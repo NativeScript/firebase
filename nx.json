@@ -22,6 +22,24 @@
     },
     "all": {
       "tags": []
+    },
+    "firebase-core": {
+      "tags": []
+    },
+    "firebase-auth": {
+      "tags": []
+    },
+    "firebase-database": {
+      "tags": []
+    },
+    "firebase-firestore": {
+      "tags": []
+    },
+    "firebase-analytics": {
+      "tags": []
+    },
+    "firebase-admob": {
+      "tags": []
     }
   },
   "workspaceLayout": {

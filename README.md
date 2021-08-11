@@ -5,7 +5,12 @@ npm run setup
 npm start
 ```
 
-- @nativescript
+- @nativescript/firebase-admob
+- @nativescript/firebase-analytics
+- @nativescript/firebase-auth
+- @nativescript/firebase-core
+- @nativescript/firebase-database
+- @nativescript/firebase-firestore
 
 # How to use?
 

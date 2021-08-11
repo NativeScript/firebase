@@ -2,11 +2,13 @@
   <Page.actionBar>
     <ActionBar title="Plugin Demos" icon="" class="action-bar"/>
   </Page.actionBar>
-  <StackLayout class="p-20">
-    <ScrollView class="h-full">
-      <StackLayout>
-        <Button text="add a package first" tap="{{ viewDemo }}" class="btn btn-primary view-demo"/>
-      </StackLayout>
-    </ScrollView>
-  </StackLayout>
+<GridLayout>
+	<ListView items="{{ demos }}" itemTap="{{ viewDemo }}">
+		<ListView.itemTemplate>
+			<GridLayout class="p-y-10">
+				<Label text="{{ name }}"/>
+			</GridLayout>
+		</ListView.itemTemplate>
+	</ListView>
+</GridLayout>
 </Page>

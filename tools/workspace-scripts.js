@@ -63,6 +63,48 @@ module.exports = {
 		// packages
 		// build output is always in dist/packages
 		'@nativescript': {
+			// @nativescript/firebase-core
+			'firebase-core': {
+				build: {
+					script: 'nx run firebase-core:build.all',
+					description: '@nativescript/firebase-core: Build',
+				},
+			},
+			// @nativescript/firebase-auth
+			'firebase-auth': {
+				build: {
+					script: 'nx run firebase-auth:build.all',
+					description: '@nativescript/firebase-auth: Build',
+				},
+			},
+			// @nativescript/firebase-database
+			'firebase-database': {
+				build: {
+					script: 'nx run firebase-database:build.all',
+					description: '@nativescript/firebase-database: Build',
+				},
+			},
+			// @nativescript/firebase-firestore
+			'firebase-firestore': {
+				build: {
+					script: 'nx run firebase-firestore:build.all',
+					description: '@nativescript/firebase-firestore: Build',
+				},
+			},
+			// @nativescript/firebase-analytics
+			'firebase-analytics': {
+				build: {
+					script: 'nx run firebase-analytics:build.all',
+					description: '@nativescript/firebase-analytics: Build',
+				},
+			},
+			// @nativescript/firebase-admob
+			'firebase-admob': {
+				build: {
+					script: 'nx run firebase-admob:build.all',
+					description: '@nativescript/firebase-admob: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run all:build',
 				description: 'Build all packages',
@@ -73,6 +115,30 @@ module.exports = {
 			description: '_____________  Focus (VS Code supported)  _____________',
 		},
 		focus: {
+			'firebase-core': {
+				script: 'nx run firebase-core:focus',
+				description: 'Focus on @nativescript/firebase-core',
+			},
+			'firebase-auth': {
+				script: 'nx run firebase-auth:focus',
+				description: 'Focus on @nativescript/firebase-auth',
+			},
+			'firebase-database': {
+				script: 'nx run firebase-database:focus',
+				description: 'Focus on @nativescript/firebase-database',
+			},
+			'firebase-firestore': {
+				script: 'nx run firebase-firestore:focus',
+				description: 'Focus on @nativescript/firebase-firestore',
+			},
+			'firebase-analytics': {
+				script: 'nx run firebase-analytics:focus',
+				description: 'Focus on @nativescript/firebase-analytics',
+			},
+			'firebase-admob': {
+				script: 'nx run firebase-admob:focus',
+				description: 'Focus on @nativescript/firebase-admob',
+			},
 			reset: {
 				script: 'nx run all:focus',
 				description: 'Reset Focus',
