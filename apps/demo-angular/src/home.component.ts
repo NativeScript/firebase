@@ -7,7 +7,22 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 	demos = [
 	{
-		name: 'add a package first'
+		name: 'firebase-admob'
+	},
+	{
+		name: 'firebase-analytics'
+	},
+	{
+		name: 'firebase-auth'
+	},
+	{
+		name: 'firebase-core'
+	},
+	{
+		name: 'firebase-database'
+	},
+	{
+		name: 'firebase-firestore'
 	}
 ];
 }

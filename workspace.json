@@ -78,14 +78,21 @@
       "projectType": "library",
       "targets": {
         "build": {
+          "executor": "@nrwl/workspace:run-commands",
           "outputs": [
             "dist/packages"
           ],
           "options": {
-            "commands": [],
+            "commands": [
+              "nx run firebase-core:build.all",
+              "nx run firebase-auth:build.all",
+              "nx run firebase-database:build.all",
+              "nx run firebase-firestore:build.all",
+              "nx run firebase-analytics:build.all",
+              "nx run firebase-admob:build.all"
+            ],
             "parallel": false
-          },
-          "executor": "@nrwl/workspace:run-commands"
+          }
         },
         "focus": {
           "outputs": [
@@ -98,6 +105,276 @@
             "parallel": false
           },
           "executor": "@nrwl/workspace:run-commands"
+        }
+      }
+    },
+    "firebase-core": {
+      "root": "packages/firebase-core",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-core",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-core",
+            "tsConfig": "packages/firebase-core/tsconfig.json",
+            "packageJson": "packages/firebase-core/package.json",
+            "main": "packages/firebase-core/index.d.ts",
+            "assets": [
+              "packages/firebase-core/*.md",
+              "packages/firebase-core/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-core/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-core:build",
+              "node tools/scripts/build-finish.ts firebase-core"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-core"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-auth": {
+      "root": "packages/firebase-auth",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-auth",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-auth",
+            "tsConfig": "packages/firebase-auth/tsconfig.json",
+            "packageJson": "packages/firebase-auth/package.json",
+            "main": "packages/firebase-auth/index.d.ts",
+            "assets": [
+              "packages/firebase-auth/*.md",
+              "packages/firebase-auth/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-auth/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-auth:build",
+              "node tools/scripts/build-finish.ts firebase-auth"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-auth"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-database": {
+      "root": "packages/firebase-database",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-database",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-database",
+            "tsConfig": "packages/firebase-database/tsconfig.json",
+            "packageJson": "packages/firebase-database/package.json",
+            "main": "packages/firebase-database/index.d.ts",
+            "assets": [
+              "packages/firebase-database/*.md",
+              "packages/firebase-database/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-database/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-database:build",
+              "node tools/scripts/build-finish.ts firebase-database"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-database"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-firestore": {
+      "root": "packages/firebase-firestore",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-firestore",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-firestore",
+            "tsConfig": "packages/firebase-firestore/tsconfig.json",
+            "packageJson": "packages/firebase-firestore/package.json",
+            "main": "packages/firebase-firestore/index.d.ts",
+            "assets": [
+              "packages/firebase-firestore/*.md",
+              "packages/firebase-firestore/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-firestore/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-firestore:build",
+              "node tools/scripts/build-finish.ts firebase-firestore"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-firestore"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-analytics": {
+      "root": "packages/firebase-analytics",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-analytics",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-analytics",
+            "tsConfig": "packages/firebase-analytics/tsconfig.json",
+            "packageJson": "packages/firebase-analytics/package.json",
+            "main": "packages/firebase-analytics/index.d.ts",
+            "assets": [
+              "packages/firebase-analytics/*.md",
+              "packages/firebase-analytics/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-analytics/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-analytics:build",
+              "node tools/scripts/build-finish.ts firebase-analytics"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-analytics"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-admob": {
+      "root": "packages/firebase-admob",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-admob",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-admob",
+            "tsConfig": "packages/firebase-admob/tsconfig.json",
+            "packageJson": "packages/firebase-admob/package.json",
+            "main": "packages/firebase-admob/index.d.ts",
+            "assets": [
+              "packages/firebase-admob/*.md",
+              "packages/firebase-admob/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-admob/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-admob:build",
+              "node tools/scripts/build-finish.ts firebase-admob"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-admob"
+            ],
+            "parallel": false
+          }
         }
       }
     }
