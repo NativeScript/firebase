@@ -1,18 +1,21 @@
 import { IFirebaseOptions, FirebaseConfig } from './common';
 import { Utils } from '@nativescript/core';
-
+export * from './utils';
 export class FirebaseOptions implements IFirebaseOptions {
 	#nativeApp: com.google.firebase.FirebaseApp;
 	static fromNative(native: com.google.firebase.FirebaseApp) {
 		if (native instanceof com.google.firebase.FirebaseApp) {
 			const opts = new FirebaseOptions();
-			opts._nativeApp = native;
+			opts.#nativeApp = native;
 			return opts;
 		}
 		return null;
 	}
 
 	get native() {
+		if (!this.#nativeApp) {
+			return null;
+		}
 		return this.#nativeApp.getOptions();
 	}
 
@@ -25,7 +28,7 @@ export class FirebaseOptions implements IFirebaseOptions {
 		if (this.#apiKey) {
 			return this.#apiKey;
 		}
-		return this.native.getApiKey();
+		return this.native?.getApiKey?.();
 	}
 
 	#gcmSenderId: string;
@@ -36,7 +39,7 @@ export class FirebaseOptions implements IFirebaseOptions {
 		if (this.#gcmSenderId) {
 			return this.#gcmSenderId;
 		}
-		return this.native.getGcmSenderId();
+		return this.native?.getGcmSenderId?.();
 	}
 
 	#databaseURL: string;
@@ -44,7 +47,7 @@ export class FirebaseOptions implements IFirebaseOptions {
 		if (this.#databaseURL) {
 			return this.#databaseURL;
 		}
-		return this.native.getDatabaseUrl();
+		return this.native?.getDatabaseUrl?.();
 	}
 
 	#googleAppId: string;
@@ -55,7 +58,7 @@ export class FirebaseOptions implements IFirebaseOptions {
 		if (this.#googleAppId) {
 			return this.#googleAppId;
 		}
-		return this.native.getApplicationId();
+		return this.native?.getApplicationId?.();
 	}
 
 	#projectId: string;
@@ -67,7 +70,7 @@ export class FirebaseOptions implements IFirebaseOptions {
 		if (this.#projectId) {
 			return this.#projectId;
 		}
-		return this.native.getProjectId();
+		return this.native?.getProjectId?.();
 	}
 
 	#storageBucket: string;
@@ -78,7 +81,7 @@ export class FirebaseOptions implements IFirebaseOptions {
 		if (this.#storageBucket) {
 			return this.#storageBucket;
 		}
-		return this.native.getProjectId();
+		return this.native?.getStorageBucket?.();
 	}
 
 	#trackingId: string;
@@ -90,7 +93,7 @@ export class FirebaseOptions implements IFirebaseOptions {
 		if (this.#trackingId) {
 			return this.#trackingId;
 		}
-		return this.native.getGaTrackingId();
+		return this.native?.getGaTrackingId?.();
 	}
 }
 
@@ -186,7 +189,8 @@ export class Firebase {
 		if (name) {
 			app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext(), nativeOptions.build(), name);
 		} else {
-			app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext(), nativeOptions.build());
+			com.google.firebase.FirebaseApp.getInstance();
+			app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext());
 		}
 
 		if (app && typeof configOrName === 'object' && typeof configOrName.automaticResourceManagement === 'boolean') {
@@ -202,10 +206,9 @@ export class Firebase {
 		});
 	}
 	static analytics() {
-		let analytics;
-		try {
-			analytics = require('@nativescript/firebase-analytics').Analytics;
-		} catch (e) {}
-		return analytics;
+		return undefined;
+	}
+	static auth(app?: FirebaseApp): any {
+		return undefined;
 	}
 }

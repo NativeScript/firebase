@@ -1,5 +1,8 @@
 import { FirebaseConfig, IFirebaseOptions } from './common';
 
+export declare function serialize(data: any): any;
+export declare function deserialize(data: any): any;
+
 export declare class FirebaseOptions implements IFirebaseOptions {
 	readonly ios: any;
 	readonly android: any;
@@ -21,5 +24,5 @@ export declare class Firebase {
 	static app(name?: string): FirebaseApp;
 	static initializeApp(options: FirebaseOptions, configOrName?: FirebaseConfig | string): Promise<FirebaseApp>;
 	static analytics(): any;
-	static auth(): any;
+	static auth(app?: FirebaseApp): any;
 }
