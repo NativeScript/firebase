@@ -6,8 +6,19 @@
     <StackLayout class="p-20">
         <ScrollView class="h-full">
           <StackLayout>
-            <Button text="Test firebase-auth" tap="{{ testIt }}" class="btn btn-primary"/>
-
+            <TextField hint="Enter email" text="{{ email }}" keyboardType="email" autocapitalizationType="none"/>
+            <TextField hint="Enter password" text="{{ password }}" secure="true"/>
+            <Button text="Create User" tap="{{ createUser }}" class="btn btn-primary"/>
+            <Button text="Login User" tap="{{ loginUser }}" class="btn btn-primary"/>
+            <Button text="Get Current User" tap="{{ getCurrentUser }}" class="btn btn-primary"/>
+            <Button text="Logout User" tap="{{ logOutUser }}" class="btn btn-primary"/>
+            <StackLayout>
+            <Label text="Current User"/>
+            <Label text="{{ uid }}"/> 
+            <Label text="{{ displayName }}"/>
+            <Label text="{{ displayEmail }}"/>
+            <Image src="{{ photoURL }}"/>
+            </StackLayout>
           </StackLayout>
         </ScrollView>
     </StackLayout>

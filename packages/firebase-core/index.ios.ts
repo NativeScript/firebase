@@ -1,4 +1,5 @@
 import { FirebaseConfig, IFirebaseOptions } from './common';
+export * from './utils';
 
 export class FirebaseOptions implements IFirebaseOptions {
 	#nativeApp: FIRApp;
@@ -301,21 +302,11 @@ export class Firebase {
 		});
 	}
 
-	static analytics() {
-		let analytics;
-		try {
-			analytics = require('@nativescript/firebase-analytics').Analytics;
-			analytics = new analytics();
-		} catch (e) {}
-		return analytics;
+	static analytics(): any {
+		return undefined;
 	}
 
-	static auth(app?: FirebaseApp) {
-		let auth;
-		try {
-			auth = require('@nativescript/firebase-auth').Auth;
-			auth = new auth(app);
-		} catch (e) {}
-		return auth;
+	static auth(app?: FirebaseApp): any {
+		return undefined;
 	}
 }

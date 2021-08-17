@@ -1,41 +1,57 @@
-import { IAnalytics } from './common';
+import { EventParameter, IAnalytics } from './common';
+import { Firebase } from '@nativescript/firebase-core';
+import { ConsentStatus, ConsentType } from '.';
+export * from './common';
 
-function serialize(data: any): any {
-	switch (typeof data) {
-		case 'string':
-		case 'boolean':
-		case 'number': {
-			return data;
-		}
+Firebase.analytics = () => {
+	return new Analytics();
+};
 
-		case 'object': {
-			if (data instanceof Date) {
-				return data.toJSON();
-			}
-
-			if (!data) {
-				return NSNull.new();
-			}
-
-			if (Array.isArray(data)) {
-				return NSArray.arrayWithArray((<any>data).map(serialize));
-			}
-
-			let node = {} as any;
-			Object.keys(data).forEach(function (key) {
-				let value = data[key];
-				node[key] = serialize(value);
+function serialize(data) {
+	switch (data.type) {
+		case 'array':
+			const array = NSMutableArray.new();
+			data.value.forEach((item) => {
+				if (typeof item === 'object') {
+					if (Array.isArray(item)) {
+						array.addObject(item.map((value) => serialize(value)));
+					} else {
+						array.addObject(Object.keys(item).map((key) => serialize(item[key])));
+					}
+				} else {
+					array.addObject(serialize(item));
+				}
 			});
-			return NSDictionary.dictionaryWithDictionary(node);
-		}
-
+			break;
+		case 'boolean':
+			return NSNumber.alloc().initWithBool(data.value);
+		case 'double':
+			return NSNumber.alloc().initWithDouble(data.value);
+		case 'float':
+			return NSNumber.alloc().initWithFloat(data.value);
+		case 'int':
+			return NSNumber.alloc().initWithInt(data.value);
+		case 'long':
+			return NSNumber.alloc().initWithLong(data.value);
+		case 'number':
+			return Number(data.value);
 		default:
-			return NSNull.new();
+			return String(data.value);
 	}
 }
 
 export class Analytics implements IAnalytics {
 	constructor() {}
+	handleOpenURL(url: string): void {
+		try {
+			FIRAnalytics.handleOpenURL(NSURL.URLWithString(url));
+		} catch (e) {}
+	}
+
+	handleUserActivity(userActivity: any): void {
+		FIRAnalytics.handleUserActivity(userActivity);
+	}
+
 	get appInstanceId(): string {
 		return FIRAnalytics.appInstanceID();
 	}
@@ -51,26 +67,57 @@ export class Analytics implements IAnalytics {
 	setUserId(userId: string): void {
 		FIRAnalytics.setUserID(userId);
 	}
-	logEvent(name: string, parameters: any): void {
-		FIRAnalytics.logEventWithNameParameters(name, serialize(parameters));
+	logEvent(name: string, parameters: EventParameter): void {
+		const event = NSMutableDictionary.new();
+		if (parameters) {
+			Object.keys(parameters).forEach((key) => {
+				const item = parameters[key];
+				event.setObjectForKey(serialize(item), key);
+			});
+		}
+		FIRAnalytics.logEventWithNameParameters(name, event as any);
 	}
 	resetAnalyticsData(): void {
 		FIRAnalytics.resetAnalyticsData();
 	}
 
-	setDefaultEventParameters(parameters: any): void {
-		FIRAnalytics.setDefaultEventParameters(serialize(parameters));
+	setDefaultEventParameters(parameters: EventParameter): void {
+		const event = NSMutableDictionary.new();
+		if (parameters) {
+			Object.keys(parameters).forEach((key) => {
+				const item = parameters[key];
+				event.setObjectForKey(serialize(item), key);
+			});
+		}
+		FIRAnalytics.setDefaultEventParameters(event as any);
 	}
 
-	setConsent(consentSettings: any): void {
-		FIRAnalytics.setConsent(serialize(consentSettings));
-	}
+	setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {
+		const dictionary = {};
+		consentSettings.forEach((value, key) => {
+			let nativeKey;
+			let nativeValue;
+			switch (key) {
+				case ConsentType.Ad_Storage:
+					nativeKey = FIRConsentTypeAdStorage;
+					break;
+				case ConsentType.Analytics_Storage:
+					nativeKey = FIRConsentTypeAnalyticsStorage;
+					break;
+			}
 
-	handleOpenURL(url: string): void {
-		FIRAnalytics.handleOpenURL(NSURL.URLWithString(url));
-	}
-
-	handleUserActivity(userActivity: any): void {
-		FIRAnalytics.handleUserActivity(userActivity);
+			switch (value) {
+				case ConsentStatus.Denied:
+					nativeValue = FIRConsentStatusDenied;
+					break;
+				case ConsentStatus.Granted:
+					nativeValue = FIRConsentStatusGranted;
+					break;
+			}
+			if (nativeKey && nativeValue) {
+				dictionary[nativeKey] = nativeValue;
+			}
+		});
+		FIRAnalytics.setConsent(dictionary as any);
 	}
 }

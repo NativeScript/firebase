@@ -1,35 +1,156 @@
-import { IAnalytics } from './common';
+import { Utils } from '@nativescript/core';
+import { Firebase } from '@nativescript/firebase-core';
+import { ConsentStatus, ConsentType, EventParameter, IAnalytics } from './common';
+export * from './common';
+
+Firebase.analytics = () => {
+	return new Analytics();
+};
+
+function serialize(data) {
+	let store;
+
+	switch (typeof data) {
+		case 'string':
+		case 'boolean':
+		case 'number': {
+			return data;
+		}
+
+		case 'object': {
+			if (data === null) {
+				return null;
+			}
+
+			if (data instanceof Date) {
+				return data.toJSON();
+			}
+			if (Array.isArray(data)) {
+				store = new java.util.ArrayList();
+				data.forEach((item, index) => {
+					const bundle = new android.os.Bundle();
+					const value = serialize(item);
+					switch (typeof value) {
+						case 'boolean':
+							bundle.putBoolean(String(index), value);
+							break;
+						case 'number':
+							bundle.putInt(String(index), value);
+							break;
+						case 'string':
+							bundle.putString(String(index), value);
+							break;
+						case 'object':
+							if (value instanceof android.os.Bundle) {
+								bundle.putBundle(String(index), value);
+							} else if (value instanceof java.util.ArrayList) {
+								bundle.putParcelableArrayList(String(index), value);
+							} else {
+								bundle.putString(String(index), null);
+							}
+
+							break;
+					}
+					store.add(bundle);
+				});
+				return store;
+			}
+
+			store = new android.os.Bundle();
+			Object.keys(data).forEach((key) => {
+				const value = serialize(data[key]);
+				switch (typeof value) {
+					case 'boolean':
+						store.putBoolean(key, value);
+						break;
+					case 'number':
+						store.putInt(key, value);
+						break;
+					case 'string':
+						store.putString(key, value);
+						break;
+					case 'object':
+						if (value instanceof android.os.Bundle) {
+							store.putBundle(key, value);
+						} else if (value instanceof java.util.ArrayList) {
+							store.putParcelableArrayList(key, value);
+						} else {
+							store.putString(key, null);
+						}
+
+						break;
+				}
+			});
+			return store;
+		}
+
+		default:
+			return null;
+	}
+}
+
 export class Analytics implements IAnalytics {
-	constructor() {}
-	setUserProperty(value: string, name: string): void {
-		throw new Error('Method not implemented.');
+	#native: com.google.firebase.analytics.FirebaseAnalytics;
+
+	constructor() {
+		this.#native = com.google.firebase.analytics.FirebaseAnalytics.getInstance(Utils.android.getApplicationContext());
+	}
+	handleOpenURL(url: string): void {}
+
+	handleUserActivity(userActivity: any): void {}
+
+	get appInstanceId(): string {
+		return this.#native.getAppInstanceId();
 	}
 	setSessionTimeoutInterval(sessionTimeoutInterval: number): void {
-		throw new Error('Method not implemented.');
+		this.#native.setSessionTimeoutDuration(sessionTimeoutInterval);
 	}
-	setDefaultEventParameters(parameters: any): void {
-		throw new Error('Method not implemented.');
-	}
-	setConsent(consentSettings: any): void {
-		throw new Error('Method not implemented.');
-	}
-	handleOpenURL(url: string): void {
-		throw new Error('Method not implemented.');
-	}
-	handleUserActivity(userActivity: any): void {
-		throw new Error('Method not implemented.');
-	}
-	get appInstanceId(): string {
-		return '';
+	setUserProperty(key: string, value: string): void {
+		this.#native.setUserProperty(key, value);
 	}
 	setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void {
-		throw new Error('Method not implemented.');
-	}
-	logEvent(name: string): void {
-		throw new Error('Method not implemented.');
+		this.#native.setAnalyticsCollectionEnabled(analyticsCollectionEnabled);
 	}
 	setUserId(userId: string): void {
-		throw new Error('Method not implemented.');
+		this.#native.setUserId(userId);
 	}
-	resetAnalyticsData(): void {}
+	logEvent(name: string, parameters: EventParameter): void {
+		this.#native.logEvent(name, serialize(parameters));
+	}
+	resetAnalyticsData(): void {
+		this.#native.resetAnalyticsData();
+	}
+
+	setDefaultEventParameters(parameters: EventParameter): void {
+		this.#native.setDefaultEventParameters(serialize(parameters));
+	}
+
+	setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {
+		const nativeMap = new java.util.HashMap();
+		consentSettings.forEach((value, key) => {
+			let nativeKey;
+			let nativeValue;
+			switch (key) {
+				case ConsentType.Ad_Storage:
+					nativeKey = FIRConsentTypeAdStorage;
+					break;
+				case ConsentType.Analytics_Storage:
+					nativeKey = FIRConsentTypeAnalyticsStorage;
+					break;
+			}
+
+			switch (value) {
+				case ConsentStatus.Denied:
+					nativeValue = FIRConsentStatusDenied;
+					break;
+				case ConsentStatus.Granted:
+					nativeValue = FIRConsentStatusGranted;
+					break;
+			}
+			if (nativeKey && nativeValue) {
+				nativeMap.put(nativeKey, nativeValue);
+			}
+		});
+		this.#native.setConsent(nativeMap);
+	}
 }
