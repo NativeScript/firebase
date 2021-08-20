@@ -121,7 +121,6 @@ export function deserialize(data: any): any {
 				}
 				break;
 			}
-
 			case 'org.json.JSONObject': {
 				store = {};
 				let i = data.keys();
@@ -132,14 +131,16 @@ export function deserialize(data: any): any {
 				break;
 			}
 
-			case 'java.util.Map': {
-				store = {};
-				const keys = data.keySet().toArray();
-				for (let k = 0; k < keys.length; k++) {
-					store[k] = deserialize(data.get(k));
+			case 'java.util.HashMap':
+				case 'java.util.Map': {
+					store = {};
+					const keys = data.keySet().toArray();
+					for (let k = 0; k < keys.length; k++) {
+						const key = keys[k];
+						store[key] = deserialize(data.get(key));
+					}
+					break;
 				}
-				break;
-			}
 
 			default:
 				store = null;

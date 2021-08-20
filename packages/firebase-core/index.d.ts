@@ -25,4 +25,10 @@ export declare class Firebase {
 	static initializeApp(options: FirebaseOptions, configOrName?: FirebaseConfig | string): Promise<FirebaseApp>;
 	static analytics(): any;
 	static auth(app?: FirebaseApp): any;
+	static database(app?: FirebaseApp): any;
+}
+
+export class FirebaseError extends Error {
+	static fromNative(native: any, message?: string);
+	readonly native;
 }

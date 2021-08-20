@@ -89,7 +89,8 @@
               "nx run firebase-database:build.all",
               "nx run firebase-firestore:build.all",
               "nx run firebase-analytics:build.all",
-              "nx run firebase-admob:build.all"
+              "nx run firebase-admob:build.all",
+              "nx run firebase-crashlytics:build.all"
             ],
             "parallel": false
           }
@@ -372,6 +373,51 @@
           "options": {
             "commands": [
               "nx g @nativescript/plugin-tools:focus-packages firebase-admob"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-crashlytics": {
+      "root": "packages/firebase-crashlytics",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-crashlytics",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-crashlytics",
+            "tsConfig": "packages/firebase-crashlytics/tsconfig.json",
+            "packageJson": "packages/firebase-crashlytics/package.json",
+            "main": "packages/firebase-crashlytics/index.d.ts",
+            "assets": [
+              "packages/firebase-crashlytics/*.md",
+              "packages/firebase-crashlytics/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-crashlytics/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-crashlytics:build",
+              "node tools/scripts/build-finish.ts firebase-crashlytics"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-crashlytics"
             ],
             "parallel": false
           }

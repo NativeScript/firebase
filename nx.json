@@ -40,6 +40,9 @@
     },
     "firebase-admob": {
       "tags": []
+    },
+    "firebase-crashlytics": {
+      "tags": []
     }
   },
   "workspaceLayout": {

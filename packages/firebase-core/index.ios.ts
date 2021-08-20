@@ -1,6 +1,18 @@
 import { FirebaseConfig, IFirebaseOptions } from './common';
 export * from './utils';
 
+export class FirebaseError extends Error {
+	#native: NSError;
+	static fromNative(native: NSError, message?: string) {
+		const error = new FirebaseError(message || native?.localizedDescription);
+		error.#native = native;
+	}
+
+	get native() {
+		return this.#native;
+	}
+}
+
 export class FirebaseOptions implements IFirebaseOptions {
 	#nativeApp: FIRApp;
 
@@ -307,6 +319,10 @@ export class Firebase {
 	}
 
 	static auth(app?: FirebaseApp): any {
+		return undefined;
+	}
+
+	static database(app?: FirebaseApp): any {
 		return undefined;
 	}
 }

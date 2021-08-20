@@ -11,6 +11,7 @@ const routes: Routes = [
 	{ path: 'firebase-analytics', loadChildren: () => import('./plugin-demos/firebase-analytics.module').then(m => m.FirebaseAnalyticsModule) },
 	{ path: 'firebase-auth', loadChildren: () => import('./plugin-demos/firebase-auth.module').then(m => m.FirebaseAuthModule) },
 	{ path: 'firebase-core', loadChildren: () => import('./plugin-demos/firebase-core.module').then(m => m.FirebaseCoreModule) },
+	{ path: 'firebase-crashlytics', loadChildren: () => import('./plugin-demos/firebase-crashlytics.module').then(m => m.FirebaseCrashlyticsModule) },
 	{ path: 'firebase-database', loadChildren: () => import('./plugin-demos/firebase-database.module').then(m => m.FirebaseDatabaseModule) },
 	{ path: 'firebase-firestore', loadChildren: () => import('./plugin-demos/firebase-firestore.module').then(m => m.FirebaseFirestoreModule) }
 ];

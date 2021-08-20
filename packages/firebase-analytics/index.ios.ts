@@ -1,44 +1,11 @@
 import { EventParameter, IAnalytics } from './common';
-import { Firebase } from '@nativescript/firebase-core';
+import { Firebase, serialize } from '@nativescript/firebase-core';
 import { ConsentStatus, ConsentType } from '.';
 export * from './common';
 
 Firebase.analytics = () => {
 	return new Analytics();
 };
-
-function serialize(data) {
-	switch (data.type) {
-		case 'array':
-			const array = NSMutableArray.new();
-			data.value.forEach((item) => {
-				if (typeof item === 'object') {
-					if (Array.isArray(item)) {
-						array.addObject(item.map((value) => serialize(value)));
-					} else {
-						array.addObject(Object.keys(item).map((key) => serialize(item[key])));
-					}
-				} else {
-					array.addObject(serialize(item));
-				}
-			});
-			break;
-		case 'boolean':
-			return NSNumber.alloc().initWithBool(data.value);
-		case 'double':
-			return NSNumber.alloc().initWithDouble(data.value);
-		case 'float':
-			return NSNumber.alloc().initWithFloat(data.value);
-		case 'int':
-			return NSNumber.alloc().initWithInt(data.value);
-		case 'long':
-			return NSNumber.alloc().initWithLong(data.value);
-		case 'number':
-			return Number(data.value);
-		default:
-			return String(data.value);
-	}
-}
 
 export class Analytics implements IAnalytics {
 	constructor() {}
@@ -68,28 +35,14 @@ export class Analytics implements IAnalytics {
 		FIRAnalytics.setUserID(userId);
 	}
 	logEvent(name: string, parameters: EventParameter): void {
-		const event = NSMutableDictionary.new();
-		if (parameters) {
-			Object.keys(parameters).forEach((key) => {
-				const item = parameters[key];
-				event.setObjectForKey(serialize(item), key);
-			});
-		}
-		FIRAnalytics.logEventWithNameParameters(name, event as any);
+		FIRAnalytics.logEventWithNameParameters(name, serialize(parameters));
 	}
 	resetAnalyticsData(): void {
 		FIRAnalytics.resetAnalyticsData();
 	}
 
 	setDefaultEventParameters(parameters: EventParameter): void {
-		const event = NSMutableDictionary.new();
-		if (parameters) {
-			Object.keys(parameters).forEach((key) => {
-				const item = parameters[key];
-				event.setObjectForKey(serialize(item), key);
-			});
-		}
-		FIRAnalytics.setDefaultEventParameters(event as any);
+		FIRAnalytics.setDefaultEventParameters(serialize(parameters));
 	}
 
 	setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {

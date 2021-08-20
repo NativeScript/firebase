@@ -105,6 +105,13 @@ module.exports = {
 					description: '@nativescript/firebase-admob: Build',
 				},
 			},
+			// @nativescript/firebase-crashlytics
+			'firebase-crashlytics': {
+				build: {
+					script: 'nx run firebase-crashlytics:build.all',
+					description: '@nativescript/firebase-crashlytics: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run all:build',
 				description: 'Build all packages',
@@ -138,6 +145,10 @@ module.exports = {
 			'firebase-admob': {
 				script: 'nx run firebase-admob:focus',
 				description: 'Focus on @nativescript/firebase-admob',
+			},
+			'firebase-crashlytics': {
+				script: 'nx run firebase-crashlytics:focus',
+				description: 'Focus on @nativescript/firebase-crashlytics',
 			},
 			reset: {
 				script: 'nx run all:focus',

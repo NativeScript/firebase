@@ -1,7 +1,7 @@
 import { IAnalytics, EventParameter } from './common';
 export * from './common';
 
-export declare class Analytics implements IAnalytics {
+declare class Analytics implements IAnalytics {
 	readonly appInstanceId: string;
 	logEvent(name: string, parameters: EventParameter): void;
 	setUserId(userId: string): void;
