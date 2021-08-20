@@ -410,7 +410,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().set(
 				this.native,
-				value,
+				serialize(value),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
 						onComplete?.(null);
@@ -448,7 +448,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().setWithPriority(
 				this.native,
-				newVal,
+				serialize(newVal),
 				newPriority as any,
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
@@ -476,14 +476,13 @@ export class Reference extends Query implements IReference {
 						return serialize(newData);
 					},
 					onComplete(error: com.google.firebase.database.DatabaseError, commited: boolean, snapshot: com.google.firebase.database.DataSnapshot): void {
-						console.log(error);
 						const ss = DataSnapshot.fromNative(snapshot);
 						if (error) {
 							const err = FirebaseError.fromNative(error);
 							onComplete?.(err, commited, ss);
 							reject(err);
 						} else {
-							onComplete(null, commited, ss);
+							onComplete?.(null, commited, ss);
 							resolve({
 								commited,
 								snapshot: ss,
@@ -498,7 +497,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().update(
 				this.native,
-				values as any,
+				serialize(values),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
 						onComplete?.(null);
@@ -557,7 +556,10 @@ export class DataSnapshot implements IDataSnapshot {
 		return this.native?.exists();
 	}
 	exportVal() {
-		return deserialize(this.native.getValue(true));
+		return {
+			'.priority': this.native.getPriority?.(),
+			'.value': deserialize(this.native.getValue(true)),
+		};
 	}
 	forEach(action: (child: DataSnapshot) => true | undefined): boolean {
 		const iterator = this.native.getChildren().iterator();

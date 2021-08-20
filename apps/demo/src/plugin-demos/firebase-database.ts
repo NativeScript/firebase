@@ -23,9 +23,9 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 		this.children();
 	}
 	randomData() {
-		this.database
-			.ref()
-			.push({ name: 'Test', date: Date.now() })
+			this.database
+			.ref('/random')
+			.push({ name: 'random' , float: 1.1 })
 			.then((value) => {
 				console.log('push randomData', value);
 			});
@@ -59,24 +59,24 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 				console.log('transaction', value.val());
 			});
 
-		this.database
-			.ref('/posts')
-			.child('1')
-			.transaction((data: any) => {
-				if (data) {
-					data.likes += 1;
-					return data;
-				} else {
-					return {
-						likes: 1,
-					};
-				}
-			})
-			.then((result) => {
-				console.log('transaction', 'result', result);
-			})
-			.catch((e) => {
-				console.log('transaction', 'error', e);
-			});
+		// this.database
+		// 	.ref('/posts')
+		// 	.child('1')
+		// 	.transaction((data: any) => {
+		// 		if (data) {
+		// 			data.likes += 1;
+		// 			return data;
+		// 		} else {
+		// 			return {
+		// 				likes: 1,
+		// 			};
+		// 		}
+		// 	})
+		// 	.then((result) => {
+		// 		console.log('transaction', 'result', result);
+		// 	})
+		// 	.catch((e) => {
+		// 		console.log('transaction', 'error', e);
+		// 	});
 	}
 }
