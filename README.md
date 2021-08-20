@@ -9,6 +9,7 @@ npm start
 - @nativescript/firebase-analytics
 - @nativescript/firebase-auth
 - @nativescript/firebase-core
+- @nativescript/firebase-crashlytics
 - @nativescript/firebase-database
 - @nativescript/firebase-firestore
 

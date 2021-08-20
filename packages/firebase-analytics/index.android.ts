@@ -22,36 +22,21 @@ function serialize(data) {
 				return null;
 			}
 
-			if (data instanceof Date) {
-				return data.toJSON();
-			}
 			if (Array.isArray(data)) {
 				store = new java.util.ArrayList();
-				data.forEach((item, index) => {
-					const bundle = new android.os.Bundle();
+				data.forEach((item) => {
 					const value = serialize(item);
 					switch (typeof value) {
-						case 'boolean':
-							bundle.putBoolean(String(index), value);
-							break;
-						case 'number':
-							bundle.putInt(String(index), value);
-							break;
-						case 'string':
-							bundle.putString(String(index), value);
-							break;
 						case 'object':
 							if (value instanceof android.os.Bundle) {
-								bundle.putBundle(String(index), value);
-							} else if (value instanceof java.util.ArrayList) {
-								bundle.putParcelableArrayList(String(index), value);
-							} else {
-								bundle.putString(String(index), null);
+								store.add(value);
+							}
+							if (value instanceof java.util.ArrayList) {
+								store.add(value);
 							}
 
 							break;
 					}
-					store.add(bundle);
 				});
 				return store;
 			}
@@ -77,7 +62,6 @@ function serialize(data) {
 						} else {
 							store.putString(key, null);
 						}
-
 						break;
 				}
 			});

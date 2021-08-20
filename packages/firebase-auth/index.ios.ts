@@ -814,6 +814,7 @@ export class Auth implements IAuth {
 			this.#native = FIRAuth.authWithApp(FIRApp.defaultApp());
 		}
 	}
+
 	fetchSignInMethodsForEmail(email: string): Promise<string[]> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {

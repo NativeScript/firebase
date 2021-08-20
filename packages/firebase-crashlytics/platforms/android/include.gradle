@@ -1,0 +1,6 @@
+apply plugin: 'com.google.firebase.crashlytics'
+
+dependencies {
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+}

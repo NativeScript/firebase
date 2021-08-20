@@ -19,6 +19,9 @@ export class HomeComponent {
 		name: 'firebase-core'
 	},
 	{
+		name: 'firebase-crashlytics'
+	},
+	{
 		name: 'firebase-database'
 	},
 	{

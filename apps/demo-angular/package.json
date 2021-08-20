@@ -7,7 +7,8 @@
     "@nativescript/firebase-database": "file:../../dist/packages/firebase-database",
     "@nativescript/firebase-firestore": "file:../../dist/packages/firebase-firestore",
     "@nativescript/firebase-analytics": "file:../../dist/packages/firebase-analytics",
-    "@nativescript/firebase-admob": "file:../../dist/packages/firebase-admob"
+    "@nativescript/firebase-admob": "file:../../dist/packages/firebase-admob",
+    "@nativescript/firebase-crashlytics": "file:../../dist/packages/firebase-crashlytics"
   },
   "devDependencies": {
     "@nativescript/android": "8.0.0",

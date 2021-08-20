@@ -1,6 +1,19 @@
 import { IFirebaseOptions, FirebaseConfig } from './common';
 import { Utils } from '@nativescript/core';
 export * from './utils';
+
+export class FirebaseError extends Error {
+	#native: java.lang.Exception;
+	static fromNative(native: java.lang.Exception, message?: string) {
+		const error = new FirebaseError(message || native?.getMessage?.());
+		error.#native = native;
+	}
+
+	get native() {
+		return this.#native;
+	}
+}
+
 export class FirebaseOptions implements IFirebaseOptions {
 	#nativeApp: com.google.firebase.FirebaseApp;
 	static fromNative(native: com.google.firebase.FirebaseApp) {
@@ -209,6 +222,10 @@ export class Firebase {
 		return undefined;
 	}
 	static auth(app?: FirebaseApp): any {
+		return undefined;
+	}
+
+	static database(app?: FirebaseApp): any {
 		return undefined;
 	}
 }
