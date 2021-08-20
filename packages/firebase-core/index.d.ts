@@ -1,15 +1,15 @@
 import { FirebaseConfig, IFirebaseOptions } from './common';
 
-export declare function serialize(data: any): any;
-export declare function deserialize(data: any): any;
+declare function serialize(data: any): any;
+declare function deserialize(data: any): any;
 
-export declare class FirebaseOptions implements IFirebaseOptions {
+declare class FirebaseOptions implements IFirebaseOptions {
 	readonly ios: any;
 	readonly android: any;
 	readonly native: any;
 }
 
-export declare class FirebaseApp {
+declare class FirebaseApp {
 	readonly native;
 	readonly ios;
 	readonly name;
@@ -20,7 +20,7 @@ export declare class FirebaseApp {
 	apps(): FirebaseApp[];
 }
 
-export declare class Firebase {
+declare class Firebase {
 	static app(name?: string): FirebaseApp;
 	static initializeApp(options: FirebaseOptions, configOrName?: FirebaseConfig | string): Promise<FirebaseApp>;
 	static analytics(): any;
@@ -28,7 +28,7 @@ export declare class Firebase {
 	static database(app?: FirebaseApp): any;
 }
 
-export class FirebaseError extends Error {
+declare class FirebaseError extends Error {
 	static fromNative(native: any, message?: string);
 	readonly native;
 }

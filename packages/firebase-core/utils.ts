@@ -1,15 +1,38 @@
+function numberHasDecimals(item: number) {
+	return !(item % 1 === 0);
+}
+
+function numberIs64Bit(item: number) {
+	return item < -Math.pow(2, 31) + 1 || item > Math.pow(2, 31) - 1;
+}
+
 export function serialize(data: any): any {
 	if (global.isIOS) {
 		switch (typeof data) {
 			case 'string':
-			case 'boolean':
-			case 'number': {
+			case 'boolean': {
 				return data;
+			}
+			case 'number': {
+				const hasDecimals = numberHasDecimals(data);
+				if (numberIs64Bit(data)) {
+					if (hasDecimals) {
+						return NSNumber.alloc().initWithDouble(data);
+					} else {
+						return NSNumber.alloc().initWithLongLong(data);
+					}
+				} else {
+					if (hasDecimals) {
+						return NSNumber.alloc().initWithFloat(data);
+					} else {
+						return data;
+					}
+				}
 			}
 
 			case 'object': {
 				if (data instanceof Date) {
-					return data.toJSON();
+					return NSDate.dateWithTimeIntervalSince1970(data.getTime() / 1000);
 				}
 
 				if (!data) {
@@ -37,9 +60,24 @@ export function serialize(data: any): any {
 		let store;
 		switch (typeof data) {
 			case 'string':
-			case 'boolean':
-			case 'number': {
+			case 'boolean': {
 				return data;
+			}
+			case 'number': {
+				const hasDecimals = numberHasDecimals(data);
+				if (numberIs64Bit(data)) {
+					if (hasDecimals) {
+						return java.lang.Double.valueOf(data);
+					} else {
+						return java.lang.Long.valueOf(data);
+					}
+				} else {
+					if (hasDecimals) {
+						return java.lang.Float.valueOf(data);
+					} else {
+						return data;
+					}
+				}
 			}
 
 			case 'object': {
@@ -48,16 +86,18 @@ export function serialize(data: any): any {
 				}
 
 				if (data instanceof Date) {
-					return data.toJSON();
+					return new java.util.Date(data.getTime());
 				}
+
 				if (Array.isArray(data)) {
-					store = new org.json.JSONArray();
-					data.forEach((item) => store.put(serialize(item)));
+					store = new java.util.ArrayList();
+					data.forEach((item) => store.add(serialize(item)));
 					return store;
 				}
 
-				store = new org.json.JSONObject();
+				store = new java.util.HashMap();
 				Object.keys(data).forEach((key) => store.put(key, serialize(data[key])));
+				console.log(store.toString());
 				return store;
 			}
 
@@ -132,15 +172,15 @@ export function deserialize(data: any): any {
 			}
 
 			case 'java.util.HashMap':
-				case 'java.util.Map': {
-					store = {};
-					const keys = data.keySet().toArray();
-					for (let k = 0; k < keys.length; k++) {
-						const key = keys[k];
-						store[key] = deserialize(data.get(key));
-					}
-					break;
+			case 'java.util.Map': {
+				store = {};
+				const keys = data.keySet().toArray();
+				for (let k = 0; k < keys.length; k++) {
+					const key = keys[k];
+					store[key] = deserialize(data.get(key));
 				}
+				break;
+			}
 
 			default:
 				store = null;

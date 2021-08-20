@@ -29,7 +29,7 @@
     "@nativescript/core": "^8.0.0",
     "@nativescript/plugin-tools": "2.0.4",
     "@nativescript/types": "^8.0.0",
-    "@nativescript/webpack": "beta",
+    "@nativescript/webpack": "rc",
     "@ngtools/webpack": "^12.0.0",
     "husky": "^5.1.3",
     "nativescript-vue": "~2.9.0",

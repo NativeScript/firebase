@@ -323,7 +323,7 @@ export class Reference extends Query implements IReference {
 	}
 	set(value: any, onComplete?: (error: FirebaseError) => void): Promise<void> {
 		return new Promise((resolve, reject) => {
-			this.native.setValueWithCompletionBlock(value, (error, ref) => {
+			this.native.setValueWithCompletionBlock(serialize(value), (error, ref) => {
 				if (error) {
 					const err = FirebaseError.fromNative(error);
 					onComplete?.(err);
@@ -355,7 +355,7 @@ export class Reference extends Query implements IReference {
 	}
 	setWithPriority(newVal: any, newPriority: string | number, onComplete?: (error: FirebaseError) => void): Promise<void> {
 		return new Promise((resolve, reject) => {
-			this.native.setValueAndPriorityWithCompletionBlock(newVal, newPriority, (error, ref) => {
+			this.native.setValueAndPriorityWithCompletionBlock(serialize(newVal), newPriority, (error, ref) => {
 				if (error) {
 					const err = FirebaseError.fromNative(error);
 					onComplete?.(err);
@@ -458,17 +458,22 @@ export class DataSnapshot implements IDataSnapshot {
 		};
 	}
 	forEach(action: (child: DataSnapshot) => true | undefined): boolean {
-		let stopEnumerate = false;
-		while (!stopEnumerate) {
-			const object = this.native.children.nextObject();
-			console.log('forEach','object', object);
-			if (!object) {
-				stopEnumerate = true;
-			} else {
-				stopEnumerate = action(DataSnapshot.fromNative(object)) || false;
+		let didStop = false;
+		const children = this.native.children;
+		let object = children.nextObject();
+		while (object) {
+			didStop = action(DataSnapshot.fromNative(object));
+			if (didStop || !object) {
+				break;
 			}
+			object = children.nextObject();
 		}
-		return stopEnumerate;
+		if (didStop) {
+			return true;
+		}
+		if (!object) {
+			return false;
+		}
 	}
 	getPriority(): string | number {
 		return this.native.priority;
