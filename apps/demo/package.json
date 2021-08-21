@@ -11,7 +11,8 @@
     "@nativescript/firebase-firestore": "file:../../packages/firebase-firestore",
     "@nativescript/firebase-analytics": "file:../../packages/firebase-analytics",
     "@nativescript/firebase-admob": "file:../../packages/firebase-admob",
-    "@nativescript/firebase-crashlytics": "file:../../packages/firebase-crashlytics"
+    "@nativescript/firebase-crashlytics": "file:../../packages/firebase-crashlytics",
+    "@nativescript/firebase-app-check": "file:../../packages/firebase-app-check"
   },
   "devDependencies": {
     "@nativescript/android": "8.0.0",

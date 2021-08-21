@@ -7,6 +7,7 @@ npm start
 
 - @nativescript/firebase-admob
 - @nativescript/firebase-analytics
+- @nativescript/firebase-app-check
 - @nativescript/firebase-auth
 - @nativescript/firebase-core
 - @nativescript/firebase-crashlytics

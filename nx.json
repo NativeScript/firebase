@@ -43,6 +43,9 @@
     },
     "firebase-crashlytics": {
       "tags": []
+    },
+    "firebase-app-check": {
+      "tags": []
     }
   },
   "workspaceLayout": {

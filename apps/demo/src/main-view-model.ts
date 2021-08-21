@@ -20,6 +20,9 @@ export class MainViewModel extends Observable {
 		{
 			name: 'firebase-firestore',
 		},
+		{
+			name: 'firebase-crashlytics',
+		},
 	];
 
 	viewDemo(args) {
