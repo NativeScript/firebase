@@ -1,1 +1,1 @@
-pod 'Firebase/Auth'
+pod 'Firebase/Auth','~>8.6'

@@ -92,7 +92,8 @@
               "nx run firebase-firestore:build.all",
               "nx run firebase-analytics:build.all",
               "nx run firebase-admob:build.all",
-              "nx run firebase-crashlytics:build.all"
+              "nx run firebase-crashlytics:build.all",
+              "nx run firebase-app-check:build.all"
             ],
             "parallel": false
           }
@@ -420,6 +421,51 @@
           "options": {
             "commands": [
               "nx g @nativescript/plugin-tools:focus-packages firebase-crashlytics"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-app-check": {
+      "root": "packages/firebase-app-check",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-app-check",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-app-check",
+            "tsConfig": "packages/firebase-app-check/tsconfig.json",
+            "packageJson": "packages/firebase-app-check/package.json",
+            "main": "packages/firebase-app-check/index.d.ts",
+            "assets": [
+              "packages/firebase-app-check/*.md",
+              "packages/firebase-app-check/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-app-check/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-app-check:build",
+              "node tools/scripts/build-finish.ts firebase-app-check"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-app-check"
             ],
             "parallel": false
           }

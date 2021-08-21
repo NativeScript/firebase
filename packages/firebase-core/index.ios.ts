@@ -325,4 +325,12 @@ export class Firebase {
 	static database(app?: FirebaseApp): any {
 		return undefined;
 	}
+
+	static crashlytics(): any {
+		return undefined;
+	}
+
+	static appCheck(): any {
+		return undefined;
+	}
 }

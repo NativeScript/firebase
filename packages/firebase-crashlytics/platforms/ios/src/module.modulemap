@@ -1,0 +1,4 @@
+module TNSFirebaseCrashlytics {
+    header "TNSFirebaseCrashlytics.h"
+    export *
+}

@@ -13,6 +13,9 @@ export class HomeComponent {
 		name: 'firebase-analytics'
 	},
 	{
+		name: 'firebase-app-check'
+	},
+	{
 		name: 'firebase-auth'
 	},
 	{

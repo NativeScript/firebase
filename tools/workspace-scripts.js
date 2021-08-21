@@ -112,6 +112,13 @@ module.exports = {
 					description: '@nativescript/firebase-crashlytics: Build',
 				},
 			},
+			// @nativescript/firebase-app-check
+			'firebase-app-check': {
+				build: {
+					script: 'nx run firebase-app-check:build.all',
+					description: '@nativescript/firebase-app-check: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run all:build',
 				description: 'Build all packages',
@@ -149,6 +156,10 @@ module.exports = {
 			'firebase-crashlytics': {
 				script: 'nx run firebase-crashlytics:focus',
 				description: 'Focus on @nativescript/firebase-crashlytics',
+			},
+			'firebase-app-check': {
+				script: 'nx run firebase-app-check:focus',
+				description: 'Focus on @nativescript/firebase-app-check',
 			},
 			reset: {
 				script: 'nx run all:focus',
