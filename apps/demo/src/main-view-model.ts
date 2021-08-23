@@ -23,6 +23,12 @@ export class MainViewModel extends Observable {
 		{
 			name: 'firebase-crashlytics',
 		},
+		{
+			name: 'firebase-app-check',
+		},
+		{
+			name: 'firebase-remote-config',
+		},
 	];
 
 	viewDemo(args) {

@@ -93,7 +93,8 @@
               "nx run firebase-analytics:build.all",
               "nx run firebase-admob:build.all",
               "nx run firebase-crashlytics:build.all",
-              "nx run firebase-app-check:build.all"
+              "nx run firebase-app-check:build.all",
+              "nx run firebase-remote-config:build.all"
             ],
             "parallel": false
           }
@@ -466,6 +467,51 @@
           "options": {
             "commands": [
               "nx g @nativescript/plugin-tools:focus-packages firebase-app-check"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-remote-config": {
+      "root": "packages/firebase-remote-config",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-remote-config",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-remote-config",
+            "tsConfig": "packages/firebase-remote-config/tsconfig.json",
+            "packageJson": "packages/firebase-remote-config/package.json",
+            "main": "packages/firebase-remote-config/index.d.ts",
+            "assets": [
+              "packages/firebase-remote-config/*.md",
+              "packages/firebase-remote-config/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-remote-config/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-remote-config:build",
+              "node tools/scripts/build-finish.ts firebase-remote-config"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-remote-config"
             ],
             "parallel": false
           }
