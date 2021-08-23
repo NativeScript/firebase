@@ -333,4 +333,8 @@ export class Firebase {
 	static appCheck(): any {
 		return undefined;
 	}
+
+	static remoteConfig(app?: FirebaseApp): any {
+		return undefined;
+	}
 }

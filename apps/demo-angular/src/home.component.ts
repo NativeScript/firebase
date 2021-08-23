@@ -29,6 +29,9 @@ export class HomeComponent {
 	},
 	{
 		name: 'firebase-firestore'
+	},
+	{
+		name: 'firebase-remote-config'
 	}
 ];
 }

@@ -46,6 +46,9 @@
     },
     "firebase-app-check": {
       "tags": []
+    },
+    "firebase-remote-config": {
+      "tags": []
     }
   },
   "workspaceLayout": {

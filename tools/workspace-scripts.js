@@ -119,6 +119,13 @@ module.exports = {
 					description: '@nativescript/firebase-app-check: Build',
 				},
 			},
+			// @nativescript/firebase-remote-config
+			'firebase-remote-config': {
+				build: {
+					script: 'nx run firebase-remote-config:build.all',
+					description: '@nativescript/firebase-remote-config: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run all:build',
 				description: 'Build all packages',
@@ -160,6 +167,10 @@ module.exports = {
 			'firebase-app-check': {
 				script: 'nx run firebase-app-check:focus',
 				description: 'Focus on @nativescript/firebase-app-check',
+			},
+			'firebase-remote-config': {
+				script: 'nx run firebase-remote-config:focus',
+				description: 'Focus on @nativescript/firebase-remote-config',
 			},
 			reset: {
 				script: 'nx run all:focus',

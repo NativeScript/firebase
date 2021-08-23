@@ -13,6 +13,7 @@ npm start
 - @nativescript/firebase-crashlytics
 - @nativescript/firebase-database
 - @nativescript/firebase-firestore
+- @nativescript/firebase-remote-config
 
 # How to use?
 

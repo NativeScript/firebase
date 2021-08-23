@@ -7,3 +7,4 @@ export * from './firebase-core';
 export * from './firebase-crashlytics';
 export * from './firebase-database';
 export * from './firebase-firestore';
+export * from './firebase-remote-config';
