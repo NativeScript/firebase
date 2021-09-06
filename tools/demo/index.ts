@@ -7,4 +7,6 @@ export * from './firebase-core';
 export * from './firebase-crashlytics';
 export * from './firebase-database';
 export * from './firebase-firestore';
+export * from './firebase-in-app-messaging';
 export * from './firebase-remote-config';
+export * from './firebase-storage';

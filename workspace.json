@@ -94,7 +94,9 @@
               "nx run firebase-admob:build.all",
               "nx run firebase-crashlytics:build.all",
               "nx run firebase-app-check:build.all",
-              "nx run firebase-remote-config:build.all"
+              "nx run firebase-remote-config:build.all",
+              "nx run firebase-storage:build.all",
+              "nx run firebase-in-app-messaging:build.all"
             ],
             "parallel": false
           }
@@ -512,6 +514,96 @@
           "options": {
             "commands": [
               "nx g @nativescript/plugin-tools:focus-packages firebase-remote-config"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-storage": {
+      "root": "packages/firebase-storage",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-storage",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-storage",
+            "tsConfig": "packages/firebase-storage/tsconfig.json",
+            "packageJson": "packages/firebase-storage/package.json",
+            "main": "packages/firebase-storage/index.d.ts",
+            "assets": [
+              "packages/firebase-storage/*.md",
+              "packages/firebase-storage/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-storage/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-storage:build",
+              "node tools/scripts/build-finish.ts firebase-storage"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-storage"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-in-app-messaging": {
+      "root": "packages/firebase-in-app-messaging",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-in-app-messaging",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-in-app-messaging",
+            "tsConfig": "packages/firebase-in-app-messaging/tsconfig.json",
+            "packageJson": "packages/firebase-in-app-messaging/package.json",
+            "main": "packages/firebase-in-app-messaging/index.d.ts",
+            "assets": [
+              "packages/firebase-in-app-messaging/*.md",
+              "packages/firebase-in-app-messaging/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-in-app-messaging/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-in-app-messaging:build",
+              "node tools/scripts/build-finish.ts firebase-in-app-messaging"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-in-app-messaging"
             ],
             "parallel": false
           }

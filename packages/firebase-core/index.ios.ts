@@ -6,6 +6,7 @@ export class FirebaseError extends Error {
 	static fromNative(native: NSError, message?: string) {
 		const error = new FirebaseError(message || native?.localizedDescription);
 		error.#native = native;
+		return error;
 	}
 
 	get native() {
@@ -334,7 +335,15 @@ export class Firebase {
 		return undefined;
 	}
 
+	static inAppMessaging(): any {
+		return undefined;
+	}
+
 	static remoteConfig(app?: FirebaseApp): any {
+		return undefined;
+	}
+
+	static storage(app?: FirebaseApp): any {
 		return undefined;
 	}
 }

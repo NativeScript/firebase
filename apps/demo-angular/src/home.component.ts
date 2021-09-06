@@ -31,7 +31,13 @@ export class HomeComponent {
 		name: 'firebase-firestore'
 	},
 	{
+		name: 'firebase-in-app-messaging'
+	},
+	{
 		name: 'firebase-remote-config'
+	},
+	{
+		name: 'firebase-storage'
 	}
 ];
 }

@@ -13,7 +13,9 @@ npm start
 - @nativescript/firebase-crashlytics
 - @nativescript/firebase-database
 - @nativescript/firebase-firestore
+- @nativescript/firebase-in-app-messaging
 - @nativescript/firebase-remote-config
+- @nativescript/firebase-storage
 
 # How to use?
 

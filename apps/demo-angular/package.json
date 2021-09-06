@@ -10,7 +10,9 @@
     "@nativescript/firebase-admob": "file:../../dist/packages/firebase-admob",
     "@nativescript/firebase-crashlytics": "file:../../dist/packages/firebase-crashlytics",
     "@nativescript/firebase-app-check": "file:../../dist/packages/firebase-app-check",
-    "@nativescript/firebase-remote-config": "file:../../dist/packages/firebase-remote-config"
+    "@nativescript/firebase-remote-config": "file:../../dist/packages/firebase-remote-config",
+    "@nativescript/firebase-storage": "file:../../dist/packages/firebase-storage",
+    "@nativescript/firebase-in-app-messaging": "file:../../dist/packages/firebase-in-app-messaging"
   },
   "devDependencies": {
     "@nativescript/android": "8.0.0",

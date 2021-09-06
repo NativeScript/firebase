@@ -49,6 +49,12 @@
     },
     "firebase-remote-config": {
       "tags": []
+    },
+    "firebase-storage": {
+      "tags": []
+    },
+    "firebase-in-app-messaging": {
+      "tags": []
     }
   },
   "workspaceLayout": {

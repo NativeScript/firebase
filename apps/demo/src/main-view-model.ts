@@ -27,7 +27,13 @@ export class MainViewModel extends Observable {
 			name: 'firebase-app-check',
 		},
 		{
+			name: 'firebase-in-app-messaging',
+		},
+		{
 			name: 'firebase-remote-config',
+		},
+		{
+			name: 'firebase-storage',
 		},
 	];
 

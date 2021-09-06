@@ -15,7 +15,9 @@ const routes: Routes = [
 	{ path: 'firebase-crashlytics', loadChildren: () => import('./plugin-demos/firebase-crashlytics.module').then(m => m.FirebaseCrashlyticsModule) },
 	{ path: 'firebase-database', loadChildren: () => import('./plugin-demos/firebase-database.module').then(m => m.FirebaseDatabaseModule) },
 	{ path: 'firebase-firestore', loadChildren: () => import('./plugin-demos/firebase-firestore.module').then(m => m.FirebaseFirestoreModule) },
-	{ path: 'firebase-remote-config', loadChildren: () => import('./plugin-demos/firebase-remote-config.module').then(m => m.FirebaseRemoteConfigModule) }
+	{ path: 'firebase-in-app-messaging', loadChildren: () => import('./plugin-demos/firebase-in-app-messaging.module').then(m => m.FirebaseInAppMessagingModule) },
+	{ path: 'firebase-remote-config', loadChildren: () => import('./plugin-demos/firebase-remote-config.module').then(m => m.FirebaseRemoteConfigModule) },
+	{ path: 'firebase-storage', loadChildren: () => import('./plugin-demos/firebase-storage.module').then(m => m.FirebaseStorageModule) }
 ];
 
 @NgModule({

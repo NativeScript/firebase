@@ -16,7 +16,6 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 	constructor() {
 		super();
 		this.auth = Firebase.auth();
-		console.log('currentUser', !!this.auth?.user);
 		this.database = Firebase.database();
 		this.transaction();
 		this.randomData();

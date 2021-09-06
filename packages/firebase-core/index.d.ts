@@ -28,7 +28,9 @@ declare class Firebase {
 	static database(app?: FirebaseApp): any;
 	static crashlytics(): any;
 	static appCheck(): any;
+	static inAppMessaging(): any;
 	static remoteConfig(app?: FirebaseApp): any;
+	static storage(app?: FirebaseApp): any;
 }
 
 declare class FirebaseError extends Error {

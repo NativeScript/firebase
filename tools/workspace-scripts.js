@@ -126,6 +126,20 @@ module.exports = {
 					description: '@nativescript/firebase-remote-config: Build',
 				},
 			},
+			// @nativescript/firebase-storage
+			'firebase-storage': {
+				build: {
+					script: 'nx run firebase-storage:build.all',
+					description: '@nativescript/firebase-storage: Build',
+				},
+			},
+			// @nativescript/firebase-in-app-messaging
+			'firebase-in-app-messaging': {
+				build: {
+					script: 'nx run firebase-in-app-messaging:build.all',
+					description: '@nativescript/firebase-in-app-messaging: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run all:build',
 				description: 'Build all packages',
@@ -171,6 +185,14 @@ module.exports = {
 			'firebase-remote-config': {
 				script: 'nx run firebase-remote-config:focus',
 				description: 'Focus on @nativescript/firebase-remote-config',
+			},
+			'firebase-storage': {
+				script: 'nx run firebase-storage:focus',
+				description: 'Focus on @nativescript/firebase-storage',
+			},
+			'firebase-in-app-messaging': {
+				script: 'nx run firebase-in-app-messaging:focus',
+				description: 'Focus on @nativescript/firebase-in-app-messaging',
 			},
 			reset: {
 				script: 'nx run all:focus',
