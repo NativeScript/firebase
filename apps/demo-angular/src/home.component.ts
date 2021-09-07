@@ -28,10 +28,22 @@ export class HomeComponent {
 		name: 'firebase-database'
 	},
 	{
+		name: 'firebase-dynamic-links'
+	},
+	{
 		name: 'firebase-firestore'
 	},
 	{
 		name: 'firebase-in-app-messaging'
+	},
+	{
+		name: 'firebase-installations'
+	},
+	{
+		name: 'firebase-messaging'
+	},
+	{
+		name: 'firebase-performance'
 	},
 	{
 		name: 'firebase-remote-config'

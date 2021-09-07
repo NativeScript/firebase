@@ -19,3 +19,10 @@ declare class Crashlytics implements ICrashlytics {
 	setCrashlyticsCollectionEnabled(enabled: boolean);
 	setUserId(userId: string);
 }
+
+
+declare module '@nativescript/firebase-core' {
+	interface Firebase {
+		static crashlytics(app?: FirebaseApp): Crashlytics;
+	}
+}

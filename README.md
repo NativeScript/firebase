@@ -12,8 +12,12 @@ npm start
 - @nativescript/firebase-core
 - @nativescript/firebase-crashlytics
 - @nativescript/firebase-database
+- @nativescript/firebase-dynamic-links
 - @nativescript/firebase-firestore
 - @nativescript/firebase-in-app-messaging
+- @nativescript/firebase-installations
+- @nativescript/firebase-messaging
+- @nativescript/firebase-performance
 - @nativescript/firebase-remote-config
 - @nativescript/firebase-storage
 

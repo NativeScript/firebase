@@ -6,3 +6,9 @@ export declare class InAppMessaging implements IInAppMessaging {
 	isMessagesDisplaySuppressed: boolean;
 	triggerEvent(eventId: string);
 }
+
+declare module '@nativescript/firebase-core' {
+	interface Firebase {
+		static inAppMessaging(): InAppMessaging;
+	}
+}

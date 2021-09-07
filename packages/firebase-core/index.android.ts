@@ -219,18 +219,8 @@ export class Firebase {
 			}
 		});
 	}
+
 	static analytics() {
-		return undefined;
-	}
-	static auth(app?: FirebaseApp): any {
-		return undefined;
-	}
-
-	static database(app?: FirebaseApp): any {
-		return undefined;
-	}
-
-	static crashlytics(): any {
 		return undefined;
 	}
 
@@ -238,7 +228,31 @@ export class Firebase {
 		return undefined;
 	}
 
+	static auth(app?: FirebaseApp): any {
+		return undefined;
+	}
+
+	static crashlytics(): any {
+		return undefined;
+	}
+
+	static database(app?: FirebaseApp): any {
+		return undefined;
+	}
+
+	static dynamicLinks(): any {
+		return undefined;
+	}
+
 	static inAppMessaging(): any {
+		return undefined;
+	}
+
+	static installations(app?: FirebaseApp): any {
+		return undefined;
+	}
+
+	static performance(): any {
 		return undefined;
 	}
 

@@ -55,6 +55,18 @@
     },
     "firebase-in-app-messaging": {
       "tags": []
+    },
+    "firebase-performance": {
+      "tags": []
+    },
+    "firebase-installations": {
+      "tags": []
+    },
+    "firebase-dynamic-links": {
+      "tags": []
+    },
+    "firebase-messaging": {
+      "tags": []
     }
   },
   "workspaceLayout": {

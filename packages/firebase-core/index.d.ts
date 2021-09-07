@@ -26,9 +26,12 @@ declare class Firebase {
 	static analytics(): any;
 	static auth(app?: FirebaseApp): any;
 	static database(app?: FirebaseApp): any;
+	static dynamicLinks(): any;
 	static crashlytics(): any;
 	static appCheck(): any;
 	static inAppMessaging(): any;
+	static installations(): any;
+	static performance(): any;
 	static remoteConfig(app?: FirebaseApp): any;
 	static storage(app?: FirebaseApp): any;
 }

@@ -1,0 +1,5 @@
+dependencies {
+    implementation 'com.google.firebase:firebase-perf'
+}
+
+apply plugin: 'com.google.firebase.firebase-perf'

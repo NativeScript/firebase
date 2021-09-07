@@ -140,6 +140,34 @@ module.exports = {
 					description: '@nativescript/firebase-in-app-messaging: Build',
 				},
 			},
+			// @nativescript/firebase-performance
+			'firebase-performance': {
+				build: {
+					script: 'nx run firebase-performance:build.all',
+					description: '@nativescript/firebase-performance: Build',
+				},
+			},
+			// @nativescript/firebase-installations
+			'firebase-installations': {
+				build: {
+					script: 'nx run firebase-installations:build.all',
+					description: '@nativescript/firebase-installations: Build',
+				},
+			},
+			// @nativescript/firebase-dynamic-links
+			'firebase-dynamic-links': {
+				build: {
+					script: 'nx run firebase-dynamic-links:build.all',
+					description: '@nativescript/firebase-dynamic-links: Build',
+				},
+			},
+			// @nativescript/firebase-messaging
+			'firebase-messaging': {
+				build: {
+					script: 'nx run firebase-messaging:build.all',
+					description: '@nativescript/firebase-messaging: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run all:build',
 				description: 'Build all packages',
@@ -193,6 +221,22 @@ module.exports = {
 			'firebase-in-app-messaging': {
 				script: 'nx run firebase-in-app-messaging:focus',
 				description: 'Focus on @nativescript/firebase-in-app-messaging',
+			},
+			'firebase-performance': {
+				script: 'nx run firebase-performance:focus',
+				description: 'Focus on @nativescript/firebase-performance',
+			},
+			'firebase-installations': {
+				script: 'nx run firebase-installations:focus',
+				description: 'Focus on @nativescript/firebase-installations',
+			},
+			'firebase-dynamic-links': {
+				script: 'nx run firebase-dynamic-links:focus',
+				description: 'Focus on @nativescript/firebase-dynamic-links',
+			},
+			'firebase-messaging': {
+				script: 'nx run firebase-messaging:focus',
+				description: 'Focus on @nativescript/firebase-messaging',
 			},
 			reset: {
 				script: 'nx run all:focus',

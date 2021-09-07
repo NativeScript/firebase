@@ -96,7 +96,11 @@
               "nx run firebase-app-check:build.all",
               "nx run firebase-remote-config:build.all",
               "nx run firebase-storage:build.all",
-              "nx run firebase-in-app-messaging:build.all"
+              "nx run firebase-in-app-messaging:build.all",
+              "nx run firebase-performance:build.all",
+              "nx run firebase-installations:build.all",
+              "nx run firebase-dynamic-links:build.all",
+              "nx run firebase-messaging:build.all"
             ],
             "parallel": false
           }
@@ -604,6 +608,186 @@
           "options": {
             "commands": [
               "nx g @nativescript/plugin-tools:focus-packages firebase-in-app-messaging"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-performance": {
+      "root": "packages/firebase-performance",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-performance",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-performance",
+            "tsConfig": "packages/firebase-performance/tsconfig.json",
+            "packageJson": "packages/firebase-performance/package.json",
+            "main": "packages/firebase-performance/index.d.ts",
+            "assets": [
+              "packages/firebase-performance/*.md",
+              "packages/firebase-performance/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-performance/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-performance:build",
+              "node tools/scripts/build-finish.ts firebase-performance"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-performance"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-installations": {
+      "root": "packages/firebase-installations",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-installations",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-installations",
+            "tsConfig": "packages/firebase-installations/tsconfig.json",
+            "packageJson": "packages/firebase-installations/package.json",
+            "main": "packages/firebase-installations/index.d.ts",
+            "assets": [
+              "packages/firebase-installations/*.md",
+              "packages/firebase-installations/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-installations/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-installations:build",
+              "node tools/scripts/build-finish.ts firebase-installations"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-installations"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-dynamic-links": {
+      "root": "packages/firebase-dynamic-links",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-dynamic-links",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-dynamic-links",
+            "tsConfig": "packages/firebase-dynamic-links/tsconfig.json",
+            "packageJson": "packages/firebase-dynamic-links/package.json",
+            "main": "packages/firebase-dynamic-links/index.d.ts",
+            "assets": [
+              "packages/firebase-dynamic-links/*.md",
+              "packages/firebase-dynamic-links/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-dynamic-links/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-dynamic-links:build",
+              "node tools/scripts/build-finish.ts firebase-dynamic-links"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-dynamic-links"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-messaging": {
+      "root": "packages/firebase-messaging",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-messaging",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-messaging",
+            "tsConfig": "packages/firebase-messaging/tsconfig.json",
+            "packageJson": "packages/firebase-messaging/package.json",
+            "main": "packages/firebase-messaging/index.d.ts",
+            "assets": [
+              "packages/firebase-messaging/*.md",
+              "packages/firebase-messaging/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-messaging/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-messaging:build",
+              "node tools/scripts/build-finish.ts firebase-messaging"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-messaging"
             ],
             "parallel": false
           }

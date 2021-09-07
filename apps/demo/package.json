@@ -15,7 +15,11 @@
     "@nativescript/firebase-app-check": "file:../../packages/firebase-app-check",
     "@nativescript/firebase-remote-config": "file:../../packages/firebase-remote-config",
     "@nativescript/firebase-storage": "file:../../packages/firebase-storage",
-    "@nativescript/firebase-in-app-messaging": "file:../../packages/firebase-in-app-messaging"
+    "@nativescript/firebase-in-app-messaging": "file:../../packages/firebase-in-app-messaging",
+    "@nativescript/firebase-performance": "file:../../packages/firebase-performance",
+    "@nativescript/firebase-installations": "file:../../packages/firebase-installations",
+    "@nativescript/firebase-dynamic-links": "file:../../packages/firebase-dynamic-links",
+    "@nativescript/firebase-messaging": "file:../../packages/firebase-messaging"
   },
   "devDependencies": {
     "@nativescript/android": "8.0.0",
