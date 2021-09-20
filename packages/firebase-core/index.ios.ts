@@ -318,7 +318,7 @@ export class Firebase {
 	static admob() {
 		return undefined;
 	}
-	
+
 	static analytics() {
 		return undefined;
 	}
@@ -346,6 +346,10 @@ export class Firebase {
 	static firestore(): any {
 		return undefined;
 	}
+
+  static functions(): any {
+    return undefined;
+  }
 
 	static inAppMessaging(): any {
 		return undefined;

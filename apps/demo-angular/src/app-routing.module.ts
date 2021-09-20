@@ -16,6 +16,7 @@ const routes: Routes = [
 	{ path: 'firebase-database', loadChildren: () => import('./plugin-demos/firebase-database.module').then(m => m.FirebaseDatabaseModule) },
 	{ path: 'firebase-dynamic-links', loadChildren: () => import('./plugin-demos/firebase-dynamic-links.module').then(m => m.FirebaseDynamicLinksModule) },
 	{ path: 'firebase-firestore', loadChildren: () => import('./plugin-demos/firebase-firestore.module').then(m => m.FirebaseFirestoreModule) },
+	{ path: 'firebase-functions', loadChildren: () => import('./plugin-demos/firebase-functions.module').then(m => m.FirebaseFunctionsModule) },
 	{ path: 'firebase-in-app-messaging', loadChildren: () => import('./plugin-demos/firebase-in-app-messaging.module').then(m => m.FirebaseInAppMessagingModule) },
 	{ path: 'firebase-installations', loadChildren: () => import('./plugin-demos/firebase-installations.module').then(m => m.FirebaseInstallationsModule) },
 	{ path: 'firebase-messaging', loadChildren: () => import('./plugin-demos/firebase-messaging.module').then(m => m.FirebaseMessagingModule) },

@@ -100,7 +100,8 @@
               "nx run firebase-performance:build.all",
               "nx run firebase-installations:build.all",
               "nx run firebase-dynamic-links:build.all",
-              "nx run firebase-messaging:build.all"
+              "nx run firebase-messaging:build.all",
+              "nx run firebase-functions:build.all"
             ],
             "parallel": false
           }
@@ -788,6 +789,51 @@
           "options": {
             "commands": [
               "nx g @nativescript/plugin-tools:focus-packages firebase-messaging"
+            ],
+            "parallel": false
+          }
+        }
+      }
+    },
+    "firebase-functions": {
+      "root": "packages/firebase-functions",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-functions",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-functions",
+            "tsConfig": "packages/firebase-functions/tsconfig.json",
+            "packageJson": "packages/firebase-functions/package.json",
+            "main": "packages/firebase-functions/index.d.ts",
+            "assets": [
+              "packages/firebase-functions/*.md",
+              "packages/firebase-functions/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-functions/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-functions:build",
+              "node tools/scripts/build-finish.ts firebase-functions"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-functions"
             ],
             "parallel": false
           }

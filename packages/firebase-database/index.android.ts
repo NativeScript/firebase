@@ -656,7 +656,7 @@ export class Database implements IDatabase {
 	get app(): FirebaseApp {
 		if (!this.#app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this.#app = FirebaseApp.fromNative(this.native.getApp());
 		}
 		return this.#app;
 	}

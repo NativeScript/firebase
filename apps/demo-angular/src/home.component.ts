@@ -34,6 +34,9 @@ export class HomeComponent {
 		name: 'firebase-firestore'
 	},
 	{
+		name: 'firebase-functions'
+	},
+	{
 		name: 'firebase-in-app-messaging'
 	},
 	{

@@ -28,7 +28,6 @@ export {SetOptions, DocumentData, GetOptions, WhereFilterOp}
 
 
 import {FirebaseApp} from '@nativescript/firebase-core';
-import {DynamicLinks} from "@nativescript/firebase-dynamic-links";
 
 
 export declare class Transaction implements ITransaction {

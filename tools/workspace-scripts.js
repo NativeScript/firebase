@@ -168,6 +168,13 @@ module.exports = {
 					description: '@nativescript/firebase-messaging: Build',
 				},
 			},
+			// @nativescript/firebase-functions
+			'firebase-functions': {
+				build: {
+					script: 'nx run firebase-functions:build.all',
+					description: '@nativescript/firebase-functions: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run all:build',
 				description: 'Build all packages',
@@ -237,6 +244,10 @@ module.exports = {
 			'firebase-messaging': {
 				script: 'nx run firebase-messaging:focus',
 				description: 'Focus on @nativescript/firebase-messaging',
+			},
+			'firebase-functions': {
+				script: 'nx run firebase-functions:focus',
+				description: 'Focus on @nativescript/firebase-functions',
 			},
 			reset: {
 				script: 'nx run all:focus',

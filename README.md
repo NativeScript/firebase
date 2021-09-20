@@ -14,6 +14,7 @@ npm start
 - @nativescript/firebase-database
 - @nativescript/firebase-dynamic-links
 - @nativescript/firebase-firestore
+- @nativescript/firebase-functions
 - @nativescript/firebase-in-app-messaging
 - @nativescript/firebase-installations
 - @nativescript/firebase-messaging

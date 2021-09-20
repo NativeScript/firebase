@@ -4,6 +4,7 @@ import '@nativescript/firebase-messaging';
 import '@nativescript/firebase-admob';
 import '@nativescript/firebase-dynamic-links';
 import '@nativescript/firebase-firestore';
+import '@nativescript/firebase-functions';
 
 import {Messaging} from '@nativescript/firebase-messaging';
 import {Admob} from '@nativescript/firebase-admob';

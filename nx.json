@@ -67,6 +67,9 @@
     },
     "firebase-messaging": {
       "tags": []
+    },
+    "firebase-functions": {
+      "tags": []
     }
   },
   "workspaceLayout": {

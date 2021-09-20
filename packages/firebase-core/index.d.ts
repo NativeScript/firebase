@@ -42,6 +42,8 @@ declare class Firebase {
 
   static firestore(): any;
 
+  static functions(): any;
+
   static inAppMessaging(): any;
 
   static installations(): any;

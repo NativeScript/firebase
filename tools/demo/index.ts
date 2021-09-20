@@ -8,6 +8,7 @@ export * from './firebase-crashlytics';
 export * from './firebase-database';
 export * from './firebase-dynamic-links';
 export * from './firebase-firestore';
+export * from './firebase-functions';
 export * from './firebase-in-app-messaging';
 export * from './firebase-installations';
 export * from './firebase-messaging';
