@@ -69,7 +69,8 @@ export interface IDatabase {
 	readonly app: FirebaseApp;
 	persistenceCacheSizeBytes: number;
 	persistenceEnabled: boolean;
-	setLoggingEnabled(enabled: boolean);
+  useEmulator(host: string, port: number);
+  setLoggingEnabled(enabled: boolean);
 	goOffline();
 	goOnline();
 	ref(path?: undefined | string): IReference;

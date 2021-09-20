@@ -1,14 +1,18 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page"
+xmlns:ui="@nativescript/firebase-admob"
+>
     <Page.actionBar>
         <ActionBar title="firebase-admob" icon="" class="action-bar">
         </ActionBar>
     </Page.actionBar>
     <StackLayout class="p-20">
-        <ScrollView class="h-full">
-          <StackLayout>
-            <Button text="Test firebase-admob" tap="{{ testIt }}" class="btn btn-primary"/>
-
-          </StackLayout>
-        </ScrollView>
+       <!-- <ui:BannerAd height="100" width="100" unitId="{{bannerAdUnit}}" layoutChanged="{{bannerLoaded}}"/> -->
+       <ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}">
+        <GridLayout height="300" width="300">
+       <Label id="headLineView"/>
+       <ui:MediaView id="mediaView"/>
+       <Label id="bodyView"/>
+      </GridLayout>
+       </ui:NativeAdView>
     </StackLayout>
 </Page>

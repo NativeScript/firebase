@@ -219,7 +219,10 @@ export class Firebase {
 			}
 		});
 	}
-
+	static admob() {
+		return undefined;
+	}
+	
 	static analytics() {
 		return undefined;
 	}
@@ -244,11 +247,19 @@ export class Firebase {
 		return undefined;
 	}
 
+	static firestore(): any {
+		return undefined;
+	}
+
 	static inAppMessaging(): any {
 		return undefined;
 	}
 
 	static installations(app?: FirebaseApp): any {
+		return undefined;
+	}
+
+	static messaging(): any {
 		return undefined;
 	}
 

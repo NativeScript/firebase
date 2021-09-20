@@ -37,13 +37,14 @@ export class DemoModel extends DemoSharedFirebaseCrashlytics {
 		}
 
 		this.crashlytics.sendUnsentReports();
-		this.crashlytics.checkForUnsentReports()
-		.then(val =>{
-			console.log('checkForUnsentReports',val);
-		})
-		.catch(e =>{
-			console.error('checkForUnsentReports', e);
-		})
+		this.crashlytics
+			.checkForUnsentReports()
+			.then((val) => {
+				console.log('checkForUnsentReports', val);
+			})
+			.catch((e) => {
+				console.error('checkForUnsentReports', e);
+			});
 	}
 
 	crash() {

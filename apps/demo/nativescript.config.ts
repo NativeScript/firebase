@@ -1,7 +1,8 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-	id: 'org.nativescript.firebasedemo',
+	//id: 'org.nativescript.firebasedemo',
+	id: 'io.github.triniwiz.nativescript.firebasedemo',
 	appResourcesPath: '../../tools/assets/App_Resources',
 	android: {
 		v8Flags: '--expose_gc',

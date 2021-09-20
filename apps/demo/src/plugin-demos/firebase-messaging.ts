@@ -1,6 +1,7 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseMessaging } from '@demo/shared';
-import { } from '@nativescript/firebase-messaging';
+import { Firebase } from '@nativescript/firebase-core';
+import { Messaging } from '@nativescript/firebase-messaging';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
@@ -8,5 +9,12 @@ export function navigatingTo(args: EventData) {
 }
 
 export class DemoModel extends DemoSharedFirebaseMessaging {
-	
+	constructor(){
+		super();
+		(<Messaging>Firebase.messaging()).getToken().then(token =>{
+			console.log('getToken', token);
+		}).catch(e =>{
+			console.log('getToken', e);
+		})
+	}
 }

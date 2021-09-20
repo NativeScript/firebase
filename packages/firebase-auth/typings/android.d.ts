@@ -1,5 +1,3 @@
-/// <reference path="android-declarations.d.ts"/>
-
 declare module com {
 	export module google {
 		export module android {

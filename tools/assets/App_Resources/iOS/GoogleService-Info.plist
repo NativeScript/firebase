@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>292142294722-f7842ip6j9s72g2vp9rc8hd18hb9h4en.apps.googleusercontent.com</string>
+	<string>292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.292142294722-f7842ip6j9s72g2vp9rc8hd18hb9h4en</string>
+	<string>com.googleusercontent.apps.292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>292142294722-ckf8oa3neiemb5ju5naesnkqqidbn92o.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCYCaQR0vcgewpD1XhzsuSI9PHQugCtan4</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>org.nativescript.firebasedemo</string>
+	<string>io.github.triniwiz.nativescript.firebasedemo</string>
 	<key>PROJECT_ID</key>
 	<string>nativescript-firebase-a55a0</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:292142294722:ios:d87a648a42b45aef287d5b</string>
+	<string>1:292142294722:ios:f1b9ddf525a3dbe1287d5b</string>
 	<key>DATABASE_URL</key>
 	<string>https://nativescript-firebase-a55a0.firebaseio.com</string>
 </dict>

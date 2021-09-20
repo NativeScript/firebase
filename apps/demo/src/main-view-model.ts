@@ -35,6 +35,12 @@ export class MainViewModel extends Observable {
 		{
 			name: 'firebase-storage',
 		},
+		{
+			name: 'firebase-messaging',
+		},
+    {
+      name: 'firebase-firestore',
+    },
 	];
 
 	viewDemo(args) {

@@ -72,7 +72,6 @@ export interface IDynamicLinks {
 	createLink(link: string, domainUriPrefix: string): IDynamicLinkParameters;
 	createShortLink(link: string, domainUriPrefix: string, shortLinkType?: ShortLinkType): IDynamicLinkParameters;
 	buildLink(link: IDynamicLinkParameters): Promise<string>;
-	getInitialLink(): Promise<IDynamicLink | null>;
 	onLink(listener: (link: IDynamicLink) => void);
 	resolveLink(link: string): Promise<IDynamicLink>;
 }

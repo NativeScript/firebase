@@ -97,6 +97,7 @@ export interface IStorage {
 	maxDownloadRetryTime: number;
 	maxOperationRetryTime: number;
 	maxUploadRetryTime: number;
+  useEmulator(host: string, port: number);
 	ref(path?: undefined | string): IReference;
 	refFromURL(url: string): IReference;
 }

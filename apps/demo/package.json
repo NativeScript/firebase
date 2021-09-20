@@ -22,7 +22,7 @@
     "@nativescript/firebase-messaging": "file:../../packages/firebase-messaging"
   },
   "devDependencies": {
-    "@nativescript/android": "8.0.0",
+    "@nativescript/android": "8.1.0",
     "@nativescript/ios": "8.0.0"
   }
 }

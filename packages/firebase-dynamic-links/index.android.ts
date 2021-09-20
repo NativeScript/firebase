@@ -2,9 +2,15 @@ import { Application, AndroidActivityNewIntentEventData, AndroidApplication } fr
 import { deserialize, Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, ShortLinkType } from './common';
 
+let dynamicLinks:DynamicLinks;
+
 Firebase.dynamicLinks = () => {
-	return new DynamicLinks();
+	if(!dynamicLinks){
+		dynamicLinks = new DynamicLinks();
+	}
+	return dynamicLinks;
 };
+
 
 export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsParameters {
 	#builder: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters.Builder;
@@ -245,7 +251,7 @@ export class DynamicLinkITunesParameters implements IDynamicLinkITunesParameters
 		return this.#builder?.getProviderToken?.();
 	}
 
-	set providerToken(value): string {
+	set providerToken(value) {
 		this.#builder.setProviderToken?.(value);
 	}
 
@@ -493,22 +499,6 @@ export class DynamicLinks implements IDynamicLinks {
 		return DynamicLinkParameters.fromNative(dl, shortLinkType);
 	}
 
-	getInitialLink(): Promise<DynamicLink> {
-		return new Promise((resolve, reject) => {
-			org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.getInitialLink(
-				this.native,
-				Application.android.foregroundActivity || Application.android.foregroundActivity,
-				new org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>({
-					onSuccess(param0) {
-						resolve(DynamicLink.fromNative(param0));
-					},
-					onError(param0) {
-						reject(FirebaseError.fromNative(param0));
-					},
-				})
-			);
-		});
-	}
 	onLink(listener: (link: DynamicLink) => void) {
 		DynamicLinks._onLink = listener;
 	}
@@ -539,7 +529,7 @@ export class DynamicLinks implements IDynamicLinks {
 	get app(): FirebaseApp {
 		if (!this.#app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this.#app = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
 		}
 		return this.#app;
 	}

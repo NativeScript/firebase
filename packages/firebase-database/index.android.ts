@@ -602,7 +602,13 @@ export class Database implements IDatabase {
 		}
 	}
 
-	#persistenceCacheSizeBytes = 10 * 1024 * 1024;
+
+  useEmulator(host: string, port: number) {
+    this.native.useEmulator(host === 'localhost' ? '10.0.2.2' : host, port);
+  }
+
+
+  #persistenceCacheSizeBytes = 10 * 1024 * 1024;
 	get persistenceCacheSizeBytes(): number {
 		return this.#persistenceCacheSizeBytes;
 	}

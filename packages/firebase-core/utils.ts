@@ -75,7 +75,7 @@ export function serialize(data: any): any {
 					if (hasDecimals) {
 						return java.lang.Float.valueOf(data);
 					} else {
-						return data;
+						return java.lang.Integer.valueOf(data);
 					}
 				}
 			}
@@ -170,7 +170,7 @@ export function deserialize(data: any): any {
 				}
 				break;
 			}
-
+			case 'android.os.Bundle':
 			case 'java.util.HashMap':
 			case 'java.util.Map': {
 				store = {};

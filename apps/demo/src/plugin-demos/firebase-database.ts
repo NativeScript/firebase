@@ -1,8 +1,6 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseDatabase } from '@demo/shared';
 import { Firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-auth';
-import '@nativescript/firebase-database';
 import { Database } from '@nativescript/firebase-database';
 import { Auth } from '@nativescript/firebase-auth';
 export function navigatingTo(args: EventData) {

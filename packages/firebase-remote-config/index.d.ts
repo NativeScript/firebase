@@ -1,49 +1,72 @@
+import {FirebaseApp} from "@nativescript/firebase-core";
+import {IConfigSettings, IConfigValue, IRemoteConfig} from "./common";
+
 declare class ConfigValue implements IConfigValue {
-	readonly native;
+  readonly native;
 
-	readonly ios;
-	readonly android;
+  readonly ios;
+  readonly android;
 
-	asBoolean(): boolean;
-	asNumber(): number;
-	asString(): string;
+  asBoolean(): boolean;
 
-	getSource(): 'default' | 'static' | 'remote';
+  asNumber(): number;
+
+  asString(): string;
+
+  getSource(): 'default' | 'static' | 'remote';
 }
 
 declare class ConfigSettings implements IConfigSettings {
-	readonly native;
-	readonly ios;
-	readonly android;
-	fetchTimeMillis: number;
-	minimumFetchIntervalMillis: number;
+  readonly native;
+  readonly ios;
+  readonly android;
+  fetchTimeMillis: number;
+  minimumFetchIntervalMillis: number;
 }
+
 export class RemoteConfig implements IRemoteConfig {
-	constructor(app?: FirebaseApp);
-	readonly native;
-	readonly ios;
-	readonly android;
+  constructor(app?: FirebaseApp);
 
-	readonly app: FirebaseApp;
+  readonly native;
+  readonly ios;
+  readonly android;
 
-	readonly fetchTimeMillis: number;
+  readonly app: FirebaseApp;
 
-	readonly lastFetchStatus: 'success' | 'failure' | 'no_fetch_yet' | 'throttled';
+  readonly fetchTimeMillis: number;
 
-	settings: ConfigSettings;
+  readonly lastFetchStatus: 'success' | 'failure' | 'no_fetch_yet' | 'throttled';
 
-	activate(): Promise<boolean>;
-	ensureInitialized(): Promise<void>;
-	fetch(expirationDurationSeconds?: number): Promise<void>;
-	fetchAndActivate(): Promise<boolean>;
-	getAll(): Record<string, ConfigValue>;
-	getBoolean(key: string): boolean;
-	getNumber(key: string): number;
-	getString(key: string): string;
-	getValue(key: string): ConfigValue;
+  settings: ConfigSettings;
 
-	reset(): Promise<void>;
+  activate(): Promise<boolean>;
 
-	setDefaults(defaults: ConfigDefaults): Promise<void>;
-	setDefaultsFromResource(resourceName: string): Promise<void>;
+  ensureInitialized(): Promise<void>;
+
+  fetch(expirationDurationSeconds?: number): Promise<void>;
+
+  fetchAndActivate(): Promise<boolean>;
+
+  getAll(): Record<string, ConfigValue>;
+
+  getBoolean(key: string): boolean;
+
+  getNumber(key: string): number;
+
+  getString(key: string): string;
+
+  getValue(key: string): ConfigValue;
+
+  reset(): Promise<void>;
+
+  setDefaults(defaults: ConfigDefaults): Promise<void>;
+
+  setDefaultsFromResource(resourceName: string): Promise<void>;
+}
+
+
+declare module '@nativescript/firebase-core' {
+  class Firebase {
+    static remoteConfig(app?: FirebaseApp): RemoteConfig;
+  }
 }

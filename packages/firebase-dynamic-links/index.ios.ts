@@ -1,16 +1,21 @@
 import { deserialize, Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, ShortLinkType } from './common';
 
+let dynamicLinks: DynamicLinks;
+
 Firebase.dynamicLinks = () => {
-	return new DynamicLinks();
+	if (!dynamicLinks) {
+		dynamicLinks = new DynamicLinks();
+	}
+	return dynamicLinks;
 };
 
-let initialLink;
+declare const FIRApp;
 let appDelegate: AppDelegateImpl;
 let _launchOptions: NSDictionary<string, any>;
 @NativeClass
 @ObjCClass(UIApplicationDelegate)
-class AppDelegateImpl extends NSObject implements UIApplicationDelegate {
+class AppDelegateImpl extends UIResponder implements UIApplicationDelegate {
 	static get sharedInstance() {
 		if (!appDelegate) {
 			appDelegate = AppDelegateImpl.alloc().init() as AppDelegateImpl;
@@ -37,10 +42,6 @@ class AppDelegateImpl extends NSObject implements UIApplicationDelegate {
 		}
 
 		if (dynamicLink.url) {
-			if (!initialLink) {
-				initialLink = dynamicLink;
-			}
-
 			if (typeof DynamicLinks._onLink === 'function') {
 				DynamicLinks._onLink(DynamicLink.fromNative(dynamicLink));
 			}
@@ -53,9 +54,6 @@ class AppDelegateImpl extends NSObject implements UIApplicationDelegate {
 		let retried = false;
 		let callback = (dynamicLink, error) => {
 			if (!error && dynamicLink?.url) {
-				if (!initialLink) {
-					initialLink = dynamicLink;
-				}
 				if (typeof DynamicLinks._onLink === 'function') {
 					DynamicLinks._onLink(DynamicLink.fromNative(dynamicLink));
 				}
@@ -233,7 +231,7 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 		return this.native.iPadBundleID;
 	}
 
-	set iPadBundleId(value): string {
+	set iPadBundleId(value) {
 		this.native.iPadBundleID = value;
 	}
 
@@ -290,7 +288,7 @@ export class DynamicLinkITunesParameters implements IDynamicLinkITunesParameters
 		return this.native.providerToken;
 	}
 
-	set providerToken(value): string {
+	set providerToken(value) {
 		this.native.providerToken = value;
 	}
 
@@ -535,45 +533,7 @@ export class DynamicLinks implements IDynamicLinks {
 			resolve(link.native.url.absoluteString);
 		});
 	}
-	getInitialLink(): Promise<DynamicLink> {
-		return new Promise((resolve, reject) => {
-			let launchOptions = _launchOptions;
 
-			if (launchOptions.objectForKey(UIApplicationLaunchOptionsURLKey)) {
-				const url = launchOptions[UIApplicationLaunchOptionsURLKey];
-				const dynamicLink = this.native.dynamicLinkFromCustomSchemeURL(url);
-
-				if (dynamicLink && dynamicLink.url) {
-					resolve(DynamicLink.fromNative(dynamicLink));
-				} else if (initialLink) {
-					resolve(DynamicLink.fromNative(initialLink));
-				} else {
-					resolve(null);
-				}
-
-				return;
-			}
-
-			const userActivityDict = launchOptions.objectForKey(UIApplicationLaunchOptionsUserActivityDictionaryKey);
-			if (userActivityDict && userActivityDict.objectForKey(UIApplicationLaunchOptionsUserActivityTypeKey) === NSUserActivityTypeBrowsingWeb) {
-				const userActivity = userActivityDict.objectForKey('UIApplicationLaunchOptionsUserActivityKey');
-
-				const completion = (dynamicLink, error) => {
-					if (!error && dynamicLink && dynamicLink.url) {
-						resolve(DynamicLink.fromNative(dynamicLink));
-					} else if (!error && initialLink) {
-						resolve(DynamicLink.fromNative(initialLink));
-					} else if (error) {
-						reject(FirebaseError.fromNative(error));
-					} else {
-						resolve(null);
-					}
-				};
-
-				this.native.handleUniversalLinkCompletion(userActivity.webpageURL, completion);
-			}
-		});
-	}
 	onLink(listener: (link: DynamicLink) => void) {
 		DynamicLinks._onLink = listener;
 	}
@@ -599,7 +559,7 @@ export class DynamicLinks implements IDynamicLinks {
 	get app(): FirebaseApp {
 		if (!this.#app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this.#app = FirebaseApp.fromNative(FIRApp.defaultApp());
 		}
 		return this.#app;
 	}

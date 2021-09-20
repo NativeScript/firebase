@@ -1,76 +1,102 @@
-import { EventParameter, IAnalytics } from './common';
-import { Firebase, serialize } from '@nativescript/firebase-core';
-import { ConsentStatus, ConsentType } from '.';
+import {EventParameter, IAnalytics} from './common';
+import {Firebase, FirebaseApp, serialize} from '@nativescript/firebase-core';
+import {ConsentStatus, ConsentType} from '.';
+
 export * from './common';
 
+declare const FIRApp;
+
+let analytics: Analytics;
 Firebase.analytics = () => {
-	return new Analytics();
+  if (!analytics) {
+    analytics = new Analytics();
+  }
+  return analytics;
 };
 
 export class Analytics implements IAnalytics {
-	constructor() {}
-	handleOpenURL(url: string): void {
-		try {
-			FIRAnalytics.handleOpenURL(NSURL.URLWithString(url));
-		} catch (e) {}
-	}
+  #app: FirebaseApp;
 
-	handleUserActivity(userActivity: any): void {
-		FIRAnalytics.handleUserActivity(userActivity);
-	}
+  constructor() {
+  }
 
-	get appInstanceId(): string {
-		return FIRAnalytics.appInstanceID();
-	}
-	setSessionTimeoutInterval(sessionTimeoutInterval: number): void {
-		FIRAnalytics.setSessionTimeoutInterval(sessionTimeoutInterval);
-	}
-	setUserProperty(key: string, value: string): void {
-		FIRAnalytics.setUserPropertyStringForName(value, key);
-	}
-	setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void {
-		FIRAnalytics.setAnalyticsCollectionEnabled(analyticsCollectionEnabled);
-	}
-	setUserId(userId: string): void {
-		FIRAnalytics.setUserID(userId);
-	}
-	logEvent(name: string, parameters: EventParameter): void {
-		FIRAnalytics.logEventWithNameParameters(name, serialize(parameters));
-	}
-	resetAnalyticsData(): void {
-		FIRAnalytics.resetAnalyticsData();
-	}
+  handleOpenURL(url: string): void {
+    try {
+      FIRAnalytics.handleOpenURL(NSURL.URLWithString(url));
+    } catch (e) {
+    }
+  }
 
-	setDefaultEventParameters(parameters: EventParameter): void {
-		FIRAnalytics.setDefaultEventParameters(serialize(parameters));
-	}
+  handleUserActivity(userActivity: any): void {
+    FIRAnalytics.handleUserActivity(userActivity);
+  }
 
-	setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {
-		const dictionary = {};
-		consentSettings.forEach((value, key) => {
-			let nativeKey;
-			let nativeValue;
-			switch (key) {
-				case ConsentType.Ad_Storage:
-					nativeKey = FIRConsentTypeAdStorage;
-					break;
-				case ConsentType.Analytics_Storage:
-					nativeKey = FIRConsentTypeAnalyticsStorage;
-					break;
-			}
+  get app(): FirebaseApp {
+    if (!this.#app) {
+      // @ts-ignore
+      this.#app = FirebaseApp.fromNative(FIRApp.defaultApp());
+    }
+    return this.#app;
+  }
 
-			switch (value) {
-				case ConsentStatus.Denied:
-					nativeValue = FIRConsentStatusDenied;
-					break;
-				case ConsentStatus.Granted:
-					nativeValue = FIRConsentStatusGranted;
-					break;
-			}
-			if (nativeKey && nativeValue) {
-				dictionary[nativeKey] = nativeValue;
-			}
-		});
-		FIRAnalytics.setConsent(dictionary as any);
-	}
+  get appInstanceId(): string {
+    return FIRAnalytics.appInstanceID();
+  }
+
+  setSessionTimeoutInterval(sessionTimeoutInterval: number): void {
+    FIRAnalytics.setSessionTimeoutInterval(sessionTimeoutInterval);
+  }
+
+  setUserProperty(key: string, value: string): void {
+    FIRAnalytics.setUserPropertyStringForName(value, key);
+  }
+
+  setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void {
+    FIRAnalytics.setAnalyticsCollectionEnabled(analyticsCollectionEnabled);
+  }
+
+  setUserId(userId: string): void {
+    FIRAnalytics.setUserID(userId);
+  }
+
+  logEvent(name: string, parameters: EventParameter): void {
+    FIRAnalytics.logEventWithNameParameters(name, serialize(parameters));
+  }
+
+  resetAnalyticsData(): void {
+    FIRAnalytics.resetAnalyticsData();
+  }
+
+  setDefaultEventParameters(parameters: EventParameter): void {
+    FIRAnalytics.setDefaultEventParameters(serialize(parameters));
+  }
+
+  setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {
+    const dictionary = {};
+    consentSettings.forEach((value, key) => {
+      let nativeKey;
+      let nativeValue;
+      switch (key) {
+        case ConsentType.Ad_Storage:
+          nativeKey = FIRConsentTypeAdStorage;
+          break;
+        case ConsentType.Analytics_Storage:
+          nativeKey = FIRConsentTypeAnalyticsStorage;
+          break;
+      }
+
+      switch (value) {
+        case ConsentStatus.Denied:
+          nativeValue = FIRConsentStatusDenied;
+          break;
+        case ConsentStatus.Granted:
+          nativeValue = FIRConsentStatusGranted;
+          break;
+      }
+      if (nativeKey && nativeValue) {
+        dictionary[nativeKey] = nativeValue;
+      }
+    });
+    FIRAnalytics.setConsent(dictionary as any);
+  }
 }

@@ -54,7 +54,7 @@ export interface IAuthSettings {
 
 export interface ActionCodeInfoData {
 	email: string;
-	fromEmail: string;
+	previousEmail: string;
 }
 
 export enum ActionCodeInfoOperation {
@@ -124,6 +124,7 @@ export interface IAuth {
 	readonly settings: IAuthSettings;
 	readonly tenantId: string;
 
+  useEmulator(host: string, port: number);
 	applyActionCode(code: string): Promise<void>;
 	checkActionCode(code: string): Promise<ActionCodeInfo>;
 	confirmPasswordReset(code: string, newPassword: string): Promise<void>;

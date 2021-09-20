@@ -1,5 +1,11 @@
+repositories {
+  google()
+  mavenCentral()
+  jcenter()
+}
+
 dependencies {
-    implementation 'com.google.firebase:firebase-perf'
+  implementation 'com.google.firebase:firebase-perf'
 }
 
 apply plugin: 'com.google.firebase.firebase-perf'
