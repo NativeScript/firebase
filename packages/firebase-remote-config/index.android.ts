@@ -1,10 +1,25 @@
 import { IRemoteConfig, IConfigSettings, IConfigValue, ConfigDefaults } from './common';
-import { Firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 import lazy from '@nativescript/core/utils/lazy';
 import { Utils } from '@nativescript/core';
-Firebase.remoteConfig = (app?: FirebaseApp) => {
-	return new RemoteConfig(app);
-};
+
+
+let defaultRemoteConfig: RemoteConfig;
+
+const fb = firebase();
+Object.defineProperty(fb, 'remoteConfig', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultRemoteConfig) {
+				defaultRemoteConfig = new RemoteConfig();
+			}
+			return defaultRemoteConfig;
+		}
+
+		return new RemoteConfig(app);
+	},
+	writable: false,
+});
 
 const SourceStatic = lazy(() => com.google.firebase.remoteconfig.FirebaseRemoteConfig.VALUE_SOURCE_STATIC);
 const SourceDefault = lazy(() => com.google.firebase.remoteconfig.FirebaseRemoteConfig.VALUE_SOURCE_DEFAULT);
@@ -118,7 +133,11 @@ export class RemoteConfig implements IRemoteConfig {
 		if (app?.native) {
 			this.#native = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance(app.native);
 		} else {
-			this.#native = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance((com as any).google.firebase.FirebaseApp.getInstance());
+			if(defaultRemoteConfig){
+				return defaultRemoteConfig;
+			}
+			defaultRemoteConfig = this;
+			this.#native = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance();
 		}
 	}
 

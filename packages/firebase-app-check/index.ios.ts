@@ -1,10 +1,22 @@
 import { IAppCheck, IAppCheckToken } from './common';
-import { Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 declare const FIRApp;
 
-Firebase.appCheck = (app?: FirebaseApp) => {
-	return new AppCheck(app);
-};
+let defaultAppCheck: AppCheck;
+const fb = firebase();
+Object.defineProperty(fb, 'appCheck', {
+	value: (app?: FirebaseApp) => {
+		if(!app){
+			if(!defaultAppCheck){
+				defaultAppCheck = new AppCheck();
+			}
+			return defaultAppCheck;
+		}
+		return new AppCheck(app);
+	},
+	writable: false,
+});
+
 
 export class AppCheckToken implements IAppCheckToken {
 	#native: FIRAppCheckToken;
@@ -40,6 +52,10 @@ export class AppCheck implements IAppCheck {
 		if (app?.native) {
 			this.#native = FIRAppCheck.appCheckWithApp(app.native);
 		} else {
+			if(defaultAppCheck){
+				return defaultAppCheck;
+			}
+			defaultAppCheck = this;
 			this.#native = FIRAppCheck.appCheckWithApp(FIRApp.defaultApp());
 		}
 	}

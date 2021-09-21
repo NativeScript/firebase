@@ -1,5 +1,5 @@
 import {Utils} from '@nativescript/core';
-import {Firebase, FirebaseApp, FirebaseError} from '@nativescript/firebase-core';
+import {firebase, FirebaseApp, FirebaseError} from '@nativescript/firebase-core';
 import {
   IAdmob,
   RequestConfiguration,
@@ -26,13 +26,17 @@ export {MaxAdContentRating, AdEventType};
 export * from './adsconsent';
 export * from './nativead';
 
-let admob: Admob;
-Firebase.admob = () => {
-  if (!admob) {
-    admob = new Admob();
-  }
-  return admob;
-};
+let defaultAdmob: Admob;
+const fb = firebase();
+Object.defineProperty(fb, 'admob', {
+	value: () => {
+		if (!defaultAdmob) {
+			defaultAdmob = new Admob();
+		}
+		return defaultAdmob;
+	},
+	writable: false,
+});
 
 export class InterstitialAd implements IInterstitialAd {
   #native: GADInterstitialAd;
@@ -472,8 +476,11 @@ export class Admob implements IAdmob {
   #app: FirebaseApp;
 
   constructor() {
-    this.#app;
-  }
+		if (defaultAdmob) {
+			return defaultAdmob;
+		}
+		defaultAdmob = this;
+	}
 
   static init() {
     GADMobileAds.sharedInstance().startWithCompletionHandler(null);

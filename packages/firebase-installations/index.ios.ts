@@ -1,12 +1,20 @@
-import { Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IInstallations } from './common';
 
-declare const FIRApp;
-
-Firebase.inAppMessaging = (app?: FirebaseApp) => {
-	return new Installations(app);
-};
-
+let defaultInstallations: Installations;
+const fb = firebase();
+Object.defineProperty(fb, 'installations', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultInstallations) {
+				defaultInstallations = new Installations();
+			}
+			return defaultInstallations;
+		}
+		return new Installations(app);
+	},
+	writable: false,
+});
 export class Installations implements IInstallations {
 	#native: FIRInstallations;
 	#app: FirebaseApp;
@@ -14,7 +22,11 @@ export class Installations implements IInstallations {
 		if (app?.native) {
 			this.#native = FIRInstallations.installationsWithApp(app.native);
 		} else {
-			this.#native = FIRInstallations.installationsWithApp(FIRApp.defaultApp());
+			if (defaultInstallations) {
+				return defaultInstallations;
+			}
+			defaultInstallations = this;
+			this.#native = FIRInstallations.installations();
 		}
 	}
 	delete(): Promise<void> {

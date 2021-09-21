@@ -1,6 +1,6 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseCrashlytics } from '@demo/shared';
-import { Firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript/firebase-core';
 import '@nativescript/firebase-crashlytics';
 import { Crashlytics } from '@nativescript/firebase-crashlytics';
 
@@ -13,7 +13,7 @@ export class DemoModel extends DemoSharedFirebaseCrashlytics {
 	crashlytics: Crashlytics;
 	constructor() {
 		super();
-		this.crashlytics = Firebase.crashlytics();
+		this.crashlytics = firebase().crashlytics();
 		this.crashlytics.setCrashlyticsCollectionEnabled(true);
 		//this.crash();
 		this.logError();

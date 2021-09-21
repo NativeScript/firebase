@@ -1,9 +1,18 @@
-import { deserialize, Firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp } from '@nativescript/firebase-core';
 import { HttpMethod, IHttpMetric, IPerformance, ITrace } from './common';
 
-Firebase.performance = () => {
-	return new Performance();
-};
+let defaultPerformance: Performance;
+
+const fb = firebase();
+Object.defineProperty(fb, 'performance', {
+	value: () => {
+		if (!defaultPerformance) {
+			defaultPerformance = new Performance();
+		}
+		return defaultPerformance;
+	},
+	writable: false,
+});
 
 export class HttpMetric implements IHttpMetric {
 	#native: com.google.firebase.perf.metrics.HttpMetric;
@@ -107,6 +116,10 @@ export class Performance implements IPerformance {
 	#app: FirebaseApp;
 
 	constructor() {
+		if (defaultPerformance) {
+			return defaultPerformance;
+		}
+		defaultPerformance = this;
 		this.#native = com.google.firebase.perf.FirebasePerformance.getInstance();
 	}
 

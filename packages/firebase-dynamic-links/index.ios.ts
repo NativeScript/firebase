@@ -1,14 +1,17 @@
-import { deserialize, Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, ShortLinkType } from './common';
 
-let dynamicLinks: DynamicLinks;
-
-Firebase.dynamicLinks = () => {
-	if (!dynamicLinks) {
-		dynamicLinks = new DynamicLinks();
-	}
-	return dynamicLinks;
-};
+let defaultDynamicLinks: DynamicLinks;
+const fb = firebase();
+Object.defineProperty(fb, 'dynamicLinks', {
+	value: () => {
+		if (!defaultDynamicLinks) {
+			defaultDynamicLinks = new DynamicLinks();
+		}
+		return defaultDynamicLinks;
+	},
+	writable: false,
+});
 
 declare const FIRApp;
 let appDelegate: AppDelegateImpl;
@@ -499,6 +502,11 @@ export class DynamicLinks implements IDynamicLinks {
 	static _onLink: (link: DynamicLink) => void;
 	static #appDelegateInitialized = false;
 	constructor() {
+		if(defaultDynamicLinks){
+			return defaultDynamicLinks;
+		}
+		defaultDynamicLinks = this;
+		
 		if (!DynamicLinks.#appDelegateInitialized) {
 			GULAppDelegateSwizzler.proxyOriginalDelegate();
 			GULAppDelegateSwizzler.registerAppDelegateInterceptor(AppDelegateImpl.sharedInstance);

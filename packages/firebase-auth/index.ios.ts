@@ -1,4 +1,4 @@
-import {FirebaseApp, Firebase, deserialize, FirebaseError} from '@nativescript/firebase-core';
+import {FirebaseApp, firebase, deserialize, FirebaseError} from '@nativescript/firebase-core';
 import {
   IAuthSettings,
   IAuth,
@@ -18,11 +18,23 @@ import {
   UserProfileChangeRequest
 } from './common';
 
-declare const FIRApp;
+export {AdditionalUserInfo, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, UserProfileChangeRequest};
 
-Firebase.auth = (app?: FirebaseApp) => {
-  return new Auth(app);
-};
+declare const FIRApp;
+let defaultAuth: Auth;
+const fb = firebase();
+Object.defineProperty(fb, 'auth', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultAuth) {
+				defaultAuth = new Auth();
+			}
+			return defaultAuth;
+		}
+		return new Auth(app);
+	},
+	writable: false,
+});
 
 export class UserMetadata implements IUserMetadata {
   #native: FIRUserMetadata;

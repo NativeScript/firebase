@@ -27,13 +27,25 @@ import {
 
 export {SetOptions, DocumentData, GetOptions, WhereFilterOp};
 
-Firebase.firestore = (app?: FirebaseApp) => {
-  return new Firestore(app);
-};
+import {deserialize, firebase, FirebaseApp, FirebaseError, serialize} from '@nativescript/firebase-core';
 
 
-import {deserialize, Firebase, FirebaseApp, FirebaseError, serialize} from '@nativescript/firebase-core';
+let defaultFirestore: Firestore;
 
+const fb = firebase();
+Object.defineProperty(fb, 'firestore', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultFirestore) {
+				defaultFirestore = new Firestore();
+			}
+			return defaultFirestore;
+		}
+
+		return new Firestore(app);
+	},
+	writable: false,
+});
 
 function deserializeField(value) {
   if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
@@ -1465,6 +1477,10 @@ export class Firestore implements IFirestore {
     if (app) {
       this.#native = com.google.firebase.firestore.FirebaseFirestore.getInstance(app.native);
     } else {
+      if(defaultFirestore){
+        return defaultFirestore;
+      }
+      defaultFirestore = this;
       this.#native = com.google.firebase.firestore.FirebaseFirestore.getInstance();
     }
   }

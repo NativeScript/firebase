@@ -1,7 +1,6 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseRemoteConfig } from '@demo/shared';
-import { Firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-remote-config';
+import { firebase } from '@nativescript/firebase-core';
 import { RemoteConfig } from '@nativescript/firebase-remote-config';
 
 export function navigatingTo(args: EventData) {
@@ -13,7 +12,7 @@ export class DemoModel extends DemoSharedFirebaseRemoteConfig {
 	remoteConfig: RemoteConfig;
 	constructor() {
 		super();
-		this.remoteConfig = Firebase.remoteConfig();
+		this.remoteConfig = firebase().remoteConfig();
 		this.remoteConfig
 			.fetchAndActivate()
 			.then((val) => {

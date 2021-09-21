@@ -1,6 +1,6 @@
 import { Observable, EventData, Page, fromObject } from '@nativescript/core';
 import { DemoSharedFirebaseAuth } from '@demo/shared';
-import { Firebase } from '@nativescript/firebase-core';
+import { firebase, Firebase } from '@nativescript/firebase-core';
 import '@nativescript/firebase-auth';
 import { Auth, User } from '@nativescript/firebase-auth';
 export function navigatingTo(args: EventData) {
@@ -12,24 +12,29 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 	email: string;
 	password: string;
 	user: User;
-	constructor(){
+	constructor() {
 		super();
-		Firebase.auth().addAuthStateChangeListener((user)=>{
-			this._setCurrentUser(user);
-		});
+		firebase()
+			.auth()
+			.addAuthStateChangeListener((user) => {
+				this._setCurrentUser(user);
+			});
 	}
 	createUser() {
-		const auth: Auth = Firebase.auth();
-		auth.createUserWithEmailAndPassword(this.email, this.password).then((user) => {
-			this.set('user', user);
-		}).catch(e =>{
-			console.error('createUser', e);
-		});
+		firebase()
+			.auth()
+			.createUserWithEmailAndPassword(this.email, this.password)
+			.then((user) => {
+				this.set('user', user);
+			})
+			.catch((e) => {
+				console.error('createUser', e);
+			});
 	}
 
 	loginUser() {
-		const auth: Auth = Firebase.auth();
-		auth
+		firebase()
+			.auth()
 			.signInWithEmailAndPassword(this.email, this.password)
 			.then((value) => {
 				console.log('loginUser', value);
@@ -40,7 +45,7 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 			});
 	}
 
-	_setCurrentUser(user: User){
+	_setCurrentUser(user: User) {
 		this.set('user', user);
 		this.set('uid', user?.uid);
 		this.set('displayName', user?.displayName);
@@ -48,14 +53,13 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 		this.set('photoURL', user?.photoURL);
 	}
 
-	getCurrentUser(){
-		const auth: Auth = Firebase.auth();
-		this._setCurrentUser(auth?.user)
+	getCurrentUser() {
+		const auth = firebase().auth();
+		this._setCurrentUser(auth?.user);
 	}
 
-	logOutUser(){
-		const auth: Auth = Firebase.auth();
-		auth.signOut();
+	logOutUser() {
+		firebase().auth().signOut();
 		this._setCurrentUser(undefined);
 	}
 }

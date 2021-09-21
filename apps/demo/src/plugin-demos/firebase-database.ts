@@ -1,6 +1,6 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseDatabase } from '@demo/shared';
-import { Firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript/firebase-core';
 import { Database } from '@nativescript/firebase-database';
 import { Auth } from '@nativescript/firebase-auth';
 export function navigatingTo(args: EventData) {
@@ -13,16 +13,16 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 	auth: Auth;
 	constructor() {
 		super();
-		this.auth = Firebase.auth();
-		this.database = Firebase.database();
+		this.auth = firebase().auth();
+		this.database = firebase().database();
 		this.transaction();
 		this.randomData();
 		this.children();
 	}
 	randomData() {
-			this.database
+		this.database
 			.ref('/random')
-			.push({ name: 'random' , float: 1.1 })
+			.push({ name: 'random', float: 1.1 })
 			.then((value) => {
 				console.log('push randomData', value);
 			});

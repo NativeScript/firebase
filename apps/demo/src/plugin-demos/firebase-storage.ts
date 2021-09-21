@@ -2,7 +2,7 @@ import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseStorage } from '@demo/shared';
 import { Metadata, Storage, TaskEvent } from '@nativescript/firebase-storage';
 import { Auth } from '@nativescript/firebase-auth';
-import { Firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript/firebase-core';
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
 	page.bindingContext = new DemoModel();
@@ -15,8 +15,8 @@ export class DemoModel extends DemoSharedFirebaseStorage {
 	textToUploadFileName = '';
 	constructor() {
 		super();
-		this.auth = Firebase.auth();
-		this.storage = Firebase.storage();
+		this.auth = firebase().auth();
+		this.storage = firebase().storage();
 	}
 
 	uploadText() {

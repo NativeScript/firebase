@@ -1,9 +1,20 @@
-import {deserialize, Firebase, FirebaseApp, FirebaseError, serialize} from '@nativescript/firebase-core';
+import {deserialize, firebase, FirebaseApp, FirebaseError, serialize} from '@nativescript/firebase-core';
 import {IDatabase, IReference, IDataSnapshot, EventType, IQuery, IOnDisconnect, IThenableReference} from './common';
 
-Firebase.database = (app?: FirebaseApp) => {
-  return new Database(app);
-};
+let defaultDatabase: Database;
+const fb = firebase();
+Object.defineProperty(fb, 'database', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultDatabase) {
+				defaultDatabase = new Database();
+			}
+			return defaultDatabase;
+		}
+		return new Database(app);
+	},
+	writable: false,
+});
 
 export class OnDisconnect implements IOnDisconnect {
   #native: FIRDatabaseReference;
@@ -528,8 +539,6 @@ export class DataSnapshot implements IDataSnapshot {
   }
 }
 
-declare const FIRApp;
-
 export class Database implements IDatabase {
   #native: FIRDatabase;
   #app: FirebaseApp;
@@ -538,7 +547,12 @@ export class Database implements IDatabase {
     if (app?.native) {
       this.#native = FIRDatabase.databaseForApp(app.native);
     } else {
-      this.#native = FIRDatabase.databaseForApp(FIRApp.defaultApp());
+      if (defaultDatabase) {
+				return defaultDatabase;
+			}
+			defaultDatabase = this;
+      this.#native = FIRDatabase.database();
+      console.log(this.#native);
     }
   }
 

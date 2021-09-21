@@ -5,11 +5,25 @@ import {
   HttpsErrorCode,
   IFunctions,
 } from "./common";
-import {deserialize, Firebase, FirebaseApp, serialize} from "@nativescript/firebase-core";
+import {deserialize, firebase, FirebaseApp, serialize} from "@nativescript/firebase-core";
 
-Firebase.functions = (app?: FirebaseApp) => {
-  return new Functions(app);
-};
+
+let defaultFunctions: Functions;
+
+const fb = firebase();
+Object.defineProperty(fb, 'functions', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultFunctions) {
+				defaultFunctions = new Functions();
+			}
+			return defaultFunctions;
+		}
+
+		return new Functions(app);
+	},
+	writable: false,
+});
 
 
 function errorToCode(error: com.google.firebase.functions.FirebaseFunctionsException.Code) {
@@ -118,6 +132,10 @@ export class Functions implements IFunctions {
     if (app?.native) {
       this.#native = com.google.firebase.functions.FirebaseFunctions.getInstance(app.native);
     } else {
+      if(defaultFunctions){
+        return defaultFunctions;
+      }
+      defaultFunctions = this;
       this.#native = com.google.firebase.functions.FirebaseFunctions.getInstance();
     }
   }

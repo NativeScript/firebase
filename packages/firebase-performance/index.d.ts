@@ -1,72 +1,74 @@
 export class HttpMetric implements IHttpMetric {
-  readonly native: any;
-  readonly ios: any;
-  readonly android: any;
+	readonly native: any;
+	readonly ios: any;
+	readonly android: any;
 
-  getAttribute(attribute: string): string;
+	getAttribute(attribute: string): string;
 
-  getAttributes(): { [key: string]: string };
+	getAttributes(): { [key: string]: string };
 
-  putAttribute(attribute: string, value: string): void;
+	putAttribute(attribute: string, value: string): void;
 
-  removeAttribute(attribute: string): void;
+	removeAttribute(attribute: string): void;
 
-  setHttpResponseCode(code: number): void;
+	setHttpResponseCode(code: number): void;
 
-  setRequestPayloadSize(bytes: number): void;
+	setRequestPayloadSize(bytes: number): void;
 
-  setResponseContentType(contentType: string): void;
+	setResponseContentType(contentType: string): void;
 
-  setResponsePayloadSize(bytes: number): void;
+	setResponsePayloadSize(bytes: number): void;
 
-  start();
+	start();
 
-  stop();
+	stop();
 }
 
 export class Trace implements ITrace {
-  readonly native: any;
-  readonly ios: any;
-  readonly android: any;
+	readonly native: any;
+	readonly ios: any;
+	readonly android: any;
 
-  getAttribute(attribute: string): string;
+	getAttribute(attribute: string): string;
 
-  getMetric(metricName: string): number;
+	getMetric(metricName: string): number;
 
-  getMetrics(): { [key: string]: number };
+	getMetrics(): { [key: string]: number };
 
-  incrementMetric(metricName: string, incrementBy: number): void;
+	incrementMetric(metricName: string, incrementBy: number): void;
 
-  putAttribute(attribute: string, value: string): void;
+	putAttribute(attribute: string, value: string): void;
 
-  putMetric(metricName: string, value: number): void;
+	putMetric(metricName: string, value: number): void;
 
-  removeMetric(metricName: string): void;
+	removeMetric(metricName: string): void;
 
-  start();
+	start();
 
-  stop();
+	stop();
 }
 
 export class Performance implements IPerformance {
-  readonly native: any;
-  readonly ios: any;
-  readonly android: any;
-  readonly app: any;
+	readonly native: any;
+	readonly ios: any;
+	readonly android: any;
+	readonly app: any;
 
-  constructor();
+	constructor();
 
-  isPerformanceCollectionEnabled: boolean;
+	isPerformanceCollectionEnabled: boolean;
 
-  newHttpMetric(url: string, httpMethod: HttpMethod): HttpMetric;
+	newHttpMetric(url: string, httpMethod: HttpMethod): HttpMetric;
 
-  newTrace(identifier: string): Trace;
+	newTrace(identifier: string): Trace;
 
-  startTrace(identifier: string): Trace;
+	startTrace(identifier: string): Trace;
 }
 
 declare module '@nativescript/firebase-core' {
-  class Firebase {
-    static performance(): Performance;
-  }
+	export interface Firebase extends FirebasePerformance {}
+}
+
+export interface FirebasePerformance {
+	static performance(): Performance;
 }

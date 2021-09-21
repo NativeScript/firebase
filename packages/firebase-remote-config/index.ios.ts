@@ -1,10 +1,22 @@
 import { IRemoteConfig, IConfigSettings, IConfigValue, ConfigDefaults } from './common';
-import { Firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
-declare const FIRApp;
+import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 
-Firebase.remoteConfig = (app?: FirebaseApp) => {
-	return new RemoteConfig(app);
-};
+let defaultRemoteConfig: RemoteConfig;
+
+const fb = firebase();
+Object.defineProperty(fb, 'remoteConfig', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultRemoteConfig) {
+				defaultRemoteConfig = new RemoteConfig();
+			}
+			return defaultRemoteConfig;
+		}
+
+		return new RemoteConfig(app);
+	},
+	writable: false,
+});
 
 export class ConfigValue implements IConfigValue {
 	#native: FIRRemoteConfigValue;
@@ -88,7 +100,11 @@ export class RemoteConfig implements IRemoteConfig {
 		if (app?.native) {
 			this.#native = FIRRemoteConfig.remoteConfigWithApp(app.native);
 		} else {
-			this.#native = FIRRemoteConfig.remoteConfigWithApp(FIRApp.defaultApp());
+			if (defaultRemoteConfig) {
+				return defaultRemoteConfig;
+			}
+			defaultRemoteConfig = this;
+			this.#native = FIRRemoteConfig.remoteConfig();
 		}
 	}
 

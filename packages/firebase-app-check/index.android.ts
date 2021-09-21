@@ -1,11 +1,23 @@
 import { IAppCheck, IAppCheckToken } from './common';
-import { Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { Utils } from '@nativescript/core';
 import lazy from '@nativescript/core/utils/lazy';
 
-Firebase.appCheck = (app?: FirebaseApp) => {
-	return new AppCheck(app);
-};
+let defaultAppCheck: AppCheck;
+const fb = firebase();
+Object.defineProperty(fb, 'appCheck', {
+	value: (app?: FirebaseApp) => {
+		if(!app){
+			if(!defaultAppCheck){
+				defaultAppCheck = new AppCheck();
+			}
+			return defaultAppCheck;
+		}
+		return new AppCheck(app);
+	},
+	writable: false,
+});
+
 
 const NSAppCheck = lazy(() => org.nativescript.firebase.app_check.FirebaseAppCheck);
 
@@ -43,7 +55,11 @@ export class AppCheck implements IAppCheck {
 		if (app?.native) {
 			this.#native = com.google.firebase.appcheck.FirebaseAppCheck.getInstance(app.native);
 		} else {
-			this.#native = com.google.firebase.appcheck.FirebaseAppCheck.getInstance((com as any).google.firebase.FirebaseApp.getInstance());
+			if(defaultAppCheck){
+				return defaultAppCheck;
+			}
+			defaultAppCheck = this;
+			this.#native = com.google.firebase.appcheck.FirebaseAppCheck.getInstance();
 		}
 	}
 	activate(isTokenAutoRefreshEnabled: boolean) {

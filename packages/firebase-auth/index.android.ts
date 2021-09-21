@@ -1,4 +1,4 @@
-import {deserialize, Firebase, FirebaseApp, FirebaseError} from '@nativescript/firebase-core';
+import {deserialize, firebase, FirebaseApp, FirebaseError} from '@nativescript/firebase-core';
 import {
   ActionCodeInfo,
   ActionCodeInfoOperation,
@@ -14,14 +14,29 @@ import {
   IUserMetadata,
   OAuthCredentialOptions,
   UserCredential,
-  UserProfileChangeRequest
+  UserProfileChangeRequest,
+  AdditionalUserInfo
 } from './common';
 import lazy from '@nativescript/core/utils/lazy';
 import {Application} from '@nativescript/core';
 
-Firebase.auth = (app?: FirebaseApp) => {
-  return new Auth(app);
-};
+export {AdditionalUserInfo, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, UserProfileChangeRequest};
+
+let defaultAuth: Auth;
+const fb = firebase();
+Object.defineProperty(fb, 'auth', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultAuth) {
+				defaultAuth = new Auth();
+			}
+			return defaultAuth;
+		}
+		return new Auth(app);
+	},
+	writable: false,
+});
+
 
 export class UserMetadata implements IUserMetadata {
   #native: com.google.firebase.auth.FirebaseUserMetadata;
@@ -876,7 +891,11 @@ export class Auth implements IAuth {
     if (app?.native) {
       this.#native = com.google.firebase.auth.FirebaseAuth.getInstance(app.native);
     } else {
-      this.#native = com.google.firebase.auth.FirebaseAuth.getInstance((com as any).google.firebase.FirebaseApp.getInstance());
+      if(defaultAuth){
+        return defaultAuth;
+      }
+      defaultAuth = this;
+      this.#native = com.google.firebase.auth.FirebaseAuth.getInstance();
     }
   }
 

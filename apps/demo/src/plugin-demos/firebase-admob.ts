@@ -1,6 +1,6 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseAdmob } from '@demo/shared';
-import { Firebase } from '@nativescript/firebase-core';
+import { firebase, Firebase } from '@nativescript/firebase-core';
 import { AdEventType, InterstitialAd, RewardedInterstitialAd, RewardedAd, BannerAd, BannerAdSize, Admob, AdsConsent, NativeAd, NativeAdLoader, NativeAdView } from '@nativescript/firebase-admob';
 import { AdChoicesPlacement, NativeAdEventType } from '@nativescript/firebase-admob/nativead/common';
 
@@ -24,7 +24,7 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		//this.interstitial();
 		//this.rewardedInterstitial();
 		//this.rewarded();
-		this.admob = Firebase.admob();
+		this.admob = firebase().admob();
 		// ATTrackingManager.requestTrackingAuthorizationWithCompletionHandler((status) => {
 		// 	console.log('ATTrackingManager', status);
 		// });

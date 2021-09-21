@@ -1,16 +1,19 @@
 import { Application, AndroidActivityNewIntentEventData, AndroidApplication } from '@nativescript/core';
-import { deserialize, Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, ShortLinkType } from './common';
 
-let dynamicLinks:DynamicLinks;
+let defaultDynamicLinks: DynamicLinks;
 
-Firebase.dynamicLinks = () => {
-	if(!dynamicLinks){
-		dynamicLinks = new DynamicLinks();
-	}
-	return dynamicLinks;
-};
-
+const fb = firebase();
+Object.defineProperty(fb, 'dynamicLinks', {
+	value: () => {
+		if (!defaultDynamicLinks) {
+			defaultDynamicLinks = new DynamicLinks();
+		}
+		return defaultDynamicLinks;
+	},
+	writable: false,
+});
 
 export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsParameters {
 	#builder: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters.Builder;
@@ -443,6 +446,10 @@ export class DynamicLinks implements IDynamicLinks {
 	static #didInit = false;
 	static #callback: org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>;
 	constructor() {
+		if (defaultDynamicLinks) {
+			return defaultDynamicLinks;
+		}
+		defaultDynamicLinks = this;
 		this.#native = com.google.firebase.dynamiclinks.FirebaseDynamicLinks.getInstance();
 		if (!DynamicLinks.#didInit) {
 			DynamicLinks.#callback = new org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>({

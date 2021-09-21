@@ -1,15 +1,27 @@
-import { FirebaseApp, FirebaseError, Firebase } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError, firebase } from '@nativescript/firebase-core';
 import { ICrashlytics } from './common';
 import lazy from '@nativescript/core/utils/lazy';
 const NSCrashlyticsReference = lazy(() => org.nativescript.firebase.crashlytics.FirebaseCrashlytics);
 
-Firebase.crashlytics = () => {
-	return new Crashlytics();
-};
+let defaultCrashlytics: Crashlytics;
+const fb = firebase();
+Object.defineProperty(fb, 'crashlytics', {
+	value: () => {
+		if (!defaultCrashlytics) {
+			defaultCrashlytics = new Crashlytics();
+		}
+		return defaultCrashlytics;
+	},
+	writable: false,
+});
 
 export class Crashlytics implements ICrashlytics {
 	#native: com.google.firebase.crashlytics.FirebaseCrashlytics;
 	constructor() {
+		if (defaultCrashlytics) {
+			return defaultCrashlytics;
+		}
+		defaultCrashlytics = this;
 		this.#native = com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance();
 	}
 	get native() {

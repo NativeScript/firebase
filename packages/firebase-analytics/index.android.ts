@@ -1,15 +1,19 @@
 import {Utils} from '@nativescript/core';
-import {Firebase, FirebaseApp} from '@nativescript/firebase-core';
+import {firebase, FirebaseApp} from '@nativescript/firebase-core';
 import {ConsentStatus, ConsentType, EventParameter, IAnalytics} from './common';
 
 export * from './common';
-let analytics: Analytics;
-Firebase.analytics = () => {
-  if (!analytics) {
-    analytics = new Analytics();
-  }
-  return analytics;
-};
+let defaultAnalytics: Analytics;
+const fb = firebase();
+Object.defineProperty(fb, 'analytics', {
+	value: () => {
+    if (!defaultAnalytics) {
+      defaultAnalytics = new Analytics();
+    }
+    return defaultAnalytics;
+	},
+	writable: false,
+});
 
 function serialize(data) {
   let store;
@@ -82,6 +86,10 @@ export class Analytics implements IAnalytics {
   #app: FirebaseApp;
 
   constructor() {
+    if(defaultAnalytics){
+      return defaultAnalytics;
+    }
+    defaultAnalytics = this;
     this.#native = com.google.firebase.analytics.FirebaseAnalytics.getInstance(Utils.android.getApplicationContext());
   }
 

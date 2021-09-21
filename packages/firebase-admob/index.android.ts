@@ -1,6 +1,6 @@
 import {Application, Utils} from '@nativescript/core';
 import lazy from '@nativescript/core/utils/lazy';
-import {Firebase, FirebaseApp, FirebaseError} from '@nativescript/firebase-core';
+import {firebase, FirebaseApp, FirebaseError} from '@nativescript/firebase-core';
 import {
   IAdmob,
   RequestConfiguration,
@@ -26,13 +26,18 @@ export {MaxAdContentRating, AdEventType};
 export * from './adsconsent';
 export * from './nativead';
 
-let admob: Admob;
-Firebase.admob = () => {
-  if (!admob) {
-    admob = new Admob();
-  }
-  return admob;
-};
+let defaultAdmob: Admob;
+
+const fb = firebase();
+Object.defineProperty(fb, 'admob', {
+	value: () => {
+		if (!defaultAdmob) {
+			defaultAdmob = new Admob();
+		}
+		return defaultAdmob;
+	},
+	writable: false,
+});
 
 let AdListener;
 
@@ -587,24 +592,30 @@ export class BannerAd extends BannerAdBase {
 }
 
 export class Admob implements IAdmob {
-  #app: FirebaseApp;
+	#app: FirebaseApp;
 
-  static init() {
-    com.google.android.gms.ads.MobileAds.initialize(Utils.android.getApplicationContext());
-  }
+	constructor() {
+		if (defaultAdmob) {
+			return defaultAdmob;
+		}
+		defaultAdmob = this;
+	}
 
-  setRequestConfiguration(requestConfiguration: RequestConfiguration) {
-    try {
-      org.nativescript.firebase.admob.FirebaseAdmob.setRequestConfiguration(JSON.stringify(requestConfiguration));
-    } catch (e) {
-    }
-  }
+	static init() {
+		com.google.android.gms.ads.MobileAds.initialize(Utils.android.getApplicationContext());
+	}
 
-  get app(): FirebaseApp {
-    if (!this.#app) {
-      // @ts-ignore
-      this.#app = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
-    }
-    return this.#app;
-  }
+	setRequestConfiguration(requestConfiguration: RequestConfiguration) {
+		try {
+			org.nativescript.firebase.admob.FirebaseAdmob.setRequestConfiguration(JSON.stringify(requestConfiguration));
+		} catch (e) {}
+	}
+
+	get app(): FirebaseApp {
+		if (!this.#app) {
+			// @ts-ignore
+			this.#app = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
+		}
+		return this.#app;
+	}
 }

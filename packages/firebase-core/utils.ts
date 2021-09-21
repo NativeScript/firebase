@@ -1,3 +1,5 @@
+import { Firebase } from ".";
+
 function numberHasDecimals(item: number) {
 	return !(item % 1 === 0);
 }

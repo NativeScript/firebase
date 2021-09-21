@@ -144,8 +144,9 @@ export declare class Admob implements IAdmob {
 }
 
 declare module '@nativescript/firebase-core' {
-  class Firebase {
-    static admob(): Admob;
-  }
+  export interface Firebase extends FirebaseAdmob {}
 }
 
+export interface FirebaseAdmob {
+  static admob(): Admob;
+}

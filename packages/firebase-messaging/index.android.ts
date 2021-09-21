@@ -1,15 +1,19 @@
 import { AndroidActivityNewIntentEventData, AndroidApplication, Application, Utils } from '@nativescript/core';
-import { FirebaseApp, FirebaseError, Firebase, deserialize } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError, firebase, deserialize } from '@nativescript/firebase-core';
 import { AuthorizationStatus, IMessaging, RemoteMessage } from './common';
 
-let messaging: Messaging;
-Firebase.messaging = () => {
-	if (!messaging) {
-		messaging = new Messaging();
-	}
-	return messaging;
-};
+let defaultMessaging: Messaging;
 
+const fb = firebase();
+Object.defineProperty(fb, 'messaging', {
+	value: () => {
+		if (!defaultMessaging) {
+			defaultMessaging = new Messaging();
+		}
+		return defaultMessaging;
+	},
+	writable: false,
+});
 let Callback;
 function ensureCallback() {
 	@NativeClass
@@ -50,6 +54,10 @@ export class Messaging implements IMessaging {
 
 
 	constructor() {
+		if (defaultMessaging) {
+			return defaultMessaging;
+		}
+		defaultMessaging = this;
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
 		this.#native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
 		ensureCallback();

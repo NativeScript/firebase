@@ -1,23 +1,32 @@
 import {EventParameter, IAnalytics} from './common';
-import {Firebase, FirebaseApp, serialize} from '@nativescript/firebase-core';
+import {firebase, FirebaseApp, serialize} from '@nativescript/firebase-core';
 import {ConsentStatus, ConsentType} from '.';
 
 export * from './common';
 
 declare const FIRApp;
 
-let analytics: Analytics;
-Firebase.analytics = () => {
-  if (!analytics) {
-    analytics = new Analytics();
-  }
-  return analytics;
-};
+let defaultAnalytics: Analytics;
+
+const fb = firebase();
+Object.defineProperty(fb, 'analytics', {
+	value: () => {
+    if (!defaultAnalytics) {
+      defaultAnalytics = new Analytics();
+    }
+    return defaultAnalytics;
+	},
+	writable: false,
+});
 
 export class Analytics implements IAnalytics {
   #app: FirebaseApp;
 
   constructor() {
+    if(defaultAnalytics){
+      return defaultAnalytics;
+    }
+    defaultAnalytics = this;
   }
 
   handleOpenURL(url: string): void {

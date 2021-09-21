@@ -1,15 +1,27 @@
-import { Firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp } from '@nativescript/firebase-core';
 import { ICrashlytics } from './common';
 
 
-Firebase.crashlytics = () => {
-	return new Crashlytics();
-};
+let defaultCrashlytics: Crashlytics;
+const fb = firebase();
+Object.defineProperty(fb, 'crashlytics', {
+	value: () => {
+		if (!defaultCrashlytics) {
+			defaultCrashlytics = new Crashlytics();
+		}
+		return defaultCrashlytics;
+	},
+	writable: false,
+});
 
 declare const TNSFirebaseCrashlytics;
 export class Crashlytics implements ICrashlytics {
 	#native: FIRCrashlytics;
 	constructor() {
+		if (defaultCrashlytics) {
+			return defaultCrashlytics;
+		}
+		defaultCrashlytics = this;
 		this.#native = FIRCrashlytics.crashlytics();
 	}
 	get native() {

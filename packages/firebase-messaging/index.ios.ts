@@ -1,5 +1,5 @@
 import { Application, ApplicationSettings, Device } from '@nativescript/core';
-import { deserialize, Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { AuthorizationStatus, IMessaging, Permissions, Notification, RemoteMessage } from './common';
 
 declare const FIRApp;
@@ -9,13 +9,18 @@ let _registerDeviceForRemoteMessages = {
 	reject: null,
 };
 
-let messaging: Messaging;
-Firebase.messaging = () => {
-	if (!messaging) {
-		messaging = new Messaging();
-	}
-	return messaging;
-};
+let defaultMessaging: Messaging;
+
+const fb = firebase();
+Object.defineProperty(fb, 'messaging', {
+	value: () => {
+		if (!defaultMessaging) {
+			defaultMessaging = new Messaging();
+		}
+		return defaultMessaging;
+	},
+	writable: false,
+});
 
 const REMOTE_NOTIFICATIONS_REGISTRATION_STATUS = 'org.nativescript.firebase.notifications.status';
 
@@ -27,6 +32,10 @@ export class Messaging implements IMessaging {
 	#onToken?: (token: string) => void;
 	#onNotificationTap?: (message: RemoteMessage) => void;
 	constructor() {
+		if (defaultMessaging) {
+			return defaultMessaging;
+		}
+		defaultMessaging = this;
 		AppDelegateImpl.sharedInstance.observe();
 		if (!Application.ios.delegate) {
 			Application.ios.delegate = AppDelegateImpl;
@@ -273,7 +282,7 @@ class FIRMessagingDelegateImpl extends NSObject implements FIRMessagingDelegate 
 			return;
 		}
 
-		messaging?._onToken?.(fcmToken);
+		defaultMessaging?._onToken?.(fcmToken);
 		const selector = 'messaging:didReceiveRegistrationToken:';
 		if (GULAppDelegateSwizzler.sharedApplication().delegate.respondsToSelector(selector)) {
 			// @ts-ignore
@@ -323,7 +332,7 @@ class UNUserNotificationCenterDelegateImpl extends NSObject implements UNUserNot
 			if (message) {
 				message['foreground'] = UIApplication.sharedApplication.applicationState === UIApplicationState.Active;
 			}
-			messaging?._onNotificationTap?.(message);
+			defaultMessaging?._onNotificationTap?.(message);
 		}
 
 		if (originalNotificationCenterDelegate && originalDelegateRespondsTo.didReceiveNotificationResponse) {
@@ -342,14 +351,14 @@ class UNUserNotificationCenterDelegateImpl extends NSObject implements UNUserNot
 	userNotificationCenterWillPresentNotificationWithCompletionHandler(center: UNUserNotificationCenter, notification: UNNotification, completionHandler: (p1: UNNotificationPresentationOptions) => void): void {
 		let options = UNNotificationPresentationOptionNone;
 		const aps = notification.request.content.userInfo.objectForKey('aps') as NSDictionary<any, any>;
-		if (messaging?.showNotificationsWhenInForeground || notification.request.content.userInfo.objectForKey('gcm.notification.showWhenInForeground') === 'true' || notification.request.content.userInfo.objectForKey('showWhenInForeground') === true || (aps && aps.objectForKey('showWhenInForeground') === true)) {
+		if (defaultMessaging?.showNotificationsWhenInForeground || notification.request.content.userInfo.objectForKey('gcm.notification.showWhenInForeground') === 'true' || notification.request.content.userInfo.objectForKey('showWhenInForeground') === true || (aps && aps.objectForKey('showWhenInForeground') === true)) {
 			options = UNNotificationPresentationOptions.Alert | UNNotificationPresentationOptions.Sound | UNNotificationPresentationOptions.Badge;
 		}
 
 		if (notification.request.content.userInfo.objectForKey('gcm.message_id')) {
 			const message = parseNotification(notification);
 			if (!message['contentAvailable']) {
-				messaging?._onMessage?.(message);
+				defaultMessaging?._onMessage?.(message);
 				if (message) {
 					message['foreground'] = UIApplication.sharedApplication.applicationState === UIApplicationState.Active;
 				}
@@ -624,7 +633,7 @@ class AppDelegateImpl extends UIResponder implements UIApplicationDelegate {
 		if (message) {
 			message['foreground'] = application.applicationState === UIApplicationState.Active;
 		}
-		messaging?._onMessage?.(message);
+		defaultMessaging?._onMessage?.(message);
 		completionHandler(UIBackgroundFetchResult.NewData);
 	}
 

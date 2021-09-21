@@ -1,14 +1,27 @@
-import { Firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp } from '@nativescript/firebase-core';
 import { IInAppMessaging } from './common';
 
-Firebase.inAppMessaging = () => {
-	return new InAppMessaging();
-};
+let defaultInAppMessaging: InAppMessaging;
+
+const fb = firebase();
+Object.defineProperty(fb, 'inAppMessaging', {
+	value: () => {
+		if (!defaultInAppMessaging) {
+			defaultInAppMessaging = new InAppMessaging();
+		}
+		return defaultInAppMessaging;
+	},
+	writable: false,
+});
 
 export class InAppMessaging implements IInAppMessaging {
 	#native: com.google.firebase.inappmessaging.FirebaseInAppMessaging;
 	#app: FirebaseApp;
 	constructor() {
+		if(defaultInAppMessaging){
+			return defaultInAppMessaging;
+		}
+		defaultInAppMessaging = this;
 		this.#native = com.google.firebase.inappmessaging.FirebaseInAppMessaging.getInstance();
 	}
 

@@ -1,10 +1,21 @@
-import { deserialize, Firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 import { IDatabase, IReference, IDataSnapshot, EventType, IQuery, IOnDisconnect, TransactionResult, IThenableReference } from './common';
 import lazy from '@nativescript/core/utils/lazy';
 
-Firebase.database = (app?: FirebaseApp) => {
-	return new Database(app);
-};
+let defaultDatabase: Database;
+const fb = firebase();
+Object.defineProperty(fb, 'database', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultDatabase) {
+				defaultDatabase = new Database();
+			}
+			return defaultDatabase;
+		}
+		return new Database(app);
+	},
+	writable: false,
+});
 
 const NSOnDisconnect = lazy(() => org.nativescript.firebase.database.FirebaseDatabase.OnDisconnect);
 const NSDatabaseReference = lazy(() => org.nativescript.firebase.database.FirebaseDatabase.DatabaseReference);
@@ -598,7 +609,11 @@ export class Database implements IDatabase {
 		if (app?.native) {
 			this.#native = com.google.firebase.database.FirebaseDatabase.getInstance(app.native);
 		} else {
-			this.#native = com.google.firebase.database.FirebaseDatabase.getInstance((com as any).google.firebase.FirebaseApp.getInstance());
+			if(defaultDatabase){
+				return defaultDatabase;
+			}
+			defaultDatabase = this;
+			this.#native = com.google.firebase.database.FirebaseDatabase.getInstance();
 		}
 	}
 

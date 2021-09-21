@@ -1,4 +1,4 @@
-import {FirebaseApp, FirebaseError, deserialize, serialize, Firebase} from '@nativescript/firebase-core';
+import {FirebaseApp, FirebaseError, deserialize, serialize, firebase} from '@nativescript/firebase-core';
 import {
   IMetadata,
   IListResult,
@@ -16,11 +16,21 @@ import {b64WithoutPrefix, getMIMEforBase64String} from './utils';
 
 export {TaskSnapshotObserver, StringFormat, TaskEvent};
 
-declare const FIRApp;
+let defaultStorage: Storage;
+const fb = firebase();
+Object.defineProperty(fb, 'storage', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultStorage) {
+				defaultStorage = new Storage();
+			}
+			return defaultStorage;
+		}
 
-Firebase.storage = (app?: FirebaseApp) => {
-  return new Storage(app);
-};
+		return new Storage(app);
+	},
+	writable: false,
+});
 
 export class TaskSnapshot implements ITaskSnapshot {
   #native: FIRStorageTaskSnapshot;
@@ -546,7 +556,11 @@ export class Storage implements IStorage {
     if (app?.native) {
       this.#native = FIRStorage.storageForApp(app.native);
     } else {
-      this.#native = FIRStorage.storageForApp(FIRApp.defaultApp());
+      if(defaultStorage){
+        return defaultStorage;
+      }
+      defaultStorage = this;
+      this.#native = FIRStorage.storage();
     }
   }
 

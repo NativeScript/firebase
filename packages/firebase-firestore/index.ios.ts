@@ -24,15 +24,27 @@ import {
   IFirestore, IBytes
 } from './common';
 
-declare const FIRApp;
-
 const main_queue = dispatch_get_current_queue();
 
-Firebase.firestore = (app?: FirebaseApp) => {
-  return new Firestore(app);
-};
+import {deserialize, firebase, FirebaseApp, FirebaseError, serialize} from '@nativescript/firebase-core';
 
-import {deserialize, Firebase, FirebaseApp, FirebaseError, serialize} from '@nativescript/firebase-core';
+let defaultFirestore: Firestore;
+
+const fb = firebase();
+Object.defineProperty(fb, 'firestore', {
+	value: (app?: FirebaseApp) => {
+		if (!app) {
+			if (!defaultFirestore) {
+				defaultFirestore = new Firestore();
+			}
+			return defaultFirestore;
+		}
+
+		return new Firestore(app);
+	},
+	writable: false,
+});
+
 
 function deserializeField(value) {
   if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
@@ -1282,7 +1294,11 @@ export class Firestore implements IFirestore {
     if (app) {
       this.#native = FIRFirestore.firestoreForApp(app.native);
     } else {
-      this.#native = FIRFirestore.firestoreForApp(FIRApp.defaultApp());
+      if(defaultFirestore){
+        return defaultFirestore;
+      }
+      defaultFirestore = this;
+      this.#native = FIRFirestore.firestore();
     }
   }
 

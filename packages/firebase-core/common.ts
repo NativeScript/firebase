@@ -1,3 +1,5 @@
+
+
 export interface IFirebaseOptions {
 	apiKey?: string;
 
@@ -29,3 +31,4 @@ export interface FirebaseConfig {
 	automaticResourceManagement?: boolean;
 	name?: string;
 }
+

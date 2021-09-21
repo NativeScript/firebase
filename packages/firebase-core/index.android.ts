@@ -161,121 +161,96 @@ export class FirebaseApp {
 	}
 }
 
+let firebaseInstance: Firebase;
+let defaultApp: FirebaseApp;
+
 export class Firebase {
-	static app(name?: string) {
+	constructor() {
+		if (firebaseInstance) {
+			return firebaseInstance;
+		}
+		firebaseInstance = this;
+		return firebaseInstance;
+	}
+
+	app(name?: string) {
 		if (name) {
 			return FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance(name));
 		}
-		return FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
+		if (!defaultApp) {
+			defaultApp = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
+		}
+		return defaultApp;
 	}
-	static initializeApp(options: FirebaseOptions, configOrName?: FirebaseConfig | string) {
-		const nativeOptions = new com.google.firebase.FirebaseOptions.Builder();
-		if (options.apiKey) {
+
+	initializeApp(options: FirebaseOptions = null, configOrName?: FirebaseConfig | string) {
+		let nativeOptions;
+		if(options){
+			nativeOptions = new com.google.firebase.FirebaseOptions.Builder();
+		}
+		if (options?.apiKey) {
 			nativeOptions.setApiKey(options.apiKey);
 		}
 
-		if (options.gcmSenderId) {
+		if (options?.gcmSenderId) {
 			nativeOptions.setGcmSenderId(options.gcmSenderId);
 		}
 
-		if (options.databaseURL) {
+		if (options?.databaseURL) {
 			nativeOptions.setDatabaseUrl(options.databaseURL);
 		}
 
-		if (options.googleAppId) {
+		if (options?.googleAppId) {
 			nativeOptions.setApplicationId(options.googleAppId);
 		}
 
-		if (options.projectId) {
+		if (options?.projectId) {
 			nativeOptions.setProjectId(options.projectId);
 		}
 
-		if (options.storageBucket) {
+		if (options?.storageBucket) {
 			nativeOptions.setStorageBucket(options.storageBucket);
 		}
 
-		if (options.trackingId) {
+		if (options?.trackingId) {
 			nativeOptions.setGaTrackingId(options.trackingId);
 		}
 
 		const name = typeof configOrName === 'string' ? configOrName : configOrName?.name;
 		let app: com.google.firebase.FirebaseApp;
+		let isDefault = false;
 		if (name) {
+			if(!nativeOptions){
+				nativeOptions = new com.google.firebase.FirebaseOptions.Builder()
+			}
 			app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext(), nativeOptions.build(), name);
 		} else {
-			com.google.firebase.FirebaseApp.getInstance();
-			app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext());
+			isDefault = true;
+			if(nativeOptions){
+				app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext(), nativeOptions.build());
+			}else {
+				app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext());
+			}
 		}
 
 		if (app && typeof configOrName === 'object' && typeof configOrName.automaticResourceManagement === 'boolean') {
 			app.setAutomaticResourceManagementEnabled(configOrName.automaticDataCollectionEnabled);
 		}
+		
+		const fbApp = FirebaseApp.fromNative(app);
 
-		return new Promise((resolve, reject) => {
-			if (app) {
-				resolve(app);
-			} else {
-				reject();
-			}
-		});
-	}
-	static admob() {
-		return undefined;
-	}
+		if(isDefault){
+			defaultApp = fbApp
+		}
 
-	static analytics() {
-		return undefined;
+		return fbApp;
 	}
+}
 
-	static appCheck(): any {
-		return undefined;
+export function firebase() {
+	if (firebaseInstance) {
+		return firebaseInstance;
 	}
-
-	static auth(app?: FirebaseApp): any {
-		return undefined;
-	}
-
-	static crashlytics(): any {
-		return undefined;
-	}
-
-	static database(app?: FirebaseApp): any {
-		return undefined;
-	}
-
-	static dynamicLinks(): any {
-		return undefined;
-	}
-
-	static firestore(): any {
-		return undefined;
-	}
-
-  static functions(): any {
-    return undefined;
-  }
-
-	static inAppMessaging(): any {
-		return undefined;
-	}
-
-	static installations(app?: FirebaseApp): any {
-		return undefined;
-	}
-
-	static messaging(): any {
-		return undefined;
-	}
-
-	static performance(): any {
-		return undefined;
-	}
-
-	static remoteConfig(app?: FirebaseApp): any {
-		return undefined;
-	}
-
-	static storage(app?: FirebaseApp): any {
-		return undefined;
-	}
+	firebaseInstance = new Firebase();
+	return firebaseInstance;
 }

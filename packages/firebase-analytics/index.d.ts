@@ -1,33 +1,35 @@
-import {IAnalytics, EventParameter} from './common';
+import { IAnalytics, EventParameter } from './common';
 
 export * from './common';
 
-declare class Analytics implements IAnalytics {
-  readonly appInstanceId: string;
+export declare class Analytics implements IAnalytics {
+	readonly appInstanceId: string;
 
-  logEvent(name: string, parameters: EventParameter): void;
+	logEvent(name: string, parameters: EventParameter): void;
 
-  setUserId(userId: string): void;
+	setUserId(userId: string): void;
 
-  resetAnalyticsData(): void;
+	resetAnalyticsData(): void;
 
-  setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void;
+	setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void;
 
-  setUserProperty(value: string, name: string): void;
+	setUserProperty(value: string, name: string): void;
 
-  setSessionTimeoutInterval(sessionTimeoutInterval: number): void;
+	setSessionTimeoutInterval(sessionTimeoutInterval: number): void;
 
-  setDefaultEventParameters(parameters: EventParameter): void;
+	setDefaultEventParameters(parameters: EventParameter): void;
 
-  setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void;
+	setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void;
 
-  handleOpenURL(url: string): void;
+	handleOpenURL(url: string): void;
 
-  handleUserActivity(userActivity: any): void;
+	handleUserActivity(userActivity: any): void;
 }
 
 declare module '@nativescript/firebase-core' {
-  class Firebase {
-    static analytics(): Analytics;
-  }
+	export interface Firebase extends FirebaseAnalytics {}
+}
+
+export interface FirebaseAnalytics {
+	static analytics(): Analytics;
 }

@@ -1,11 +1,18 @@
-import { deserialize, Firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp } from '@nativescript/firebase-core';
 import { HttpMethod, IHttpMetric, IPerformance, ITrace } from './common';
 
+let defaultPerformance: Performance;
 
-Firebase.performance = ()=>{
-    return new Performance();
-}
-
+const fb = firebase();
+Object.defineProperty(fb, 'performance', {
+	value: () => {
+		if (!defaultPerformance) {
+			defaultPerformance = new Performance();
+		}
+		return defaultPerformance;
+	},
+	writable: false,
+});
 
 function toHttpMethod(method: HttpMethod): FIRHTTPMethod {
 	switch (method) {
@@ -127,6 +134,15 @@ export class Trace implements ITrace {
 export class Performance implements IPerformance {
 	#native: FIRPerformance;
 	#app: FirebaseApp;
+
+	constructor(){
+		if (defaultPerformance) {
+			return defaultPerformance;
+		}
+		defaultPerformance = this;
+		this.#native = FIRPerformance.sharedInstance();
+	}
+
 	get isPerformanceCollectionEnabled(): boolean {
 		return this.native.dataCollectionEnabled;
 	}
