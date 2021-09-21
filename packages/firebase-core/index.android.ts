@@ -116,7 +116,7 @@ export class FirebaseApp {
 	#options: FirebaseOptions;
 
 	static fromNative(app: com.google.firebase.FirebaseApp) {
-		if (app instanceof FIRApp) {
+		if (app instanceof com.google.firebase.FirebaseApp) {
 			const fb = new FirebaseApp();
 			fb.#native = app;
 			return fb;
