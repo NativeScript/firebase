@@ -1,7 +1,7 @@
 {
     "name": "@nativescript/firebase-admob",
-    "version": "1.0.0",
-    "description": "Add a plugin description",
+    "version": "1.0.0-alpha.0",
+    "description": "NativeScript Firebase - Admob",
     "main": "index",
     "typings": "index.d.ts",
     "nativescript": {
@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/NativeScript/plugins.git"
+        "url": "https://github.com/NativeScript/firebase.git"
     },
     "keywords": [
         "NativeScript",
@@ -26,10 +26,10 @@
         "email": "oss@nativescript.org"
     },
     "bugs": {
-        "url": "https://github.com/NativeScript/plugins/issues"
+        "url": "https://github.com/NativeScript/firebase/issues"
     },
     "license": "Apache-2.0",
-    "homepage": "https://github.com/NativeScript/plugins",
+    "homepage": "https://github.com/NativeScript/firebase",
     "readmeFilename": "README.md",
     "bootstrapper": "@nativescript/plugin-seed"
 }

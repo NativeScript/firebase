@@ -1,6 +1,7 @@
 import { FirebaseApp, FirebaseError, firebase } from '@nativescript/firebase-core';
 import { ICrashlytics } from './common';
 import lazy from '@nativescript/core/utils/lazy';
+import StackTrace from 'stacktrace-js';
 const NSCrashlyticsReference = lazy(() => org.nativescript.firebase.crashlytics.FirebaseCrashlytics);
 
 let defaultCrashlytics: Crashlytics;
@@ -68,7 +69,19 @@ export class Crashlytics implements ICrashlytics {
 		this.native.log(message);
 	}
 	recordError(error: any): void {
-		this.native.recordException(error);
+		if (error instanceof Error) {
+			StackTrace.fromError(error).then((stack) => {
+				const traceElements = Array.create('java.lang.StackTraceElement', stack.length);
+				stack.forEach((item, i) => {
+					traceElements[i] = new java.lang.StackTraceElement('', item.functionName, item.fileName, -1);
+				});
+				const t = new java.lang.Throwable(error.message);
+				t.setStackTrace(traceElements);
+				this.native.recordException(t);
+			});
+		} else {
+			this.native.recordException(error);
+		}
 	}
 	sendUnsentReports(): void {
 		this.native.sendUnsentReports();

@@ -807,7 +807,7 @@ export class TwitterAuthProvider {
 export class PhoneAuthCredential extends AuthCredential implements IPhoneAuthCredential {
   protected _native: com.google.firebase.auth.PhoneAuthCredential;
 
-  staticFromNative(credential: com.google.firebase.auth.PhoneAuthCredential) {
+  static fromNative(credential: com.google.firebase.auth.PhoneAuthCredential) {
     if (credential instanceof com.google.firebase.auth.PhoneAuthCredential) {
       const nativeCredential = new PhoneAuthCredential();
       nativeCredential._native = credential;
@@ -1293,7 +1293,7 @@ export class Auth implements IAuth {
   }
 
   #user: User;
-  get user(): User {
+  get currentUser(): User {
     if (!this.#user) {
       this.#user = User.fromNative(this.native.getCurrentUser());
     }

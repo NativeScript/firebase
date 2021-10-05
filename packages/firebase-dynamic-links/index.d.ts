@@ -1,5 +1,5 @@
 import { FirebaseApp } from '@nativescript/firebase-core';
-import { ShortLinkType } from './common';
+import { ShortLinkType, IDynamicLink } from './common';
 
 export { ShortLinkType };
 

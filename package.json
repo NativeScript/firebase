@@ -36,6 +36,7 @@
     "nativescript-vue-template-compiler": "~2.9.0",
     "ng-packagr": "^12.0.0",
     "rxjs": "~6.6.0",
+    "stacktrace-js": "~2.0.2",
     "typescript": "~4.3.0",
     "zone.js": "~0.11.1"
   },

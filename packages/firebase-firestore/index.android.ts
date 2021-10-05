@@ -99,9 +99,9 @@ function deserializeField(value) {
     return dict;
   }
 
-  // if (value instanceof NSData) {
-  //   //todo handle blob
-  // }
+  if (value instanceof com.google.firebase.firestore.Blob) {
+    return Bytes.fromNative(value);
+  }
 
   return value;
 }
@@ -186,8 +186,8 @@ function serializeItems(value) {
     return dict;
   }
 
-  if (value instanceof Blob) {
-    //todo handle blob
+  if (value instanceof Bytes) {
+   return value.native;
   }
 
   return value;
@@ -499,8 +499,9 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
   onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
   onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): any {
     const argsCount = arguments.length;
+    let listener;
     if (argsCount === 1 && typeof options === 'object') {
-      const listener = this.native.addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
+      listener = this.native.addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             options?.error?.(FirebaseError.fromNative(error));
@@ -508,11 +509,10 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
             options?.complete?.();
             options?.next?.(QuerySnapshot.fromNative(ss));
           }
-          listener.remove();
         }
       }));
     } else if (argsCount === 2) {
-      const listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
+      listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             onNext?.error?.(FirebaseError.fromNative(error));
@@ -520,12 +520,11 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
             onNext?.complete?.();
             onNext?.next?.(QuerySnapshot.fromNative(ss));
           }
-          listener.remove();
         }
       }));
     } else if (argsCount === 3) {
 
-      const listener = this.native.addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
+      listener = this.native.addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             onNext?.(FirebaseError.fromNative(error));
@@ -533,13 +532,12 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
             onError?.();
             options?.(QuerySnapshot.fromNative(ss));
           }
-          listener.remove();
         }
       }));
 
     } else if (argsCount === 4) {
 
-      const listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
+  listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             onError?.(FirebaseError.fromNative(error));
@@ -547,10 +545,11 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
             onCompletion?.();
             onNext?.(QuerySnapshot.fromNative(ss));
           }
-          listener.remove();
         }
       }));
     }
+
+    return () => listener?.remove?.();
   }
 
   orderBy(fieldPath: keyof DocumentData | FieldPath, directionStr: 'asc' | 'desc' = 'asc'): Query {
@@ -963,9 +962,10 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
   onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
   onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
   onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any) {
+    let listener;
     const argsCount = arguments.length;
     if (argsCount === 1 && typeof options === 'object') {
-      const listener = this.native.addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
+      listener = this.native.addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             options?.error?.(FirebaseError.fromNative(error));
@@ -973,12 +973,11 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
             options?.complete?.();
             options?.next?.(DocumentSnapshot.fromNative(ss));
           }
-          listener.remove();
         }
       }));
     } else if (argsCount === 2) {
 
-      const listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
+      listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             onNext?.error?.(FirebaseError.fromNative(error));
@@ -986,12 +985,11 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
             onNext?.complete?.();
             onNext?.next?.(DocumentSnapshot.fromNative(ss));
           }
-          listener.remove();
         }
       }))
     } else if (argsCount === 3) {
 
-      const listener = this.native.addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
+      listener = this.native.addSnapshotListener(new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             onNext?.(FirebaseError.fromNative(error));
@@ -999,13 +997,12 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
             onError?.();
             options?.(DocumentSnapshot.fromNative(ss));
           }
-          listener.remove();
         }
       }));
 
     } else if (argsCount === 4) {
 
-      const listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
+      listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             onError?.(FirebaseError.fromNative(error));
@@ -1013,10 +1010,11 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
             onCompletion?.();
             onNext?.(DocumentSnapshot.fromNative(ss));
           }
-          listener.remove();
         }
       }))
     }
+
+    return () => listener?.remove?.();
   }
 
   set(data: T, options?: SetOptions): Promise<void> {
@@ -1454,18 +1452,58 @@ export class Bytes implements IBytes {
   }
 
   static fromBase64String(base64) {
+    if(typeof base64 === 'string'){
+      let b64 = base64;
+      if(base64.startsWith('data:')){
+        b64 = base64.split(",")[1];
+      }
+      const data = new java.lang.String(b64).getBytes('UTF-8');
+      const encoded = android.util.Base64.encode(data, android.util.Base64.NO_WRAP);
+      const bytes = new Bytes();
+      bytes.#native = com.google.firebase.firestore.Blob.fromBytes(encoded);
+      return bytes;
+    }
+    return null;
   }
 
   static fromUint8Array(array) {
+    if (!(array instanceof Uint8Array)) {
+      throw new Error('Bytes.fromUint8Array expects an instance of Uint8Array');
+    }
 
+    const bytes = new Bytes();
+    bytes.#native = com.google.firebase.firestore.Blob.fromBytes(Array.from(array));
+    return bytes;
   }
 
+  #base64: string
   toBase64(): string {
-    return "";
+    if(!this.#base64){
+      const data = this.native.toBytes();
+      this.#base64 = android.util.Base64.encodeToString(data, android.util.Base64.NO_WRAP);
+    }
+    
+    return this.#base64;
   }
 
+  #native_buffer;
+  #buffer;
   toUint8Array(): Uint8Array {
-    return undefined;
+    if(!this.#native_buffer){
+      this.#native_buffer = java.nio.ByteBuffer.wrap(this.native.toBytes())
+    }
+    if(!this.#buffer){
+      this.#buffer = (<any>ArrayBuffer).from(this.#native_buffer)
+    }
+    return new Uint8Array(this.#buffer);
+  }
+
+  get native(){
+    return this.#native;
+  }
+
+  get android(){
+    return this.native;
   }
 }
 

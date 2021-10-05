@@ -363,189 +363,201 @@ export class Metadata implements IMetadata {
 }
 
 export class Reference implements IReference {
-  #native: com.google.firebase.storage.StorageReference;
+	#native: com.google.firebase.storage.StorageReference;
 
-  static fromNative(value: com.google.firebase.storage.StorageReference) {
-    if (value instanceof com.google.firebase.storage.StorageReference) {
-      const ref = new Reference();
-      ref.#native = value;
-      return ref;
-    }
-    return null;
-  }
+	static fromNative(value: com.google.firebase.storage.StorageReference) {
+		if (value instanceof com.google.firebase.storage.StorageReference) {
+			const ref = new Reference();
+			ref.#native = value;
+			return ref;
+		}
+		return null;
+	}
 
-  get native() {
-    return this.#native;
-  }
+	get native() {
+		return this.#native;
+	}
 
-  get android() {
-    return this.native;
-  }
+	get android() {
+		return this.native;
+	}
 
-  get bucket(): string {
-    return this.native?.getBucket?.();
-  }
+	get bucket(): string {
+		return this.native?.getBucket?.();
+	}
 
-  get fullPath(): string {
-    return this.native?.getPath?.();
-  }
+	get fullPath(): string {
+		return this.native?.getPath?.();
+	}
 
-  get name(): string {
-    return this.native?.getName?.();
-  }
+	get name(): string {
+		return this.native?.getName?.();
+	}
 
-  get parent(): Reference {
-    return Reference.fromNative(this.native.getParent?.());
-  }
+	get parent(): Reference {
+		return Reference.fromNative(this.native.getParent?.());
+	}
 
-  get root(): Reference {
-    return Reference.fromNative(this.native.getRoot?.());
-  }
+	get root(): Reference {
+		return Reference.fromNative(this.native.getRoot?.());
+	}
 
-  get storage() {
-    return Storage.fromNative(this.native.getStorage());
-  }
+	get storage() {
+		return Storage.fromNative(this.native.getStorage());
+	}
 
-  child(path: string): Reference {
-    return Reference.fromNative(this.native.child(path));
-  }
+	child(path: string): Reference {
+		return Reference.fromNative(this.native.child(path));
+	}
 
-  delete(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      org.nativescript.firebase.storage.FirebaseStorage.StorageReference.delete(
-        this.native,
-        new org.nativescript.firebase.storage.FirebaseStorage.Callback<java.lang.Void>({
-          onError(param0) {
-            reject(FirebaseError.fromNative(param0));
-          },
-          onSuccess(param0) {
-            resolve();
-          },
-        })
-      );
-    });
-  }
+	delete(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			org.nativescript.firebase.storage.FirebaseStorage.StorageReference.delete(
+				this.native,
+				new org.nativescript.firebase.storage.FirebaseStorage.Callback<java.lang.Void>({
+					onError(param0) {
+						reject(FirebaseError.fromNative(param0));
+					},
+					onSuccess(param0) {
+						resolve();
+					},
+				})
+			);
+		});
+	}
 
-  getDownloadURL(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      org.nativescript.firebase.storage.FirebaseStorage.StorageReference.getDownloadURL(
-        this.native,
-        new org.nativescript.firebase.storage.FirebaseStorage.Callback<android.net.Uri>({
-          onError(param0) {
-            reject(FirebaseError.fromNative(param0));
-          },
-          onSuccess(param0) {
-            resolve(param0.toString());
-          },
-        })
-      );
-    });
-  }
+	getDownloadURL(): Promise<string> {
+		return new Promise((resolve, reject) => {
+			org.nativescript.firebase.storage.FirebaseStorage.StorageReference.getDownloadURL(
+				this.native,
+				new org.nativescript.firebase.storage.FirebaseStorage.Callback<android.net.Uri>({
+					onError(param0) {
+						reject(FirebaseError.fromNative(param0));
+					},
+					onSuccess(param0) {
+						resolve(param0.toString());
+					},
+				})
+			);
+		});
+	}
 
-  getMetadata(): Promise<Metadata> {
-    return new Promise((resolve, reject) => {
-      org.nativescript.firebase.storage.FirebaseStorage.StorageReference.getMetadata(
-        this.native,
-        new org.nativescript.firebase.storage.FirebaseStorage.Callback<com.google.firebase.storage.StorageMetadata>({
-          onError(param0) {
-            reject(FirebaseError.fromNative(param0));
-          },
-          onSuccess(param0) {
-            resolve(Metadata.fromNative(param0));
-          },
-        })
-      );
-    });
-  }
+	getMetadata(): Promise<Metadata> {
+		return new Promise((resolve, reject) => {
+			org.nativescript.firebase.storage.FirebaseStorage.StorageReference.getMetadata(
+				this.native,
+				new org.nativescript.firebase.storage.FirebaseStorage.Callback<com.google.firebase.storage.StorageMetadata>({
+					onError(param0) {
+						reject(FirebaseError.fromNative(param0));
+					},
+					onSuccess(param0) {
+						resolve(Metadata.fromNative(param0));
+					},
+				})
+			);
+		});
+	}
 
-  list(options?: ListOptions): Promise<ListResult> {
-    return new Promise((resolve, reject) => {
-      org.nativescript.firebase.storage.FirebaseStorage.StorageReference.list(
-        this.native,
-        options?.maxResults ?? 1000,
-        options.pageToken || null,
-        new org.nativescript.firebase.storage.FirebaseStorage.Callback<com.google.firebase.storage.ListResult>({
-          onError(param0) {
-            reject(FirebaseError.fromNative(param0));
-          },
-          onSuccess(param0) {
-            resolve(ListResult.fromNative(param0));
-          },
-        })
-      );
-    });
-  }
+	list(options?: ListOptions): Promise<ListResult> {
+		return new Promise((resolve, reject) => {
+			org.nativescript.firebase.storage.FirebaseStorage.StorageReference.list(
+				this.native,
+				options?.maxResults ?? 1000,
+				options.pageToken || null,
+				new org.nativescript.firebase.storage.FirebaseStorage.Callback<com.google.firebase.storage.ListResult>({
+					onError(param0) {
+						reject(FirebaseError.fromNative(param0));
+					},
+					onSuccess(param0) {
+						resolve(ListResult.fromNative(param0));
+					},
+				})
+			);
+		});
+	}
 
-  listAll(): Promise<ListResult> {
-    return new Promise((resolve, reject) => {
-      org.nativescript.firebase.storage.FirebaseStorage.StorageReference.listAll(
-        this.native,
-        new org.nativescript.firebase.storage.FirebaseStorage.Callback<com.google.firebase.storage.ListResult>({
-          onError(param0) {
-            reject(FirebaseError.fromNative(param0));
-          },
-          onSuccess(param0) {
-            resolve(ListResult.fromNative(param0));
-          },
-        })
-      );
-    });
-  }
+	listAll(): Promise<ListResult> {
+		return new Promise((resolve, reject) => {
+			org.nativescript.firebase.storage.FirebaseStorage.StorageReference.listAll(
+				this.native,
+				new org.nativescript.firebase.storage.FirebaseStorage.Callback<com.google.firebase.storage.ListResult>({
+					onError(param0) {
+						reject(FirebaseError.fromNative(param0));
+					},
+					onSuccess(param0) {
+						resolve(ListResult.fromNative(param0));
+					},
+				})
+			);
+		});
+	}
 
-  put(data: Blob | Uint8Array | ArrayBuffer, metadata?: Metadata): Task {
-    if (data instanceof Blob) {
-      const ab = (Blob as any).InternalAccessor.getBuffer(data).buffer.slice(0);
-      if (metadata) {
-        return Task.fromNative(this.native.putBytes(Array.from(ab), metadata.native));
-      }
-      return Task.fromNative(this.native.putBytes(Array.from(ab)));
-    } else if (data instanceof Uint8Array || data instanceof ArrayBuffer) {
-      if (metadata) {
-        return Task.fromNative(this.native.putBytes(Array.from(data as any), metadata.native));
-      }
-      return Task.fromNative(this.native.putBytes(Array.from(data as any)));
-    }
-    return null;
-  }
+	put(data: Blob | Uint8Array | ArrayBuffer, metadata?: Metadata): Task {
+		if (data instanceof Blob) {
+			const ab = (Blob as any).InternalAccessor.getBuffer(data).buffer.slice(0);
+			if (metadata) {
+				return Task.fromNative(this.native.putBytes(Array.from(ab), metadata.native));
+			}
+			return Task.fromNative(this.native.putBytes(Array.from(ab)));
+		} else if (data instanceof Uint8Array || data instanceof ArrayBuffer) {
+			if (metadata) {
+				return Task.fromNative(this.native.putBytes(Array.from(data as any), metadata.native));
+			}
+			return Task.fromNative(this.native.putBytes(Array.from(data as any)));
+		}
+		return null;
+	}
 
-  putString(data: string, format: StringFormat = StringFormat.RAW, metadata?: Metadata): Task {
-    switch (format) {
-      case StringFormat.DATA_URL:
-        const base64 = b64WithoutPrefix(data);
-        const mime = getMIMEforBase64String(data);
+	putString(data: string, format: StringFormat = StringFormat.RAW, metadata?: Metadata): Task {
+		switch (format) {
+			case StringFormat.DATA_URL:
+				const base64 = b64WithoutPrefix(data);
+				const mime = getMIMEforBase64String(data);
 
-        const meta = metadata || new Metadata();
-        if (!metadata.contentType) {
-          meta.contentType = mime;
-        }
+				const meta = metadata || new Metadata();
+				if (!metadata.contentType) {
+					meta.contentType = mime;
+				}
 
-        org.nativescript.firebase.storage.FirebaseStorage.StorageReference.putString(this.native, base64, format, meta.native);
+				org.nativescript.firebase.storage.FirebaseStorage.StorageReference.putString(this.native, base64, format, meta.native);
 
-      default:
-        return Task.fromNative(org.nativescript.firebase.storage.FirebaseStorage.StorageReference.putString(this.native, data, format, metadata?.native || null));
-    }
-  }
+			default:
+				return Task.fromNative(org.nativescript.firebase.storage.FirebaseStorage.StorageReference.putString(this.native, data, format, metadata?.native || null));
+		}
+	}
 
-  updateMetadata(metadata: Metadata): Promise<Metadata> {
-    return new Promise((resolve, reject) => {
-      org.nativescript.firebase.storage.FirebaseStorage.StorageReference.updateMetadata(
-        this.native,
-        metadata.native,
-        new org.nativescript.firebase.storage.FirebaseStorage.Callback<com.google.firebase.storage.StorageMetadata>({
-          onError(param0) {
-            reject(FirebaseError.fromNative(param0));
-          },
-          onSuccess(param0) {
-            resolve(Metadata.fromNative(param0));
-          },
-        })
-      );
-    });
-  }
+	putFile(path: string, metadata?: Metadata): Task {
+		let task: Task = null;
+		try {
+			if (metadata) {
+				task = Task.fromNative(this.native.putFile(android.net.Uri.parse(path), metadata.native));
+			} else {
+				task = Task.fromNative(this.native.putFile(android.net.Uri.parse(path)));
+			}
+		} catch (e) {}
+		return task;
+	}
 
-  writeToFile(localFilePath: string): Task {
-    return Task.fromNative(this.native.getFile(new java.io.File(localFilePath)));
-  }
+	updateMetadata(metadata: Metadata): Promise<Metadata> {
+		return new Promise((resolve, reject) => {
+			org.nativescript.firebase.storage.FirebaseStorage.StorageReference.updateMetadata(
+				this.native,
+				metadata.native,
+				new org.nativescript.firebase.storage.FirebaseStorage.Callback<com.google.firebase.storage.StorageMetadata>({
+					onError(param0) {
+						reject(FirebaseError.fromNative(param0));
+					},
+					onSuccess(param0) {
+						resolve(Metadata.fromNative(param0));
+					},
+				})
+			);
+		});
+	}
+
+	writeToFile(localFilePath: string): Task {
+		return Task.fromNative(this.native.getFile(new java.io.File(localFilePath)));
+	}
 }
 
 export class Storage implements IStorage {

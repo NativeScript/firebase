@@ -5,5 +5,5 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.google.firebase:firebase-perf'
+  classpath 'com.google.firebase:perf-plugin:1.4.0'
 }

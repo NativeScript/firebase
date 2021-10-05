@@ -23,7 +23,7 @@
     "@nativescript/firebase-functions": "file:../../packages/firebase-functions"
   },
   "devDependencies": {
-    "@nativescript/android": "8.1.0",
-    "@nativescript/ios": "8.0.0"
+    "@nativescript/android": "8.2.0-alpha.2",
+    "@nativescript/ios": "8.1.0"
   }
 }

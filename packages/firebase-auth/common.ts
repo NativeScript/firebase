@@ -119,7 +119,7 @@ export interface UserProfileChangeRequest {
 
 export interface IAuth {
 	readonly app: FirebaseApp;
-	readonly user: IUser;
+	readonly currentUser: IUser;
 	readonly languageCode: string;
 	readonly settings: IAuthSettings;
 	readonly tenantId: string;

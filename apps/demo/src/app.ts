@@ -1,4 +1,4 @@
-import { Application } from '@nativescript/core';
+import { Application, Utils } from '@nativescript/core';
 import { firebase } from '@nativescript/firebase-core';
 import '@nativescript/firebase-admob';
 import '@nativescript/firebase-analytics';
@@ -51,5 +51,4 @@ messaging
 	.catch((e) => {
 		console.error('requestPermission', e);
 	});
-
 Application.run({ moduleName: 'app-root' });

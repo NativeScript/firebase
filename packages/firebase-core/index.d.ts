@@ -1,5 +1,6 @@
 import {FirebaseConfig, IFirebaseOptions} from './common';
 
+
 declare function serialize(data: any): any;
 
 declare function deserialize(data: any): any;
@@ -8,6 +9,30 @@ declare class FirebaseOptions implements IFirebaseOptions {
   readonly ios: any;
   readonly android: any;
   readonly native: any;
+
+  apiKey?: string;
+
+	gcmSenderId?: string;
+
+	androidClientId?: string;
+
+	appGroupId?: string;
+
+	bundleId?: string;
+
+	clientId?: string;
+
+	databaseURL?: string;
+
+	deepLinkURLScheme?: string;
+
+	googleAppId?: string;
+
+	projectId?: string;
+
+	storageBucket?: string;
+
+	trackingId?: string;
 }
 
 declare class FirebaseApp {

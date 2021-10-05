@@ -97,7 +97,7 @@ function deserializeField(value) {
   }
 
   if (value instanceof NSData) {
-    //todo handle blob
+    return Bytes.fromNative(value);
   }
 
   return value;
@@ -150,8 +150,8 @@ function serializeItems(value) {
     return dict;
   }
 
-  if (value instanceof Blob) {
-    //todo handle blob
+  if (value instanceof Bytes) {
+    return value.native;
   }
 
   return value;
@@ -439,48 +439,47 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
   onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
   onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
   onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): any {
+    let listener;
     const argsCount = arguments.length;
     if (argsCount === 1 && typeof options === 'object') {
-      const listener = this.native.addSnapshotListener((ss, error) => {
+      listener = this.native.addSnapshotListener((ss, error) => {
         if (error) {
           options?.error?.(FirebaseError.fromNative(error));
         } else {
           options?.complete?.();
           options?.next?.(QuerySnapshot.fromNative(ss));
         }
-        listener.remove();
       });
     } else if (argsCount === 2) {
-      const listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
+      listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
         if (error) {
           onNext?.error?.(FirebaseError.fromNative(error));
         } else {
           onNext?.complete?.();
           onNext?.next?.(QuerySnapshot.fromNative(ss));
         }
-        listener.remove();
       });
     } else if (argsCount === 3) {
-      const listener = this.native.addSnapshotListener((ss, error) => {
+      listener = this.native.addSnapshotListener((ss, error) => {
         if (error) {
           onNext?.(FirebaseError.fromNative(error));
         } else {
           onError?.();
           options?.(QuerySnapshot.fromNative(ss));
         }
-        listener.remove();
       });
     } else if (argsCount === 4) {
-      const listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
+      listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
         if (error) {
           onError?.(FirebaseError.fromNative(error));
         } else {
           onCompletion?.();
           onNext?.(QuerySnapshot.fromNative(ss));
         }
-        listener.remove();
       });
     }
+
+    return () => listener?.remove?.();
   }
 
   orderBy(fieldPath: keyof DocumentData | FieldPath, directionStr: 'asc' | 'desc' = 'asc'): Query {
@@ -869,47 +868,46 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
   onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
   onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any) {
     const argsCount = arguments.length;
+    let listener
     if (argsCount === 1 && typeof options === 'object') {
-      const listener = this.native.addSnapshotListener((ss, error) => {
+      listener = this.native.addSnapshotListener((ss, error) => {
         if (error) {
           options?.error?.(FirebaseError.fromNative(error));
         } else {
           options?.complete?.();
           options?.next?.(DocumentSnapshot.fromNative(ss));
         }
-        listener.remove();
       });
     } else if (argsCount === 2) {
-      const listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
+      listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
         if (error) {
           onNext?.error?.(FirebaseError.fromNative(error));
         } else {
           onNext?.complete?.();
           onNext?.next?.(DocumentSnapshot.fromNative(ss));
         }
-        listener.remove();
       });
     } else if (argsCount === 3) {
-      const listener = this.native.addSnapshotListener((ss, error) => {
+      listener = this.native.addSnapshotListener((ss, error) => {
         if (error) {
           onNext?.(FirebaseError.fromNative(error));
         } else {
           onError?.();
           options?.(DocumentSnapshot.fromNative(ss));
         }
-        listener.remove();
       });
     } else if (argsCount === 4) {
-      const listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
+      listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
         if (error) {
           onError?.(FirebaseError.fromNative(error));
         } else {
           onCompletion?.();
           onNext?.(DocumentSnapshot.fromNative(ss));
         }
-        listener.remove();
       });
     }
+
+    return () => listener?.remove?.();
   }
 
   set(data: T, options?: SetOptions): Promise<void> {
@@ -1259,31 +1257,55 @@ export class Settings implements ISettings {
 }
 
 export class Bytes implements IBytes {
-  #native: NSData;
+	#native: NSData;
 
-  static fromNative(data: NSData) {
-    if (data instanceof NSData) {
-      const nsData = new Bytes();
-      nsData.#native = data;
-      return nsData;
-    }
-    return null;
-  }
+	static fromNative(data: NSData) {
+		if (data instanceof NSData) {
+			const nsData = new Bytes();
+			nsData.#native = data;
+			return nsData;
+		}
+		return null;
+	}
 
-  static fromBase64String(base64) {
-  }
+	static fromBase64String(base64) {
+		if (typeof base64 === 'string') {
+			let b64 = base64;
+			if (base64.startsWith('data:')) {
+				b64 = base64.split(',')[1];
+			}
+			const bytes = new Bytes();
+			bytes.#native = NSData.alloc().initWithBase64EncodedStringOptions(b64, 0);
+			return bytes;
+		}
+		return null;
+	}
 
-  static fromUint8Array(array) {
+	static fromUint8Array(array) {
+		if (!(array instanceof Uint8Array)) {
+			throw new Error('Bytes.fromUint8Array expects an instance of Uint8Array');
+		}
 
-  }
+		const nsData = new Bytes();
+		nsData.#native = NSData.dataWithData(array as any);
+		return nsData;
+	}
 
-  toBase64(): string {
-    return "";
-  }
+	toBase64(): string {
+		return this.native.base64EncodedStringWithOptions(0);
+	}
 
-  toUint8Array(): Uint8Array {
-    return new Uint8Array(interop.bufferFromData(NSData.dataWithData(this.#native)))
-  }
+	toUint8Array(): Uint8Array {
+		return new Uint8Array(interop.bufferFromData(NSData.dataWithData(this.#native)));
+	}
+
+	get native() {
+		return this.#native;
+	}
+
+	get ios() {
+		return this.native;
+	}
 }
 
 export class Firestore implements IFirestore {

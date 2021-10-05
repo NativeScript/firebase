@@ -1,7 +1,6 @@
 import { firebase, FirebaseApp } from '@nativescript/firebase-core';
 import { ICrashlytics } from './common';
 
-
 let defaultCrashlytics: Crashlytics;
 const fb = firebase();
 Object.defineProperty(fb, 'crashlytics', {
@@ -63,7 +62,18 @@ export class Crashlytics implements ICrashlytics {
 	}
 
 	recordError(error: any): void {
-		this.native.recordError(error);
+		if (error instanceof Error) {
+			StackTrace.fromError(error).then((stack) => {
+				const traceElements = [];
+				stack.forEach((item, i) => {
+					traceElements[i] = FIRStackFrame.stackFrameWithSymbolFileLine(item.functionName, item.fileName, item.lineNumber);
+				});
+				const e = FIRExceptionModel.exceptionModelWithNameReason('JavaScriptError', error.message);
+				this.native.recordExceptionModel(e);
+			});
+		} else {
+			this.native.recordError(error);
+		}
 	}
 
 	sendUnsentReports(): void {

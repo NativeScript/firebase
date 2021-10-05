@@ -248,10 +248,13 @@ export type DocumentFieldType =
 
 
 export interface IBytes {
+
   toBase64(): string;
 
   toUint8Array(): Uint8Array;
 }
+
+
 
 export interface IFirestore {
   useEmulator(host: string, port: number);

@@ -88,6 +88,7 @@ export interface IReference {
 	listAll(): Promise<IListResult>;
 	put(data: Blob | Uint8Array | ArrayBuffer, metadata?: IMetadata): ITask;
 	putString(data: string, format?: StringFormat, metadata?: IMetadata): ITask;
+	putFile(path: string, metadata?: IMetadata): ITask;
 	updateMetadata(metadata: IMetadata): Promise<IMetadata>;
 	writeToFile(localFilePath: string): ITask;
 }
@@ -97,7 +98,7 @@ export interface IStorage {
 	maxDownloadRetryTime: number;
 	maxOperationRetryTime: number;
 	maxUploadRetryTime: number;
-  useEmulator(host: string, port: number);
+  	useEmulator(host: string, port: number);
 	ref(path?: undefined | string): IReference;
 	refFromURL(url: string): IReference;
 }
