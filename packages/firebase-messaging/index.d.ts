@@ -1,6 +1,6 @@
 import { FirebaseApp, Firebase } from '@nativescript/firebase-core';
-import { IMessaging, Permissions } from './common';
-
+import { IMessaging, Permissions, RemoteMessage, AuthorizationStatus } from './common';
+export { AuthorizationStatus } from './common';
 export declare class Messaging implements IMessaging {
 	getToken(): Promise<string>;
 
@@ -29,6 +29,8 @@ export declare class Messaging implements IMessaging {
 	isDeviceRegisteredForRemoteMessages(): boolean;
 
 	isAutoInitEnabled: boolean;
+	showNotificationsWhenInForeground: boolean;
+	
 	readonly app: FirebaseApp;
 
 	readonly native;
