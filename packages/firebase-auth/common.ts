@@ -30,7 +30,7 @@ export interface IUser {
 	emailVerified: boolean;
 	email: string;
 	phoneNumber: string;
-	provideId: string;
+	providerId: string;
 	photoURL: string;
 	metadata: any;
 	providerData: any;

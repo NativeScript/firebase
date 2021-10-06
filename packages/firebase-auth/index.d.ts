@@ -32,24 +32,24 @@ export declare class User implements IUser {
 	readonly emailVerified: boolean;
 	readonly email: string;
 	readonly phoneNumber: string;
-	readonly provideId: string;
+	readonly providerId: string;
 	readonly photoURL: string;
 	readonly metadata: UserMetadata;
 	readonly providerData: UserInfo[];
 
 	delete(): Promise<void>;
 	getIdToken(forceRefresh?: undefined | false | true): Promise<string>;
-	getIdTokenResult(forceRefresh?: undefined | false | true): Promise<IAuthTokenResult>;
-	linkWithCredential(credential: IAuthCredential): Promise<UserCredential>;
-	reauthenticateWithCredential(credential: IAuthCredential): Promise<UserCredential>;
+	getIdTokenResult(forceRefresh?: undefined | false | true): Promise<AuthTokenResult>;
+	linkWithCredential(credential: AuthCredential): Promise<UserCredential>;
+	reauthenticateWithCredential(credential: AuthCredential): Promise<UserCredential>;
 	reload(): Promise<void>;
-	sendEmailVerification(actionCodeSettings?: IActionCodeSettings): Promise<void>;
-	unlink(providerId: string): Promise<IUser>;
+	sendEmailVerification(actionCodeSettings?: ActionCodeSettings): Promise<void>;
+	unlink(providerId: string): Promise<User>;
 	updateEmail(email: string): Promise<void>;
 	updatePassword(password: string): Promise<void>;
-	updatePhoneNumber(credential: IAuthCredential): Promise<void>;
+	updatePhoneNumber(credential: AuthCredential): Promise<void>;
 	updateProfile(updates: UserProfileChangeRequest): Promise<void>;
-	verifyBeforeUpdateEmail(email: string, actionCodeSettings?: IActionCodeSettings): Promise<void>;
+	verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings): Promise<void>;
 }
 
 export declare class AuthSettings implements IAuthSettings {
@@ -156,9 +156,9 @@ export declare class AuthTokenResult implements IAuthTokenResult {
 
 export declare class Auth implements IAuth {
 	readonly app: FirebaseApp;
-	readonly currentUser: IUser;
+	readonly currentUser: User;
 	readonly languageCode: string;
-	readonly settings: IAuthSettings;
+	readonly settings: AuthSettings;
 	readonly tenantId: string;
 
 	useEmulator(host: string, port: number);
@@ -175,13 +175,13 @@ export declare class Auth implements IAuth {
 
 	isSignInWithEmailLink(emailLink: string): boolean;
 
-	addAuthStateChangeListener(listener: (user: IUser) => void);
+	addAuthStateChangeListener(listener: (user: User) => void);
 
-	removeAuthStateChangeListener(listener: (user: IUser) => void);
+	removeAuthStateChangeListener(listener: (user: User) => void);
 
-	addIdTokenChangeListener(listener: (user: IUser) => void);
+	addIdTokenChangeListener(listener: (user: User) => void);
 
-	removeIdTokenChangListener(listener: (user: IUser) => void);
+	removeIdTokenChangListener(listener: (user: User) => void);
 
 	sendPasswordResetEmail(email: string, actionCodeSettings?: ActionCodeSettings): Promise<void>;
 
@@ -189,7 +189,7 @@ export declare class Auth implements IAuth {
 
 	signInAnonymously(): Promise<UserCredential>;
 
-	signInWithCredential(credential: IAuthCredential): Promise<UserCredential>;
+	signInWithCredential(credential: AuthCredential): Promise<UserCredential>;
 
 	signInWithCustomToken(customToken: string): Promise<UserCredential>;
 

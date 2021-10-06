@@ -165,7 +165,7 @@ export class User implements IUser {
     return this.native?.getPhoneNumber?.();
   }
 
-  get provideId(): string {
+  get providerId(): string {
     return this.native?.getProviderId?.();
   }
 
