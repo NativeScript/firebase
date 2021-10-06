@@ -6,7 +6,7 @@ import { AdChoicesPlacement, IMediaContent, IMuteThisAdReason, INativeAd, INativ
 
 export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio };
 declare const AdLoaderAdType;
-@CSSType('NativeAdView')
+
 export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
 	#native: GADNativeAdView;
 	#children: View[] = [];

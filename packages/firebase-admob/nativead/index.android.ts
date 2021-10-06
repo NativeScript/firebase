@@ -7,7 +7,7 @@ export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio };
 const NATIVE_AD_LOADED_EVENT = 'adNativeAdLoaded';
 const AD_MANAGER_AD_VIEW_LOADED_EVENT = 'adManagerAdViewLoaded';
 
-@CSSType('NativeAdView')
+
 export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
 	#native: com.google.android.gms.ads.nativead.NativeAdView;
 	#children: View[] = []
