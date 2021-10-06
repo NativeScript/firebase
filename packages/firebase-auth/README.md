@@ -201,7 +201,7 @@ Most configuration is already setup when using Google Sign-In with Firebase, how
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
-import { GithubAuthProvider } from '@nativescript/firebase-auth';
+import { GoogleAuthProvider } from '@nativescript/firebase-auth';
 
 const credential = GoogleAuthProvider.credential(accessToken, idToken);
 
