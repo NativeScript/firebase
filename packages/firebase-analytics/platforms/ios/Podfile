@@ -1,1 +1,10 @@
-pod 'Firebase/Analytics','~>8.6'
+  # Firebase dependencies
+  if defined?($NSFirebaseAnalyticsWithoutAdIdSupport)
+    Pod::UI.puts "Using Firebase/AnalyticsWithoutAdIdSupport pod in place of default Firebase/Analytics"
+
+    pod 'Firebase/AnalyticsWithoutAdIdSupport','~>8.6'
+  else
+    Pod::UI.puts "Using default Firebase/Analytics with Ad Ids. May require App Tracking Transparency. Not allowed for Kids apps."
+    Pod::UI.puts "You may set variable `$NSFirebaseAnalyticsWithoutAdIdSupport=true` in Podfile to use analytics without ad ids."
+    pod 'Firebase/Analytics','~>8.6'
+  end

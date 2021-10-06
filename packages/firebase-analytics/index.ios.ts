@@ -49,7 +49,7 @@ export class Analytics implements IAnalytics {
   }
 
   get appInstanceId(): string {
-    return FIRAnalytics.appInstanceID();
+    return FIRAnalytics?.appInstanceID?.();
   }
 
   setSessionTimeoutInterval(sessionTimeoutInterval: number): void {

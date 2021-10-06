@@ -1,8 +1,10 @@
 import { FirebaseApp, Firebase } from '@nativescript/firebase-core';
-import { IMessaging } from './common';
+import { IMessaging, Permissions } from './common';
 
 export declare class Messaging implements IMessaging {
 	getToken(): Promise<string>;
+
+	getAPNSToken(): string | null;
 
 	hasPermission(): Promise<AuthorizationStatus>;
 
@@ -14,7 +16,7 @@ export declare class Messaging implements IMessaging {
 
 	registerDeviceForRemoteMessages(): Promise<void>;
 
-	requestPermission(permissions?: any): Promise<AuthorizationStatus>;
+	requestPermission(permissions?: Permissions): Promise<AuthorizationStatus>;
 
 	subscribeToTopic(topic: string): Promise<void>;
 

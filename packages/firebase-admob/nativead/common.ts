@@ -92,7 +92,7 @@ export interface NativeAdOptions {
 		adChoicesPlacement?: AdChoicesPlacement;
 		mediaAspectRatio?: MediaAspectRatio;
 		customMuteThisAd?: boolean;
-		multipleImagesKey?: boolean;
+		multipleImages?: boolean;
 		returnUrlsForImageAssets?: boolean;
 		videoOptions?: {
 			startMuted?: boolean;

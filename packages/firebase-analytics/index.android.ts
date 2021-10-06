@@ -82,90 +82,88 @@ function serialize(data) {
 }
 
 export class Analytics implements IAnalytics {
-  #native: com.google.firebase.analytics.FirebaseAnalytics;
-  #app: FirebaseApp;
+	#native: com.google.firebase.analytics.FirebaseAnalytics;
+	#app: FirebaseApp;
 
-  constructor() {
-    if(defaultAnalytics){
-      return defaultAnalytics;
-    }
-    defaultAnalytics = this;
-    this.#native = com.google.firebase.analytics.FirebaseAnalytics.getInstance(Utils.android.getApplicationContext());
-  }
+	constructor() {
+		if (defaultAnalytics) {
+			return defaultAnalytics;
+		}
+		defaultAnalytics = this;
+		this.#native = com.google.firebase.analytics.FirebaseAnalytics.getInstance(Utils.android.getApplicationContext());
+	}
 
-  handleOpenURL(url: string): void {
-  }
+	handleOpenURL(url: string): void {}
 
-  handleUserActivity(userActivity: any): void {
-  }
+	handleUserActivity(userActivity: any): void {}
 
+	get app(): FirebaseApp {
+		if (!this.#app) {
+			// @ts-ignore
+			this.#app = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
+		}
+		return this.#app;
+	}
 
-  get app(): FirebaseApp {
-    if (!this.#app) {
-      // @ts-ignore
-      this.#app = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
-    }
-    return this.#app;
-  }
+	get appInstanceId(): string {
+		return this.#native.getAppInstanceId();
+	}
 
-  get appInstanceId(): string {
-    return this.#native.getAppInstanceId();
-  }
+	setSessionTimeoutInterval(sessionTimeoutInterval: number): void {
+		this.#native.setSessionTimeoutDuration(sessionTimeoutInterval);
+	}
 
-  setSessionTimeoutInterval(sessionTimeoutInterval: number): void {
-    this.#native.setSessionTimeoutDuration(sessionTimeoutInterval);
-  }
+	setUserProperty(key: string, value: string): void {
+		this.#native.setUserProperty(key, value);
+	}
 
-  setUserProperty(key: string, value: string): void {
-    this.#native.setUserProperty(key, value);
-  }
+	setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void {
+		this.#native.setAnalyticsCollectionEnabled(analyticsCollectionEnabled);
+	}
 
-  setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void {
-    this.#native.setAnalyticsCollectionEnabled(analyticsCollectionEnabled);
-  }
+	setUserId(userId: string): void {
+		this.#native.setUserId(userId);
+	}
 
-  setUserId(userId: string): void {
-    this.#native.setUserId(userId);
-  }
+	logEvent(name: string, parameters: EventParameter): void {
+		this.#native.logEvent(name, serialize(parameters));
+	}
 
-  logEvent(name: string, parameters: EventParameter): void {
-    this.#native.logEvent(name, serialize(parameters));
-  }
+	resetAnalyticsData(): void {
+		this.#native.resetAnalyticsData();
+	}
 
-  resetAnalyticsData(): void {
-    this.#native.resetAnalyticsData();
-  }
+	setDefaultEventParameters(parameters: EventParameter): void {
+		this.#native.setDefaultEventParameters(serialize(parameters));
+	}
 
-  setDefaultEventParameters(parameters: EventParameter): void {
-    this.#native.setDefaultEventParameters(serialize(parameters));
-  }
+	setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {
+		const nativeMap = new java.util.HashMap();
 
-  setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {
-    const nativeMap = new java.util.HashMap();
-    consentSettings.forEach((value, key) => {
-      let nativeKey;
-      let nativeValue;
-      switch (key) {
-        case ConsentType.Ad_Storage:
-          nativeKey = FIRConsentTypeAdStorage;
-          break;
-        case ConsentType.Analytics_Storage:
-          nativeKey = FIRConsentTypeAnalyticsStorage;
-          break;
-      }
+		consentSettings.forEach((value, key) => {
+			let nativeKey;
+			let nativeValue;
+			switch (key) {
+				case ConsentType.Ad_Storage:
+					nativeKey = com.google.firebase.analytics.FirebaseAnalytics.ConsentType.AD_STORAGE;
+					break;
+				case ConsentType.Analytics_Storage:
+					nativeKey = com.google.firebase.analytics.FirebaseAnalytics.ConsentType.ANALYTICS_STORAGE;
+					break;
+			}
 
-      switch (value) {
-        case ConsentStatus.Denied:
-          nativeValue = FIRConsentStatusDenied;
-          break;
-        case ConsentStatus.Granted:
-          nativeValue = FIRConsentStatusGranted;
-          break;
-      }
-      if (nativeKey && nativeValue) {
-        nativeMap.put(nativeKey, nativeValue);
-      }
-    });
-    this.#native.setConsent(nativeMap);
-  }
+			switch (value) {
+				case ConsentStatus.Denied:
+					nativeValue = com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus.DENIED;
+					break;
+				case ConsentStatus.Granted:
+					nativeValue = com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus.GRANTED;
+					break;
+			}
+			if (nativeKey && nativeValue) {
+				nativeMap.put(nativeKey, nativeValue);
+			}
+		});
+		this.#native.setConsent(nativeMap);
+	}
 }

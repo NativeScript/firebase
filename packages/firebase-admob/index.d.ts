@@ -108,6 +108,9 @@ export declare class BannerAd extends BannerAdBase {
 }
 
 export declare class BannerAdSize extends BannerAdSizeBase {
+
+  constructor(width: number, height: number);
+
   readonly BANNER: BannerAdSize;
 
   readonly FULL_BANNER: BannerAdSize;

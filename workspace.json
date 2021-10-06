@@ -839,6 +839,41 @@
           }
         }
       }
+    },
+    "demo-vue": {
+      "root": "apps/demo-vue/",
+      "projectType": "application",
+      "sourceRoot": "apps/demo-vue/app",
+      "targets": {
+        "build": {
+          "executor": "@nativescript/nx:build",
+          "options": {
+            "noHmr": true,
+            "production": true,
+            "uglify": true,
+            "release": true,
+            "forDevice": true
+          }
+        },
+        "ios": {
+          "executor": "@nativescript/nx:build",
+          "options": {
+            "platform": "ios"
+          }
+        },
+        "android": {
+          "executor": "@nativescript/nx:build",
+          "options": {
+            "platform": "android"
+          }
+        },
+        "clean": {
+          "executor": "@nativescript/nx:build",
+          "options": {
+            "clean": true
+          }
+        }
+      }
     }
   },
   "cli": {

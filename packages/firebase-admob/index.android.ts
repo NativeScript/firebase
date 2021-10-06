@@ -458,101 +458,108 @@ const FULL_WIDTH = lazy(() => com.google.android.gms.ads.AdSize.FULL_WIDTH);
 const AUTO_HEIGHT = lazy(() => com.google.android.gms.ads.AdSize.AUTO_HEIGHT);
 
 export class BannerAdSize extends BannerAdSizeBase {
-  #native: com.google.android.gms.ads.AdSize;
+	#native: com.google.android.gms.ads.AdSize;
 
-  static fromNative(size: com.google.android.gms.ads.AdSize) {
-    const banner = new BannerAdSize();
-    if (size instanceof com.google.android.gms.ads.AdSize) {
-      banner.#native = size;
-    } else {
-      banner.#native = com.google.android.gms.ads.AdSize.INVALID;
-    }
-    return banner;
-  }
+	constructor(width?: number, height?: number) {
+		super();
+		if (width && height) {
+			this.#native = new com.google.android.gms.ads.AdSize(width, height);
+		}
+	}
 
-  static get BANNER(): BannerAdSize {
-    return BannerAdSize.fromNative(BANNER());
-  }
+	static fromNative(size: com.google.android.gms.ads.AdSize) {
+		const banner = new BannerAdSize();
+		if (size instanceof com.google.android.gms.ads.AdSize) {
+			banner.#native = size;
+		} else {
+			banner.#native = com.google.android.gms.ads.AdSize.INVALID;
+		}
+		return banner;
+	}
 
-  static get FULL_BANNER(): BannerAdSize {
-    return BannerAdSize.fromNative(FULL_BANNER());
-  }
+	static get BANNER(): BannerAdSize {
+		return BannerAdSize.fromNative(BANNER());
+	}
 
-  static get LARGE_BANNER(): BannerAdSize {
-    return BannerAdSize.fromNative(LARGE_BANNER());
-  }
+	static get FULL_BANNER(): BannerAdSize {
+		return BannerAdSize.fromNative(FULL_BANNER());
+	}
 
-  static get LEADERBOARD(): BannerAdSize {
-    return BannerAdSize.fromNative(LEADERBOARD());
-  }
+	static get LARGE_BANNER(): BannerAdSize {
+		return BannerAdSize.fromNative(LARGE_BANNER());
+	}
 
-  static get MEDIUM_RECTANGLE(): BannerAdSize {
-    return BannerAdSize.fromNative(MEDIUM_RECTANGLE());
-  }
+	static get LEADERBOARD(): BannerAdSize {
+		return BannerAdSize.fromNative(LEADERBOARD());
+	}
 
-  static createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
-    let w;
-    if (width === 'fullWidth') {
-      w = FULL_WIDTH();
-    } else if (width === 'autoHeight') {
-      w = AUTO_HEIGHT();
-    } else {
-      w = width;
-    }
+	static get MEDIUM_RECTANGLE(): BannerAdSize {
+		return BannerAdSize.fromNative(MEDIUM_RECTANGLE());
+	}
 
-    switch (orientation) {
-      case 'portrait':
-        return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getPortraitAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
-      case 'landscape':
-        return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getLandscapeAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
-      default:
-        return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
-    }
-  }
+	static createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
+		let w;
+		if (width === 'fullWidth') {
+			w = FULL_WIDTH();
+		} else if (width === 'autoHeight') {
+			w = AUTO_HEIGHT();
+		} else {
+			w = width;
+		}
 
-  static createInLineAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
-    let w;
-    if (width === 'fullWidth') {
-      w = FULL_WIDTH();
-    } else if (width === 'autoHeight') {
-      w = AUTO_HEIGHT();
-    } else {
-      w = width;
-    }
+		switch (orientation) {
+			case 'portrait':
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getPortraitAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+			case 'landscape':
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getLandscapeAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+			default:
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+		}
+	}
 
-    switch (orientation) {
-      case 'portrait':
-        return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getPortraitInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
-      case 'landscape':
-        return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getLandscapeInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
-      default:
-        return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
-    }
-  }
+	static createInLineAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
+		let w;
+		if (width === 'fullWidth') {
+			w = FULL_WIDTH();
+		} else if (width === 'autoHeight') {
+			w = AUTO_HEIGHT();
+		} else {
+			w = width;
+		}
 
-  static get FLUID(): BannerAdSize {
-    return BannerAdSize.fromNative(FLUID());
-  }
+		switch (orientation) {
+			case 'portrait':
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getPortraitInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+			case 'landscape':
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getLandscapeInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+			default:
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+		}
+	}
 
-  static get WIDE_SKYSCRAPER(): BannerAdSize {
-    return BannerAdSize.fromNative(WIDE_SKYSCRAPER());
-  }
+	static get FLUID(): BannerAdSize {
+		return BannerAdSize.fromNative(FLUID());
+	}
 
-  static get INVALID(): BannerAdSize {
-    return BannerAdSize.fromNative(INVALID());
-  }
+	static get WIDE_SKYSCRAPER(): BannerAdSize {
+		return BannerAdSize.fromNative(WIDE_SKYSCRAPER());
+	}
 
-  static get SEARCH(): BannerAdSize {
-    return BannerAdSize.fromNative(SEARCH());
-  }
+	static get INVALID(): BannerAdSize {
+		return BannerAdSize.fromNative(INVALID());
+	}
 
-  get native() {
-    return this.#native;
-  }
+	static get SEARCH(): BannerAdSize {
+		return BannerAdSize.fromNative(SEARCH());
+	}
 
-  get android() {
-    return this.native;
-  }
+	get native() {
+		return this.#native;
+	}
+
+	get android() {
+		return this.native;
+	}
 }
 
 export class BannerAd extends BannerAdBase {

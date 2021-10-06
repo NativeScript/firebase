@@ -194,7 +194,7 @@ class FirebaseAdmob {
 
       const val CUSTOM_MUTE_THIS_ADD_KEY = "customMuteThisAdd"
 
-      const val MULTIPLE_IMAGES_KEY = "multipleImagesKey"
+      const val MULTIPLE_IMAGES_KEY = "multipleImages"
       const val RETURN_URLS_FOR_IMAGE_ASSETS_KEY = "returnUrlsForImageAssets"
 
       const val VIDEO_OPTIONS_KEY = "videoOptions"

@@ -111,6 +111,10 @@ export class Messaging implements IMessaging {
 		});
 	}
 
+	getAPNSToken(){
+		return null;
+	}
+
 	hasPermission(): Promise<AuthorizationStatus> {
 		return Promise.resolve(org.nativescript.firebase.messaging.FirebaseMessaging.hasPermission(Utils.android.getApplicationContext()) ? AuthorizationStatus.AUTHORIZED : AuthorizationStatus.DENIED);
 	}

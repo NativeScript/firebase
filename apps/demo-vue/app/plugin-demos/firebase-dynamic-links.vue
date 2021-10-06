@@ -1,0 +1,34 @@
+<template>
+  <Page>
+    <ActionBar>
+      <Label text="firebase-dynamic-links"/>
+    </ActionBar>
+
+    <GridLayout>
+      <Button class="info" :text="message"/>
+    </GridLayout>
+  </Page>
+</template>
+
+<script lang="ts">
+  import Vue from "nativescript-vue";
+  import { DemoSharedFirebaseDynamicLinks } from '@demo/shared';
+  import { } from '@nativescript/firebase-dynamic-links';
+
+  export default Vue.extend({
+    computed: {
+      message() {
+        return "Test firebase-dynamic-links";
+      }
+    }
+  });
+</script>
+
+<style scoped lang="scss">
+
+  .info {
+    font-size: 20;
+    horizontal-align: center;
+    vertical-align: center;
+  }
+</style>

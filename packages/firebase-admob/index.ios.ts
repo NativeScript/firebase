@@ -296,112 +296,119 @@ export class RewardedItem implements IRewardedItem {
 }
 
 export class BannerAdSize extends BannerAdSizeBase {
-  #native: GADAdSize;
+	#native: GADAdSize;
 
-  static fromNative(size: GADAdSize) {
-    const banner = new BannerAdSize();
-    if (size instanceof GADAdSize) {
-      banner.#native = size;
-    } else {
-      banner.#native = kGADAdSizeInvalid;
-    }
-    return banner;
-  }
+	constructor(width?: number, height?: number) {
+		super();
+		if (width && height) {
+			this.#native = GADAdSizeFromCGSize(CGSizeMake(width, height));
+		}
+	}
 
-  static get BANNER(): BannerAdSize {
-    return BannerAdSize.fromNative(kGADAdSizeBanner);
-  }
+	static fromNative(size: GADAdSize) {
+		const banner = new BannerAdSize();
+		if (size instanceof GADAdSize) {
+			banner.#native = size;
+		} else {
+			banner.#native = kGADAdSizeInvalid;
+		}
+		return banner;
+	}
 
-  static get FULL_BANNER(): BannerAdSize {
-    return BannerAdSize.fromNative(kGADAdSizeFullBanner);
-  }
+	static get BANNER(): BannerAdSize {
+		return BannerAdSize.fromNative(kGADAdSizeBanner);
+	}
 
-  static get LARGE_BANNER(): BannerAdSize {
-    return BannerAdSize.fromNative(kGADAdSizeLargeBanner);
-  }
+	static get FULL_BANNER(): BannerAdSize {
+		return BannerAdSize.fromNative(kGADAdSizeFullBanner);
+	}
 
-  static get LEADERBOARD(): BannerAdSize {
-    return BannerAdSize.fromNative(kGADAdSizeLeaderboard);
-  }
+	static get LARGE_BANNER(): BannerAdSize {
+		return BannerAdSize.fromNative(kGADAdSizeLargeBanner);
+	}
 
-  static get MEDIUM_RECTANGLE(): BannerAdSize {
-    return BannerAdSize.fromNative(kGADAdSizeMediumRectangle);
-  }
+	static get LEADERBOARD(): BannerAdSize {
+		return BannerAdSize.fromNative(kGADAdSizeLeaderboard);
+	}
 
-  static createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
-    let banner;
-    if (orientation === 'portrait') {
-      if (width === 'fullWidth') {
-        banner = TNSGA.createAnchoredAdaptiveBanner(Width.FullWidth, Orientation.Portrait)
-      } else if (width === 'autoHeight') {
-        banner = TNSGA.createAnchoredAdaptiveBanner(Width.AutoHeight, Orientation.Portrait)
-      } else {
-        banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width, Orientation.Device);
-      }
-    } else if (orientation === 'landscape') {
-      if (width === 'fullWidth') {
-        banner = TNSGA.createAnchoredAdaptiveBanner(Width.FullWidth, Orientation.Landscape)
-      } else if (width === 'autoHeight') {
-        banner = TNSGA.createAnchoredAdaptiveBanner(Width.AutoHeight, Orientation.Landscape)
-      } else {
-        banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width, Orientation.Device);
-      }
-    } else {
-      banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width as any, Orientation.Device);
-    }
+	static get MEDIUM_RECTANGLE(): BannerAdSize {
+		return BannerAdSize.fromNative(kGADAdSizeMediumRectangle);
+	}
 
-    return BannerAdSize.fromNative(banner);
-  }
+	static createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
+		let banner;
+		if (orientation === 'portrait') {
+			if (width === 'fullWidth') {
+				banner = TNSGA.createAnchoredAdaptiveBanner(Width.FullWidth, Orientation.Portrait);
+			} else if (width === 'autoHeight') {
+				banner = TNSGA.createAnchoredAdaptiveBanner(Width.AutoHeight, Orientation.Portrait);
+			} else {
+				banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width, Orientation.Device);
+			}
+		} else if (orientation === 'landscape') {
+			if (width === 'fullWidth') {
+				banner = TNSGA.createAnchoredAdaptiveBanner(Width.FullWidth, Orientation.Landscape);
+			} else if (width === 'autoHeight') {
+				banner = TNSGA.createAnchoredAdaptiveBanner(Width.AutoHeight, Orientation.Landscape);
+			} else {
+				banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width, Orientation.Device);
+			}
+		} else {
+			banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width as any, Orientation.Device);
+		}
 
-  static createInLineAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
-    let banner;
-    if (orientation === 'portrait') {
-      if (width === 'fullWidth') {
-        banner = TNSGA.createInlineAdaptiveBanner(Width.FullWidth, Orientation.Portrait)
-      } else if (width === 'autoHeight') {
-        banner = TNSGA.createInlineAdaptiveBanner(Width.AutoHeight, Orientation.Portrait)
-      } else {
-        banner = TNSGA.createInlineAdaptiveBannerWithWidth(width, Orientation.Device);
-      }
-    } else if (orientation === 'landscape') {
-      if (width === 'fullWidth') {
-        banner = TNSGA.createInlineAdaptiveBanner(Width.FullWidth, Orientation.Landscape)
-      } else if (width === 'autoHeight') {
-        banner = TNSGA.createInlineAdaptiveBanner(Width.AutoHeight, Orientation.Landscape)
-      } else {
-        banner = TNSGA.createInlineAdaptiveBannerWithWidth(width, Orientation.Device);
-      }
-    } else {
-      banner = TNSGA.createInlineAdaptiveBannerWithWidth(width as any, Orientation.Device);
-    }
+		return BannerAdSize.fromNative(banner);
+	}
 
-    return BannerAdSize.fromNative(banner);
-  }
+	static createInLineAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
+		let banner;
+		if (orientation === 'portrait') {
+			if (width === 'fullWidth') {
+				banner = TNSGA.createInlineAdaptiveBanner(Width.FullWidth, Orientation.Portrait);
+			} else if (width === 'autoHeight') {
+				banner = TNSGA.createInlineAdaptiveBanner(Width.AutoHeight, Orientation.Portrait);
+			} else {
+				banner = TNSGA.createInlineAdaptiveBannerWithWidth(width, Orientation.Device);
+			}
+		} else if (orientation === 'landscape') {
+			if (width === 'fullWidth') {
+				banner = TNSGA.createInlineAdaptiveBanner(Width.FullWidth, Orientation.Landscape);
+			} else if (width === 'autoHeight') {
+				banner = TNSGA.createInlineAdaptiveBanner(Width.AutoHeight, Orientation.Landscape);
+			} else {
+				banner = TNSGA.createInlineAdaptiveBannerWithWidth(width, Orientation.Device);
+			}
+		} else {
+			banner = TNSGA.createInlineAdaptiveBannerWithWidth(width as any, Orientation.Device);
+		}
 
-  static get FLUID(): BannerAdSize {
-    return BannerAdSize.fromNative(kGADAdSizeFluid);
-  }
+		return BannerAdSize.fromNative(banner);
+	}
 
-  static get WIDE_SKYSCRAPER(): BannerAdSize {
-    return BannerAdSize.fromNative(kGADAdSizeSkyscraper);
-  }
+	static get FLUID(): BannerAdSize {
+		return BannerAdSize.fromNative(kGADAdSizeFluid);
+	}
 
-  static get INVALID(): BannerAdSize {
-    return BannerAdSize.fromNative(kGADAdSizeInvalid);
-  }
+	static get WIDE_SKYSCRAPER(): BannerAdSize {
+		return BannerAdSize.fromNative(kGADAdSizeSkyscraper);
+	}
 
-  static get SEARCH(): BannerAdSize {
-    console.error('BannerAdSize', 'SEARCH', 'not supported on iOS');
-    return BannerAdSize.INVALID;
-  }
+	static get INVALID(): BannerAdSize {
+		return BannerAdSize.fromNative(kGADAdSizeInvalid);
+	}
 
-  get native() {
-    return this.#native;
-  }
+	static get SEARCH(): BannerAdSize {
+		console.error('BannerAdSize', 'SEARCH', 'not supported on iOS');
+		return BannerAdSize.INVALID;
+	}
 
-  get ios() {
-    return this.native;
-  }
+	get native() {
+		return this.#native;
+	}
+
+	get ios() {
+		return this.native;
+	}
 }
 
 export class BannerAd extends BannerAdBase {

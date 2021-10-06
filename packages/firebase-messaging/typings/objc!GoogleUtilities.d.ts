@@ -498,7 +498,7 @@ declare class GULSecureCoding extends NSObject {
 
 	static new(): GULSecureCoding; // inherited from NSObject
 
-	static unarchivedObjectOfClassFromDataError(class: typeof NSObject, data: NSData): any;
+	static unarchivedObjectOfClassFromDataError(aClass: typeof NSObject, data: NSData): any;
 
 	static unarchivedObjectOfClassesFromDataError(classes: NSSet<typeof NSObject>, data: NSData): any;
 }

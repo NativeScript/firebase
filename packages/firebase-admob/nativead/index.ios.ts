@@ -14,9 +14,10 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		this.#native = GADNativeAdView.new();
 		return this.#native;
 	}
-/*
+
 	_addChildFromBuilder(name: string, value: any): void {
 		if (value instanceof View && !value.parent) {
+			this._addView(value);
 			this.#children.push(value);
 		}
 	}
@@ -27,21 +28,20 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		});
 	}
 
-	public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number) {
-		const nativeView = this.nativeView;
-		if (nativeView) {
-		  const width = Utils.layout.getMeasureSpecSize(widthMeasureSpec);
-		  const height = Utils.layout.getMeasureSpecSize(heightMeasureSpec);
-		  this.setMeasuredDimension(width, height);
-		}
-	}
+	// public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number) {
+	// 	const nativeView = this.nativeView;
+	// 	if (nativeView) {
+	// 	  const width = Utils.layout.getMeasureSpecSize(widthMeasureSpec);
+	// 	  const height = Utils.layout.getMeasureSpecSize(heightMeasureSpec);
+	// 	  this.setMeasuredDimension(width, height);
+	// 	}
+	// }
 
-	public onLayout(left: number, top: number, right: number, bottom: number): void {
-		super.onLayout(left, top, right, bottom);
-		View.layoutChild(this, this.#children[0], left, top, right, bottom);
-	  }
+	// public onLayout(left: number, top: number, right: number, bottom: number): void {
+	// 	super.onLayout(left, top, right, bottom);
+	// 	View.layoutChild(this, this.#children[0], left, top, right, bottom);
+	// }
 	
-	  */
 
 
 	// onLoaded(){
@@ -251,9 +251,9 @@ export class NativeAdLoader implements INativeAdLoader {
 				options.push(mediaAspectRatio);
 			}
 
-			if (typeof nativeAdOptions?.multipleImagesKey === 'boolean') {
+			if (typeof nativeAdOptions?.multipleImages === 'boolean') {
 				const multipleImagesKey = GADNativeAdImageAdLoaderOptions.new();
-				multipleImagesKey.shouldRequestMultipleImages = nativeAdOptions.multipleImagesKey;
+				multipleImagesKey.shouldRequestMultipleImages = nativeAdOptions.multipleImages;
 				options.push(multipleImagesKey);
 			}
 

@@ -70,6 +70,9 @@
     },
     "firebase-functions": {
       "tags": []
+    },
+    "demo-vue": {
+      "tags": []
     }
   },
   "workspaceLayout": {

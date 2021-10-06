@@ -2,7 +2,7 @@ import { Application, ApplicationSettings, Device } from '@nativescript/core';
 import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { AuthorizationStatus, IMessaging, Permissions, Notification, RemoteMessage } from './common';
 
-declare const FIRApp;
+declare const FIRApp, TNSFirebaseMessaging;
 
 let _registerDeviceForRemoteMessages = {
 	resolve: null,
@@ -80,6 +80,10 @@ export class Messaging implements IMessaging {
 				}
 			});
 		});
+	}
+
+	getAPNSToken(){
+		return TNSFirebaseMessaging.APNSTokenToString(this.native.APNSToken);
 	}
 
 	_hasPermission(resolve, reject) {
