@@ -129,14 +129,14 @@ Vue.use(Admob);
 The table below lists the standard banner sizes.
 
 |         Size in dp (WxH)         |   Description    |                AdSize Constant                 |
-| :------------------------------: | :--------------: | :--------------------------------------------: | ----------- | ------------------------------------- | ----------- | --------- |
+| :------------------------------: | :--------------: | :--------------------------------------------: | 
 |              320x50              | Standard Banner  |                     BANNER                     |
 |             320x100              |   Large Banner   |                  LARGE_BANNER                  |
 |             320x250              | Medium Rectangle |                MEDIUM_RECTANGLE                |
 |              468x60              | Full-Size Banner |                  FULL_BANNER                   |
 |              728x90              |   Leaderboard    |                  LEADERBOARD                   |
-| Provided width x Adaptive height | Adaptive Banner  | Use createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device') |
-| Provided width x Adaptive height | Adaptive Banner  |  Use createInLineAdaptiveBanner(width: number  | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device') |
+| Provided width x Adaptive height | Adaptive Banner  | Use createAnchoredAdaptiveBanner(width, orientation) |
+| Provided width x Adaptive height | Adaptive Banner  |  Use createInLineAdaptiveBanner(width, orientation) |
 
 To define a custom banner size, set your desired AdSize, as shown here:
 
