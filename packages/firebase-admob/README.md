@@ -268,7 +268,7 @@ Broadly speaking, there are two parts to successfully implementing Native Ads: l
 Ensure you've included xmlns:ui="@nativescript/firebase-admob" on the Page element
 
 ```xml
- <ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}">
+ <ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}" />
 ```
 
 ### Always test with test ads
