@@ -500,7 +500,7 @@ If you want to use a specific icon for the push notification, it has to be confi
 #### Enable push support in Xcode
 
 Open /platforms/ios/yourproject.**xcworkspace** (!) and go to your project's target and head over to "Capabilities" to switch this on (if it isn't already):
-![push-xcode-config](assets/images/push-xcode-config.png 'Push Xcode config')
+![push-xcode-config](https://raw.githubusercontent.com/NativeScript/firebase/main/packages/firebase-messaging/assets/images/push-xcode-config.png)
 
 > Without this enabled you will receive push messages in the foreground, but **NOT in the background** / when the app is killed.
 
