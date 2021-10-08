@@ -41,6 +41,7 @@ Add the AdMob App ID (identified in the AdMob UI) to the app's AndroidManifest.x
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
+</application>
 ```
 
 See [here](https://developers.google.com/admob/android/quick-start#update_your_androidmanifestxml) for more information about configuring AndroidManifest.xml and setting up the App ID.
