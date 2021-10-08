@@ -20,7 +20,7 @@ Update your Info.plist
 
 - A GADApplicationIdentifier key with a string value of your AdMob app ID ([identified in the AdMob UI](https://support.google.com/admob/answer/7356431)).
 
-```plist
+```cli
 <key>GADApplicationIdentifier</key>
 <string>ca-app-pub-3940256099942544~1458002511</string>
 ```
