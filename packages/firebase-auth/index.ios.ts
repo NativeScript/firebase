@@ -145,7 +145,7 @@ export class User implements IUser {
 		return this.native?.photoURL?.absoluteString;
 	}
 
-	get metadata(): any {
+	get metadata(): UserMetadata {
 		return UserMetadata.fromNative(this.native?.metadata);
 	}
 

@@ -178,7 +178,7 @@ export class User implements IUser {
     return url;
   }
 
-  get metadata(): any {
+  get metadata(): UserMetadata {
     return UserMetadata.fromNative(this.native?.getMetadata?.());
   }
 

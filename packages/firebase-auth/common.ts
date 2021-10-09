@@ -32,8 +32,8 @@ export interface IUser {
 	phoneNumber: string;
 	providerId: string;
 	photoURL: string;
-	metadata: any;
-	providerData: any;
+	metadata: IUserMetadata;
+	providerData: IUserInfo[];
 	delete(): Promise<void>;
 	getIdToken(forceRefresh?: undefined | false | true): Promise<string>;
 	getIdTokenResult(forceRefresh?: undefined | false | true): Promise<IAuthTokenResult>;
