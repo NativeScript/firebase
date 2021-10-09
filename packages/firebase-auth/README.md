@@ -157,10 +157,23 @@ A 3rd party library is required to both install the Facebook SDK and trigger the
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 import { FacebookAuthProvider } from '@nativescript/firebase-auth';
-// Create a credential from the access token
-const facebookAuthCredential = FacebookAuthProvider.credential(accessToken);
+import { LoginManager, AccessToken } from '@nativescript/facebook';
 
-firebase().auth().signInWithCredential(facebookAuthCredential);
+
+LoginManager.logInWithPermissions(['public_profile', 'email']).then((result) => {
+	// Once signed in, get the users AccesToken
+	const data = await AccessToken.getCurrentAccessToken();
+
+	// Create a Firebase credential with the AccessToken
+	const facebookCredential = FacebookAuthProvider.credential(data.accessToken);
+
+	// Sign-in the user with the credential
+	return auth().signInWithCredential(facebookCredential);
+
+	firebase().auth().signInWithCredential(facebookAuthCredential);
+});
+
+
 ```
 
 ** Note **
@@ -176,9 +189,18 @@ A 3rd party library is required to both install the Twitter SDK and trigger the 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 import { TwitterAuthProvider } from '@nativescript/firebase-auth';
-const twitterAuthCredential = TwitterAuthProvider.credential(authToken, authTokenSecret);
+import { Twitter, TwitterSignIn } from '@nativescript/twitter';
 
-firebase().auth().signInWithCredential(twitterAuthCredential);
+Twitter.init('TWITTER_CONSUMER_KEY', 'TWITTER_CONSUMER_SECRET'); // called earlier in the app
+
+// Perform the login request
+TwitterSignIn.logIn().then((data) => {
+	const twitterAuthCredential = TwitterAuthProvider.credential(data.authToken, data.authTokenSecret);
+
+	firebase().auth().signInWithCredential(twitterAuthCredential);
+});
+
+
 ```
 
 #### GitHub
@@ -202,10 +224,15 @@ Most configuration is already setup when using Google Sign-In with Firebase, how
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 import { GoogleAuthProvider } from '@nativescript/firebase-auth';
+import { GoogleSignin } from '@nativescript/google-signin';
 
-const credential = GoogleAuthProvider.credential(accessToken, idToken);
+GoogleSignin.configure(); // called earlier in the app
 
-firebase().auth().signInWithCredential(credential);
+GoogleSignin.signIn().then((user) => {
+	const credential = GoogleAuthProvider.credential(user.accessToken, user.idToken);
+
+	firebase().auth().signInWithCredential(credential);
+});
 ```
 
 ### Phone Authentication
