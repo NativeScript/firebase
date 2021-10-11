@@ -171,6 +171,10 @@ export class FirebaseOptions implements IFirebaseOptions {
 	}
 }
 
+let firebaseInstance: Firebase;
+let defaultApp: FirebaseApp;
+const firebaseApps = new Map<string, FirebaseApp>();
+
 export class FirebaseApp {
 	#native: FIRApp;
 	#options: FirebaseOptions;
@@ -205,6 +209,7 @@ export class FirebaseApp {
 		return new Promise<void>((resolve, reject) => {
 			this.native.deleteApp((done) => {
 				if (done) {
+					firebaseApps.delete(this.native.name);
 					resolve();
 				} else {
 					reject();
@@ -228,9 +233,6 @@ export class FirebaseApp {
 	}
 }
 
-let firebaseInstance: Firebase;
-let defaultApp: FirebaseApp;
-
 export class Firebase {
 	constructor() {
 		if (firebaseInstance) {
@@ -241,6 +243,9 @@ export class Firebase {
 	}
 	app(name?: string) {
 		if (name) {
+			if (firebaseApps.has(name)) {
+				return firebaseApps.get(name);
+			}
 			return FirebaseApp.fromNative(FIRApp.appNamed(name));
 		}
 		if (!defaultApp) {
@@ -256,7 +261,7 @@ export class Firebase {
 			nativeOptions = FIROptions.alloc().initWithGoogleAppIDGCMSenderID(options.googleAppId, options.gcmSenderId);
 		}
 
-		if(!nativeOptions && options){
+		if (!nativeOptions && options) {
 			nativeOptions = FIROptions.defaultOptions();
 		}
 
@@ -314,6 +319,10 @@ export class Firebase {
 			FIRApp.configureWithNameOptions(name, nativeOptions);
 			app = FIRApp.appNamed(name);
 		} else {
+			if (defaultApp) {
+				return defaultApp;
+			}
+
 			if (nativeOptions) {
 				FIRApp.configureWithOptions(nativeOptions);
 			} else {
@@ -321,6 +330,7 @@ export class Firebase {
 			}
 
 			app = FIRApp.defaultApp();
+			isDefault = true;
 		}
 
 		if (app && typeof configOrName === 'object' && typeof configOrName.automaticDataCollectionEnabled === 'boolean') {
@@ -331,6 +341,10 @@ export class Firebase {
 
 		if (isDefault) {
 			defaultApp = fbApp;
+		}
+
+		if (!isDefault) {
+			firebaseApps.set(name, fbApp);
 		}
 
 		return fbApp;

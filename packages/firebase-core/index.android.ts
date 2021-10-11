@@ -111,6 +111,10 @@ export class FirebaseOptions implements IFirebaseOptions {
 	}
 }
 
+let firebaseInstance: Firebase;
+let defaultApp: FirebaseApp;
+const firebaseApps = new Map<string, FirebaseApp>();
+
 export class FirebaseApp {
 	#native: com.google.firebase.FirebaseApp;
 	#options: FirebaseOptions;
@@ -142,6 +146,7 @@ export class FirebaseApp {
 
 	delete() {
 		return new Promise<void>((resolve, reject) => {
+			firebaseApps.delete(this.native.getName());
 			this.native.delete();
 			resolve();
 		});
@@ -161,9 +166,6 @@ export class FirebaseApp {
 	}
 }
 
-let firebaseInstance: Firebase;
-let defaultApp: FirebaseApp;
-
 export class Firebase {
 	constructor() {
 		if (firebaseInstance) {
@@ -175,6 +177,9 @@ export class Firebase {
 
 	app(name?: string) {
 		if (name) {
+			if (firebaseApps.has(name)) {
+				return firebaseApps.get(name);
+			}
 			return FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance(name));
 		}
 		if (!defaultApp) {
@@ -185,7 +190,7 @@ export class Firebase {
 
 	initializeApp(options: FirebaseOptions = null, configOrName?: FirebaseConfig | string) {
 		let nativeOptions;
-		if(options){
+		if (options) {
 			nativeOptions = new com.google.firebase.FirebaseOptions.Builder();
 		}
 		if (options?.apiKey) {
@@ -220,15 +225,18 @@ export class Firebase {
 		let app: com.google.firebase.FirebaseApp;
 		let isDefault = false;
 		if (name) {
-			if(!nativeOptions){
-				nativeOptions = new com.google.firebase.FirebaseOptions.Builder()
+			if (!nativeOptions) {
+				nativeOptions = new com.google.firebase.FirebaseOptions.Builder();
 			}
 			app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext(), nativeOptions.build(), name);
 		} else {
+			if (defaultApp) {
+				defaultApp;
+			}
 			isDefault = true;
-			if(nativeOptions){
+			if (nativeOptions) {
 				app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext(), nativeOptions.build());
-			}else {
+			} else {
 				app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext());
 			}
 		}
@@ -236,11 +244,15 @@ export class Firebase {
 		if (app && typeof configOrName === 'object' && typeof configOrName.automaticResourceManagement === 'boolean') {
 			app.setAutomaticResourceManagementEnabled(configOrName.automaticDataCollectionEnabled);
 		}
-		
+
 		const fbApp = FirebaseApp.fromNative(app);
 
-		if(isDefault){
-			defaultApp = fbApp
+		if (isDefault) {
+			defaultApp = fbApp;
+		}
+
+		if (!isDefault) {
+			firebaseApps.set(name, fbApp);
 		}
 
 		return fbApp;
