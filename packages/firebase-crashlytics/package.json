@@ -1,38 +1,38 @@
 {
-    "name": "@nativescript/firebase-crashlytics",
-    "version": "1.0.0-alpha.3",
-    "description": "NativeScript Firebase - Crashlytics",
-    "main": "index",
-    "typings": "index.d.ts",
-    "nativescript": {
-        "platforms": {
-            "ios": "6.0.0",
-            "android": "6.0.0"
-        }
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/NativeScript/firebase.git"
-    },
-    "keywords": [
-        "NativeScript",
-        "JavaScript",
-        "TypeScript",
-        "iOS",
-        "Android"
-    ],
-    "author": {
-        "name": "NativeScript",
-        "email": "oss@nativescript.org"
-    },
-    "bugs": {
-        "url": "https://github.com/NativeScript/firebase/issues"
-    },
-    "license": "Apache-2.0",
-    "homepage": "https://github.com/NativeScript/firebase",
-    "readmeFilename": "README.md",
-    "bootstrapper": "@nativescript/plugin-seed",
-    "dependencies": {
-        "stacktrace-js": "~2.0.2"
+  "name": "@nativescript/firebase-crashlytics",
+  "version": "1.0.0-alpha.4",
+  "description": "NativeScript Firebase - Crashlytics",
+  "main": "index",
+  "typings": "index.d.ts",
+  "nativescript": {
+    "platforms": {
+      "ios": "6.0.0",
+      "android": "6.0.0"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NativeScript/firebase.git"
+  },
+  "keywords": [
+    "NativeScript",
+    "JavaScript",
+    "TypeScript",
+    "iOS",
+    "Android"
+  ],
+  "author": {
+    "name": "NativeScript",
+    "email": "oss@nativescript.org"
+  },
+  "bugs": {
+    "url": "https://github.com/NativeScript/firebase/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/NativeScript/firebase",
+  "readmeFilename": "README.md",
+  "bootstrapper": "@nativescript/plugin-seed",
+  "dependencies": {
+    "stacktrace-js": "~2.0.2"
+  }
 }
