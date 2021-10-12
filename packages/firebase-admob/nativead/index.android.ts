@@ -28,7 +28,7 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 
 	onLoaded(){
 		super.onLoaded();
-		if(this.#child){
+		if(this.#child && this.#native.indexOfChild(this.#child.nativeView) === -1) {
 			(this.#native as any).addView(this.#child.nativeView);
 		}
 	}
