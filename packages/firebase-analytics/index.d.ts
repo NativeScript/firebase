@@ -1,4 +1,4 @@
-import { IAnalytics, EventParameter } from './common';
+import { IAnalytics, EventParameter, ConsentType, ConsentStatus} from './common';
 
 export * from './common';
 
@@ -13,7 +13,7 @@ export declare class Analytics implements IAnalytics {
 
 	setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void;
 
-	setUserProperty(value: string, name: string): void;
+	setUserProperty(name: string, value: string): void;
 
 	setSessionTimeoutInterval(sessionTimeoutInterval: number): void;
 
