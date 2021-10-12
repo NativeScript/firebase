@@ -1,27 +1,9 @@
-import {Application, Utils} from '@nativescript/core';
+import { Application, Utils } from '@nativescript/core';
 import lazy from '@nativescript/core/utils/lazy';
-import {firebase, FirebaseApp, FirebaseError} from '@nativescript/firebase-core';
-import {
-  IAdmob,
-  RequestConfiguration,
-  AdEventListener,
-  AdShowOptions,
-  IInterstitialAd,
-  RequestOptions,
-  IRewardedAd,
-  AdEventType,
-  BannerAdBase,
-  IRewardedInterstitialAd,
-  IRewardedItem,
-  RewardedAdEventType,
-  MaxAdContentRating,
-  ServerSideVerificationOptions,
-  unitIdProperty,
-  BannerAdSizeBase,
-  sizeProperty
-} from './common';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { IAdmob, RequestConfiguration, AdEventListener, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, AdEventType, BannerAdBase, IRewardedInterstitialAd, IRewardedItem, RewardedAdEventType, MaxAdContentRating, ServerSideVerificationOptions, unitIdProperty, BannerAdSizeBase, sizeProperty, AdapterStatus } from './common';
 
-export {MaxAdContentRating, AdEventType};
+export { MaxAdContentRating, AdEventType, AdapterStatus };
 
 export * from './adsconsent';
 export * from './nativead';
@@ -29,419 +11,419 @@ export * from './nativead';
 let defaultAdmob: Admob;
 
 const fb = firebase();
-Object.defineProperty(fb, 'admob', {
-	value: () => {
-		if (!defaultAdmob) {
-			defaultAdmob = new Admob();
-		}
-		return defaultAdmob;
-	},
-	writable: false,
-});
+if (!fb.admob) {
+	Object.defineProperty(fb, 'admob', {
+		value: () => {
+			if (!defaultAdmob) {
+				defaultAdmob = new Admob();
+			}
+			return defaultAdmob;
+		},
+		writable: false,
+	});
+}
 
 let AdListener;
 
 function ensureAdListener() {
-  if (AdListener) {
-    return;
-  }
+	if (AdListener) {
+		return;
+	}
 
-  @NativeClass()
-  class AdListenerImpl extends com.google.android.gms.ads.AdListener {
-    _owner: WeakRef<BannerAd>;
+	@NativeClass()
+	class AdListenerImpl extends com.google.android.gms.ads.AdListener {
+		_owner: WeakRef<BannerAd>;
 
-    constructor(owner: WeakRef<BannerAd>) {
-      super();
-      this._owner = owner;
-      return global.__native(this);
-    }
+		constructor(owner: WeakRef<BannerAd>) {
+			super();
+			this._owner = owner;
+			return global.__native(this);
+		}
 
-    onAdLoaded() {
-      this._owner?.get?.().notify({
-        eventName: BannerAd.onAdLoadedEvent,
-        object: this._owner?.get?.(),
-      });
-    }
+		onAdLoaded() {
+			this._owner?.get?.().notify({
+				eventName: BannerAd.onAdLoadedEvent,
+				object: this._owner?.get?.(),
+			});
+		}
 
-    onAdClicked() {
-      this._owner?.get?.().notify({
-        eventName: BannerAd.onAdClickedEvent,
-        object: this._owner?.get?.(),
-      });
-    }
+		onAdClicked() {
+			this._owner?.get?.().notify({
+				eventName: BannerAd.onAdClickedEvent,
+				object: this._owner?.get?.(),
+			});
+		}
 
-    onAdFailedToLoad(error: com.google.android.gms.ads.LoadAdError) {
-      this._owner?.get?.().notify({
-        eventName: BannerAd.onAdFailedToLoadEvent,
-        object: this._owner?.get?.(),
-        error: FirebaseError.fromNative(error),
-      });
-    }
+		onAdFailedToLoad(error: com.google.android.gms.ads.LoadAdError) {
+			this._owner?.get?.().notify({
+				eventName: BannerAd.onAdFailedToLoadEvent,
+				object: this._owner?.get?.(),
+				error: FirebaseError.fromNative(error),
+			});
+		}
 
-    onAdClosed() {
-      this._owner?.get?.().notify({
-        eventName: BannerAd.onAdClosedEvent,
-        object: this._owner?.get?.(),
-      });
-    }
+		onAdClosed() {
+			this._owner?.get?.().notify({
+				eventName: BannerAd.onAdClosedEvent,
+				object: this._owner?.get?.(),
+			});
+		}
 
-    onAdImpression() {
-      this._owner?.get?.().notify({
-        eventName: BannerAd.onAdImpression,
-        object: this._owner?.get?.(),
-      });
-    }
+		onAdImpression() {
+			this._owner?.get?.().notify({
+				eventName: BannerAd.onAdImpression,
+				object: this._owner?.get?.(),
+			});
+		}
 
-    onAdOpened() {
-      this._owner?.get?.().notify({
-        eventName: BannerAd.onAdOpenedEvent,
-        object: this._owner?.get?.(),
-      });
-    }
-  }
+		onAdOpened() {
+			this._owner?.get?.().notify({
+				eventName: BannerAd.onAdOpenedEvent,
+				object: this._owner?.get?.(),
+			});
+		}
+	}
 
-  AdListener = AdListenerImpl;
+	AdListener = AdListenerImpl;
 }
 
 export class InterstitialAd implements IInterstitialAd {
-  #native: com.google.android.gms.ads.interstitial.InterstitialAd;
-  #adUnitId: string;
-  #requestOptions?: RequestOptions;
-  #loaded = false;
+	#native: com.google.android.gms.ads.interstitial.InterstitialAd;
+	#adUnitId: string;
+	#requestOptions?: RequestOptions;
+	#loaded = false;
 
-  static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): InterstitialAd {
-    const ad = new InterstitialAd();
-    ad.#adUnitId = adUnitId;
-    ad.#requestOptions = requestOptions;
-    return ad;
-  }
+	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): InterstitialAd {
+		const ad = new InterstitialAd();
+		ad.#adUnitId = adUnitId;
+		ad.#requestOptions = requestOptions;
+		return ad;
+	}
 
-  get adUnitId(): string {
-    return this.#adUnitId;
-  }
+	get adUnitId(): string {
+		return this.#adUnitId;
+	}
 
-  _setNative(value) {
-    this.#native = value;
-  }
+	_setNative(value) {
+		this.#native = value;
+	}
 
-  _setLoaded(value) {
-    this.#loaded = value;
-  }
+	_setLoaded(value) {
+		this.#loaded = value;
+	}
 
-  _onAdEvent?: AdEventListener;
+	_onAdEvent?: AdEventListener;
 
-  get loaded(): boolean {
-    return this.#loaded;
-  }
+	get loaded(): boolean {
+		return this.#loaded;
+	}
 
-  load(): void {
-    const ref = new WeakRef(this);
-    org.nativescript.firebase.admob.FirebaseAdmob.InterstitialAd.load(
-      Application.android.foregroundActivity || Application.android.startActivity,
-      this.#adUnitId,
-      JSON.stringify(this.#requestOptions || {}),
-      new org.nativescript.firebase.admob.FirebaseAdmob.AdCallback({
-        onEvent(event: string, dataOrError: any) {
-          const owner = ref.get?.();
-          switch (event) {
-            case AdEventType.LOADED:
-              owner._setNative?.(dataOrError);
-              owner?._onAdEvent(AdEventType.LOADED, null, owner);
-              owner?._setLoaded(true);
-              break;
-            case AdEventType.CLOSED:
-              owner?._onAdEvent(AdEventType.CLOSED, null, owner);
-              owner?._setLoaded(false);
-              break;
-            case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
-              owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
-              break;
-            case AdEventType.IMPRESSION:
-              owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
-              break;
-            case AdEventType.OPENED:
-              owner?._onAdEvent(AdEventType.OPENED, null, owner);
-              break;
-            case AdEventType.FAILED_TO_LOAD_EVENT:
-              owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
-              break;
-          }
-        },
-      })
-    );
-  }
+	load(): void {
+		const ref = new WeakRef(this);
+		org.nativescript.firebase.admob.FirebaseAdmob.InterstitialAd.load(
+			Application.android.foregroundActivity || Application.android.startActivity,
+			this.#adUnitId,
+			JSON.stringify(this.#requestOptions || {}),
+			new org.nativescript.firebase.admob.FirebaseAdmob.AdCallback({
+				onEvent(event: string, dataOrError: any) {
+					const owner = ref.get?.();
+					switch (event) {
+						case AdEventType.LOADED:
+							owner._setNative?.(dataOrError);
+							owner?._onAdEvent(AdEventType.LOADED, null, owner);
+							owner?._setLoaded(true);
+							break;
+						case AdEventType.CLOSED:
+							owner?._onAdEvent(AdEventType.CLOSED, null, owner);
+							owner?._setLoaded(false);
+							break;
+						case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
+							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
+							break;
+						case AdEventType.IMPRESSION:
+							owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
+							break;
+						case AdEventType.OPENED:
+							owner?._onAdEvent(AdEventType.OPENED, null, owner);
+							break;
+						case AdEventType.FAILED_TO_LOAD_EVENT:
+							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
+							break;
+					}
+				},
+			})
+		);
+	}
 
-  onAdEvent(listener: AdEventListener) {
-    this._onAdEvent = listener;
-  }
+	onAdEvent(listener: AdEventListener) {
+		this._onAdEvent = listener;
+	}
 
-  show(showOptions?: AdShowOptions) {
-    if (typeof showOptions?.immersiveModeEnabled === 'boolean') {
-      this.#native.setImmersiveMode(showOptions?.immersiveModeEnabled);
-    }
-    this.#native.show(Application.android.foregroundActivity || Application.android.startActivity);
-  }
+	show(showOptions?: AdShowOptions) {
+		if (typeof showOptions?.immersiveModeEnabled === 'boolean') {
+			this.#native.setImmersiveMode(showOptions?.immersiveModeEnabled);
+		}
+		this.#native.show(Application.android.foregroundActivity || Application.android.startActivity);
+	}
 
-  get native() {
-    return this.#native;
-  }
+	get native() {
+		return this.#native;
+	}
 
-  get android() {
-    return this.native;
-  }
+	get android() {
+		return this.native;
+	}
 }
 
 export class RewardedInterstitialAd implements IRewardedInterstitialAd {
-  #native: com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd;
-  #adUnitId: string;
-  #requestOptions?: RequestOptions;
-  #loaded = false;
+	#native: com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd;
+	#adUnitId: string;
+	#requestOptions?: RequestOptions;
+	#loaded = false;
 
-  static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedInterstitialAd {
-    const ad = new RewardedInterstitialAd();
-    ad.#adUnitId = adUnitId;
-    ad.#requestOptions = requestOptions;
-    return ad;
-  }
+	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedInterstitialAd {
+		const ad = new RewardedInterstitialAd();
+		ad.#adUnitId = adUnitId;
+		ad.#requestOptions = requestOptions;
+		return ad;
+	}
 
-  get adUnitId(): string {
-    return this.#adUnitId;
-  }
+	get adUnitId(): string {
+		return this.#adUnitId;
+	}
 
-  _setNative(value) {
-    this.#native = value;
-  }
+	_setNative(value) {
+		this.#native = value;
+	}
 
-  _setLoaded(value) {
-    this.#loaded = value;
-  }
+	_setLoaded(value) {
+		this.#loaded = value;
+	}
 
-  get loaded(): boolean {
-    return this.#loaded;
-  }
+	get loaded(): boolean {
+		return this.#loaded;
+	}
 
-  load(): void {
-    const ref = new WeakRef(this);
-    org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd.load(
-      Application.android.foregroundActivity || Application.android.startActivity,
-      this.#adUnitId,
-      JSON.stringify(this.#requestOptions || {}),
-      new org.nativescript.firebase.admob.FirebaseAdmob.AdCallback({
-        onEvent(event: string, dataOrError: any) {
-          const owner = ref.get?.();
-          switch (event) {
-            case AdEventType.LOADED:
-              owner._setNative?.(dataOrError);
-              owner?._onAdEvent(AdEventType.LOADED, null, owner);
-              owner?._setLoaded(true);
-              break;
-            case AdEventType.CLOSED:
-              owner?._onAdEvent(AdEventType.CLOSED, null, owner);
-              owner?._setLoaded(false);
-              break;
-            case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
-              owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
-              break;
-            case AdEventType.IMPRESSION:
-              owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
-              break;
-            case AdEventType.OPENED:
-              owner?._onAdEvent(AdEventType.OPENED, null, owner);
-              break;
-            case AdEventType.FAILED_TO_LOAD_EVENT:
-              owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
-              break;
-          }
-        },
-      })
-    );
-  }
+	load(): void {
+		const ref = new WeakRef(this);
+		org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd.load(
+			Application.android.foregroundActivity || Application.android.startActivity,
+			this.#adUnitId,
+			JSON.stringify(this.#requestOptions || {}),
+			new org.nativescript.firebase.admob.FirebaseAdmob.AdCallback({
+				onEvent(event: string, dataOrError: any) {
+					const owner = ref.get?.();
+					switch (event) {
+						case AdEventType.LOADED:
+							owner._setNative?.(dataOrError);
+							owner?._onAdEvent(AdEventType.LOADED, null, owner);
+							owner?._setLoaded(true);
+							break;
+						case AdEventType.CLOSED:
+							owner?._onAdEvent(AdEventType.CLOSED, null, owner);
+							owner?._setLoaded(false);
+							break;
+						case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
+							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
+							break;
+						case AdEventType.IMPRESSION:
+							owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
+							break;
+						case AdEventType.OPENED:
+							owner?._onAdEvent(AdEventType.OPENED, null, owner);
+							break;
+						case AdEventType.FAILED_TO_LOAD_EVENT:
+							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
+							break;
+					}
+				},
+			})
+		);
+	}
 
-  _onAdEvent: AdEventListener;
+	_onAdEvent: AdEventListener;
 
-  onAdEvent(listener: AdEventListener) {
-    this._onAdEvent = listener;
-  }
+	onAdEvent(listener: AdEventListener) {
+		this._onAdEvent = listener;
+	}
 
-  show(showOptions?: AdShowOptions) {
-    if (typeof showOptions?.immersiveModeEnabled === 'boolean') {
-      this.#native.setImmersiveMode(showOptions?.immersiveModeEnabled);
-    }
-    const ref = new WeakRef(this);
-    org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd.show(
-      Application.android.foregroundActivity || Application.android.startActivity,
-      this.#native,
-      new org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.gms.ads.rewarded.RewardItem>({
-        onSuccess(reward): void {
-          ref.get()?._onAdEvent?.(RewardedAdEventType.EARNED_REWARD, null, RewardedItem.fromNative(reward));
-        },
-        onError(error): void {
-        },
-      })
-    );
-  }
+	show(showOptions?: AdShowOptions) {
+		if (typeof showOptions?.immersiveModeEnabled === 'boolean') {
+			this.#native.setImmersiveMode(showOptions?.immersiveModeEnabled);
+		}
+		const ref = new WeakRef(this);
+		org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd.show(
+			Application.android.foregroundActivity || Application.android.startActivity,
+			this.#native,
+			new org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.gms.ads.rewarded.RewardItem>({
+				onSuccess(reward): void {
+					ref.get()?._onAdEvent?.(RewardedAdEventType.EARNED_REWARD, null, RewardedItem.fromNative(reward));
+				},
+				onError(error): void {},
+			})
+		);
+	}
 
-  setServerSideVerificationOptions(options: ServerSideVerificationOptions): void {
-    if (this.native) {
-      const ssvo = new com.google.android.gms.ads.rewarded.ServerSideVerificationOptions.Builder();
-      if (options.customData) {
-        ssvo.setCustomData(options.customData);
-      }
-      if (options.userId) {
-        ssvo.setUserId(options.userId);
-      }
-      this.native.setServerSideVerificationOptions(ssvo.build());
-    }
-  }
+	setServerSideVerificationOptions(options: ServerSideVerificationOptions): void {
+		if (this.native) {
+			const ssvo = new com.google.android.gms.ads.rewarded.ServerSideVerificationOptions.Builder();
+			if (options.customData) {
+				ssvo.setCustomData(options.customData);
+			}
+			if (options.userId) {
+				ssvo.setUserId(options.userId);
+			}
+			this.native.setServerSideVerificationOptions(ssvo.build());
+		}
+	}
 
-  get native() {
-    return this.#native;
-  }
+	get native() {
+		return this.#native;
+	}
 
-  get android() {
-    return this.native;
-  }
+	get android() {
+		return this.native;
+	}
 }
 
 export class RewardedAd implements IRewardedAd {
-  #native: com.google.android.gms.ads.rewarded.RewardedAd;
-  #adUnitId: string;
-  #requestOptions?: RequestOptions;
-  #loaded = false;
+	#native: com.google.android.gms.ads.rewarded.RewardedAd;
+	#adUnitId: string;
+	#requestOptions?: RequestOptions;
+	#loaded = false;
 
-  static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedAd {
-    const reward = new RewardedAd();
-    reward.#adUnitId = adUnitId;
-    reward.#requestOptions = requestOptions;
-    return reward;
-  }
+	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedAd {
+		const reward = new RewardedAd();
+		reward.#adUnitId = adUnitId;
+		reward.#requestOptions = requestOptions;
+		return reward;
+	}
 
-  get adUnitId(): string {
-    return this.#adUnitId;
-  }
+	get adUnitId(): string {
+		return this.#adUnitId;
+	}
 
-  get loaded(): boolean {
-    return this.#loaded;
-  }
+	get loaded(): boolean {
+		return this.#loaded;
+	}
 
-  _setNative(value) {
-    this.#native = value;
-  }
+	_setNative(value) {
+		this.#native = value;
+	}
 
-  _setLoaded(value) {
-    this.#loaded = value;
-  }
+	_setLoaded(value) {
+		this.#loaded = value;
+	}
 
-  load(): void {
-    const ref = new WeakRef(this);
-    org.nativescript.firebase.admob.FirebaseAdmob.RewardedAd.load(
-      Application.android.foregroundActivity || Application.android.startActivity,
-      this.#adUnitId,
-      JSON.stringify(this.#requestOptions || {}),
-      new org.nativescript.firebase.admob.FirebaseAdmob.AdCallback({
-        onEvent(event: string, dataOrError: any) {
-          const owner = ref.get?.();
-          switch (event) {
-            case AdEventType.LOADED:
-              owner?._setNative?.(dataOrError);
-              owner?._onAdEvent(AdEventType.LOADED, null, owner);
-              owner?._setLoaded(true);
-              break;
-            case AdEventType.CLOSED:
-              owner?._onAdEvent(AdEventType.CLOSED, null, owner);
-              owner?._setLoaded(false);
-              break;
-            case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
-              owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
-              break;
-            case AdEventType.IMPRESSION:
-              owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
-              break;
-            case AdEventType.OPENED:
-              owner?._onAdEvent(AdEventType.OPENED, null, owner);
-              break;
-            case AdEventType.FAILED_TO_LOAD_EVENT:
-              owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
-              break;
-          }
-        },
-      })
-    );
-  }
+	load(): void {
+		const ref = new WeakRef(this);
+		org.nativescript.firebase.admob.FirebaseAdmob.RewardedAd.load(
+			Application.android.foregroundActivity || Application.android.startActivity,
+			this.#adUnitId,
+			JSON.stringify(this.#requestOptions || {}),
+			new org.nativescript.firebase.admob.FirebaseAdmob.AdCallback({
+				onEvent(event: string, dataOrError: any) {
+					const owner = ref.get?.();
+					switch (event) {
+						case AdEventType.LOADED:
+							owner?._setNative?.(dataOrError);
+							owner?._onAdEvent(AdEventType.LOADED, null, owner);
+							owner?._setLoaded(true);
+							break;
+						case AdEventType.CLOSED:
+							owner?._onAdEvent(AdEventType.CLOSED, null, owner);
+							owner?._setLoaded(false);
+							break;
+						case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
+							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
+							break;
+						case AdEventType.IMPRESSION:
+							owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
+							break;
+						case AdEventType.OPENED:
+							owner?._onAdEvent(AdEventType.OPENED, null, owner);
+							break;
+						case AdEventType.FAILED_TO_LOAD_EVENT:
+							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
+							break;
+					}
+				},
+			})
+		);
+	}
 
-  _onAdEvent: AdEventListener;
+	_onAdEvent: AdEventListener;
 
-  onAdEvent(listener: AdEventListener) {
-    this._onAdEvent = listener;
-  }
+	onAdEvent(listener: AdEventListener) {
+		this._onAdEvent = listener;
+	}
 
-  show(showOptions?: AdShowOptions) {
-    if (typeof showOptions?.immersiveModeEnabled === 'boolean') {
-      this.#native.setImmersiveMode(showOptions?.immersiveModeEnabled);
-    }
-    const ref = new WeakRef(this);
-    org.nativescript.firebase.admob.FirebaseAdmob.RewardedAd.show(
-      Application.android.foregroundActivity || Application.android.startActivity,
-      this.#native,
-      new org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.gms.ads.rewarded.RewardItem>({
-        onSuccess(reward): void {
-          ref.get()?._onAdEvent?.(RewardedAdEventType.EARNED_REWARD, null, RewardedItem.fromNative(reward));
-        },
-        onError(error): void {
-        },
-      })
-    );
-  }
+	show(showOptions?: AdShowOptions) {
+		if (typeof showOptions?.immersiveModeEnabled === 'boolean') {
+			this.#native.setImmersiveMode(showOptions?.immersiveModeEnabled);
+		}
+		const ref = new WeakRef(this);
+		org.nativescript.firebase.admob.FirebaseAdmob.RewardedAd.show(
+			Application.android.foregroundActivity || Application.android.startActivity,
+			this.#native,
+			new org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.gms.ads.rewarded.RewardItem>({
+				onSuccess(reward): void {
+					ref.get()?._onAdEvent?.(RewardedAdEventType.EARNED_REWARD, null, RewardedItem.fromNative(reward));
+				},
+				onError(error): void {},
+			})
+		);
+	}
 
-  setServerSideVerificationOptions(options: ServerSideVerificationOptions): void {
-    if (this.native) {
-      const ssvo = new com.google.android.gms.ads.rewarded.ServerSideVerificationOptions.Builder();
-      if (options.customData) {
-        ssvo.setCustomData(options.customData);
-      }
-      if (options.userId) {
-        ssvo.setUserId(options.userId);
-      }
-      this.native.setServerSideVerificationOptions(ssvo.build());
-    }
-  }
+	setServerSideVerificationOptions(options: ServerSideVerificationOptions): void {
+		if (this.native) {
+			const ssvo = new com.google.android.gms.ads.rewarded.ServerSideVerificationOptions.Builder();
+			if (options.customData) {
+				ssvo.setCustomData(options.customData);
+			}
+			if (options.userId) {
+				ssvo.setUserId(options.userId);
+			}
+			this.native.setServerSideVerificationOptions(ssvo.build());
+		}
+	}
 
-  get native() {
-    return this.#native;
-  }
+	get native() {
+		return this.#native;
+	}
 
-  get android() {
-    return this.native;
-  }
+	get android() {
+		return this.native;
+	}
 }
 
 export class RewardedItem implements IRewardedItem {
-  #native: com.google.android.gms.ads.rewarded.RewardItem;
+	#native: com.google.android.gms.ads.rewarded.RewardItem;
 
-  static fromNative(reward: com.google.android.gms.ads.rewarded.RewardItem) {
-    if (reward instanceof com.google.android.gms.ads.rewarded.RewardItem) {
-      const item = new RewardedItem();
-      item.#native = reward;
-      return item;
-    }
-    return null;
-  }
+	static fromNative(reward: com.google.android.gms.ads.rewarded.RewardItem) {
+		if (reward instanceof com.google.android.gms.ads.rewarded.RewardItem) {
+			const item = new RewardedItem();
+			item.#native = reward;
+			return item;
+		}
+		return null;
+	}
 
-  get amount(): number {
-    return this.native?.getAmount?.();
-  }
+	get amount(): number {
+		return this.native?.getAmount?.();
+	}
 
-  get type(): string {
-    return this.native?.getType();
-  }
+	get type(): string {
+		return this.native?.getType();
+	}
 
-  get native() {
-    return this.#native;
-  }
+	get native() {
+		return this.#native;
+	}
 
-  get android() {
-    return this.native;
-  }
+	get android() {
+		return this.native;
+	}
 }
 
 const BANNER = lazy(() => com.google.android.gms.ads.AdSize.BANNER);
@@ -563,39 +545,39 @@ export class BannerAdSize extends BannerAdSizeBase {
 }
 
 export class BannerAd extends BannerAdBase {
-  #native: com.google.android.gms.ads.AdView;
-  #listener;
+	#native: com.google.android.gms.ads.AdView;
+	#listener;
 
-  [sizeProperty.setNative](value) {
-    this.#native.setAdSize(value?.native);
-  }
+	[sizeProperty.setNative](value) {
+		this.#native.setAdSize(value?.native);
+	}
 
-  [unitIdProperty.setNative](value) {
-    if (this.#native) {
-      this.#native.setAdUnitId(value);
-    }
-  }
+	[unitIdProperty.setNative](value) {
+		if (this.#native) {
+			this.#native.setAdUnitId(value);
+		}
+	}
 
-  createNativeView() {
-    this.#native = new com.google.android.gms.ads.AdView(this._context);
-    return this.#native;
-  }
+	createNativeView() {
+		this.#native = new com.google.android.gms.ads.AdView(this._context);
+		return this.#native;
+	}
 
-  initNativeView() {
-    ensureAdListener();
-    this.#listener = new AdListener(new WeakRef(this));
-    this.#native.setAdListener(this.#listener);
-  }
+	initNativeView() {
+		ensureAdListener();
+		this.#listener = new AdListener(new WeakRef(this));
+		this.#native.setAdListener(this.#listener);
+	}
 
-  load(options?: RequestOptions) {
-    if (this.#native) {
-      org.nativescript.firebase.admob.FirebaseAdmob.BannerAd.load(JSON.stringify(options || {}), this.#native);
-    }
-  }
+	load(options?: RequestOptions) {
+		if (this.#native) {
+			org.nativescript.firebase.admob.FirebaseAdmob.BannerAd.load(JSON.stringify(options || {}), this.#native);
+		}
+	}
 
-  isLoading(): boolean {
-    return this.#native?.isLoading?.();
-  }
+	isLoading(): boolean {
+		return this.#native?.isLoading?.();
+	}
 }
 
 export class Admob implements IAdmob {
@@ -608,12 +590,37 @@ export class Admob implements IAdmob {
 		defaultAdmob = this;
 	}
 
-	static init() {
-		com.google.android.gms.ads.MobileAds.initialize(Utils.android.getApplicationContext());
+	static init(): Promise<{ [key: string]: AdapterStatus }> {
+		return new Promise((resolve, reject) => {
+			com.google.android.gms.ads.MobileAds.initialize(
+				Utils.android.getApplicationContext(),
+				new com.google.android.gms.ads.initialization.OnInitializationCompleteListener({
+					onInitializationComplete(status: com.google.android.gms.ads.initialization.InitializationStatus) {
+						let data = {};
+						try {
+							data = JSON.parse(org.nativescript.firebase.admob.FirebaseAdmob.toJSONStatusMap(status.getAdapterStatusMap()));
+						} catch (e) {}
+						resolve(data);
+					},
+				})
+			);
+		});
 	}
 
 	setRequestConfiguration(requestConfiguration: RequestConfiguration) {
 		try {
+			const parsedConfiguration: any = { ...requestConfiguration };
+			if (typeof parsedConfiguration.tagForChildDirectedTreatment === 'boolean') {
+				parsedConfiguration.tagForChildDirectedTreatment = String(parsedConfiguration.tagForChildDirectedTreatment);
+			} else {
+				parsedConfiguration.tagForChildDirectedTreatment = 'unspecified';
+			}
+
+			if (typeof parsedConfiguration.tagForUnderAgeOfConsent === 'boolean') {
+				parsedConfiguration.tagForUnderAgeOfConsent = String(parsedConfiguration.tagForUnderAgeOfConsent);
+			} else {
+				parsedConfiguration.tagForUnderAgeOfConsent = 'unspecified';
+			}
 			org.nativescript.firebase.admob.FirebaseAdmob.setRequestConfiguration(JSON.stringify(requestConfiguration));
 		} catch (e) {}
 	}

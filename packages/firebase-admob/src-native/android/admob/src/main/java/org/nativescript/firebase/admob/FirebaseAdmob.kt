@@ -12,6 +12,7 @@ import com.google.android.gms.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.formats.AdManagerAdViewOptions
 import com.google.android.gms.ads.formats.ShouldDelayBannerRenderingListener
+import com.google.android.gms.ads.initialization.AdapterStatus
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.rewarded.RewardItem
@@ -21,6 +22,90 @@ import com.google.android.ump.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.concurrent.Executors
+
+private const val NATIVE_AD_OPTIONS_KEY = "nativeAdOptions"
+
+private const val AD_CHOICES_PLACEMENT_KEY = "adChoicesPlacement"
+private const val AD_CHOICES_PLACEMENT_TOP_LEFT_KEY = "topLeft"
+private const val AD_CHOICES_PLACEMENT_TOP_RIGHT_KEY = "topRight"
+private const val AD_CHOICES_PLACEMENT_BOTTOM_RIGHT_KEY = "bottomRight"
+private const val AD_CHOICES_PLACEMENT_BOTTOM_LEFT_KEY = "bottomLeft"
+
+private const val MEDIA_ASPECT_RATIO_KEY = "mediaAspectRatio"
+private const val MEDIA_ASPECT_RATIO_LANDSCAPE_KEY = "landscape"
+private const val MEDIA_ASPECT_RATIO_PORTRAIT_KEY = "portrait"
+private const val MEDIA_ASPECT_RATIO_SQUARE_KEY = "square"
+private const val MEDIA_ASPECT_RATIO_SQUARE_ANY = "any"
+
+private const val CUSTOM_MUTE_THIS_ADD_KEY = "customMuteThisAdd"
+
+private const val MULTIPLE_IMAGES_KEY = "multipleImages"
+private const val RETURN_URLS_FOR_IMAGE_ASSETS_KEY = "returnUrlsForImageAssets"
+
+private const val VIDEO_OPTIONS_KEY = "videoOptions"
+private const val VIDEO_OPTIONS_START_MUTED_KEY = "startMuted"
+private const val VIDEO_OPTIONS_CLICK_TO_EXPAND_REQUESTED_KEY = "clickToExpandRequested"
+private const val VIDEO_OPTIONS_CUSTOM_CONTROLS_REQUESTED_KEY = "customControlsRequested"
+
+private const val AD_SIZES_KEY = "adSizes"
+
+private const val AD_MANAGER_AD_VIEW_OPTIONS_KEY = "adManagerAdViewOptions"
+
+private const val AD_MANAGER_AD_VIEW_OPTIONS_MANUAL_IMPRESSIONS_ENABLED_KEY =
+  "manualImpressionsEnabled"
+
+private const val AD_MANAGER_AD_VIEW_OPTIONS_SHOULD_DELAY_BANNER_RENDERING_KEY =
+  "shouldDelayBannerRendering"
+
+private const val AD_MANAGER_AD_VIEW_LOADED_EVENT = "adManagerAdViewLoaded"
+
+private const val AD_MANAGER_AD_CLICKED_EVENT = "adClicked"
+
+private const val AD_MANAGER_AD_CLOSED_EVENT = "adClosed"
+
+private const val AD_MANAGER_AD_FAILED_TO_LOAD_EVENT = "adFailedToLoad"
+
+private const val AD_MANAGER_AD_IMPRESSION_EVENT = "adImpression"
+
+private const val AD_MANAGER_AD_LOADED_EVENT = "adLoaded"
+
+private const val AD_MANAGER_AD_OPENED_EVENT = "adOpened"
+
+private const val AD_MANAGER_AD_NATIVE_AD_LOADED_EVENT = "adNativeAdLoaded"
+
+private const val DEBUG_SETTINGS_KEY = "debugSettings"
+private const val GEOGRAPHY_KEY = "geography"
+private const val DEVICE_IDS_KEY = "deviceIds"
+private const val EMULATOR_KEY = "emulator"
+private const val FORCE_TESTING_KEY = "forceTesting"
+private const val TAG_FOR_UNDER_AGE_OF_CONSENT_KEY = "tagForUnderAgeOfConsent"
+private const val ADMOB_ID_KEY = "adMobAppId"
+
+
+private const val CONTENT_URL_KEY = "contentUrl"
+private const val KEYWORDS_KEY = "keywords"
+private const val LOCATION_KEY = "location"
+private const val LOCATION_LATITUDE_KEY = "lat"
+private const val LOCATION_LONGITUDE_KEY = "lon"
+private const val LOCATION_ACCURACY_KEY = "locationAccuracy"
+private const val NETWORK_EXTRAS_KEY = "networkExtras"
+private const val REQUEST_AGENT_KEY = "requestAgent"
+private const val REQUEST_NON_PERSONALIZED_ADS_ONLY_KEY = "requestNonPersonalizedAdsOnly"
+
+private const val PUBLISHER_PROVIDER_ID_KEY = "publisherProvidedId"
+private const val CUSTOM_TARGETING_KEY = "customTargeting"
+private const val CATEGORY_EXCLUSIONS_KEY = "categoryExclusions"
+private const val AD_STRING_KEY = "adString"
+
+
+private const val AD_CLICKED_EVENT = "adClicked"
+private const val AD_CLOSED_EVENT = "adClosed"
+private const val AD_FAILED_TO_LOAD_EVENT = "adFailedToLoad"
+private const val AD_LOADED_EVENT = "adLoaded"
+private const val AD_OPENED_EVENT = "adOpened"
+private  const val AD_IMPRESSION_EVENT = "adImpression"
+private const val AD_FAILED_TO_SHOW_FULL_SCREEN_CONTENT = " adFailedToShowFullScreenContent"
+
 
 class FirebaseAdmob {
   interface Callback<T> {
@@ -177,107 +262,58 @@ class FirebaseAdmob {
   }
 
   class NativeAd {
-    companion object {
 
-      const val NATIVE_AD_OPTIONS_KEY = "nativeAdOptions"
-      const val AD_CHOICES_PLACEMENT_KEY = "adChoicesPlacement"
-      const val AD_CHOICES_PLACEMENT_TOP_LEFT_KEY = "topLeft"
-      const val AD_CHOICES_PLACEMENT_TOP_RIGHT_KEY = "topRight"
-      const val AD_CHOICES_PLACEMENT_BOTTOM_RIGHT_KEY = "bottomRight"
-      const val AD_CHOICES_PLACEMENT_BOTTOM_LEFT_KEY = "bottomLeft"
+    enum class BannerAdSize(private val value: String) {
+      BANNER("BANNER"),
+      FLUID("FLUID"),
+      FULL_BANNER("FULL_BANNER"),
+      LARGE_BANNER("LARGE_BANNER"),
+      LEADERBOARD("LEADERBOARD"),
+      MEDIUM_RECTANGLE("MEDIUM_RECTANGLE"),
+      SMART_BANNER("SMART_BANNER"),
+      WIDE_SKYSCRAPER("WIDE_SKYSCRAPER"),
+      INVALID("INVALID"),
+      SEARCH("SEARCH");
 
-      const val MEDIA_ASPECT_RATIO_KEY = "mediaAspectRatio"
-      const val MEDIA_ASPECT_RATIO_LANDSCAPE_KEY = "landscape"
-      const val MEDIA_ASPECT_RATIO_PORTRAIT_KEY = "portrait"
-      const val MEDIA_ASPECT_RATIO_SQUARE_KEY = "square"
-      const val MEDIA_ASPECT_RATIO_SQUARE_ANY = "any"
-
-      const val CUSTOM_MUTE_THIS_ADD_KEY = "customMuteThisAdd"
-
-      const val MULTIPLE_IMAGES_KEY = "multipleImages"
-      const val RETURN_URLS_FOR_IMAGE_ASSETS_KEY = "returnUrlsForImageAssets"
-
-      const val VIDEO_OPTIONS_KEY = "videoOptions"
-      const val VIDEO_OPTIONS_START_MUTED_KEY = "startMuted"
-      const val VIDEO_OPTIONS_CLICK_TO_EXPAND_REQUESTED_KEY = "clickToExpandRequested"
-      const val VIDEO_OPTIONS_CUSTOM_CONTROLS_REQUESTED_KEY = "customControlsRequested"
-
-      const val AD_SIZES_KEY = "adSizes"
-
-      const val AD_MANAGER_AD_VIEW_OPTIONS_KEY = "adManagerAdViewOptions"
-
-      const val AD_MANAGER_AD_VIEW_OPTIONS_MANUAL_IMPRESSIONS_ENABLED_KEY =
-        "manualImpressionsEnabled"
-
-      const val AD_MANAGER_AD_VIEW_OPTIONS_SHOULD_DELAY_BANNER_RENDERING_KEY =
-        "shouldDelayBannerRendering"
-
-      const val AD_MANAGER_AD_VIEW_LOADED_EVENT = "adManagerAdViewLoaded"
-
-      const val AD_MANAGER_AD_CLICKED_EVENT = "adClicked"
-
-      const val AD_MANAGER_AD_CLOSED_EVENT = "adClosed"
-
-      const val AD_MANAGER_AD_FAILED_TO_LOAD_EVENT = "adFailedToLoad"
-
-      const val AD_MANAGER_AD_IMPRESSION_EVENT = "adImpression"
-
-      const val AD_MANAGER_AD_LOADED_EVENT = "adLoaded"
-
-      const val AD_MANAGER_AD_OPENED_EVENT = "adOpened"
-
-      const val AD_MANAGER_AD_NATIVE_AD_LOADED_EVENT = "adNativeAdLoaded"
-
-
-      enum class BannerAdSize(private val value: String) {
-        BANNER("BANNER"),
-        FLUID("FLUID"),
-        FULL_BANNER("FULL_BANNER"),
-        LARGE_BANNER("LARGE_BANNER"),
-        LEADERBOARD("LEADERBOARD"),
-        MEDIUM_RECTANGLE("MEDIUM_RECTANGLE"),
-        SMART_BANNER("SMART_BANNER"),
-        WIDE_SKYSCRAPER("WIDE_SKYSCRAPER"),
-        INVALID("INVALID"),
-        SEARCH("SEARCH");
-
-        override fun toString(): String {
-          return value
-        }
-
-        fun toAdSize(): AdSize {
-          return when (this) {
-            BANNER -> AdSize.BANNER
-            FLUID -> AdSize.FLUID
-            FULL_BANNER -> AdSize.FULL_BANNER
-            LARGE_BANNER -> AdSize.LARGE_BANNER
-            LEADERBOARD -> AdSize.LEADERBOARD
-            MEDIUM_RECTANGLE -> AdSize.MEDIUM_RECTANGLE
-            SMART_BANNER -> AdSize.SMART_BANNER
-            WIDE_SKYSCRAPER -> AdSize.WIDE_SKYSCRAPER
-            SEARCH -> AdSize.SEARCH
-            else -> AdSize.INVALID
-          }
-        }
-
-        companion object {
-          fun fromString(value: String): BannerAdSize {
-            return when (value) {
-              "BANNER" -> BANNER
-              "FLUID" -> FLUID
-              "FULL_BANNER" -> FULL_BANNER
-              "LARGE_BANNER" -> LARGE_BANNER
-              "LEADERBOARD" -> LEADERBOARD
-              "MEDIUM_RECTANGLE" -> MEDIUM_RECTANGLE
-              "SMART_BANNER" -> SMART_BANNER
-              "WIDE_SKYSCRAPER" -> WIDE_SKYSCRAPER
-              "SEARCH" -> SEARCH
-              else -> INVALID
-            }
-          }
-        }
-
+      override fun toString(): String {
+        return value
       }
+
+      fun toAdSize(): AdSize {
+        return when (this) {
+          BANNER -> AdSize.BANNER
+          FLUID -> AdSize.FLUID
+          FULL_BANNER -> AdSize.FULL_BANNER
+          LARGE_BANNER -> AdSize.LARGE_BANNER
+          LEADERBOARD -> AdSize.LEADERBOARD
+          MEDIUM_RECTANGLE -> AdSize.MEDIUM_RECTANGLE
+          SMART_BANNER -> AdSize.SMART_BANNER
+          WIDE_SKYSCRAPER -> AdSize.WIDE_SKYSCRAPER
+          SEARCH -> AdSize.SEARCH
+          else -> AdSize.INVALID
+        }
+      }
+
+      companion object {
+        fun fromString(value: String): BannerAdSize {
+          return when (value) {
+            "BANNER" -> BANNER
+            "FLUID" -> FLUID
+            "FULL_BANNER" -> FULL_BANNER
+            "LARGE_BANNER" -> LARGE_BANNER
+            "LEADERBOARD" -> LEADERBOARD
+            "MEDIUM_RECTANGLE" -> MEDIUM_RECTANGLE
+            "SMART_BANNER" -> SMART_BANNER
+            "WIDE_SKYSCRAPER" -> WIDE_SKYSCRAPER
+            "SEARCH" -> SEARCH
+            else -> INVALID
+          }
+        }
+      }
+
+    }
+
+    companion object {
 
       @JvmStatic
       fun createLoader(
@@ -491,13 +527,6 @@ class FirebaseAdmob {
     }
 
     companion object {
-      const val DEBUG_SETTINGS_KEY = "debugSettings"
-      const val GEOGRAPHY_KEY = "geography"
-      const val DEVICE_IDS_KEY = "deviceIds"
-      const val EMULATOR_KEY = "emulator"
-      const val FORCE_TESTING_KEY = "forceTesting"
-      const val TAG_FOR_UNDER_AGE_OF_CONSENT_KEY = "tagForUnderAgeOfConsent"
-      const val ADMOB_ID_KEY = "adMobAppId"
 
       @JvmStatic
       fun reset(context: Context) {
@@ -611,53 +640,30 @@ class FirebaseAdmob {
     }
   }
 
+  enum class MaxAdContentRating(private val value: String) {
+    G("G"),
+    PG("PG"),
+    T("T"),
+    MA("MA"),
+    UNSPECIFIED("UNSPECIFIED");
+
+    override fun toString(): String {
+      return value
+    }
+  }
+
+  enum class RequestConfiguration(private val value: String) {
+    MaxAdContentRating("maxAdContentRating"),
+    TagForChildDirectedTreatment("tagForChildDirectedTreatment"),
+    TagForUnderAgeOfConsent("tagForUnderAgeOfConsent"),
+    TestDevices("testDevices");
+
+    override fun toString(): String {
+      return value
+    }
+  }
+
   companion object {
-    const val CONTENT_URL_KEY = "contentUrl"
-    const val KEYWORDS_KEY = "keywords"
-    const val LOCATION_KEY = "location"
-    const val LOCATION_LATITUDE_KEY = "lat"
-    const val LOCATION_LONGITUDE_KEY = "lon"
-    const val LOCATION_ACCURACY_KEY = "locationAccuracy"
-    const val NETWORK_EXTRAS_KEY = "networkExtras"
-    const val REQUEST_AGENT_KEY = "requestAgent"
-    const val REQUEST_NON_PERSONALIZED_ADS_ONLY_KEY = "requestNonPersonalizedAdsOnly"
-
-    const val PUBLISHER_PROVIDER_ID_KEY = "publisherProvidedId"
-    const val CUSTOM_TARGETING_KEY = "customTargeting"
-    const val CATEGORY_EXCLUSIONS_KEY = "categoryExclusions"
-    const val AD_STRING_KEY = "adString"
-
-
-    const val AD_CLICKED_EVENT = "adClicked"
-    const val AD_CLOSED_EVENT = "adClosed"
-    const val AD_FAILED_TO_LOAD_EVENT = "adFailedToLoad"
-    const val AD_LOADED_EVENT = "adLoaded"
-    const val AD_OPENED_EVENT = "adOpened"
-    const val AD_IMPRESSION_EVENT = "adImpression"
-    const val AD_FAILED_TO_SHOW_FULL_SCREEN_CONTENT = " adFailedToShowFullScreenContent"
-
-    enum class MaxAdContentRating(private val value: String) {
-      G("G"),
-      PG("PG"),
-      T("T"),
-      MA("MA"),
-      UNSPECIFIED("UNSPECIFIED");
-
-      override fun toString(): String {
-        return value
-      }
-    }
-
-    enum class RequestConfiguration(private val value: String) {
-      MaxAdContentRating("maxAdContentRating"),
-      TagForChildDirectedTreatment("tagForChildDirectedTreatment"),
-      TagForUnderAgeOfConsent("tagForUnderAgeOfConsent"),
-      TestDevices("testDevices");
-
-      override fun toString(): String {
-        return value
-      }
-    }
 
     @JvmStatic
     fun setRequestConfiguration(configuration: String) {
@@ -736,7 +742,7 @@ class FirebaseAdmob {
           val list = mutableListOf<String>()
           for (i in 0..testDevices.length()) {
             val value = testDevices.getString(i)
-            if (value == AdConsent.EMULATOR_KEY) {
+            if (value == "EMULATOR") {
               list.add(AdRequest.DEVICE_ID_EMULATOR)
             } else {
               list.add(value)
@@ -747,11 +753,10 @@ class FirebaseAdmob {
         }
 
       } catch (e: Exception) {
-
       }
     }
 
-    fun buildRequest(request: String): AdRequest {
+    private fun buildRequest(request: String): AdRequest {
       val builder = AdRequest.Builder()
       buildRequest(builder, request)
       return builder.build()
@@ -813,7 +818,7 @@ class FirebaseAdmob {
       }
     }
 
-    fun buildAdManagerRequest(request: String): AdManagerAdRequest {
+    private fun buildAdManagerRequest(request: String): AdManagerAdRequest {
       val adRequest = AdManagerAdRequest.Builder()
 
       buildRequest(adRequest, request)
@@ -856,6 +861,25 @@ class FirebaseAdmob {
 
 
       return adRequest.build()
+    }
+
+    @JvmStatic
+    fun toJSONStatusMap(status: Map<String, AdapterStatus>): String {
+      val json = JSONObject();
+      for (entry in status.entries) {
+        val obj = JSONObject()
+        obj.put(
+          "description", entry.value.description
+        )
+        obj.put(
+          "latency", entry.value.latency
+        )
+        obj.put(
+          "state", entry.value.initializationState
+        )
+        json.put(entry.key, obj)
+      }
+      return json.toString()
     }
 
     @JvmStatic

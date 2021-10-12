@@ -1,155 +1,150 @@
-import {Application} from '@nativescript/core';
+import { Application } from '@nativescript/core';
 
-import {FirebaseApp} from '@nativescript/firebase-core';
-import {
-  IAdmob,
-  RequestConfiguration,
-  AdEventListener,
-  AdShowOptions,
-  IInterstitialAd,
-  RequestOptions,
-  IRewardedAd,
-  AdEventType,
-  BannerAdBase,
-  IRewardedInterstitialAd,
-  IRewardedItem,
-  RewardedAdEventType,
-  MaxAdContentRating,
-  ServerSideVerificationOptions
-} from './common';
+import { FirebaseApp } from '@nativescript/firebase-core';
+import { IAdmob, RequestConfiguration, AdEventListener, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, AdEventType, BannerAdBase, IRewardedInterstitialAd, IRewardedItem, RewardedAdEventType, MaxAdContentRating, ServerSideVerificationOptions } from './common';
 
-export {MaxAdContentRating, AdEventType, RewardedAdEventType};
+export { MaxAdContentRating, AdEventType, RewardedAdEventType };
 
 export * from './adsconsent';
 export * from './nativead';
 
 export declare class InterstitialAd implements IInterstitialAd {
-  static createForAdRequest(adUnitId: string): InterstitialAd;
-  static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): InterstitialAd;
+	static createForAdRequest(adUnitId: string): InterstitialAd;
+	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): InterstitialAd;
 
-  readonly adUnitId: string;
-  readonly loaded: boolean;
+	readonly adUnitId: string;
+	readonly loaded: boolean;
 
-  load(): void;
+	load(): void;
 
-  onAdEvent(listener: AdEventListener);
+	onAdEvent(listener: AdEventListener);
 
-  show(showOptions?: AdShowOptions);
+	show(showOptions?: AdShowOptions);
 
-  readonly native: any;
-  readonly android: any;
-  readonly ios: any;
+	readonly native: any;
+	readonly android: any;
+	readonly ios: any;
 }
 
 export declare class RewardedInterstitialAd implements IRewardedInterstitialAd {
-  static createForAdRequest(adUnitId: string): RewardedInterstitialAd;
-  static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedInterstitialAd;
+	static createForAdRequest(adUnitId: string): RewardedInterstitialAd;
+	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedInterstitialAd;
 
-  readonly adUnitId: string;
-  readonly loaded: boolean;
+	readonly adUnitId: string;
+	readonly loaded: boolean;
 
-  load(): void;
+	load(): void;
 
-  onAdEvent(listener: AdEventListener);
+	onAdEvent(listener: AdEventListener);
 
-  show(showOptions?: AdShowOptions);
+	show(showOptions?: AdShowOptions);
 
-  setServerSideVerificationOptions(options: ServerSideVerificationOptions): void;
+	setServerSideVerificationOptions(options: ServerSideVerificationOptions): void;
 
-  readonly native: any;
-  readonly android: any;
-  readonly ios: any;
+	readonly native: any;
+	readonly android: any;
+	readonly ios: any;
 }
 
 export declare class RewardedAd implements IRewardedAd {
-  static createForAdRequest(adUnitId: string): RewardedAd;
-  static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedAd;
+	static createForAdRequest(adUnitId: string): RewardedAd;
+	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedAd;
 
-  readonly adUnitId: string;
-  readonly loaded: boolean;
+	readonly adUnitId: string;
+	readonly loaded: boolean;
 
-  load(): void;
+	load(): void;
 
-  onAdEvent(listener: AdEventListener);
+	onAdEvent(listener: AdEventListener);
 
-  show(showOptions?: AdShowOptions);
+	show(showOptions?: AdShowOptions);
 
-  setServerSideVerificationOptions(options: ServerSideVerificationOptions): void;
+	setServerSideVerificationOptions(options: ServerSideVerificationOptions): void;
 
-  readonly native: any;
-  readonly android: any;
-  readonly ios: any;
+	readonly native: any;
+	readonly android: any;
+	readonly ios: any;
 }
 
 export declare class RewardedItem implements IRewardedItem {
-  readonly amount: number;
+	readonly amount: number;
 
-  readonly type: string;
+	readonly type: string;
 
-  readonly native: any;
-  readonly android: any;
-  readonly ios: any;
+	readonly native: any;
+	readonly android: any;
+	readonly ios: any;
 }
 
 export declare class BannerAd extends BannerAdBase {
-  size: BannerAdSize;
+	size: BannerAdSize;
 
-  unitId: string;
+	unitId: string;
 
-  load(options?: RequestOptions);
+	load(options?: RequestOptions);
 
-  isLoading(): boolean;
+	isLoading(): boolean;
 
-  on(event: 'adClicked', callback: (args: any) => void, thisArg?: any);
-  on(event: 'adLoaded', callback: (args: any) => void, thisArg?: any);
-  on(event: 'adClosed', callback: (args: any) => void, thisArg?: any);
-  on(event: 'adImpression', callback: (args: any) => void, thisArg?: any);
-  on(event: 'adFailedToLoad', callback: (args: any) => void, thisArg?: any);
+	on(event: 'adClicked', callback: (args: any) => void, thisArg?: any);
+	on(event: 'adLoaded', callback: (args: any) => void, thisArg?: any);
+	on(event: 'adClosed', callback: (args: any) => void, thisArg?: any);
+	on(event: 'adImpression', callback: (args: any) => void, thisArg?: any);
+	on(event: 'adFailedToLoad', callback: (args: any) => void, thisArg?: any);
 }
 
 export declare class BannerAdSize extends BannerAdSizeBase {
+	constructor(width: number, height: number);
 
-  constructor(width: number, height: number);
+	readonly BANNER: BannerAdSize;
 
-  readonly BANNER: BannerAdSize;
+	readonly FULL_BANNER: BannerAdSize;
 
-  readonly FULL_BANNER: BannerAdSize;
+	readonly LARGE_BANNER: BannerAdSize;
 
-  readonly LARGE_BANNER: BannerAdSize;
+	readonly LEADERBOARD: BannerAdSize;
 
-  readonly LEADERBOARD: BannerAdSize;
+	readonly MEDIUM_RECTANGLE: BannerAdSize;
 
-  readonly MEDIUM_RECTANGLE: BannerAdSize;
+	readonly FLUID: BannerAdSize;
 
-  readonly FLUID: BannerAdSize;
+	readonly WIDE_SKYSCRAPER: BannerAdSize;
 
-  readonly WIDE_SKYSCRAPER: BannerAdSize;
+	readonly INVALID: BannerAdSize;
 
-  readonly INVALID: BannerAdSize;
+	readonly SEARCH: BannerAdSize;
 
-  readonly SEARCH: BannerAdSize;
+	static createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize;
 
-  static createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize;
+	static createInLineAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize;
 
-  static createInLineAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize;
-
-  readonly native: any;
-  readonly android: any;
-  readonly ios: any;
+	readonly native: any;
+	readonly android: any;
+	readonly ios: any;
 }
 
 export declare class Admob implements IAdmob {
-  readonly app: FirebaseApp;
+	readonly app: FirebaseApp;
 
-  static init();
+	static init(): Promise<{ [key: string]: AdapterStatus }>;
 
-  setRequestConfiguration(requestConfiguration: RequestConfiguration);
+	setRequestConfiguration(requestConfiguration: RequestConfiguration);
 }
 
 declare module '@nativescript/firebase-core' {
-  export interface Firebase extends FirebaseAdmob {}
+	export interface Firebase extends FirebaseAdmob {}
+}
+
+export enum AdapterStatusState {
+	NOT_READY,
+	READY,
+}
+
+export interface AdapterStatus {
+	description: string;
+	latency: number;
+	initializationState: AdapterStatusState;
 }
 
 export interface FirebaseAdmob {
-  static admob(): Admob;
+	static admob(): Admob;
 }

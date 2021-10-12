@@ -309,7 +309,7 @@ Through the use of NativeAdListener, you can listen for lifecycle events, such a
 <ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}">
   <GridLayout height="300" width="300">
     <Label id="headLineView" />
-    <ui:MediaView id="mediaView" />
+    <ui:MediaView id="mediaView" height="100%"/>
     <Label id="bodyView" />
   </GridLayout>
 </ui:NativeAdView>
@@ -324,6 +324,7 @@ loader.onAdEvent((event, error, data) => {
 		const hlv = view.getViewById('headLineView');
 		hlv.text = ad.headline;
 		const mv = view.getViewById('mediaView');
+    view.mediaView = mv;
 		mv.mediaContent = ad.mediaContent;
 		const bv = view.getViewById('bodyView');
 		bv.text = ad.body;

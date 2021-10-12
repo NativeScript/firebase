@@ -1,41 +1,44 @@
 import { AddChildFromBuilder, Application, CSSType, ImageSource, View } from '@nativescript/core';
 import { AdEventListener, AdEventType, ManagerRequestOptions, RequestOptions } from '../common';
-import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, MediaViewBase, NativeAdOptions, UnconfirmedClickListener, VideoStatus, AdChoicesPlacement, MediaAspectRatio, INativeAdLoader, NativeAdEventListener, NativeAdEventType, stretchProperty, NativeAdViewBase } from './common';
+import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, MediaViewBase, NativeAdOptions, UnconfirmedClickListener, VideoStatus, AdChoicesPlacement, MediaAspectRatio, INativeAdLoader, NativeAdEventListener, NativeAdEventType, stretchProperty, NativeAdViewBase, mediaContentProperty } from './common';
 
-export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio };
+export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio, NativeAdEventType };
 
 const NATIVE_AD_LOADED_EVENT = 'adNativeAdLoaded';
 const AD_MANAGER_AD_VIEW_LOADED_EVENT = 'adManagerAdViewLoaded';
 
-
 export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
 	#native: com.google.android.gms.ads.nativead.NativeAdView;
-	#children: View[] = []
-	createNativeView(){
+	#child: View;
+	createNativeView() {
 		this.#native = new com.google.android.gms.ads.nativead.NativeAdView(this._context);
 		return this.#native;
 	}
 
 	_addChildFromBuilder(name: string, value: any): void {
-		if(value instanceof View && !value.parent){
+		if (value instanceof View && !value.parent && !this.#child) {
 			this._addView(value);
-			this.#children.push(value);
+			this.#child = value;
 		}
 	}
 
 	public eachChildView(callback: (child: View) => boolean): void {
-        this.#children.forEach((view) => {
-            callback(view);
-        });
-    }
+		callback(this.#child);
+	}
 
+	onLoaded(){
+		super.onLoaded();
+		if(this.#child){
+			(this.#native as any).addView(this.#child.nativeView);
+		}
+	}
 
 	#adChoicesView: View;
 	get adChoicesView(): View {
 		return this.#adChoicesView;
 	}
 
-	set adChoicesView(value){
+	set adChoicesView(value) {
 		this.#adChoicesView = value;
 		this.#native.setAdChoicesView(value?.nativeView);
 	}
@@ -45,18 +48,17 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		return this.#advertiserView;
 	}
 
-	set advertiserView(value){
+	set advertiserView(value) {
 		this.#advertiserView = value;
 		this.#native.setAdvertiserView(value?.nativeView);
 	}
 
-	
 	#bodyView: View;
 	get bodyView(): View {
 		return this.#bodyView;
 	}
 
-	set bodyView(value){
+	set bodyView(value) {
 		this.#bodyView = value;
 		this.#native.setBodyView(value?.nativeView);
 	}
@@ -66,7 +68,7 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		return this.#callToActionView;
 	}
 
-	set callToActionView(value){
+	set callToActionView(value) {
 		this.#callToActionView = value;
 		this.#native.setCallToActionView(value?.nativeView);
 	}
@@ -76,18 +78,17 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		return this.#headlineView;
 	}
 
-	set headlineView(value){
+	set headlineView(value) {
 		this.#headlineView = value;
 		this.#native.setHeadlineView(value?.nativeView);
 	}
-
 
 	#iconView: View;
 	get iconView(): View {
 		return this.#iconView;
 	}
 
-	set iconView(value){
+	set iconView(value) {
 		this.#iconView = value;
 		this.#native.setIconView(value?.nativeView);
 	}
@@ -97,7 +98,7 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		return this.#imageView;
 	}
 
-	set imageView(value){
+	set imageView(value) {
 		this.imageView = value;
 		this.#native.setImageView(value?.nativeView);
 	}
@@ -108,17 +109,17 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 	}
 
 	set mediaView(value) {
-		this.#native.setMediaView(value?.native)
+		this.#native.setMediaView(value?.native);
 		this.#mediaView = value;
 	}
-	
+
 	#nativeAd: NativeAd;
 	get nativeAd(): NativeAd {
 		return this.#nativeAd;
 	}
 
-	set nativeAd(value){
-		this.#native.setNativeAd(value?.native);
+	set nativeAd(value) {
+		this.#native.setNativeAd(value?.native || null);
 		this.#nativeAd = value;
 	}
 
@@ -127,18 +128,17 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		return this.#priceView;
 	}
 
-	set priceView(value){
+	set priceView(value) {
 		this.#priceView = value;
 		this.#native.setPriceView(value?.nativeView);
 	}
-
 
 	#starRatingView: View;
 	get starRatingView(): View {
 		return this.#starRatingView;
 	}
 
-	set starRatingView(value){
+	set starRatingView(value) {
 		this.#starRatingView = value;
 		this.#native.setStarRatingView(value?.nativeView);
 	}
@@ -148,13 +148,11 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		return this.#storeView;
 	}
 
-	set storeView(value){
+	set storeView(value) {
 		this.#priceView = value;
 		this.#native.setStoreView(value?.nativeView);
 	}
-
 }
-
 
 export class NativeAdLoader implements INativeAdLoader {
 	#adUnitId: string;
@@ -206,7 +204,7 @@ export class NativeAdLoader implements INativeAdLoader {
 							break;
 						case NATIVE_AD_LOADED_EVENT:
 							nativeAd = NativeAd.fromNative(param1);
-							owner?._listener?.(NativeAdEventType.LOADED, null, param1);
+							owner?._listener?.(NativeAdEventType.LOADED, null, nativeAd);
 							break;
 						case AD_MANAGER_AD_VIEW_LOADED_EVENT:
 							// returns adManagerAdView view
@@ -299,8 +297,8 @@ export class NativeAd implements INativeAd {
 		return this.native?.getPrice?.();
 	}
 
-	get mediaContent(){
-		return MediaContent.fromNative(this.native?.getMediaContent?.())
+	get mediaContent() {
+		return MediaContent.fromNative(this.native?.getMediaContent?.());
 	}
 
 	isCustomClickGestureEnabled(): boolean {
@@ -522,47 +520,41 @@ export class VideoController implements IVideoController {
 	}
 }
 
-
 export class MediaView extends MediaViewBase {
 	#contentView: com.google.android.gms.ads.nativead.MediaView;
-	#mediaContent: com.google.android.gms.ads.MediaContent;
 	createNativeView() {
 		this.#contentView = new com.google.android.gms.ads.nativead.MediaView(this._context);
 		return this.#contentView;
 	}
 
-	set mediaContent(content) {
-		this.#contentView.setImageScaleType
-		this.#mediaContent = content?.native;
-		this.#contentView?.setMediaContent(content?.native);
-	}
-
-	get mediaContent() {
-		return MediaContent.fromNative(this.#mediaContent);
+	[mediaContentProperty.setNative](content) {
+		if (this.#contentView) {
+			this.#contentView?.setMediaContent(content?.native || null);
+		}
 	}
 
 	[stretchProperty.setNative](value) {
-		if(!this.#contentView){
+		if (!this.#contentView) {
 			return;
 		}
-        switch (value) {
-            case 'aspectFit':
-                this.nativeViewProtected.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER);
-                break;
-            case 'aspectFill':
-                this.nativeViewProtected.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-                break;
-            case 'fill':
-                this.nativeViewProtected.setScaleType(android.widget.ImageView.ScaleType.FIT_XY);
-                break;
-            case 'none':
-            default:
-                this.nativeViewProtected.setScaleType(android.widget.ImageView.ScaleType.MATRIX);
-                break;
-        }
-    }
+		switch (value) {
+			case 'aspectFit':
+				this.nativeViewProtected.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER);
+				break;
+			case 'aspectFill':
+				this.nativeViewProtected.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+				break;
+			case 'fill':
+				this.nativeViewProtected.setScaleType(android.widget.ImageView.ScaleType.FIT_XY);
+				break;
+			case 'none':
+			default:
+				this.nativeViewProtected.setScaleType(android.widget.ImageView.ScaleType.MATRIX);
+				break;
+		}
+	}
 
-	get native(){
+	get native() {
 		return this.#contentView;
 	}
 }

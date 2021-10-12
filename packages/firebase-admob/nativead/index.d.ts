@@ -4,7 +4,7 @@ import { AdEventListener, AdEventType, ManagerRequestOptions, RequestOptions } f
 import { topViewController, toSerializeManagerRequestOptions, toSerializeRequestOptions } from '../utils';
 import { AdChoicesPlacement, IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, INativeAdLoader, IVideoController, MediaAspectRatio, MediaViewBase, NativeAdEventListener, NativeAdEventType, NativeAdOptions, UnconfirmedClickListener, VideoStatus } from './common';
 
-export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio };
+export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio, NativeAdEventType };
 
 export declare class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
 	adChoicesView: View;

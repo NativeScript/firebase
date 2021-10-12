@@ -1,4 +1,4 @@
 dependencies {
-    implementation 'com.google.android.gms:play-services-ads:20.3.0'
+    implementation 'com.google.android.gms:play-services-ads:20.4.0'
     implementation 'com.google.android.ump:user-messaging-platform:2.0.0'
 }

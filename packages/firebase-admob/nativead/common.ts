@@ -1,8 +1,8 @@
-import { CoreTypes, CSSType, GridLayout, ImageSource, Property, View } from '@nativescript/core';
+import { ContainerView, CoreTypes, CSSType, Property, View } from '@nativescript/core';
 import { AdEventListener, AdEventType, BannerAdSizeBase, ManagerRequestOptions } from '../common';
 
 @CSSType('NativeAdView')
-export abstract class NativeAdViewBase extends GridLayout {
+export abstract class NativeAdViewBase extends ContainerView {
 	abstract adChoicesView: View;
 
 	abstract advertiserView: View;
@@ -42,13 +42,18 @@ export const stretchProperty = new Property<MediaViewBase, CoreTypes.ImageStretc
 	affectsLayout: global.isIOS,
 });
 
+export const mediaContentProperty = new Property<MediaViewBase, IMediaContent>({
+	name: 'mediaContent'
+});
+
 @CSSType('MediaView')
-export abstract class MediaViewBase extends View {
-	abstract mediaContent: IMediaContent;
+export class MediaViewBase extends ContainerView {
+	mediaContent: IMediaContent;
 	stretch: CoreTypes.ImageStretchType;
 }
 
 stretchProperty.register(MediaViewBase);
+mediaContentProperty.register(MediaViewBase);
 
 export enum VideoStatus {
 	Unstarted,

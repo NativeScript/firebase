@@ -7,11 +7,11 @@ xmlns:ui="@nativescript/firebase-admob"
     </Page.actionBar>
     <StackLayout class="p-20">
        <!-- <ui:BannerAd height="100" width="100" unitId="{{bannerAdUnit}}" layoutChanged="{{bannerLoaded}}"/> -->
-       <ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}">
-        <GridLayout height="300" width="300">
-       <Label id="headLineView"/>
-       <ui:MediaView id="mediaView"/>
-       <Label id="bodyView"/>
+       <ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}" layoutChanged="{{nativeAdLayoutChanged}}">
+        <GridLayout rows="auto,auto,auto" height="300" width="300">
+       <Label id="headLineView" text="First"/>
+       <ui:MediaView row="1" id="mediaView" height="100%"/>
+       <Label row="2" id="bodyView"/>
       </GridLayout>
        </ui:NativeAdView>
     </StackLayout>

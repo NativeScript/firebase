@@ -1,8 +1,9 @@
-import { Observable, EventData, Page } from '@nativescript/core';
+import { Observable, EventData, Page, View, Label } from '@nativescript/core';
 import { DemoSharedFirebaseAdmob } from '@demo/shared';
-import { firebase, Firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript/firebase-core';
+import '@nativescript/firebase-admob';
 import { AdEventType, InterstitialAd, RewardedInterstitialAd, RewardedAd, BannerAd, BannerAdSize, Admob, AdsConsent, NativeAd, NativeAdLoader, NativeAdView } from '@nativescript/firebase-admob';
-import { AdChoicesPlacement, NativeAdEventType } from '@nativescript/firebase-admob/nativead/common';
+import { AdChoicesPlacement, NativeAdEventType } from '@nativescript/firebase-admob';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
@@ -18,13 +19,11 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		}
 	}
 
-	admob: Admob;
 	constructor() {
 		super();
 		//this.interstitial();
 		//this.rewardedInterstitial();
 		//this.rewarded();
-		this.admob = firebase().admob();
 		// ATTrackingManager.requestTrackingAuthorizationWithCompletionHandler((status) => {
 		// 	console.log('ATTrackingManager', status);
 		// });
@@ -35,24 +34,33 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		} else {
 			testDevices.push('EMULATOR');
 		}
-		this.admob.setRequestConfiguration({
+		const admob = firebase().admob();
+		admob.setRequestConfiguration({
 			testDevices,
 		});
 	}
 
+	nativeAdLayoutChanged(event) {
+		const view = event.object;
+		const hlv = view.getViewById('headLineView') as Label;
+		const mv = view.getViewById('mediaView');
+		const bv = view.getViewById('bodyView');
+		console.log('nativeAdLayoutChanged', hlv.nativeView, mv.nativeView, bv.nativeView);
+	}
 	nativeAdLoaded(event) {
 		const view = event.object;
-		const loader = new NativeAdLoader('ca-app-pub-3940256099942544/3986624511', null , {
+		const loader = new NativeAdLoader('ca-app-pub-3940256099942544/3986624511', null, {
 			nativeAdOptions: {
-				adChoicesPlacement: AdChoicesPlacement.TOP_RIGHT
-			}
+				adChoicesPlacement: AdChoicesPlacement.TOP_RIGHT,
+			},
 		});
 		loader.onAdEvent((event, error, data) => {
 			if (event === NativeAdEventType.LOADED) {
 				const ad = data as NativeAd;
-				const hlv = view.getViewById('headLineView');
+				const hlv = view.getViewById('headLineView') as Label;
 				hlv.text = ad.headline;
 				const mv = view.getViewById('mediaView');
+				view.mediaView = mv;
 				mv.mediaContent = ad.mediaContent;
 				const bv = view.getViewById('bodyView');
 				bv.text = ad.body;

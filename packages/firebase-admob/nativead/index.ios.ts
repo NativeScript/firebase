@@ -2,56 +2,60 @@ import { AddChildFromBuilder, CSSType, ImageSource, Utils, View } from '@natives
 import { FirebaseError } from '@nativescript/firebase-core';
 import { AdEventListener, AdEventType, ManagerRequestOptions, RequestOptions } from '../common';
 import { topViewController, toSerializeManagerRequestOptions, toSerializeRequestOptions } from '../utils';
-import { AdChoicesPlacement, IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, INativeAdLoader, IVideoController, MediaAspectRatio, MediaViewBase, NativeAdEventListener, NativeAdEventType, NativeAdOptions, NativeAdViewBase, stretchProperty, UnconfirmedClickListener, VideoStatus } from './common';
+import { AdChoicesPlacement, IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, INativeAdLoader, IVideoController, MediaAspectRatio, mediaContentProperty, MediaViewBase, NativeAdEventListener, NativeAdEventType, NativeAdOptions, NativeAdViewBase, stretchProperty, UnconfirmedClickListener, VideoStatus } from './common';
 
-export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio };
+export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio, NativeAdEventType };
 declare const AdLoaderAdType;
 
 export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
 	#native: GADNativeAdView;
-	#children: View[] = [];
+	#child: View;
 	createNativeView() {
 		this.#native = GADNativeAdView.new();
 		return this.#native;
 	}
 
 	_addChildFromBuilder(name: string, value: any): void {
-		if (value instanceof View && !value.parent) {
-			this._addView(value);
-			this.#children.push(value);
+		if (value instanceof View) {
+			this.#child = value;
 		}
 	}
 
 	public eachChildView(callback: (child: View) => boolean): void {
-		this.#children.forEach((view) => {
-			callback(view);
-		});
+		if (this.#child) {
+			callback(this.#child);
+		}
 	}
 
-	// public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number) {
-	// 	const nativeView = this.nativeView;
-	// 	if (nativeView) {
-	// 	  const width = Utils.layout.getMeasureSpecSize(widthMeasureSpec);
-	// 	  const height = Utils.layout.getMeasureSpecSize(heightMeasureSpec);
-	// 	  this.setMeasuredDimension(width, height);
-	// 	}
-	// }
+	public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void {
+		const result = View.measureChild(this, this.#child, widthMeasureSpec, heightMeasureSpec);
 
-	// public onLayout(left: number, top: number, right: number, bottom: number): void {
-	// 	super.onLayout(left, top, right, bottom);
-	// 	View.layoutChild(this, this.#children[0], left, top, right, bottom);
-	// }
-	
+		const width = Utils.layout.getMeasureSpecSize(widthMeasureSpec);
+		const widthMode = Utils.layout.getMeasureSpecMode(widthMeasureSpec);
 
+		const height = Utils.layout.getMeasureSpecSize(heightMeasureSpec);
+		const heightMode = Utils.layout.getMeasureSpecMode(heightMeasureSpec);
 
-	// onLoaded(){
-	// 	super.onLoaded();
-	// 	this.#children.forEach(child =>{
-	// 		if(!(child.parent === this)){
-	// 			this._addView(child);
-	// 		}
-	// 	})
-	// }
+		const measureWidth = Math.max(result.measuredWidth, this.effectiveMinWidth);
+		const measureHeight = Math.max(result.measuredHeight, this.effectiveMinHeight);
+
+		const widthAndState = View.resolveSizeAndState(measureWidth, width, widthMode, 0);
+		const heightAndState = View.resolveSizeAndState(measureHeight, height, heightMode, 0);
+
+		this.setMeasuredDimension(widthAndState, heightAndState);
+	}
+
+	public onLayout(left: number, top: number, right: number, bottom: number): void {
+		View.layoutChild(this, this.#child, 0, 0, right - left, bottom - top);
+	}
+
+	onLoaded() {
+		super.onLoaded();
+		if (this.#child) {
+			this._addView(this.#child);
+			this.#native.addSubview(this.#child.nativeView);
+		}
+	}
 
 	#adChoicesView: View;
 	get adChoicesView(): View {
@@ -554,11 +558,19 @@ export class MediaView extends MediaViewBase {
 		return this.#contentView;
 	}
 
-	get mediaContent(): MediaContent {
-		return MediaContent.fromNative(this.#contentView.mediaContent);
+	public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number) {
+		const nativeView = this.nativeView;
+		if (nativeView) {
+			const width = Utils.layout.getMeasureSpecSize(widthMeasureSpec);
+			const height = Utils.layout.getMeasureSpecSize(heightMeasureSpec);
+			this.setMeasuredDimension(width, height);
+		}
 	}
-	set mediaContent(content) {
-		this.#contentView.mediaContent = content?.native;
+
+	[mediaContentProperty.setNative](content) {
+		if (this.#contentView) {
+			this.#contentView.mediaContent = content?.native || null;
+		}
 	}
 
 	[stretchProperty.setNative](value) {
