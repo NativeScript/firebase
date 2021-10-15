@@ -1,6 +1,6 @@
 # @nativescript/firebase-remote-config
 
-```javascript
+```cli
 ns plugin add @nativescript/firebase-remote-config
 ```
 

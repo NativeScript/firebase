@@ -1,6 +1,6 @@
 # @nativescript/firebase-messaging
 
-```javascript
+```cli
 ns plugin add @nativescript/firebase-messaging
 ```
 
@@ -70,7 +70,7 @@ Depending on the contents of the message, it's important to understand both how 
 
 The device state and message contents determines which handler will be called:
 
-|     Foreground      | Background |                  Quit                   |
+|     Foreground      | Background |                  Quit                   |										   |
 | :-----------------: | :--------: | :-------------------------------------: | --------------------------------------- |
 |    Notification     | onMessage  |       setBackgroundMessageHandler       | setBackgroundMessageHandler             |
 | Notification + Data | onMessage  |       setBackgroundMessageHandler       | setBackgroundMessageHandler             |
@@ -86,7 +86,7 @@ To learn more about how to send these options in your message payload, view the 
 
 The device state and message contents can also determine whether a Notification will be displayed:
 
-|     Foreground      |    Background    |       Quit       |
+|     Foreground      |    Background    |       Quit       |				|
 | :-----------------: | :--------------: | :--------------: | ---------------- |
 |    Notification     | Notification: ❌ | Notification: ✅ | Notification: ✅ |
 | Notification + Data | Notification: ❌ | Notification: ✅ | Notification: ✅ |
@@ -222,7 +222,7 @@ To send a message to a device, you must access its unique token. A token is auto
 
 The examples below use a Cloud Firestore database to store and manage the tokens, and Firebase Authentication to manage the users identity. You can however use any datastore or authentication method of your choice.
 
-> If using iOS, ensure you have completed the [setup](#apple-integration) & [requested user permission](#iOS---Requesting-permissions) before trying to receive messages!
+> **Note:** If using iOS, ensure you have completed the [setup](#apple-integration) & [requested user permission](#iOS---Requesting-permissions) before trying to receive messages!
 
 ### Saving tokens
 
@@ -277,7 +277,7 @@ Inside of the saveTokenToDatabase method, we store the token on a record specifi
 
 With the tokens stored in a secure datastore, we now have the ability to send messages via FCM to those devices.
 
-> The following example uses the Node.JS firebase-admin package to send messages to our devices, however any SDK (listed above) can be used.
+> **Note:** The following example uses the Node.JS firebase-admin package to send messages to our devices, however any SDK (listed above) can be used.
 
 Go ahead and setup the `firebase-tools` library on your server environment. Once setup, our script needs to perform two actions:
 
@@ -415,7 +415,7 @@ const payload = {
 };
 ```
 
-> Check out the [official Firebase documentation](https://firebase.google.com/docs/cloud-messaging/ios/send-image) to see the list of available configuration for iOS.
+> **Note:** Check out the [official Firebase documentation](https://firebase.google.com/docs/cloud-messaging/ios/send-image) to see the list of available configuration for iOS.
 
 #### Android
 
@@ -435,7 +435,7 @@ const payload = {
 };
 ```
 
-> If you want to know more about sending an image on Android have a look at [the documentation](https://firebase.google.com/docs/cloud-messaging/android/send-image).
+> **Note:** If you want to know more about sending an image on Android have a look at [the documentation](https://firebase.google.com/docs/cloud-messaging/android/send-image).
 
 ### Pulling it all together
 
@@ -502,7 +502,7 @@ If you want to use a specific icon for the push notification, it has to be confi
 Open /platforms/ios/yourproject.**xcworkspace** (!) and go to your project's target and head over to "Capabilities" to switch this on (if it isn't already):
 ![push-xcode-config](https://raw.githubusercontent.com/NativeScript/firebase/main/packages/firebase-messaging/assets/images/push-xcode-config.png)
 
-> Without this enabled you will receive push messages in the foreground, but **NOT in the background** / when the app is killed.
+> **Note:** Without this enabled you will receive push messages in the foreground, but **NOT in the background** / when the app is killed.
 
 #### Copy the entitlements file
 

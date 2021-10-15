@@ -1,6 +1,6 @@
 # @nativescript/firebase-installations
 
-```javascript
+```cli
 ns plugin add @nativescript/firebase-installations
 ```
 

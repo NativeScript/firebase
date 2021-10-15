@@ -1,6 +1,6 @@
 # @nativescript/firebase-analytics
 
-```javascript
+```cli
 ns plugin add @nativescript/firebase-analytics
 ```
 

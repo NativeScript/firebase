@@ -1,6 +1,6 @@
 # @nativescript/firebase-in-app-messaging
 
-```javascript
+```cli
 ns plugin add @nativescript/firebase-in-app-messaging
 ```
 
@@ -30,7 +30,7 @@ According to github issue https://github.com/firebase/firebase-ios-sdk/issues/47
 The isMessagesDisplaySuppressed property allows you to control when messages can/cannot be displayed. Below illustrates a use case for controlling the flow of messages:
 
 
-> **The suppressed state is not persisted between restarts, so ensure it is called as early as possible.**
+> **Note:** The suppressed state is not persisted between restarts, so ensure it is called as early as possible.
 
 
 
