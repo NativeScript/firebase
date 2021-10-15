@@ -1,6 +1,6 @@
 # @nativescript/firebase-crashlytics
 
-```javascript
+```cli
 ns plugin add @nativescript/firebase-crashlytics
 ```
 
