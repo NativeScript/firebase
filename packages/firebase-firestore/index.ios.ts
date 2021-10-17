@@ -304,7 +304,7 @@ export class DocumentSnapshot<T extends DocumentData = DocumentData> implements 
   }
 
   data() {
-    return deserialize(this.native.data);
+    return deserializeField(this.native.data());
   }
 
   get<fieldType extends DocumentFieldType>(fieldPath: string | number | FieldPath): fieldType {
@@ -652,7 +652,7 @@ export class QueryDocumentSnapshot<T extends DocumentData = DocumentData> extend
   }
 
   data() {
-    return deserialize(this.#native.data());
+    return deserializeField(this.#native.data());
   }
 
   get<fieldType extends DocumentFieldType>(fieldPath: string | number | FieldPath): fieldType {
@@ -1092,6 +1092,13 @@ export class GeoPoint implements IGeoPoint {
   get ios() {
     return this.native;
   }
+
+  toString() {
+    return {
+      latitude: this.latitude,
+      longitude: this.longitude
+    }
+  }
 }
 
 export class Timestamp implements ITimestamp {
@@ -1126,6 +1133,13 @@ export class Timestamp implements ITimestamp {
 
   get ios() {
     return this.native;
+  }
+
+  toString() {
+    return {
+      nanoseconds: this.nanoseconds,
+      seconds: this.seconds
+    }
   }
 }
 
