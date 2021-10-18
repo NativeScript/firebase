@@ -36,10 +36,10 @@ export class Messaging implements IMessaging {
 			return defaultMessaging;
 		}
 		defaultMessaging = this;
-		AppDelegateImpl.sharedInstance.observe();
 		if (!Application.ios.delegate) {
 			Application.ios.delegate = AppDelegateImpl;
 		}
+		AppDelegateImpl.sharedInstance.observe();
 		this.#native = FIRMessaging.messaging();
 		this.#delegate = FIRMessagingDelegateImpl.initWithOwner(new WeakRef(this));
 		this.#native.delegate = this.#delegate;
