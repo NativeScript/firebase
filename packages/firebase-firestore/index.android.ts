@@ -81,8 +81,9 @@ function deserializeField(value) {
   }
 
   if (value instanceof java.util.List) {
-    let array = [];
-    for (let i = 0, n = value.size(); i < n; i++) {
+    const array = [];
+    const size = value.size();
+    for (let i = 0, n = size; i < n; i++) {
       array[i] = deserializeField(value.get(i));
     }
     return array;
@@ -93,7 +94,7 @@ function deserializeField(value) {
     const keys = value.keySet().toArray();
     const size = keys.length;
     for (let i = 0, n = size; i < n; i++) {
-      let key = value[i];
+      const key = keys[i];
       dict[key] = deserializeField(value.get(key));
     }
     return dict;
