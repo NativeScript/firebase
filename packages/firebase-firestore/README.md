@@ -199,7 +199,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 firebase().firestore()
   .collection('users')
-  .where('age', isGreaterThan: 20)
+  .where('age', '>', 20)
   .get()
   .then(...);
 
@@ -212,7 +212,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 firebase().firestore()
   .collection('users')
-  .where('language', arrayContainsAny: ['en', 'it'])
+  .where('language', 'array-contains-any', ['en', 'it'])
   .get()
   .then(...);
 ```
@@ -296,7 +296,7 @@ Cloud Firestore does not support the following types of queries:
 
 - Queries with range filters on different fields, as described in the previous section.
 - Logical OR queries. In this case, you should create a separate query for each OR condition and merge the query results in your app.
-- Queries with a != clause. In this case, you should split the query into a greater-than query and a less-than query. For example, the query clause where("age", isNotEqualTo: 30) is not supported, however you can get the same result set by combining two queries, one with the clause where("age", isLessThan: 30) and one with the clause where("age", isGreaterThan: 30)
+- Queries with a != clause. In this case, you should split the query into a greater-than query and a less-than query. For example, the query clause where("age", '!=', 30) is not supported, however you can get the same result set by combining two queries, one with the clause where("age", '<', 30) and one with the clause where("age", '>', 30)
 
 ### Writing Data
 
