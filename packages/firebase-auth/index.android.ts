@@ -640,7 +640,7 @@ function ensureClass() {
   }
 
   @NativeClass
-  class OnVerificationStateChangedCallbacksImpl extends OnVerificationStateChangedCallbacks {
+  class OnVerificationStateChangedCallbacksImpl extends com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks {
     _resolve;
     _reject;
 
@@ -651,11 +651,8 @@ function ensureClass() {
       return global.__native(this);
     }
 
-    onVerificationFailed(error: any) {
-      this._reject({
-        message: error.getMessage(),
-        native: error,
-      });
+    onVerificationFailed(error) {
+      this._reject(FirebaseError.fromNative(error));
     }
 
     onVerificationCompleted(credential: com.google.firebase.auth.PhoneAuthCredential) {
