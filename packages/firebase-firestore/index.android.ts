@@ -811,7 +811,7 @@ export class QuerySnapshot implements IQuerySnapshot {
       const cb = thisArg ? callback.bind(thisArg) : callback;
       const count = this.native.size();
       const documents = this.native.getDocuments();
-      for (let i = 0; i < count; i) {
+      for (let i = 0; i < count; i++) {
         cb(QueryDocumentSnapshot.fromNative(documents.get(i)));
       }
     }
