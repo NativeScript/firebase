@@ -9,16 +9,16 @@ ns plugin add @nativescript/firebase-core
 ### Initialize Default App
 
 ```ts
-import { Firebase } from '@nativescript/firebase-core'
-const firebase = Firebase.initializeApp()
+import { firebase } from '@nativescript/firebase-core'
+const defaultApp = firebase().initializeApp()
 ```
 
 ### Initialize Secondary App
 
 ```ts
-import { Firebase } from '@nativescript/firebase-core'
+import { firebase, FirebaseOptions } from '@nativescript/firebase-core'
 const config = new FirebaseOptions()
-const firebase = Firebase.initializeApp(config, 'SECONDARY_APP')
+const secondaryApp = firebase().initializeApp(config, 'SECONDARY_APP')
 ```
 
 
