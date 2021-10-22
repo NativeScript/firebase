@@ -1,4 +1,4 @@
-import {deserialize, firebase, FirebaseApp, FirebaseError} from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import {
   ActionCodeInfo,
   ActionCodeInfoOperation,
@@ -18,23 +18,23 @@ import {
   AdditionalUserInfo
 } from './common';
 import lazy from '@nativescript/core/utils/lazy';
-import {Application} from '@nativescript/core';
+import { Application } from '@nativescript/core';
 
-export {AdditionalUserInfo, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, UserProfileChangeRequest};
+export { AdditionalUserInfo, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, UserProfileChangeRequest };
 
 let defaultAuth: Auth;
 const fb = firebase();
 Object.defineProperty(fb, 'auth', {
-	value: (app?: FirebaseApp) => {
-		if (!app) {
-			if (!defaultAuth) {
-				defaultAuth = new Auth();
-			}
-			return defaultAuth;
-		}
-		return new Auth(app);
-	},
-	writable: false,
+  value: (app?: FirebaseApp) => {
+    if (!app) {
+      if (!defaultAuth) {
+        defaultAuth = new Auth();
+      }
+      return defaultAuth;
+    }
+    return new Auth(app);
+  },
+  writable: false,
 });
 
 
@@ -684,9 +684,17 @@ export class PhoneAuthProvider {
   static provider(auth?: Auth) {
     const provider = new PhoneAuthProvider();
     if (auth) {
-      provider.#native = com.google.firebase.auth.PhoneAuthOptions.newBuilder(auth.native);
+      provider.#native = com.google.firebase.auth.PhoneAuthOptions
+        .newBuilder(auth.native)
+        .setTimeout(
+          long(60), java.util.concurrent.TimeUnit.SECONDS
+        );
     } else {
-      provider.#native = com.google.firebase.auth.PhoneAuthOptions.newBuilder();
+      provider.#native = com.google.firebase.auth.PhoneAuthOptions
+        .newBuilder()
+        .setTimeout(
+          long(60), java.util.concurrent.TimeUnit.SECONDS
+        );
     }
 
     provider.#native.setActivity(Application.android.foregroundActivity || Application.android.startActivity);
@@ -888,7 +896,7 @@ export class Auth implements IAuth {
     if (app?.native) {
       this.#native = com.google.firebase.auth.FirebaseAuth.getInstance(app.native);
     } else {
-      if(defaultAuth){
+      if (defaultAuth) {
         return defaultAuth;
       }
       defaultAuth = this;
