@@ -26,23 +26,23 @@ import {
 
 const main_queue = dispatch_get_current_queue();
 
-import {deserialize, firebase, FirebaseApp, FirebaseError, serialize} from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 
 let defaultFirestore: Firestore;
 
 const fb = firebase();
 Object.defineProperty(fb, 'firestore', {
-	value: (app?: FirebaseApp) => {
-		if (!app) {
-			if (!defaultFirestore) {
-				defaultFirestore = new Firestore();
-			}
-			return defaultFirestore;
-		}
+  value: (app?: FirebaseApp) => {
+    if (!app) {
+      if (!defaultFirestore) {
+        defaultFirestore = new Firestore();
+      }
+      return defaultFirestore;
+    }
 
-		return new Firestore(app);
-	},
-	writable: false,
+    return new Firestore(app);
+  },
+  writable: false,
 });
 
 
@@ -265,6 +265,12 @@ export class SnapshotMetadata implements ISnapshotMetadata {
     return this.native.pendingWrites;
   }
 
+  toJSON() {
+    return {
+      fromCache: this.fromCache,
+      hasPendingWrites: this.hasPendingWrites
+    }
+  }
 
   get native() {
     return this.#native;
@@ -315,6 +321,16 @@ export class DocumentSnapshot<T extends DocumentData = DocumentData> implements 
     }
   }
 
+  toJSON() {
+    return {
+      exists: this.exists,
+      id: this.id,
+      metadata: this.metadata,
+      ref: this.ref,
+      data: this.data
+    }
+  }
+
 
   get native() {
     return this.#native;
@@ -360,6 +376,15 @@ export class DocumentChange implements IDocumentChange {
     }
   }
 
+  toJSON() {
+    return {
+      doc: this.doc,
+      newIndex: this.newIndex,
+      oldIndex: this.oldIndex,
+      type: this.type,
+    }
+  }
+
   get native() {
     return this.#native;
   }
@@ -369,7 +394,7 @@ export class DocumentChange implements IDocumentChange {
   }
 }
 
-export class Query<T extends DocumentData = DocumentData> implements IQuery <T> {
+export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
   #native: FIRQuery;
 
   static fromNative(query: FIRQuery): Query {
@@ -736,6 +761,15 @@ export class QuerySnapshot implements IQuerySnapshot {
     }
   }
 
+  toJSON() {
+    return {
+      docs: this.docs,
+      empty: this.empty,
+      metadata: this.metadata,
+      size: this.size
+    }
+  }
+
   get native() {
     return this.#native;
   }
@@ -784,6 +818,15 @@ export class CollectionReference<T extends DocumentData = DocumentData> extends 
   doc(documentPath?: string) {
     return DocumentReference.fromNative(this.native.documentWithPath(documentPath || '/'));
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      path: this.path,
+      parent: this.parent
+    }
+  }
+
 
   get native() {
     return this.#native;
@@ -973,6 +1016,14 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
     });
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      path: this.path,
+      parent: this.parent
+    }
+  }
+
   get native() {
     return this.#native;
   }
@@ -1010,6 +1061,12 @@ export class FieldPath implements IFieldPath {
 
   documentId(): FieldPath {
     return FieldPath.fromNative(FIRFieldPath.documentID());
+  }
+
+  toJSON() {
+    return {
+      documentId: this.documentId
+    }
   }
 }
 
@@ -1093,7 +1150,7 @@ export class GeoPoint implements IGeoPoint {
     return this.native;
   }
 
-  toString() {
+  toJSON() {
     return {
       latitude: this.latitude,
       longitude: this.longitude
@@ -1135,7 +1192,7 @@ export class Timestamp implements ITimestamp {
     return this.native;
   }
 
-  toString() {
+  toJSON() {
     return {
       nanoseconds: this.nanoseconds,
       seconds: this.seconds
@@ -1261,6 +1318,16 @@ export class Settings implements ISettings {
     this.native.sslEnabled = value;
   }
 
+  toJSON() {
+    return {
+      cacheSizeBytes: this.cacheSizeBytes,
+      host: this.host,
+      ignoreUndefinedProperties: this.ignoreUndefinedProperties,
+      persistence: this.persistence,
+      ssl: this.ssl
+    }
+  }
+
   get ios() {
     return this.native;
   }
@@ -1271,55 +1338,55 @@ export class Settings implements ISettings {
 }
 
 export class Bytes implements IBytes {
-	#native: NSData;
+  #native: NSData;
 
-	static fromNative(data: NSData) {
-		if (data instanceof NSData) {
-			const nsData = new Bytes();
-			nsData.#native = data;
-			return nsData;
-		}
-		return null;
-	}
+  static fromNative(data: NSData) {
+    if (data instanceof NSData) {
+      const nsData = new Bytes();
+      nsData.#native = data;
+      return nsData;
+    }
+    return null;
+  }
 
-	static fromBase64String(base64) {
-		if (typeof base64 === 'string') {
-			let b64 = base64;
-			if (base64.startsWith('data:')) {
-				b64 = base64.split(',')[1];
-			}
-			const bytes = new Bytes();
-			bytes.#native = NSData.alloc().initWithBase64EncodedStringOptions(b64, 0);
-			return bytes;
-		}
-		return null;
-	}
+  static fromBase64String(base64) {
+    if (typeof base64 === 'string') {
+      let b64 = base64;
+      if (base64.startsWith('data:')) {
+        b64 = base64.split(',')[1];
+      }
+      const bytes = new Bytes();
+      bytes.#native = NSData.alloc().initWithBase64EncodedStringOptions(b64, 0);
+      return bytes;
+    }
+    return null;
+  }
 
-	static fromUint8Array(array) {
-		if (!(array instanceof Uint8Array)) {
-			throw new Error('Bytes.fromUint8Array expects an instance of Uint8Array');
-		}
+  static fromUint8Array(array) {
+    if (!(array instanceof Uint8Array)) {
+      throw new Error('Bytes.fromUint8Array expects an instance of Uint8Array');
+    }
 
-		const nsData = new Bytes();
-		nsData.#native = NSData.dataWithData(array as any);
-		return nsData;
-	}
+    const nsData = new Bytes();
+    nsData.#native = NSData.dataWithData(array as any);
+    return nsData;
+  }
 
-	toBase64(): string {
-		return this.native.base64EncodedStringWithOptions(0);
-	}
+  toBase64(): string {
+    return this.native.base64EncodedStringWithOptions(0);
+  }
 
-	toUint8Array(): Uint8Array {
-		return new Uint8Array(interop.bufferFromData(NSData.dataWithData(this.#native)));
-	}
+  toUint8Array(): Uint8Array {
+    return new Uint8Array(interop.bufferFromData(NSData.dataWithData(this.#native)));
+  }
 
-	get native() {
-		return this.#native;
-	}
+  get native() {
+    return this.#native;
+  }
 
-	get ios() {
-		return this.native;
-	}
+  get ios() {
+    return this.native;
+  }
 }
 
 export class Firestore implements IFirestore {
@@ -1330,7 +1397,7 @@ export class Firestore implements IFirestore {
     if (app) {
       this.#native = FIRFirestore.firestoreForApp(app.native);
     } else {
-      if(defaultFirestore){
+      if (defaultFirestore) {
         return defaultFirestore;
       }
       defaultFirestore = this;
@@ -1415,8 +1482,8 @@ export class Firestore implements IFirestore {
               .then(value => {
                 returnValue = value?.native || value || null;
               }).catch(e => {
-              return null;
-            })
+                return null;
+              })
           });
           lock.lock();
         },

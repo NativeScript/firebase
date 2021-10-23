@@ -25,32 +25,58 @@ import {
   IBytes
 } from './common';
 
-export {SetOptions, DocumentData, GetOptions, WhereFilterOp};
+export { SetOptions, DocumentData, GetOptions, WhereFilterOp };
 
-import {deserialize, firebase, FirebaseApp, FirebaseError, serialize} from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 
 
 let defaultFirestore: Firestore;
 
 const fb = firebase();
 Object.defineProperty(fb, 'firestore', {
-	value: (app?: FirebaseApp) => {
-		if (!app) {
-			if (!defaultFirestore) {
-				defaultFirestore = new Firestore();
-			}
-			return defaultFirestore;
-		}
+  value: (app?: FirebaseApp) => {
+    if (!app) {
+      if (!defaultFirestore) {
+        defaultFirestore = new Firestore();
+      }
+      return defaultFirestore;
+    }
 
-		return new Firestore(app);
-	},
-	writable: false,
+    return new Firestore(app);
+  },
+  writable: false,
 });
 
 function deserializeField(value) {
+
   if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
     return value;
   }
+
+  if (value instanceof java.lang.Short) {
+    return value.shortValue();
+  }
+
+  if (value instanceof java.lang.Integer) {
+    return value.intValue();
+  }
+
+  if (value instanceof java.lang.Long) {
+    return value.longValue();
+  }
+
+  if (value instanceof java.lang.Float) {
+    return value.floatValue();
+  }
+
+  if (value instanceof java.lang.Double) {
+    return value.doubleValue();
+  }
+
+  if (value instanceof java.lang.Boolean) {
+    return value.booleanValue();
+  }
+
 
   if (value instanceof com.google.firebase.Timestamp) {
     return Timestamp.fromNative(value);
@@ -76,10 +102,6 @@ function deserializeField(value) {
     return CollectionReference.fromNative(value);
   }
 
-  if (!value) {
-    return null;
-  }
-
   if (value instanceof java.util.List) {
     const array = [];
     const size = value.size();
@@ -103,6 +125,11 @@ function deserializeField(value) {
   if (value instanceof com.google.firebase.firestore.Blob) {
     return Bytes.fromNative(value);
   }
+
+  if (!value) {
+    return null;
+  }
+
 
   return value;
 }
@@ -139,11 +166,9 @@ function serializeItems(value) {
     }
   }
 
-
   if (typeof value === 'boolean') {
     return java.lang.Boolean.valueOf(value);
   }
-
 
   if (value instanceof Timestamp) {
     return value.native;
@@ -188,7 +213,7 @@ function serializeItems(value) {
   }
 
   if (value instanceof Bytes) {
-   return value.native;
+    return value.native;
   }
 
   return value;
@@ -323,6 +348,13 @@ export class SnapshotMetadata implements ISnapshotMetadata {
     return this.native.hasPendingWrites();
   }
 
+  toJSON() {
+    return {
+      fromCache: this.fromCache,
+      hasPendingWrites: this.hasPendingWrites
+    }
+  }
+
 
   get native() {
     return this.#native;
@@ -373,6 +405,16 @@ export class DocumentSnapshot<T extends DocumentData = DocumentData> implements 
     }
   }
 
+  toJSON() {
+    return {
+      exists: this.exists,
+      id: this.id,
+      metadata: this.metadata,
+      ref: this.ref,
+      data: this.data
+    }
+  }
+
   get native() {
     return this.#native;
   }
@@ -417,6 +459,16 @@ export class DocumentChange implements IDocumentChange {
     }
   }
 
+  toJSON() {
+    return {
+      doc: this.doc,
+      newIndex: this.newIndex,
+      oldIndex: this.oldIndex,
+      type: this.type,
+    }
+  }
+
+
   get native() {
     return this.#native;
   }
@@ -426,7 +478,7 @@ export class DocumentChange implements IDocumentChange {
   }
 }
 
-export class Query<T extends DocumentData = DocumentData> implements IQuery <T> {
+export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
   #native: com.google.firebase.firestore.Query;
 
   static fromNative(query: com.google.firebase.firestore.Query): Query {
@@ -538,7 +590,7 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
 
     } else if (argsCount === 4) {
 
-  listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
+      listener = this.native.addSnapshotListener(com.google.firebase.firestore.MetadataChanges.INCLUDE, new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
         onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
           if (error) {
             onError?.(FirebaseError.fromNative(error));
@@ -614,9 +666,9 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
         case 'array-contains':
           query = this.native.whereArrayContains(
             fieldPath.native,
-            value.map((val) => {
+            Array.isArray(value) ? value.map((val) => {
               return val?.native || val;
-            })
+            }) : value
           );
           break;
         case 'array-contains-any':
@@ -671,9 +723,9 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery <T> 
         case 'array-contains':
           query = this.native.whereArrayContains(
             fieldPath as any,
-            value.map((val) => {
+            Array.isArray(value) ? value.map((val) => {
               return val?.native || val;
-            })
+            }) : value
           );
           break;
         case 'array-contains-any':
@@ -817,6 +869,14 @@ export class QuerySnapshot implements IQuerySnapshot {
     }
   }
 
+  toJSON() {
+    return {
+      docs: this.docs,
+      empty: this.empty,
+      metadata: this.metadata,
+      size: this.size
+    }
+  }
 
   get native() {
     return this.#native;
@@ -870,6 +930,14 @@ export class CollectionReference<T extends DocumentData = DocumentData> extends 
 
   doc(documentPath?: string) {
     return DocumentReference.fromNative(this.native.document(documentPath || '/'));
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      path: this.path,
+      parent: this.parent
+    }
   }
 
   get native() {
@@ -1131,6 +1199,14 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
     });
   }
 
+  toJSON() {
+    return {
+      id: this.id,
+      path: this.path,
+      parent: this.parent
+    }
+  }
+
   get native() {
     return this.#native;
   }
@@ -1168,6 +1244,12 @@ export class FieldPath implements IFieldPath {
 
   documentId(): FieldPath {
     return FieldPath.fromNative(com.google.firebase.firestore.FieldPath.documentId());
+  }
+
+  toJSON() {
+    return {
+      documentId: this.documentId
+    }
   }
 }
 
@@ -1247,7 +1329,7 @@ export class GeoPoint implements IGeoPoint {
     return this.native;
   }
 
-  toString() {
+  toJSON() {
     return {
       latitude: this.latitude,
       longitude: this.longitude
@@ -1289,7 +1371,7 @@ export class Timestamp implements ITimestamp {
     return this.native;
   }
 
-  toString() {
+  toJSON() {
     return {
       nanoseconds: this.nanoseconds,
       seconds: this.seconds
@@ -1445,6 +1527,16 @@ export class Settings implements ISettings {
     this.#builder.setSslEnabled(value);
   }
 
+  toJSON() {
+    return {
+      cacheSizeBytes: this.cacheSizeBytes,
+      host: this.host,
+      ignoreUndefinedProperties: this.ignoreUndefinedProperties,
+      persistence: this.persistence,
+      ssl: this.ssl
+    }
+  }
+
   get android() {
     return this.native;
   }
@@ -1467,9 +1559,9 @@ export class Bytes implements IBytes {
   }
 
   static fromBase64String(base64) {
-    if(typeof base64 === 'string'){
+    if (typeof base64 === 'string') {
       let b64 = base64;
-      if(base64.startsWith('data:')){
+      if (base64.startsWith('data:')) {
         b64 = base64.split(",")[1];
       }
       const data = new java.lang.String(b64).getBytes('UTF-8');
@@ -1493,31 +1585,31 @@ export class Bytes implements IBytes {
 
   #base64: string
   toBase64(): string {
-    if(!this.#base64){
+    if (!this.#base64) {
       const data = this.native.toBytes();
       this.#base64 = android.util.Base64.encodeToString(data, android.util.Base64.NO_WRAP);
     }
-    
+
     return this.#base64;
   }
 
   #native_buffer;
   #buffer;
   toUint8Array(): Uint8Array {
-    if(!this.#native_buffer){
+    if (!this.#native_buffer) {
       this.#native_buffer = java.nio.ByteBuffer.wrap(this.native.toBytes())
     }
-    if(!this.#buffer){
+    if (!this.#buffer) {
       this.#buffer = (<any>ArrayBuffer).from(this.#native_buffer)
     }
     return new Uint8Array(this.#buffer);
   }
 
-  get native(){
+  get native() {
     return this.#native;
   }
 
-  get android(){
+  get android() {
     return this.native;
   }
 }
@@ -1530,7 +1622,7 @@ export class Firestore implements IFirestore {
     if (app) {
       this.#native = com.google.firebase.firestore.FirebaseFirestore.getInstance(app.native);
     } else {
-      if(defaultFirestore){
+      if (defaultFirestore) {
         return defaultFirestore;
       }
       defaultFirestore = this;
