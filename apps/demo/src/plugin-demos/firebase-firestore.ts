@@ -14,6 +14,7 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 	constructor() {
 		super();
 		this.firestore = firebase().firestore();
+		console.log(this.firestore.settings);
 		this.firestore
 			.collection('users')
 			.add({
@@ -41,5 +42,12 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 			.catch((error) => {
 				console.error('Error adding geo document: ', error);
 			});
+
+
+			this.firestore.collection('items')
+			.get()
+			.then(items =>{
+				console.log(items.docs[0].data())
+			})
 	}
 }
