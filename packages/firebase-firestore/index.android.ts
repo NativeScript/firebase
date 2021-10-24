@@ -143,10 +143,9 @@ function numberIs64Bit(item: number) {
   return item < -Math.pow(2, 31) + 1 || item > Math.pow(2, 31) - 1;
 }
 
-
 function serializeItems(value) {
   if (typeof value === 'string') {
-    return java.lang.String.valueOf(value);
+    return value;
   }
 
   if (typeof value === 'number') {
@@ -204,7 +203,7 @@ function serializeItems(value) {
 
   if (value && typeof value === 'object') {
     const keys = Object.keys(value);
-    let dict = new java.util.HashMap();
+    const dict = new java.util.HashMap();
     keys.forEach((key) => {
       dict.put(key, serializeItems(value[key]));
     });
@@ -646,114 +645,90 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
     if (fieldPath instanceof FieldPath) {
       switch (opStr) {
         case '!=':
-          query = this.native.whereNotEqualTo(fieldPath.native, value?.native || value);
+          query = this.native.whereNotEqualTo(fieldPath.native, serializeItems(value));
           break;
         case '<':
-          query = this.native.whereLessThan(fieldPath.native, value?.native || value);
+          query = this.native.whereLessThan(fieldPath.native, serializeItems(value));
           break;
         case '>':
-          query = this.native.whereGreaterThan(fieldPath.native, value?.native || value);
+          query = this.native.whereGreaterThan(fieldPath.native, serializeItems(value));
           break;
         case '<=':
-          query = this.native.whereLessThanOrEqualTo(fieldPath.native, value?.native || value);
+          query = this.native.whereLessThanOrEqualTo(fieldPath.native, serializeItems(value));
           break;
         case '>=':
-          query = this.native.whereGreaterThanOrEqualTo(fieldPath.native, value?.native || value);
+          query = this.native.whereGreaterThanOrEqualTo(fieldPath.native, serializeItems(value));
           break;
         case '==':
-          query = this.native.whereEqualTo(fieldPath.native, value?.native || value);
+          query = this.native.whereEqualTo(fieldPath.native, serializeItems(value));
           break;
         case 'array-contains':
           query = this.native.whereArrayContains(
             fieldPath.native,
-            Array.isArray(value) ? value.map((val) => {
-              return val?.native || val;
-            }) : value
+            serializeItems(value)
           );
           break;
         case 'array-contains-any':
           query = this.native.whereArrayContainsAny(
             fieldPath.native,
-            java.util.Arrays.asList(
-              value.map((val) => {
-                return val?.native || val;
-              })
-            )
+            serializeItems(value)
           );
           break;
         case 'in':
           query = this.native.whereIn(
             fieldPath.native,
-            value.map((val) => {
-              return val?.native || val;
-            })
+            serializeItems(value)
           );
           break;
         case 'not-in':
           query = this.native.whereNotIn(
             fieldPath.native,
-            java.util.Arrays.asList(
-              value.map((val) => {
-                return val?.native || val;
-              })
-            )
+            serializeItems(value)
           );
           break;
       }
     } else {
       switch (opStr) {
         case '!=':
-          query = this.native.whereNotEqualTo(fieldPath as any, value?.native || value);
+          query = this.native.whereNotEqualTo(fieldPath as any, serializeItems(value));
           break;
         case '<':
-          query = this.native.whereLessThan(fieldPath as any, value?.native || value);
+          query = this.native.whereLessThan(fieldPath as any, serializeItems(value));
           break;
         case '>':
-          query = this.native.whereGreaterThan(fieldPath as any, value?.native || value);
+          query = this.native.whereGreaterThan(fieldPath as any, serializeItems(value));
           break;
         case '<=':
-          query = this.native.whereLessThanOrEqualTo(fieldPath as any, value?.native || value);
+          query = this.native.whereLessThanOrEqualTo(fieldPath as any, serializeItems(value));
           break;
         case '>=':
-          query = this.native.whereGreaterThanOrEqualTo(fieldPath as any, value?.native || value);
+          query = this.native.whereGreaterThanOrEqualTo(fieldPath as any, serializeItems(value));
           break;
         case '==':
-          query = this.native.whereEqualTo(fieldPath as any, value?.native || value);
+          query = this.native.whereEqualTo(fieldPath as any, serializeItems(value));
           break;
         case 'array-contains':
           query = this.native.whereArrayContains(
             fieldPath as any,
-            Array.isArray(value) ? value.map((val) => {
-              return val?.native || val;
-            }) : value
+            serializeItems(value)
           );
           break;
         case 'array-contains-any':
           query = this.native.whereArrayContainsAny(
             fieldPath as any,
-            java.util.Arrays.asList(
-              value.map((val) => {
-                return val?.native || val;
-              })
-            )
+            serializeItems(value)
           );
           break;
         case 'in':
           query = this.native.whereIn(
             fieldPath as any,
-            value.map((val) => {
-              return val?.native || val;
-            })
+            serializeItems(value)
           );
           break;
         case 'not-in':
           query = this.native.whereNotIn(
             fieldPath as any,
-            java.util.Arrays.asList(
-              value.map((val) => {
-                return val?.native || val;
-              })
-            )
+            serializeItems(value)
           );
           break;
       }
