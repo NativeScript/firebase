@@ -1,3 +1,4 @@
+import { knownFolders } from '@nativescript/core';
 import { FirebaseConfig, IFirebaseOptions } from './common';
 export * from './utils';
 
@@ -347,6 +348,80 @@ export class Firebase {
 			firebaseApps.set(name, fbApp);
 		}
 
+		return fbApp;
+	}
+
+	initializeAppWithPath(path: string, options: FirebaseOptions = null, config?: FirebaseConfig) {
+		if (path.startsWith('res://')) {
+			path = NSBundle.mainBundle.pathForResourceOfType(path.replace('res://', '').replace('.plist', ''), 'plist')
+		} else if (path.startsWith('~/')) {
+			path = knownFolders.currentApp().path + '/' + path.replace('~/', '');
+		}
+
+		const nativeOptions = FIROptions.alloc().initWithContentsOfFile(path);
+
+
+		if (options?.apiKey) {
+			nativeOptions.APIKey = options.apiKey;
+		}
+
+		if (options?.gcmSenderId) {
+			nativeOptions.GCMSenderID = options.gcmSenderId;
+		}
+
+		if (options?.androidClientId) {
+			nativeOptions.androidClientID = options.androidClientId;
+		}
+
+		if (options?.appGroupId) {
+			nativeOptions.appGroupID = options.appGroupId;
+		}
+
+		if (options?.bundleId) {
+			nativeOptions.bundleID = options.bundleId;
+		}
+
+		if (options?.clientId) {
+			nativeOptions.clientID = options.clientId;
+		}
+
+		if (options?.databaseURL) {
+			nativeOptions.databaseURL = options.databaseURL;
+		}
+
+		if (options?.deepLinkURLScheme) {
+			nativeOptions.deepLinkURLScheme = options.deepLinkURLScheme;
+		}
+
+		if (options?.googleAppId) {
+			nativeOptions.googleAppID = options.googleAppId;
+		}
+
+		if (options?.projectId) {
+			nativeOptions.projectID = options.projectId;
+		}
+
+		if (options?.storageBucket) {
+			nativeOptions.storageBucket = options.storageBucket;
+		}
+
+		if (options?.trackingId) {
+			nativeOptions.trackingID = options.trackingId;
+		}
+
+
+		FIRApp.configureWithOptions(nativeOptions);
+
+		const app = FIRApp.defaultApp();
+
+		if (app && typeof config === 'object' && typeof config.automaticDataCollectionEnabled === 'boolean') {
+			app.dataCollectionDefaultEnabled = config.automaticDataCollectionEnabled;
+		}
+		const fbApp = FirebaseApp.fromNative(app);
+
+		if (!defaultApp) {
+			defaultApp = fbApp;
+		}
 		return fbApp;
 	}
 }

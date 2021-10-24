@@ -1,5 +1,5 @@
 import { IFirebaseOptions, FirebaseConfig } from './common';
-import { Utils } from '@nativescript/core';
+import { knownFolders, Utils, File } from '@nativescript/core';
 export * from './utils';
 
 export class FirebaseError extends Error {
@@ -255,6 +255,117 @@ export class Firebase {
 			firebaseApps.set(name, fbApp);
 		}
 
+		return fbApp;
+	}
+
+
+	initializeAppWithPath(path: string, options: FirebaseOptions = null, config?: FirebaseConfig) {
+		let json;
+		const ctx = Utils.android.getApplicationContext() as android.content.Context;
+		if (path.startsWith('res://')) {
+			const jsonStr = (<any>org).nativescript.firebase.core.FirebaseCore.readRawAsset(ctx, path);
+			console.log('jsonStr', jsonStr);
+			json = JSON.parse(jsonStr);
+		} else {
+			if (path.startsWith('~/')) {
+				path = knownFolders.currentApp().path + '/' + path.replace('~/', '');
+			}
+			json = require(path);
+		}
+
+
+		// always use first client
+
+		const client = json['client'][0];
+		const oauth_clients = client['oauth_client'];
+		const project_info = json['project_info'];
+		const client_info = client['client_info'];
+
+
+		let default_web_client_id = null;
+		const firebase_database_url = project_info['firebase_url'] || null;
+		const gcm_defaultSenderId = project_info['project_number'] || null;
+		const google_api_key = client['api_key']?.['current_key'] ?? null;
+		const google_app_id = client_info['mobilesdk_app_id'] || null;
+		const google_crash_reporting_api_key = google_app_id;
+		const google_storage_bucket = project_info['storage_bucket'] || null;
+		const project_id = project_info['project_id'] || null;
+
+		for (let i = 0; i < oauth_clients.length; i++) {
+			const oauth_client = oauth_clients[i];
+			if (oauth_client.client_type === 3) {
+				default_web_client_id = oauth_client['client_id'];
+			}
+		}
+
+		const nativeOptions = new com.google.firebase.FirebaseOptions.Builder();
+		if (google_api_key) {
+			nativeOptions.setApiKey(google_api_key);
+		}
+
+		if (google_app_id) {
+			nativeOptions.setApplicationId(google_app_id);
+		}
+
+		if (firebase_database_url) {
+			nativeOptions.setDatabaseUrl(firebase_database_url);
+		}
+
+		if (gcm_defaultSenderId) {
+			nativeOptions.setGcmSenderId(gcm_defaultSenderId);
+		}
+
+		if (project_id) {
+			nativeOptions.setProjectId(project_id);
+		}
+
+
+		if (google_storage_bucket) {
+			nativeOptions.setStorageBucket(google_storage_bucket);
+		}
+
+
+		if (options?.apiKey) {
+			nativeOptions.setApiKey(options.apiKey);
+		}
+
+		if (options?.gcmSenderId) {
+			nativeOptions.setGcmSenderId(options.gcmSenderId);
+		}
+
+		if (options?.databaseURL) {
+			nativeOptions.setDatabaseUrl(options.databaseURL);
+		}
+
+		if (options?.googleAppId) {
+			nativeOptions.setApplicationId(options.googleAppId);
+		}
+
+		if (options?.projectId) {
+			nativeOptions.setProjectId(options.projectId);
+		}
+
+		if (options?.storageBucket) {
+			nativeOptions.setStorageBucket(options.storageBucket);
+		}
+
+		if (options?.trackingId) {
+			nativeOptions.setGaTrackingId(options.trackingId);
+		}
+
+
+		const app = com.google.firebase.FirebaseApp.initializeApp(ctx, nativeOptions.build());
+
+		if (app && typeof config === 'object' && typeof config.automaticResourceManagement === 'boolean') {
+			app.setAutomaticResourceManagementEnabled(config.automaticDataCollectionEnabled);
+		}
+
+
+		const fbApp = FirebaseApp.fromNative(app);
+
+		if (!defaultApp) {
+			defaultApp = fbApp;
+		}
 		return fbApp;
 	}
 }

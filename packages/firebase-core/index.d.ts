@@ -1,4 +1,4 @@
-import {FirebaseConfig, IFirebaseOptions} from './common';
+import { FirebaseConfig, IFirebaseOptions } from './common';
 
 
 declare function serialize(data: any): any;
@@ -12,27 +12,27 @@ declare class FirebaseOptions implements IFirebaseOptions {
 
   apiKey?: string;
 
-	gcmSenderId?: string;
+  gcmSenderId?: string;
 
-	androidClientId?: string;
+  androidClientId?: string;
 
-	appGroupId?: string;
+  appGroupId?: string;
 
-	bundleId?: string;
+  bundleId?: string;
 
-	clientId?: string;
+  clientId?: string;
 
-	databaseURL?: string;
+  databaseURL?: string;
 
-	deepLinkURLScheme?: string;
+  deepLinkURLScheme?: string;
 
-	googleAppId?: string;
+  googleAppId?: string;
 
-	projectId?: string;
+  projectId?: string;
 
-	storageBucket?: string;
+  storageBucket?: string;
 
-	trackingId?: string;
+  trackingId?: string;
 }
 
 declare class FirebaseApp {
@@ -50,6 +50,8 @@ export interface Firebase {
   app(name?: string): FirebaseApp;
 
   initializeApp(options?: FirebaseOptions, configOrName?: FirebaseConfig | string): FirebaseApp;
+
+  initializeAppWithPath(path: string, options?: FirebaseOptions, config?: FirebaseConfig): FirebaseApp;
 }
 
 export function firebase(): Firebase;
