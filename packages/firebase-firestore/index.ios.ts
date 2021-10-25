@@ -568,9 +568,9 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
         case 'array-contains':
           query = this.native.queryWhereFieldPathArrayContains(
             fieldPath.native,
-            value.map((val) => {
+            Array.isArray(value) ? value.map((val) => {
               return val?.native || val;
-            })
+            }) : value
           );
           break;
         case 'array-contains-any':
@@ -629,9 +629,9 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
         case 'array-contains-any':
           query = this.native.queryWhereFieldArrayContainsAny(
             fieldPath as any,
-            value.map((val) => {
+            Array.isArray(value) ? value.map((val) => {
               return val?.native || val;
-            })
+            }) : value
           );
           break;
         case 'in':
