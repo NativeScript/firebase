@@ -1,5 +1,6 @@
 import { firebase, FirebaseApp } from '@nativescript/firebase-core';
 import { ICrashlytics } from './common';
+import StackTrace from 'stacktrace-js';
 
 let defaultCrashlytics: Crashlytics;
 const fb = firebase();
