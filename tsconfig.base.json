@@ -7,7 +7,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noEmitHelpers": false,
-    "target": "ES2021",
+    "target": "es2015",
     "module": "esnext",
     "allowSyntheticDefaultImports": true,
     "lib": [
