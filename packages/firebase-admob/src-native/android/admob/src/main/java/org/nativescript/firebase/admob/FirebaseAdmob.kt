@@ -419,7 +419,7 @@ class FirebaseAdmob {
 
           config.optJSONArray(AD_SIZES_KEY)?.let {
             val sizes = mutableListOf<AdSize>()
-            for (i in 0..it.length()) {
+            for (i in 0 until it.length()) {
               sizes.add(BannerAdSize.fromString(it.getString(i)).toAdSize())
             }
             adLoader.forAdManagerAdView({ view ->
@@ -573,7 +573,7 @@ class FirebaseAdmob {
             }
 
             debugSettings.optJSONArray(DEVICE_IDS_KEY)?.let { deviceIds ->
-              for (i in 0..deviceIds.length()) {
+              for (i in 0 until deviceIds.length()) {
                 val deviceId = deviceIds.getString(i)
                 if (deviceId == EMULATOR_KEY) {
                   debug.addTestDeviceHashedId(AdRequest.DEVICE_ID_EMULATOR)
@@ -740,7 +740,7 @@ class FirebaseAdmob {
 
         config.optJSONArray(RequestConfiguration.TestDevices.toString())?.let { testDevices ->
           val list = mutableListOf<String>()
-          for (i in 0..testDevices.length()) {
+          for (i in 0 until testDevices.length()) {
             val value = testDevices.getString(i)
             if (value == "EMULATOR") {
               list.add(AdRequest.DEVICE_ID_EMULATOR)
@@ -772,7 +772,7 @@ class FirebaseAdmob {
         }
 
         json.optJSONArray(KEYWORDS_KEY)?.let {
-          for (i in 0..it.length()) {
+          for (i in 0 until it.length()) {
             adRequest.addKeyword(it.getString(i))
           }
         }
@@ -834,7 +834,7 @@ class FirebaseAdmob {
             when (val value = it[key]) {
               is JSONArray -> {
                 val list = mutableListOf<String>()
-                for (i in 0..value.length()) {
+                for (i in 0 until value.length()) {
                   list.add(value.getString(i))
                 }
                 adRequest.addCustomTargeting(key, list)
@@ -847,7 +847,7 @@ class FirebaseAdmob {
         }
 
         json.optJSONArray(CATEGORY_EXCLUSIONS_KEY)?.let {
-          for (i in 0..it.length()) {
+          for (i in 0 until it.length()) {
             adRequest.addCategoryExclusion(it.getString(i))
           }
         }
