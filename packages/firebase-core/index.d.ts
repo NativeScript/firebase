@@ -1,7 +1,7 @@
 import { FirebaseConfig, IFirebaseOptions } from './common';
 
 
-declare function serialize(data: any): any;
+declare function serialize(data: any, wrapPrimitives?: boolean): any;
 
 declare function deserialize(data: any): any;
 

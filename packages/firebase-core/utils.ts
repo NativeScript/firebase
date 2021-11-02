@@ -8,7 +8,7 @@ function numberIs64Bit(item: number) {
 	return item < -Math.pow(2, 31) + 1 || item > Math.pow(2, 31) - 1;
 }
 
-export function serialize(data: any): any {
+export function serialize(data: any, wrapPrimitives: boolean = false): any {
 	if (global.isIOS) {
 		switch (typeof data) {
 			case 'string':
@@ -63,6 +63,12 @@ export function serialize(data: any): any {
 		switch (typeof data) {
 			case 'string':
 			case 'boolean': {
+				if (wrapPrimitives) {
+					if (typeof data === 'string') {
+						return new java.lang.String(data);
+					}
+					return new java.lang.Boolean(data);
+				}
 				return data;
 			}
 			case 'number': {

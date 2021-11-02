@@ -421,7 +421,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().set(
 				this.native,
-				serialize(value),
+				serialize(value, true),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
 						onComplete?.(null);
@@ -459,7 +459,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().setWithPriority(
 				this.native,
-				serialize(newVal),
+				serialize(newVal, true),
 				newPriority as any,
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
@@ -484,7 +484,7 @@ export class Reference extends Query implements IReference {
 					doTransaction(data: any): any {
 						const newData = transactionUpdate(deserialize(data));
 						// TODO improve
-						return serialize(newData);
+						return serialize(newData, true);
 					},
 					onComplete(error: com.google.firebase.database.DatabaseError, commited: boolean, snapshot: com.google.firebase.database.DataSnapshot): void {
 						const ss = DataSnapshot.fromNative(snapshot);
@@ -508,7 +508,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().update(
 				this.native,
-				serialize(values),
+				serialize(values, true),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
 						onComplete?.(null);
