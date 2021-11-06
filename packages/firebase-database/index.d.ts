@@ -51,6 +51,15 @@ declare class Query implements IQuery {
 	startAt(value: string | number | boolean, key?: string): Query;
 }
 
+declare class ServerValue {
+	readonly native: any;
+	readonly android: any;
+	readonly ios: any;
+	
+	static timeStamp(): ServerValue;
+	static increment(count: number): ServerValue;
+}
+
 declare class Reference extends Query implements IReference {
 	readonly native: any;
 	readonly android: any;

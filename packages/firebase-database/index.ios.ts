@@ -271,6 +271,28 @@ export class Query implements IQuery {
   }
 }
 
+export class ServerValue {
+  #native: any;
+  static timeStamp() {
+    const value = new ServerValue();
+    value.#native = FIRServerValue.timestamp();
+    return value;
+  }
+  static increment(count: number) {
+    const value = new ServerValue();
+    value.#native = FIRServerValue.increment(count);
+    return value;
+  }
+
+  get native() {
+    return this.#native;
+  }
+
+  get ios() {
+    return this.native;
+  }
+}
+
 export class Reference extends Query implements IReference {
   #native: FIRDatabaseReference;
 

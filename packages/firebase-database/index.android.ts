@@ -337,6 +337,28 @@ export class Query implements IQuery {
 	}
 }
 
+export class ServerValue {
+	#native: any;
+	static timeStamp() {
+		const value = new ServerValue();
+		value.#native = com.google.firebase.database.ServerValue.TIMESTAMP;
+		return value;
+	}
+	static increment(count: number) {
+		const value = new ServerValue();
+		value.#native = com.google.firebase.database.ServerValue.increment(count);
+		return value;
+	}
+
+	get native() {
+		return this.#native;
+	}
+
+	get android() {
+		return this.native;
+	}
+}
+
 export class Reference extends Query implements IReference {
 	#native: com.google.firebase.database.DatabaseReference;
 	static fromNative(ref: com.google.firebase.database.DatabaseReference) {
