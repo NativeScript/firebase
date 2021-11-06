@@ -103,6 +103,10 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 					return store;
 				}
 
+				if (data.native) {
+					return data.native;
+				}
+
 				store = new java.util.HashMap();
 				Object.keys(data).forEach((key) => store.put(key, serialize(data[key])));
 				console.log(store.toString());
@@ -146,6 +150,7 @@ export function deserialize(data: any): any {
 			return data;
 		}
 		let store;
+
 		switch (data.getClass().getName()) {
 			case 'java.lang.String': {
 				return String(data);
@@ -155,6 +160,7 @@ export function deserialize(data: any): any {
 				return String(data) === 'true';
 			}
 
+			case 'java.lang.Float':
 			case 'java.lang.Integer':
 			case 'java.lang.Long':
 			case 'java.lang.Double':
@@ -178,6 +184,17 @@ export function deserialize(data: any): any {
 				}
 				break;
 			}
+
+			case 'androidx.collection.SimpleArrayMap': {
+                const count = data.size();
+                for (let l = 0; l < count; l++) {
+                    const key = data.keyAt(l);
+                    store[key] = deserialize(data.get(key));
+                }
+                break;
+            }
+
+			case 'androidx.collection.ArrayMap':
 			case 'android.os.Bundle':
 			case 'java.util.HashMap':
 			case 'java.util.Map': {
