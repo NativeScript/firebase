@@ -109,7 +109,6 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 
 				store = new java.util.HashMap();
 				Object.keys(data).forEach((key) => store.put(key, serialize(data[key])));
-				console.log(store.toString());
 				return store;
 			}
 
