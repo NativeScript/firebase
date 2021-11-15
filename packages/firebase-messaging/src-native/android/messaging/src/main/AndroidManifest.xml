@@ -8,6 +8,7 @@
 
   <application>
     <service
+      android:directBootAware="true"
       android:name=".FirebaseMessaging$Service"
       android:exported="false">
       <intent-filter>
