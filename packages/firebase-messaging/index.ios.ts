@@ -2,6 +2,9 @@ import { Application, ApplicationSettings, Device } from '@nativescript/core';
 import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { AuthorizationStatus, IMessaging, Permissions, Notification, RemoteMessage } from './common';
 
+
+export { AuthorizationStatus } from './common';
+
 declare const FIRApp, TNSFirebaseMessaging;
 
 let _registerDeviceForRemoteMessages = {

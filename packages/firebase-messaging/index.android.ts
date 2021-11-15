@@ -4,6 +4,8 @@ import { AuthorizationStatus, IMessaging, RemoteMessage } from './common';
 
 let defaultMessaging: Messaging;
 
+export { AuthorizationStatus } from './common';
+
 const fb = firebase();
 Object.defineProperty(fb, 'messaging', {
 	value: () => {
@@ -30,9 +32,13 @@ function ensureCallback() {
 		public onSuccess(message: string): void {
 			const callback = this._owner?.get?.()?.[this._propName];
 			if (typeof callback === 'function') {
-				try {
-					callback(JSON.parse(message));
-				} catch (e) {}
+				if (this._propName === '_onToken') {
+					callback(message);
+				} else {
+					try {
+						callback(JSON.parse(message));
+					} catch (e) { }
+				}
 			}
 		}
 	}
@@ -159,6 +165,8 @@ export class Messaging implements IMessaging {
 			this.#onTokenCallback._owner = new WeakRef(this);
 
 			org.nativescript.firebase.messaging.FirebaseMessaging.setOnTokenListener(this.#onTokenCallback);
+		} else {
+			org.nativescript.firebase.messaging.FirebaseMessaging.setOnTokenListener(null);
 		}
 	}
 	registerDeviceForRemoteMessages(): Promise<void> {
