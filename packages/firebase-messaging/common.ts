@@ -5,13 +5,13 @@ import '@nativescript/core'
 export interface AndroidPermissions {}
 
 export interface IOSPermissions {
-    alert: undefined | false | true;
-    announcement: undefined | false | true;
-    badge: undefined | false | true;
-    carPlay: undefined | false | true;
-    criticalAlert: undefined | false | true;
-    provisional: undefined | false | true;
-    sound: undefined | false | true;
+    alert?: undefined | false | true;
+    announcement?: undefined | false | true;
+    badge?: undefined | false | true;
+    carPlay?: undefined | false | true;
+    criticalAlert?: undefined | false | true;
+    provisional?: undefined | false | true;
+    sound?: undefined | false | true;
 }
 export interface Permissions {
     ios?: IOSPermissions
