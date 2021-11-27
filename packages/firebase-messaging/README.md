@@ -22,7 +22,7 @@ This module provides a requestPermission method which triggers a native permissi
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-crashlytics'; // only needs to be imported 1x
+import '@nativescript/firebase-messaging'; // only needs to be imported 1x
 
 async function requestUserPermission() {
 	const authStatus = await firebase()
