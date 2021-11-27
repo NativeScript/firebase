@@ -162,15 +162,13 @@ import { LoginManager, AccessToken } from '@nativescript/facebook';
 
 LoginManager.logInWithPermissions(['public_profile', 'email']).then((result) => {
 	// Once signed in, get the users AccesToken
-	const data = await AccessToken.getCurrentAccessToken();
+	const data = await AccessToken.currentAccessToken();
 
 	// Create a Firebase credential with the AccessToken
-	const facebookCredential = FacebookAuthProvider.credential(data.accessToken);
+	const facebookCredential = FacebookAuthProvider.credential(data.tokenString);
 
 	// Sign-in the user with the credential
-	return auth().signInWithCredential(facebookCredential);
-
-	firebase().auth().signInWithCredential(facebookAuthCredential);
+	return firebase().auth().signInWithCredential(facebookCredential);
 });
 
 
