@@ -263,7 +263,7 @@ async function saveTokenToDatabase(token) {
 
 
     // Listen to whether the token changes
-    firebase().messaging().onTokenRefresh(token => {
+    firebase().messaging().onToken(token => {
       saveTokenToDatabase(token);
 
 }
