@@ -225,7 +225,7 @@ import { GoogleSignin } from '@nativescript/google-signin';
 GoogleSignin.configure(); // called earlier in the app
 
 GoogleSignin.signIn().then((user) => {
-	const credential = GoogleAuthProvider.credential(user.accessToken, user.idToken);
+	const credential = GoogleAuthProvider.credential(user.idToken, user.accessToken);
 
 	firebase().auth().signInWithCredential(credential);
 });
