@@ -217,6 +217,8 @@ export class Timestamp implements ITimestamp {
 
 	readonly seconds: number;
 
+	static fromDate(date: Date): Timestamp;
+
 	readonly android: any;
 	readonly ios: any;
 	readonly native: any;
@@ -288,7 +290,7 @@ export declare class Firestore implements IFirestore {
 }
 
 declare module '@nativescript/firebase-core' {
-	export interface Firebase extends FirebaseFirestore {}
+	export interface Firebase extends FirebaseFirestore { }
 }
 
 export interface FirebaseFirestore {

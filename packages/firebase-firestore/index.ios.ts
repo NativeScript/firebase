@@ -159,17 +159,29 @@ function serializeItems(value) {
 
 function createDictionary(field: any, value?: any, moreFieldsAndValues?: any) {
   const data = {};
-  if (field instanceof FieldPath) {
-    data[field.native as any] = value?.native || value;
+  if (data && !value && !moreFieldsAndValues) {
+    Object.entries(field).forEach((item) => {
+      const key = <any>item[0];
+      const value = <any>item[1];
+      if (key instanceof FieldPath) {
+        data[key.native as any] = value?.native || value;
+      } else {
+        data[key] = value?.native || value;
+      }
+    });
   } else {
-    data[field] = value?.native || value;
-  }
+    if (field instanceof FieldPath) {
+      data[field.native as any] = value?.native || value;
+    } else {
+      data[field] = value?.native || value;
+    }
 
-  if (Array.isArray(moreFieldsAndValues)) {
-    for (let i = 0; i < moreFieldsAndValues.length; i += 2) {
-      const key = moreFieldsAndValues[i];
-      const value = moreFieldsAndValues[i + 1];
-      data[key?.native || key] = value?.native || value;
+    if (Array.isArray(moreFieldsAndValues)) {
+      for (let i = 0; i < moreFieldsAndValues.length; i += 2) {
+        const key = moreFieldsAndValues[i];
+        const value = moreFieldsAndValues[i + 1];
+        data[key?.native || key] = value?.native || value;
+      }
     }
   }
 
@@ -1155,6 +1167,15 @@ export class Timestamp implements ITimestamp {
     if (timestamp instanceof FIRTimestamp) {
       const ts = new Timestamp(0, 0, true);
       ts.#native = timestamp;
+      return ts;
+    }
+    return null;
+  }
+
+  static fromDate(date: Date) {
+    if (date instanceof Date) {
+      const ts = new Timestamp(0, 0, true);
+      ts.#native = FIRTimestamp.timestampWithDate(date);
       return ts;
     }
     return null;

@@ -1,6 +1,6 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseFirestore } from '@demo/shared';
-import { Firestore, GeoPoint } from '@nativescript/firebase-firestore';
+import { Firestore, GeoPoint, Timestamp } from '@nativescript/firebase-firestore';
 import { firebase } from '@nativescript/firebase-core';
 
 export function navigatingTo(args: EventData) {
@@ -9,13 +9,18 @@ export function navigatingTo(args: EventData) {
 }
 
 export class DemoModel extends DemoSharedFirebaseFirestore {
-	firestore: Firestore;
 
 	constructor() {
 		super();
-		this.firestore = firebase().firestore();
-		console.log(this.firestore.settings);
-		this.firestore
+		Promise.all(
+			[
+				this.invalid_field_path()
+			]
+		)
+	}
+
+	async init() {
+		firebase().firestore()
 			.collection('users')
 			.add({
 				first: 'Ada',
@@ -30,7 +35,7 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 			});
 
 		const geo = new GeoPoint(10, -10);
-		this.firestore
+		firebase().firestore()
 			.collection('geo')
 			.add({
 				thing: 'it',
@@ -44,10 +49,31 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 			});
 
 
-			this.firestore.collection('items')
+		firebase().firestore().collection('items')
 			.get()
-			.then(items =>{
+			.then(items => {
 				console.log(items.docs[0].data())
 			})
+	}
+
+	async invalid_field_path() {
+		try {
+			await firebase().firestore()
+				.collection("products")
+				.doc("Oq4eU5p4Lj7Eh6dfjbBX")
+				.set({
+					name: "Product 1",
+					ts: Timestamp.fromDate(new Date())
+				});
+			await firebase().firestore()
+				.collection("products")
+				.doc("Oq4eU5p4Lj7Eh6dfjbBX")
+				.update({
+					name: "Product 2",
+					ts: Timestamp.fromDate(new Date())
+				});
+		} catch (error) {
+			console.log('error', error);
+		}
 	}
 }

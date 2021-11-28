@@ -1330,6 +1330,26 @@ export class Timestamp implements ITimestamp {
     return null;
   }
 
+  static #dateFormat: java.text.SimpleDateFormat;
+
+
+  static fromDate(date: Date) {
+    if (date instanceof Date) {
+      const ts = new Timestamp(0, 0, true);
+
+      if (!this.#dateFormat) {
+        const dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        const tz = java.util.TimeZone.getTimeZone('UTC');
+        dateFormat.setTimeZone(tz);
+        this.#dateFormat = dateFormat;
+      }
+
+      ts.#native = new com.google.firebase.Timestamp(this.#dateFormat.parse(date.toISOString()))
+      return ts;
+    }
+    return null;
+  }
+
   get nanoseconds(): number {
     return this.native.getNanoseconds();
   }
