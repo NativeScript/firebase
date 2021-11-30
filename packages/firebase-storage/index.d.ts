@@ -100,6 +100,8 @@ export declare class Reference implements IReference {
 
 	putString(data: string, format: StringFormat = StringFormat.RAW, metadata?: Metadata): Task;
 
+	putFile(path: string, metadata?: Metadata): Task
+
 	updateMetadata(metadata: Metadata): Promise<Metadata>;
 
 	writeToFile(localFilePath: string): Task;
