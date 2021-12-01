@@ -9,6 +9,7 @@
             <TextField text="{{ textToUpload }}" hint="Enter Text to upload"/>
             <TextField text="{{ textToUploadFileName }}" hint="Enter Text to upload file name"/>
             <Button text="Upload text" tap="{{ uploadText }}" class="btn btn-primary"/>
+            <Button text="Upload file" tap="{{ uploadFile }}" class="btn btn-primary"/>
             <Button text="Test firebase-storage" tap="{{ testIt }}" class="btn btn-primary"/>
           </StackLayout>
         </ScrollView>

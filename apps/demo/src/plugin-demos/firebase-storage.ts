@@ -1,4 +1,4 @@
-import { Observable, EventData, Page } from '@nativescript/core';
+import { Observable, EventData, Page, File, knownFolders, path } from '@nativescript/core';
 import { DemoSharedFirebaseStorage } from '@demo/shared';
 import { Metadata, Storage, TaskEvent } from '@nativescript/firebase-storage';
 import { Auth } from '@nativescript/firebase-auth';
@@ -38,9 +38,40 @@ export class DemoModel extends DemoSharedFirebaseStorage {
 				},
 				next(snapshot) {
 					console.info('uploadText', 'next', 'state', snapshot.state, snapshot.error);
-					console.log('uploadText', 'next', 'progress %', snapshot.bytesTransferred / snapshot.totalBytes ?? 0 * 100);
+					if (snapshot.totalBytes) {
+						console.log('uploadFile', 'next', 'progress %', snapshot.bytesTransferred / snapshot.totalBytes ?? 0 * 100);
+					}
 					if (snapshot.error) {
 						console.error('uploadText', 'next', snapshot.error);
+					}
+				},
+			});
+	}
+
+	uploadFile() {
+		const file = File.fromPath(
+			path.join(knownFolders.currentApp().path, 'images', 'deadpool.jpeg')
+		)
+		const metadata = new Metadata();
+		metadata.contentType = 'image/jpg';
+		this.storage
+			.ref()
+			.child('images/deadpool.jpeg')
+			.putFile(file.path, metadata)
+			.on(TaskEvent.STATE_CHANGED, {
+				complete() {
+					console.info('uploadFile', 'completed');
+				},
+				error(err) {
+					console.error('uploadFile', 'error', err);
+				},
+				next(snapshot) {
+					console.info('uploadFile', 'next', 'state', snapshot.state);
+					if (snapshot.totalBytes) {
+						console.log('uploadFile', 'next', 'progress %', snapshot.bytesTransferred / snapshot.totalBytes ?? 0 * 100);
+					}
+					if (snapshot.error) {
+						console.error('uploadFile', 'next', snapshot.error);
 					}
 				},
 			});
