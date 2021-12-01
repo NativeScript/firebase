@@ -1,4 +1,4 @@
-import {FirebaseApp, FirebaseError, deserialize, serialize, firebase} from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError, deserialize, serialize, firebase } from '@nativescript/firebase-core';
 import {
   IMetadata,
   IListResult,
@@ -12,24 +12,24 @@ import {
   TaskEvent,
   StringFormat
 } from './common';
-import {b64WithoutPrefix, getMIMEforBase64String} from './utils';
+import { b64WithoutPrefix, getMIMEforBase64String } from './utils';
 
-export {TaskSnapshotObserver, StringFormat, TaskEvent};
+export { TaskSnapshotObserver, StringFormat, TaskEvent };
 
 let defaultStorage: Storage;
 const fb = firebase();
 Object.defineProperty(fb, 'storage', {
-	value: (app?: FirebaseApp) => {
-		if (!app) {
-			if (!defaultStorage) {
-				defaultStorage = new Storage();
-			}
-			return defaultStorage;
-		}
+  value: (app?: FirebaseApp) => {
+    if (!app) {
+      if (!defaultStorage) {
+        defaultStorage = new Storage();
+      }
+      return defaultStorage;
+    }
 
-		return new Storage(app);
-	},
-	writable: false,
+    return new Storage(app);
+  },
+  writable: false,
 });
 
 export class TaskSnapshot implements ITaskSnapshot {
@@ -57,6 +57,9 @@ export class TaskSnapshot implements ITaskSnapshot {
   }
 
   get error(): FirebaseError {
+    if (!this.native.error) {
+      return null
+    }
     return FirebaseError.fromNative(this.native.error);
   }
 
@@ -178,6 +181,7 @@ export class Task implements ITask {
             nextOrObserver(TaskSnapshot.fromNative(snapshot));
           } else if (typeof nextOrObserver === 'object') {
             nextOrObserver?.next(TaskSnapshot.fromNative(snapshot));
+            nextOrObserver?.complete?.();
           }
         }
         if (complete) {
@@ -353,211 +357,212 @@ export class Metadata implements IMetadata {
 }
 
 export class Reference implements IReference {
-	#native: FIRStorageReference;
+  #native: FIRStorageReference;
 
-	static fromNative(value: FIRStorageReference) {
-		if (value instanceof FIRStorageReference) {
-			const ref = new Reference();
-			ref.#native = value;
-			return ref;
-		}
-		return null;
-	}
+  static fromNative(value: FIRStorageReference) {
+    if (value instanceof FIRStorageReference) {
+      const ref = new Reference();
+      ref.#native = value;
+      return ref;
+    }
+    return null;
+  }
 
-	get native() {
-		return this.#native;
-	}
+  get native() {
+    return this.#native;
+  }
 
-	get ios() {
-		return this.native;
-	}
+  get ios() {
+    return this.native;
+  }
 
-	get bucket(): string {
-		return this.native?.bucket;
-	}
+  get bucket(): string {
+    return this.native?.bucket;
+  }
 
-	get fullPath(): string {
-		return this.native?.fullPath;
-	}
+  get fullPath(): string {
+    return this.native?.fullPath;
+  }
 
-	get name(): string {
-		return this.native?.name;
-	}
+  get name(): string {
+    return this.native?.name;
+  }
 
-	get parent(): Reference {
-		return Reference.fromNative(this.native.parent());
-	}
+  get parent(): Reference {
+    return Reference.fromNative(this.native.parent());
+  }
 
-	get root(): Reference {
-		return Reference.fromNative(this.native.root());
-	}
+  get root(): Reference {
+    return Reference.fromNative(this.native.root());
+  }
 
-	get storage() {
-		return Storage.fromNative(this.native.storage);
-	}
+  get storage() {
+    return Storage.fromNative(this.native.storage);
+  }
 
-	child(path: string): Reference {
-		return Reference.fromNative(this.native.child(path));
-	}
+  child(path: string): Reference {
+    return Reference.fromNative(this.native.child(path));
+  }
 
-	delete(): Promise<void> {
-		return new Promise((resolve, reject) => {
-			this.native.deleteWithCompletion((error) => {
-				if (error) {
-					reject(FirebaseError.fromNative(error));
-				} else {
-					resolve();
-				}
-			});
-		});
-	}
+  delete(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.native.deleteWithCompletion((error) => {
+        if (error) {
+          reject(FirebaseError.fromNative(error));
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
 
-	getDownloadURL(): Promise<string> {
-		return new Promise((resolve, reject) => {
-			this.native.downloadURLWithCompletion((url, error) => {
-				if (error) {
-					reject(FirebaseError.fromNative(error));
-				} else {
-					resolve(url.absoluteString);
-				}
-			});
-		});
-	}
+  getDownloadURL(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.native.downloadURLWithCompletion((url, error) => {
+        if (error) {
+          reject(FirebaseError.fromNative(error));
+        } else {
+          resolve(url.absoluteString);
+        }
+      });
+    });
+  }
 
-	getMetadata(): Promise<Metadata> {
-		return new Promise((resolve, reject) => {
-			this.native.metadataWithCompletion((storageMetadata, error) => {
-				if (error) {
-					reject(FirebaseError.fromNative(error));
-				} else {
-					resolve(Metadata.fromNative(storageMetadata));
-				}
-			});
-		});
-	}
+  getMetadata(): Promise<Metadata> {
+    return new Promise((resolve, reject) => {
+      this.native.metadataWithCompletion((storageMetadata, error) => {
+        if (error) {
+          reject(FirebaseError.fromNative(error));
+        } else {
+          resolve(Metadata.fromNative(storageMetadata));
+        }
+      });
+    });
+  }
 
-	list(options?: ListOptions): Promise<ListResult> {
-		return new Promise((resolve, reject) => {
-			if (options?.pageToken) {
-				this.native.listWithMaxResultsPageTokenCompletion(options?.maxResults ?? 1000, options.pageToken, (result, error) => {
-					if (error) {
-						reject(FirebaseError.fromNative(error));
-					} else {
-						resolve(ListResult.fromNative(result));
-					}
-				});
-			} else {
-				this.native.listWithMaxResultsCompletion(options?.maxResults ?? 1000, (result, error) => {
-					if (error) {
-						reject(FirebaseError.fromNative(error));
-					} else {
-						resolve(ListResult.fromNative(result));
-					}
-				});
-			}
-		});
-	}
+  list(options?: ListOptions): Promise<ListResult> {
+    return new Promise((resolve, reject) => {
+      if (options?.pageToken) {
+        this.native.listWithMaxResultsPageTokenCompletion(options?.maxResults ?? 1000, options.pageToken, (result, error) => {
+          if (error) {
+            reject(FirebaseError.fromNative(error));
+          } else {
+            resolve(ListResult.fromNative(result));
+          }
+        });
+      } else {
+        this.native.listWithMaxResultsCompletion(options?.maxResults ?? 1000, (result, error) => {
+          if (error) {
+            reject(FirebaseError.fromNative(error));
+          } else {
+            resolve(ListResult.fromNative(result));
+          }
+        });
+      }
+    });
+  }
 
-	listAll(): Promise<ListResult> {
-		return new Promise((resolve, reject) => {
-			this.native.listAllWithCompletion((result, error) => {
-				if (error) {
-					reject(FirebaseError.fromNative(error));
-				} else {
-					resolve(ListResult.fromNative(result));
-				}
-			});
-		});
-	}
+  listAll(): Promise<ListResult> {
+    return new Promise((resolve, reject) => {
+      this.native.listAllWithCompletion((result, error) => {
+        if (error) {
+          reject(FirebaseError.fromNative(error));
+        } else {
+          resolve(ListResult.fromNative(result));
+        }
+      });
+    });
+  }
 
-	put(data: Blob | Uint8Array | ArrayBuffer, metadata?: Metadata): Task {
-		if (data instanceof Blob) {
-			const ab = (Blob as any).InternalAccessor.getBuffer(data).buffer.slice(0);
-			if (metadata) {
-				return Task.fromNative(this.native.putDataMetadata(NSData.dataWithData(ab), metadata.native));
-			}
-			return Task.fromNative(this.native.putData(NSData.dataWithData(ab)));
-		} else if (data instanceof Uint8Array || data instanceof ArrayBuffer) {
-			if (metadata) {
-				return Task.fromNative(this.native.putDataMetadata(NSData.dataWithData(data as any), metadata.native));
-			}
+  put(data: Blob | Uint8Array | ArrayBuffer, metadata?: Metadata): Task {
+    if (data instanceof Blob) {
+      const ab = (Blob as any).InternalAccessor.getBuffer(data).buffer.slice(0);
+      if (metadata) {
+        return Task.fromNative(this.native.putDataMetadata(NSData.dataWithData(ab), metadata.native));
+      }
+      return Task.fromNative(this.native.putData(NSData.dataWithData(ab)));
+    } else if (data instanceof Uint8Array || data instanceof ArrayBuffer) {
+      if (metadata) {
+        return Task.fromNative(this.native.putDataMetadata(NSData.dataWithData(data as any), metadata.native));
+      }
 
-			return Task.fromNative(this.native.putData(NSData.dataWithData(data as any)));
-		}
-	}
+      return Task.fromNative(this.native.putData(NSData.dataWithData(data as any)));
+    }
+  }
 
-	putString(data: string, format?: StringFormat, metadata?: Metadata): Task {
-		let nsData;
-		switch (format) {
-			case StringFormat.BASE64:
-				nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
-				break;
-			case StringFormat.BASE64URL:
-				let base64Encoded = data.replace(/-/g, '+').replace(/_/g, '/');
+  putString(data: string, format?: StringFormat, metadata?: Metadata): Task {
+    let nsData;
+    switch (format) {
+      case StringFormat.BASE64:
+        nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
+        break;
+      case StringFormat.BASE64URL:
+        let base64Encoded = data.replace(/-/g, '+').replace(/_/g, '/');
 
-				while (base64Encoded.length % 4 != 0) {
-					base64Encoded = base64Encoded + '=';
-				}
-				nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
-				break;
-			case StringFormat.DATA_URL:
-				const base64 = b64WithoutPrefix(data);
-				const mime = getMIMEforBase64String(data);
+        while (base64Encoded.length % 4 != 0) {
+          base64Encoded = base64Encoded + '=';
+        }
+        nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
+        break;
+      case StringFormat.DATA_URL:
+        const base64 = b64WithoutPrefix(data);
+        const mime = getMIMEforBase64String(data);
 
-				const meta = metadata || new Metadata();
-				if (!metadata.contentType) {
-					meta.contentType = mime;
-				}
-				return Task.fromNative(this.native.putDataMetadata(NSData.alloc().initWithBase64EncodedStringOptions(base64, 0), meta.native));
-			default:
-				const text = NSString.stringWithString(data);
-				const nativeData = text.dataUsingEncoding(NSUTF8StringEncoding);
-				const encodedString = nativeData.base64EncodedStringWithOptions(0);
-				nsData = NSData.alloc().initWithBase64EncodedStringOptions(encodedString, 0);
-				break;
-		}
+        const meta = metadata || new Metadata();
+        if (!metadata.contentType) {
+          meta.contentType = mime;
+        }
+        return Task.fromNative(this.native.putDataMetadata(NSData.alloc().initWithBase64EncodedStringOptions(base64, 0), meta.native));
+      default:
+        const text = NSString.stringWithString(data);
+        const nativeData = text.dataUsingEncoding(NSUTF8StringEncoding);
+        const encodedString = nativeData.base64EncodedStringWithOptions(0);
+        nsData = NSData.alloc().initWithBase64EncodedStringOptions(encodedString, 0);
+        break;
+    }
 
-		if (metadata) {
-			return Task.fromNative(this.native.putDataMetadata(nsData, metadata.native));
-		}
+    if (metadata) {
+      return Task.fromNative(this.native.putDataMetadata(nsData, metadata.native));
+    }
 
-		return Task.fromNative(this.native.putData(nsData));
-	}
+    return Task.fromNative(this.native.putData(nsData));
+  }
 
-	putFile(path: string, metadata?: Metadata): Task {
-		let task: Task = null;
-		try {
-			if (metadata) {
-				task = Task.fromNative(this.native.putFileMetadata(NSURL.URLWithString(path), metadata.native));
-			} else {
-				task = Task.fromNative(this.native.putFile(NSURL.URLWithString(path)));
-			}
-		} catch (e) {}
-		return task;
-	}
+  putFile(path: string, metadata?: Metadata): Task {
+    let task: Task = null;
+    try {
+      const url = path?.startsWith?.('/') ? NSURL.fileURLWithPath(path) : NSURL.URLWithString(path)
+      if (metadata) {
+        task = Task.fromNative(this.native.putFileMetadata(url, metadata.native));
+      } else {
+        task = Task.fromNative(this.native.putFile(url));
+      }
+    } catch (e) { }
+    return task;
+  }
 
-	updateMetadata(metadata: Metadata): Promise<Metadata> {
-		return new Promise((resolve, reject) => {
-			this.native.updateMetadataCompletion(metadata.native, (metadata, error) => {
-				if (error) {
-					reject(FirebaseError.fromNative(error));
-				}
-				{
-					resolve(Metadata.fromNative(metadata));
-				}
-			});
-		});
-	}
+  updateMetadata(metadata: Metadata): Promise<Metadata> {
+    return new Promise((resolve, reject) => {
+      this.native.updateMetadataCompletion(metadata.native, (metadata, error) => {
+        if (error) {
+          reject(FirebaseError.fromNative(error));
+        }
+        {
+          resolve(Metadata.fromNative(metadata));
+        }
+      });
+    });
+  }
 
-	writeToFile(localFilePath: string): Task {
-		let url;
-		if (localFilePath?.indexOf('file:')) {
-			url = NSURL.URLWithString(localFilePath);
-		} else {
-			url = NSURL.fileURLWithPath(localFilePath);
-		}
-		return Task.fromNative(this.native.writeToFile(url));
-	}
+  writeToFile(localFilePath: string): Task {
+    let url;
+    if (localFilePath?.indexOf('file:')) {
+      url = NSURL.URLWithString(localFilePath);
+    } else {
+      url = NSURL.fileURLWithPath(localFilePath);
+    }
+    return Task.fromNative(this.native.writeToFile(url));
+  }
 }
 
 export class Storage implements IStorage {
@@ -568,7 +573,7 @@ export class Storage implements IStorage {
     if (app?.native) {
       this.#native = FIRStorage.storageForApp(app.native);
     } else {
-      if(defaultStorage){
+      if (defaultStorage) {
         return defaultStorage;
       }
       defaultStorage = this;
