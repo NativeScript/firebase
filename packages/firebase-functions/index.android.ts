@@ -3,10 +3,9 @@ import {
   HttpsCallable,
   HttpsCallableOptions,
   HttpsErrorCode,
-  IFunctions,
+  IFunctions
 } from "./common";
 import {deserialize, firebase, FirebaseApp, serialize} from "@nativescript/firebase-core";
-
 
 let defaultFunctions: Functions;
 
@@ -21,6 +20,31 @@ Object.defineProperty(fb, 'functions', {
 		}
 
 		return new Functions(app);
+	},
+	writable: false,
+});
+/**
+  Firebase Functions Region - Region for which to run HttpsCallable method
+  Set parameter using firebase().app().functions(regionOrCustomDomain: string)
+  @see https://firebase.google.com/docs/reference/android/com/google/firebase/functions/FirebaseFunctions
+  @note If not set, default region is used ("us-central1")
+  */
+let defaultRegionOrCustomDomain: string;
+/**
+  Add 'functions' method to FirebaseApp class
+  @see https://firebase.google.com/docs/reference/node/firebase.app.App
+  @see https://firebase.google.com/docs/functions/locations
+  @param regionOrCustomDomain(string)(Optional): Name of the region for which to Functions results
+  @return Functions
+  */
+const fbApp = FirebaseApp;
+Object.defineProperty(fbApp.prototype, 'functions', {
+	value: (regionOrCustomDomain?: string) => {
+		defaultRegionOrCustomDomain = regionOrCustomDomain;
+    if (!defaultFunctions) {
+      defaultFunctions = new Functions();
+    }
+		return defaultFunctions;
 	},
 	writable: false,
 });
@@ -130,13 +154,19 @@ export class Functions implements IFunctions {
 
   constructor(app?: FirebaseApp) {
     if (app?.native) {
-      this.#native = com.google.firebase.functions.FirebaseFunctions.getInstance(app.native);
+      this.#native = defaultRegionOrCustomDomain
+        ? com.google.firebase.functions.FirebaseFunctions.getInstance(app.native, defaultRegionOrCustomDomain)
+        : com.google.firebase.functions.FirebaseFunctions.getInstance(app.native);
     } else {
       if(defaultFunctions){
         return defaultFunctions;
       }
       defaultFunctions = this;
-      this.#native = com.google.firebase.functions.FirebaseFunctions.getInstance();
+      // If defaultRegionOrCustomDomain is set, get FirebaseFunctions instance using that parameter
+      // @see https://firebase.google.com/docs/functions/locations#client-side_location_selection_for_callable_functions
+      this.#native = defaultRegionOrCustomDomain
+         ? com.google.firebase.functions.FirebaseFunctions.getInstance(defaultRegionOrCustomDomain)
+         : com.google.firebase.functions.FirebaseFunctions.getInstance();
     }
   }
 
@@ -162,7 +192,7 @@ export class Functions implements IFunctions {
   }
 
   useEmulator(host: string, port: number) {
-    this.native.useEmulator(host, port);
+    this.native.useEmulator(host === 'localhost' ? '10.0.2.2' : host, port);
   }
 
   get native() {

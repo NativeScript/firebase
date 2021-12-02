@@ -3,7 +3,7 @@ import {
   HttpsCallable,
   HttpsCallableOptions,
   HttpsErrorCode,
-  IFunctions,
+  IFunctions
 } from "./common";
 import {deserialize, firebase, FirebaseApp, serialize} from "@nativescript/firebase-core";
 
@@ -20,6 +20,34 @@ Object.defineProperty(fb, 'functions', {
 		}
 
 		return new Functions(app);
+	},
+	writable: false,
+});
+/**
+  Firebase Functions Region - Region for which to run HttpsCallable method
+  Set parameter using firebase().app().functions(regionOrCustomDomain: string)
+  @link https://firebase.google.com/docs/reference/node/firebase.app.App
+  @link https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions
+  @note If not set, default region is used ('us-central1')
+  */
+let defaultRegionOrCustomDomain: string;
+/**
+  Add 'functions' method to FirebaseApp class
+  @param regionOrCustomDomain(string)(Optional): Name of the Region or Custom Domain for which to Functions results
+  @return Functions
+  @see FirebaseFunctions
+  @link https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions
+  @see Supported Regions
+  @see https://firebase.google.com/docs/functions/locations
+  */
+const fbApp = FirebaseApp;
+Object.defineProperty(fbApp.prototype, 'functions', {
+	value: (regionOrCustomDomain?: string) => {
+		defaultRegionOrCustomDomain = regionOrCustomDomain;
+    if (!defaultFunctions) {
+      defaultFunctions = new Functions();
+    }
+		return defaultFunctions;
 	},
 	writable: false,
 });
@@ -115,13 +143,29 @@ export class Functions implements IFunctions {
 
   constructor(app?: FirebaseApp) {
     if (app?.native) {
-      this.#native = FIRFunctions.functionsForApp(app.native);
+      if(defaultRegionOrCustomDomain){
+        this.#native = isRegion(defaultRegionOrCustomDomain) // Check whether a Region has been set
+          ? FIRFunctions.functionsForAppRegion(app.native, defaultRegionOrCustomDomain)  // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforapp:region:
+          : isCustomDomain(defaultRegionOrCustomDomain) // Check whether using a Custom Domain has been set
+            ? FIRFunctions.functionsForAppCustomDomain(app.native, defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforapp:customdomain:
+            : FIRFunctions.functionsForApp(app.native); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforapp:
+      } else {
+        this.#native = FIRFunctions.functionsForApp(app.native); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforapp:
+      }
     } else {
       if(defaultFunctions){
         return defaultFunctions;
       }
       defaultFunctions = this;
-      this.#native = FIRFunctions.functions();
+      if(defaultRegionOrCustomDomain){
+        this.#native = isRegion(defaultRegionOrCustomDomain) // Check whether a Region has been set
+          ? FIRFunctions.functionsForRegion(defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforregion:
+          : isCustomDomain(defaultRegionOrCustomDomain) // Check whether using a Custom Domain has been set
+            ? FIRFunctions.functionsForCustomDomain(defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforcustomdomain:
+            : FIRFunctions.functions(); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functions
+      } else {
+        this.#native = FIRFunctions.functions(); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functions
+      }
     }
   }
 
@@ -177,4 +221,21 @@ export class Functions implements IFunctions {
     }
     return this.#app;
   }
+}
+/**
+  Check whether a regionOrCustomDomain string is a Region for the http trigger, such as “us-central1”.
+  @param regionOrCustomDomain(string): Text to parse
+  @return boolean: TRUE if a Region; FALSE if not
+  */
+function isRegion(regionOrCustomDomain: string): boolean{
+  const elems = regionOrCustomDomain.split('.');
+  return elems.length === 1 ? true : false;
+}
+/**
+  Check whether a regionOrCustomDomain string is a Custom Domain for the http trigger, such as “https://mydomain.com”
+  @param regionOrCustomDomain(string): Text to parse
+  @return boolean: TRUE if a CustomDomain; FALSE if not
+  */
+function isCustomDomain(regionOrCustomDomain: string): boolean{
+  return !isRegion(regionOrCustomDomain);
 }
