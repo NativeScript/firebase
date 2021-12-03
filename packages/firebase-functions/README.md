@@ -51,7 +51,11 @@ firebase()
 ## Regional Cloud Functions
 Cloud Functions are _regional_, which means the infrastructure that runs your Cloud Function is located in specific regions.
 
+<<<<<<< HEAD
 By default, functions run in the _us-central1_ region. View the [supported regions](https://firebase.google.com/docs/functions/locations).
+=======
+By default, functions run in the _us-central1_ region. View the [supported regions](https://firebase.google.com/docs/functions/locations)
+>>>>>>> e0602081644464c60610caa66d227ba3dfcf2c57
 
 To run functions in a different region, after initializing Firebase App set the region using _firebase().app().functions(region)_.
 
