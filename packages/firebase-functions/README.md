@@ -48,6 +48,41 @@ firebase()
 	});
 ```
 
+## Regional Cloud Functions
+Cloud Functions are _regional_, which means the infrastructure that runs your Cloud Function is located in specific regions.
+
+By default, functions run in the _us-central1_ region. View the [supported regions](https://firebase.google.com/docs/functions/locations)
+
+To run functions in a different region, after initializing Firebase App set the region using _firebase().app().functions(region)_.
+
+Regional function endpoint example (using _europe-west2_ region ):
+```ts
+// Deployed HTTPS callable
+exports.listProducts = functions.region("europe-west2").https.onCall(() => {
+	return [
+		/* ... */
+		// Return some data
+	];
+});
+```
+
+To access the regional function endpoint:
+```ts
+import { firebase } from '@nativescript/firebase-core';
+import '@nativescript/firebase-functions';
+
+firebase().initializeApp();
+firebase().app().functions("europe-west2");
+
+firebase()
+	.functions()
+	.httpsCallable('listProducts')()
+	.then((response) => {
+		setProducts(response.data);
+		setLoading(false);
+	});
+```
+
 ## Using an emulator
 
 Whilst developing your application with Cloud Functions, it is possible to run the functions inside of a local emulator.
