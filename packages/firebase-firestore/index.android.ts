@@ -1241,23 +1241,23 @@ export class FieldValue implements IFieldValue {
   }
 
 
-  arrayRemove(elements: any[]): FieldValue {
+  static arrayRemove(elements: any[]): FieldValue {
     return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.arrayRemove(elements.map((element) => element?.native || element)));
   }
 
-  arrayUnion(elements: any[]): FieldValue {
+  static arrayUnion(elements: any[]): FieldValue {
     return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.arrayUnion(elements.map((element) => element?.native || element)));
   }
 
-  delete(): FieldValue {
+  static delete(): FieldValue {
     return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.delete());
   }
 
-  increment(n: number): FieldValue {
+  static increment(n: number): FieldValue {
     return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.increment(n));
   }
 
-  serverTimestamp(): FieldValue {
+  static serverTimestamp(): FieldValue {
     return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.serverTimestamp());
   }
 

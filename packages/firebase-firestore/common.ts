@@ -71,18 +71,7 @@ export interface IFieldPath {
   documentId(): IFieldPath;
 }
 
-export interface IFieldValue {
-
-  arrayRemove(elements: any[]): IFieldValue;
-
-  arrayUnion(elements: any[]): IFieldValue;
-
-  delete(): IFieldValue;
-
-  increment(n: number): IFieldValue;
-
-  serverTimestamp(): IFieldValue;
-}
+export interface IFieldValue {}
 
 export interface IGeoPoint {
   latitude: number;

@@ -1079,19 +1079,19 @@ export class FieldValue implements IFieldValue {
   }
 
 
-  arrayRemove(elements: any[]): FieldValue {
+  static arrayRemove(elements: any[]): FieldValue {
     return FieldValue.fromNative(FIRFieldValue.fieldValueForArrayRemove(elements.map((element) => element?.native || element)));
   }
 
-  arrayUnion(elements: any[]): FieldValue {
+  static arrayUnion(elements: any[]): FieldValue {
     return FieldValue.fromNative(FIRFieldValue.fieldValueForArrayUnion(elements.map((element) => element?.native || element)));
   }
 
-  delete(): FieldValue {
+  static delete(): FieldValue {
     return FieldValue.fromNative(FIRFieldValue.fieldValueForDelete());
   }
 
-  increment(n: number): FieldValue {
+  static increment(n: number): FieldValue {
     const useDouble = n % 1 === 0;
     if (useDouble) {
       return FieldValue.fromNative(FIRFieldValue.fieldValueForDoubleIncrement(n));
@@ -1099,7 +1099,7 @@ export class FieldValue implements IFieldValue {
     return FieldValue.fromNative(FIRFieldValue.fieldValueForIntegerIncrement(n));
   }
 
-  serverTimestamp(): FieldValue {
+  static serverTimestamp(): FieldValue {
     return FieldValue.fromNative(FIRFieldValue.fieldValueForServerTimestamp());
   }
 
