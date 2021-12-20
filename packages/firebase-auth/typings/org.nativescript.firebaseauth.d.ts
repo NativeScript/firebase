@@ -27,6 +27,7 @@ declare module org {
 				public static sendPasswordResetEmail(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: com.google.firebase.auth.ActionCodeSettings, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 				public static sendSignInLinkToEmail(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: com.google.firebase.auth.ActionCodeSettings, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 				public static signInWithEmailAndPassword(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: string, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
+				public static signInWithProvider(param0: globalAndroid.app.Activity, param1: com.google.firebase.auth.FirebaseAuth, param2: com.google.firebase.auth.OAuthProvider.Builder, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 				public static createUserWithEmailAndPassword(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: string, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 				public static getExecutorsCount(): number;
 				public static verifyPasswordResetCode(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<string>): void;
@@ -64,6 +65,7 @@ declare module org {
 					public checkActionCode(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.ActionCodeResult>): void;
 					public createUserWithEmailAndPassword(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: string, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 					public signInWithCredential(param0: com.google.firebase.auth.FirebaseAuth, param1: com.google.firebase.auth.AuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
+					public signInWithProvider(param0: globalAndroid.app.Activity, param1: com.google.firebase.auth.FirebaseAuth, param2: com.google.firebase.auth.OAuthProvider.Builder, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 					public fetchSignInMethodsForEmail(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.SignInMethodQueryResult>): void;
 					public sendPasswordResetEmail(param0: com.google.firebase.auth.FirebaseAuth, param1: string, param2: com.google.firebase.auth.ActionCodeSettings, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 				}
@@ -71,36 +73,38 @@ declare module org {
 					public static class: java.lang.Class<org.nativescript.firebaseauth.FirebaseAuth.User>;
 					public static Companion: org.nativescript.firebaseauth.FirebaseAuth.User.Companion;
 					public static updateProfile(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.UserProfileChangeRequest, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
-					public static verifyBeforeUpdateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
-					public static verifyBeforeUpdateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: com.google.firebase.auth.ActionCodeSettings , param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 					public static linkWithCredential(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.AuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
-					public static updateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
-					public static reauthenticateWithCredential(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.AuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 					public static reload(param0: com.google.firebase.auth.FirebaseUser, param1: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+					public static updateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 					public static unlink(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
+					public static reauthenticateWithCredential(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.AuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 					public static delete(param0: com.google.firebase.auth.FirebaseUser, param1: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 					public constructor();
 					public static updatePassword(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+					public static verifyBeforeUpdateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: com.google.firebase.auth.ActionCodeSettings, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 					public static sendEmailVerification(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.ActionCodeSettings, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 					public static getIdToken(param0: com.google.firebase.auth.FirebaseUser, param1: boolean, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<string>): void;
 					public static getIdTokenResult(param0: com.google.firebase.auth.FirebaseUser, param1: boolean, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.GetTokenResult>): void;
 					public static updatePhoneNumber(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.PhoneAuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+					public static reauthenticateWithProvider(param0: globalAndroid.app.Activity, param1: com.google.firebase.auth.FirebaseUser, param2: com.google.firebase.auth.OAuthProvider.Builder, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 				}
 				export module User {
 					export class Companion {
 						public static class: java.lang.Class<org.nativescript.firebaseauth.FirebaseAuth.User.Companion>;
-						public updateProfile(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.UserProfileChangeRequest, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
-						public reauthenticateWithCredential(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.AuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+						public reauthenticateWithCredential(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.AuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 						public getIdToken(param0: com.google.firebase.auth.FirebaseUser, param1: boolean, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<string>): void;
-						public verifyBeforeUpdateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 						public unlink(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
 						public getIdTokenResult(param0: com.google.firebase.auth.FirebaseUser, param1: boolean, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.GetTokenResult>): void;
 						public updatePassword(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+						public verifyBeforeUpdateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: com.google.firebase.auth.ActionCodeSettings, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+						public delete(param0: com.google.firebase.auth.FirebaseUser, param1: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+						public updateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+						public reauthenticateWithProvider(param0: globalAndroid.app.Activity, param1: com.google.firebase.auth.FirebaseUser, param2: com.google.firebase.auth.OAuthProvider.Builder, param3: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
+						public updateProfile(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.UserProfileChangeRequest, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
+						public reload(param0: com.google.firebase.auth.FirebaseUser, param1: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 						public updatePhoneNumber(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.PhoneAuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 						public linkWithCredential(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.AuthCredential, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<com.google.firebase.auth.AuthResult>): void;
-						public delete(param0: com.google.firebase.auth.FirebaseUser, param1: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 						public sendEmailVerification(param0: com.google.firebase.auth.FirebaseUser, param1: com.google.firebase.auth.ActionCodeSettings, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
-						public updateEmail(param0: com.google.firebase.auth.FirebaseUser, param1: string, param2: org.nativescript.firebaseauth.FirebaseAuth.Callback<java.lang.Void>): void;
 					}
 				}
 			}

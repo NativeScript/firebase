@@ -183,6 +183,16 @@ export declare class FieldPath implements IFieldPath {
 }
 
 export declare class FieldValue implements IFieldValue {
+	static arrayRemove(elements: any[]): FieldValue;
+
+	static arrayUnion(elements: any[]): FieldValue;
+
+	static delete(): FieldValue;
+
+	static increment(n: number): FieldValue;
+
+	static serverTimestamp(): FieldValue;
+
 	readonly android: any;
 	readonly ios: any;
 	readonly native: any;

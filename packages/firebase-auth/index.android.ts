@@ -15,10 +15,12 @@ import {
   OAuthCredentialOptions,
   UserCredential,
   UserProfileChangeRequest,
-  AdditionalUserInfo
+  AdditionalUserInfo,
+  IOAuthProvider
 } from './common';
 import lazy from '@nativescript/core/utils/lazy';
 import { Application } from '@nativescript/core';
+import { FirebaseAuth } from '.';
 
 export { AdditionalUserInfo, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, UserProfileChangeRequest };
 
@@ -274,6 +276,30 @@ export class User implements IUser {
       }
     });
   }
+
+  reauthenticateWithProvider(provider: OAuthProvider): Promise<UserCredential> {
+    return new Promise((resolve, reject) => {
+      if (provider._isCustomProvider && provider._builder) {
+        org.nativescript.firebaseauth.FirebaseAuth.User.reauthenticateWithProvider(
+          Application.android.foregroundActivity || Application.android.startActivity,
+          this.native, provider._builder, new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+            onSuccess(success) {
+              resolve(toUserCredential(success));
+            },
+            onError(error) {
+              reject({
+                message: error.getMessage(),
+                native: error,
+              });
+            },
+          })
+        )
+      } else {
+        reject(FirebaseError.fromNative(null, 'OAuthProvider not configured'));
+      }
+    })
+  }
+
 
   reauthenticateWithCredential(credential: AuthCredential): Promise<UserCredential> {
     return new Promise((resolve, reject) => {
@@ -775,11 +801,45 @@ export class OAuthCredential extends AuthCredential implements IOAuthCredential 
   }
 }
 
-export class OAuthProvider {
-  #providerId: string;
 
+
+export class OAuthProvider implements IOAuthProvider {
+  #providerId: string;
+  #customProvider: boolean;
+  #builder: com.google.firebase.auth.OAuthProvider.Builder;
   constructor(providerId: string) {
     this.#providerId = providerId;
+    this.#customProvider = false;
+  }
+
+  get _isCustomProvider() {
+    return this.#customProvider;
+  }
+
+  get _builder() {
+    return this.#builder
+  }
+
+  addCustomParameter(key: string, value: string) {
+    if (!this.#builder) {
+      this.#builder = com.google.firebase.auth.OAuthProvider.newBuilder(this.#providerId);
+      this.#customProvider = true;
+    }
+    this.#builder.addCustomParameter(key, value);
+  }
+
+  setScopes(scopes: string[]) {
+    if (!this.#builder) {
+      this.#builder = com.google.firebase.auth.OAuthProvider.newBuilder(this.#providerId);
+      this.#customProvider = true;
+    }
+    if (Array.isArray(scopes)) {
+      const array = new java.util.ArrayList<string>();
+      scopes.forEach(item => {
+        array.add(item);
+      })
+      this.#builder.setScopes(array);
+    }
   }
 
   credential(optionsOrIdToken: OAuthCredentialOptions | string | null, accessToken?: string) {
@@ -1051,6 +1111,29 @@ export class Auth implements IAuth {
         );
       }
     });
+  }
+
+  signInWithProvider(provider: OAuthProvider): Promise<UserCredential> {
+    return new Promise((resolve, reject) => {
+      if (provider._isCustomProvider && provider._builder) {
+        org.nativescript.firebaseauth.FirebaseAuth.signInWithProvider(
+          Application.android.foregroundActivity || Application.android.startActivity,
+          this.native, provider._builder, new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+            onSuccess(success) {
+              resolve(toUserCredential(success));
+            },
+            onError(error) {
+              reject({
+                message: error.getMessage(),
+                native: error,
+              });
+            },
+          })
+        )
+      } else {
+        reject(FirebaseError.fromNative(null, 'OAuthProvider not configured'));
+      }
+    })
   }
 
   signInWithCredential(credential: AuthCredential): Promise<UserCredential> {

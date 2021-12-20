@@ -2,7 +2,7 @@ import { Observable, EventData, Page, fromObject } from '@nativescript/core';
 import { DemoSharedFirebaseAuth } from '@demo/shared';
 import { firebase, Firebase } from '@nativescript/firebase-core';
 import '@nativescript/firebase-auth';
-import { Auth, User } from '@nativescript/firebase-auth';
+import { Auth, User, OAuthProvider } from '@nativescript/firebase-auth';
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
 	page.bindingContext = new DemoModel();
@@ -14,12 +14,14 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 	user: User;
 	constructor() {
 		super();
+
 		firebase()
 			.auth()
 			.addAuthStateChangeListener((user) => {
 				this._setCurrentUser(user);
 			});
 	}
+
 	createUser() {
 		firebase()
 			.auth()
@@ -55,11 +57,33 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 
 	getCurrentUser() {
 		const auth = firebase().auth();
-		this._setCurrentUser(auth?.user);
+		this._setCurrentUser(auth?.currentUser);
 	}
 
 	logOutUser() {
 		firebase().auth().signOut();
 		this._setCurrentUser(undefined);
+	}
+
+
+	loginMs() {
+		// https://firebase.google.com/docs/auth/android/microsoft-oauth#handle_the_sign-in_flow_with_the_firebase_sdk
+
+		const provider = new OAuthProvider('microsoft.com');
+		provider.addCustomParameter("prompt", "consent");
+		provider.addCustomParameter("login_hint", "user@firstadd.onmicrosoft.com");
+		provider.addCustomParameter("tenant", "TENANT_ID");
+
+		provider.setScopes(["mail.read", "calendars.read"]);
+
+		firebase()
+			.auth()
+			.signInWithProvider(provider)
+			.then(credentials => {
+
+			})
+			.catch(err => {
+
+			});
 	}
 }

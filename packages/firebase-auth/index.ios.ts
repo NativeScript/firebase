@@ -1,5 +1,5 @@
 import { FirebaseApp, firebase, deserialize, FirebaseError } from '@nativescript/firebase-core';
-import { IAuthSettings, IAuth, IUser, IUserInfo, IUserMetadata, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, AdditionalUserInfo, IAuthCredential, IActionCodeSettings, OAuthCredentialOptions, IOAuthCredential, IAuthTokenResult, IPhoneAuthCredential, UserProfileChangeRequest } from './common';
+import { IAuthSettings, IAuth, IUser, IUserInfo, IUserMetadata, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, AdditionalUserInfo, IAuthCredential, IActionCodeSettings, OAuthCredentialOptions, IOAuthCredential, IAuthTokenResult, IPhoneAuthCredential, UserProfileChangeRequest, IOAuthProvider } from './common';
 
 export { AdditionalUserInfo, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, UserProfileChangeRequest };
 
@@ -243,6 +243,28 @@ export class User implements IUser {
 		});
 	}
 
+	reauthenticateWithProvider(provider: OAuthProvider): Promise<UserCredential> {
+		return new Promise((resolve, reject) => {
+			if (!this.native) {
+				reject();
+			} else {
+				provider._builder.getCredentialWithUIDelegateCompletion(null, (credential, error) => {
+					if (error) {
+						reject(FirebaseError.fromNative(error))
+					} else {
+						this.native.reauthenticateWithCredentialCompletion(credential, (result, error) => {
+							if (error) {
+								reject(FirebaseError.fromNative(error));
+							} else {
+								resolve(toUserCredential(result));
+							}
+						});
+					}
+				})
+			}
+		})
+	}
+
 	reauthenticateWithCredential(credential: AuthCredential): Promise<UserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
@@ -378,7 +400,7 @@ export class User implements IUser {
 				if (profile.photoUri) {
 					try {
 						request.photoURL = NSURL.URLWithString(profile.photoUri);
-					} catch (e) {}
+					} catch (e) { }
 				}
 
 				request.commitChangesWithCompletion((error) => {
@@ -703,11 +725,32 @@ export class OAuthCredential extends AuthCredential implements IOAuthCredential 
 	}
 }
 
-export class OAuthProvider {
-	#providerId: string;
 
+export class OAuthProvider implements IOAuthProvider {
+	#providerId: string;
+	#customParameters: { [key: string]: string }
+	#scopes: string[];
 	constructor(providerId: string) {
 		this.#providerId = providerId;
+		this.#customParameters = {};
+		this.#scopes = [];
+	}
+
+	get _builder() {
+		const builder = FIROAuthProvider.providerWithProviderID(this.#providerId);
+		builder.customParameters = this.#customParameters as any;
+		builder.scopes = this.#scopes as any;
+		return builder;
+	}
+
+	addCustomParameter(key: string, value: string) {
+		this.#customParameters[key] = value;
+	}
+
+	setScopes(scopes: string[]) {
+		if (Array.isArray(scopes)) {
+			this.#scopes = scopes;
+		}
 	}
 
 	credential(optionsOrIdToken: OAuthCredentialOptions | string | null, accessToken?: string) {
@@ -938,6 +981,28 @@ export class Auth implements IAuth {
 				});
 			}
 		});
+	}
+
+	signInWithProvider(provider: OAuthProvider): Promise<UserCredential> {
+		return new Promise((resolve, reject) => {
+			if (!this.native) {
+				reject();
+			} else {
+				provider._builder.getCredentialWithUIDelegateCompletion(null, (credential, error) => {
+					if (error) {
+						reject(FirebaseError.fromNative(error))
+					} else {
+						this.native.signInWithCredentialCompletion(credential, (result, error) => {
+							if (error) {
+								reject(FirebaseError.fromNative(error));
+							} else {
+								resolve(toUserCredential(result));
+							}
+						});
+					}
+				})
+			}
+		})
 	}
 
 	signInWithCredential(credential: AuthCredential): Promise<UserCredential> {

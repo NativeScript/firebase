@@ -1,9 +1,9 @@
 package org.nativescript.firebaseauth
 
+import android.app.Activity
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Nullable
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.*
 import java.util.concurrent.Executors
 
@@ -17,6 +17,29 @@ class FirebaseAuth {
 
   class User {
     companion object {
+
+      @JvmStatic
+      fun reauthenticateWithProvider(
+        activity: Activity,
+        user: FirebaseUser,
+        builder: OAuthProvider.Builder,
+        callback: Callback<AuthResult>
+      ) {
+        user.startActivityForReauthenticateWithProvider(activity, builder.build())
+          .addOnCompleteListener(executors) {
+            if (it.isSuccessful) {
+              runOnMain {
+                callback.onSuccess(it.result)
+              }
+            } else {
+              runOnMain {
+                callback.onError(it.exception)
+              }
+            }
+          }
+      }
+
+
       @JvmStatic
       fun delete(
         user: FirebaseUser,
@@ -156,7 +179,6 @@ class FirebaseAuth {
             }
           }
       }
-
 
 
       @JvmStatic
@@ -300,6 +322,29 @@ class FirebaseAuth {
     private var handler = Handler(Looper.getMainLooper())
     private fun runOnMain(runnable: Runnable) {
       handler.post(runnable)
+    }
+
+
+    @JvmStatic
+    fun signInWithProvider(
+      activity: Activity,
+      auth: com.google.firebase.auth.FirebaseAuth,
+      builder: OAuthProvider.Builder,
+      callback: Callback<AuthResult>
+    ) {
+      val task =
+        auth.pendingAuthResult ?: auth.startActivityForSignInWithProvider(activity, builder.build())
+      task.addOnCompleteListener(executors) {
+        if (it.isSuccessful) {
+          runOnMain {
+            callback.onSuccess(it.result)
+          }
+        } else {
+          runOnMain {
+            callback.onError(it.exception)
+          }
+        }
+      }
     }
 
 

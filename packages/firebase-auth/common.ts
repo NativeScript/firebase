@@ -38,6 +38,7 @@ export interface IUser {
 	getIdToken(forceRefresh?: undefined | false | true): Promise<string>;
 	getIdTokenResult(forceRefresh?: undefined | false | true): Promise<IAuthTokenResult>;
 	linkWithCredential(credential: IAuthCredential): Promise<UserCredential>;
+	reauthenticateWithProvider(credential: IOAuthProvider): Promise<UserCredential>;
 	reauthenticateWithCredential(credential: IAuthCredential): Promise<UserCredential>;
 	reload(): Promise<void>;
 	sendEmailVerification(actionCodeSettings?: IActionCodeSettings): Promise<void>;
@@ -110,11 +111,17 @@ export interface IOAuthCredential extends IAuthCredential {
 	readonly secret: string;
 }
 
-export interface IPhoneAuthCredential extends IAuthCredential {}
+export interface IPhoneAuthCredential extends IAuthCredential { }
 
 export interface UserProfileChangeRequest {
 	displayName?: string;
 	photoUri?: string;
+}
+
+export interface IOAuthProvider {
+	addCustomParameter(key: string, value: string);
+	setScopes(scopes: string[]);
+	credential(optionsOrIdToken: OAuthCredentialOptions | string | null, accessToken?: string);
 }
 
 export interface IAuth {
@@ -124,7 +131,7 @@ export interface IAuth {
 	readonly settings: IAuthSettings;
 	readonly tenantId: string;
 
-  useEmulator(host: string, port: number);
+	useEmulator(host: string, port: number);
 	applyActionCode(code: string): Promise<void>;
 	checkActionCode(code: string): Promise<ActionCodeInfo>;
 	confirmPasswordReset(code: string, newPassword: string): Promise<void>;
@@ -138,6 +145,7 @@ export interface IAuth {
 	sendPasswordResetEmail(email: string, actionCodeSettings?: IActionCodeSettings): Promise<void>;
 	sendSignInLinkToEmail(email: string, actionCodeSettings?: IActionCodeSettings): Promise<void>;
 	signInAnonymously(): Promise<UserCredential>;
+	signInWithProvider(provider: IOAuthProvider): Promise<UserCredential>
 	signInWithCredential(credential: IAuthCredential): Promise<UserCredential>;
 	signInWithCustomToken(customToken: string): Promise<UserCredential>;
 	signInWithEmailAndPassword(email: string, password: string): Promise<UserCredential>;

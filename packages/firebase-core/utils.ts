@@ -185,13 +185,13 @@ export function deserialize(data: any): any {
 			}
 
 			case 'androidx.collection.SimpleArrayMap': {
-                const count = data.size();
-                for (let l = 0; l < count; l++) {
-                    const key = data.keyAt(l);
-                    store[key] = deserialize(data.get(key));
-                }
-                break;
-            }
+				const count = data.size();
+				for (let l = 0; l < count; l++) {
+					const key = data.keyAt(l);
+					store[key] = deserialize(data.get(key));
+				}
+				break;
+			}
 
 			case 'androidx.collection.ArrayMap':
 			case 'android.os.Bundle':
@@ -207,7 +207,18 @@ export function deserialize(data: any): any {
 			}
 
 			default:
-				store = null;
+				if (typeof data === 'object' && data instanceof java.util.List) {
+					const array = [];
+					const size = data.size();
+					for (let i = 0, n = size; i < n; i++) {
+						array[i] = deserialize(data.get(i));
+					}
+					store = array;
+				} else {
+					store = null;
+				}
+				break;
+
 		}
 		return store;
 	}
