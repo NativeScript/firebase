@@ -324,7 +324,7 @@ class FirebaseStorage {
                 }
               }
 
-              if (complete) {
+              if (complete or nextOrObserver) {
                 runOnMain {
                   callback.onComplete()
                 }
