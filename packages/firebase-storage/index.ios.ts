@@ -165,6 +165,7 @@ export class Task implements ITask {
             nextOrObserver(TaskSnapshot.fromNative(snapshot));
           } else if (typeof nextOrObserver === 'object') {
             nextOrObserver?.next(TaskSnapshot.fromNative(snapshot));
+            nextOrObserver?.error(FirebaseError.fromNative(snapshot.error));
           }
         }
 

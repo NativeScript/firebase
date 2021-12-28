@@ -150,6 +150,11 @@ export class Task implements ITask {
           complete?.();
         },
         onError(param0) {
+          if (nextOrObserver) {
+            if (typeof nextOrObserver === 'object') {
+              nextOrObserver?.error?.(FirebaseError.fromNative(param0));
+            }
+          }
           error?.(FirebaseError.fromNative(param0));
         },
       })
