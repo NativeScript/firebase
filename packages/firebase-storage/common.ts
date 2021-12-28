@@ -10,9 +10,9 @@ export enum TaskState {
 }
 
 export interface TaskSnapshotObserver {
-	complete: () => void;
-	error: (error: FirebaseError) => void;
-	next: (taskSnapshot: ITaskSnapshot) => void;
+	complete?: () => void;
+	error?: (error: FirebaseError) => void;
+	next?: (taskSnapshot: ITaskSnapshot) => void;
 }
 
 export interface ITaskSnapshot {
