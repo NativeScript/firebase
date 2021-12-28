@@ -237,18 +237,18 @@ class FirebaseMessaging {
     }
 
     @JvmStatic
-    fun setOnTokenListener(callback: Callback<String>) {
+    fun setOnTokenListener(callback: Callback<String>?) {
       onTokenListener = callback
     }
 
     @JvmStatic
-    fun setOnMessageListener(callback: Callback<String>) {
+    fun setOnMessageListener(callback: Callback<String>?) {
       onMessageListener = callback
     }
 
 
     @JvmStatic
-    fun setOnMessageTapListener(callback: Callback<String>) {
+    fun setOnMessageTapListener(callback: Callback<String>?) {
       onMessageTapListener = callback
     }
 
