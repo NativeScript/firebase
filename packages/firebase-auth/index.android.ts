@@ -665,7 +665,7 @@ function ensureClass() {
     return;
   }
 
-  @NativeClass
+  @NativeClass()
   class OnVerificationStateChangedCallbacksImpl extends com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks {
     _resolve;
     _reject;
@@ -709,17 +709,18 @@ export class PhoneAuthProvider {
 
   static provider(auth?: Auth) {
     const provider = new PhoneAuthProvider();
+    const timeout = java.lang.Long.valueOf(60);
     if (auth) {
       provider.#native = com.google.firebase.auth.PhoneAuthOptions
         .newBuilder(auth.native)
         .setTimeout(
-          long(60), java.util.concurrent.TimeUnit.SECONDS
+          timeout as any, java.util.concurrent.TimeUnit.SECONDS
         );
     } else {
       provider.#native = com.google.firebase.auth.PhoneAuthOptions
         .newBuilder()
         .setTimeout(
-          long(60), java.util.concurrent.TimeUnit.SECONDS
+          timeout, java.util.concurrent.TimeUnit.SECONDS
         );
     }
 
@@ -738,7 +739,11 @@ export class PhoneAuthProvider {
         reject();
       } else {
         ensureClass();
-        com.google.firebase.auth.PhoneAuthProvider.verifyPhoneNumber(this.native.setPhoneNumber(phoneNumber).setCallbacks(new OnVerificationStateChangedCallbacks(resolve, reject)).build());
+        const cb = new OnVerificationStateChangedCallbacks(resolve, reject);
+        com.google.firebase.auth.PhoneAuthProvider
+        .verifyPhoneNumber(this.native.setPhoneNumber(phoneNumber)
+        .setCallbacks(cb)
+        .build());
       }
     });
   }
