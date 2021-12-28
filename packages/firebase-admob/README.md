@@ -121,6 +121,14 @@ import { AdmobModule } from '@nativescript/firebase-admob/angular';
 })
 ```
 
+```html
+<BannerAd
+  height="100"
+  width="100"
+  [unitId]="bannerAdUnit"
+  (layoutChanged)="bannerLoaded($event)">
+</BannerAd>
+```
 #### Vue
 
 ```ts
@@ -128,6 +136,15 @@ import Vue from 'nativescript-vue'
 import Admob from '@nativescript/firebase-admob/vue'
 
 Vue.use(Admob)
+
+```
+
+```html
+<BannerAd
+  height="100"
+  width="100"
+  :unitId="bannerAdUnit"
+  @layoutChanged="bannerLoaded"/>
 ```
 
 #### Banner Sizes
