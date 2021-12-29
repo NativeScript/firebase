@@ -1,7 +1,7 @@
 import { IFirebaseOptions, FirebaseConfig } from './common';
 import { knownFolders, Utils, File } from '@nativescript/core';
 export * from './utils';
-
+declare const __non_webpack_require__;
 export class FirebaseError extends Error {
 	#native: java.lang.Exception;
 	static fromNative(native: java.lang.Exception, message?: string) {
@@ -270,7 +270,7 @@ export class Firebase {
 			if (path.startsWith('~/')) {
 				path = knownFolders.currentApp().path + '/' + path.replace('~/', '');
 			}
-			json = require(path);
+			json = __non_webpack_require__(path);
 		}
 
 
