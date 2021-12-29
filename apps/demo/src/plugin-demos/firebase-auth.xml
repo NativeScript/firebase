@@ -8,8 +8,13 @@
           <StackLayout>
             <TextField hint="Enter email" text="{{ email }}" keyboardType="email" autocapitalizationType="none"/>
             <TextField hint="Enter password" text="{{ password }}" secure="true"/>
+            <TextField hint="Enter Phone Number" text="{{ phoneNumber }}"/>
+            <TextField hint="Enter Verification Code" text="{{ code }}"/>
+            <Button text="Get Phone Verification Code" tap="{{ getVerificationCode }}" class="btn btn-primary"/>
             <Button text="Create User" tap="{{ createUser }}" class="btn btn-primary"/>
             <Button text="Login User" tap="{{ loginUser }}" class="btn btn-primary"/>
+            <Button text="Login User With Phone" tap="{{ loginWithPhone }}" class="btn btn-primary"/>
+            <Button text="Link User Phone" tap="{{ linkPhone }}" class="btn btn-primary"/>
             <Button text="Get Current User" tap="{{ getCurrentUser }}" class="btn btn-primary"/>
             <Button text="Logout User" tap="{{ logOutUser }}" class="btn btn-primary"/>
             <StackLayout>
