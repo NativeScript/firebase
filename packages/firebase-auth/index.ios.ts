@@ -48,6 +48,13 @@ export class UserMetadata implements IUserMetadata {
 	get lastSignInDate(): Date {
 		return this.native.lastSignInDate;
 	}
+
+	toJSON() {
+		return {
+			creationDate: this.creationDate,
+			lastSignInDate: this.lastSignInDate
+		}
+	}
 }
 
 export class UserInfo implements IUserInfo {
@@ -57,6 +64,7 @@ export class UserInfo implements IUserInfo {
 		if (info) {
 			const nativeInfo = new UserInfo();
 			nativeInfo.#native = info;
+			return nativeInfo;
 		}
 		return null;
 	}
@@ -91,6 +99,17 @@ export class UserInfo implements IUserInfo {
 
 	get providerId(): string {
 		return this.native?.providerID;
+	}
+
+	toJSON() {
+		return {
+			displayName: this.displayName,
+			email: this.email,
+			uid: this.uid,
+			phoneNumber: this.phoneNumber,
+			providerId: this.providerId,
+			photoURL: this.photoURL,
+		}
 	}
 }
 
@@ -157,6 +176,21 @@ export class User implements IUser {
 			data.push(UserInfo.fromNative(providerData.objectAtIndex(i)));
 		}
 		return data;
+	}
+
+	toJSON() {
+		return {
+			displayName: this.displayName,
+			anonymous: this.anonymous,
+			emailVerified: this.emailVerified,
+			email: this.email,
+			uid: this.uid,
+			phoneNumber: this.phoneNumber,
+			providerId: this.providerId,
+			photoURL: this.photoURL,
+			metadata: this.metadata,
+			providerData: this.providerData
+		}
 	}
 
 	delete(): Promise<void> {

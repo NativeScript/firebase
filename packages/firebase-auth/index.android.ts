@@ -73,6 +73,13 @@ export class UserMetadata implements IUserMetadata {
     }
     return null;
   }
+
+  toJSON() {
+    return {
+      creationDate: this.creationDate,
+      lastSignInDate: this.lastSignInDate
+    }
+  }
 }
 
 export class UserInfo implements IUserInfo {
@@ -82,6 +89,7 @@ export class UserInfo implements IUserInfo {
     if (info) {
       const nativeInfo = new UserInfo();
       nativeInfo.#native = info;
+      return nativeInfo;
     }
     return null;
   }
@@ -121,6 +129,17 @@ export class UserInfo implements IUserInfo {
 
   get providerId(): string {
     return this.native?.getProviderId?.();
+  }
+
+  toJSON() {
+    return {
+      displayName: this.displayName,
+      email: this.email,
+      uid: this.uid,
+      phoneNumber: this.phoneNumber,
+      providerId: this.providerId,
+      photoURL: this.photoURL,
+    }
   }
 }
 
@@ -192,6 +211,21 @@ export class User implements IUser {
       data.push(UserInfo.fromNative(providerData.get(i)));
     }
     return data;
+  }
+
+  toJSON() {
+    return {
+      displayName: this.displayName,
+      anonymous: this.anonymous,
+      emailVerified: this.emailVerified,
+      email: this.email,
+      uid: this.uid,
+      phoneNumber: this.phoneNumber,
+      providerId: this.providerId,
+      photoURL: this.photoURL,
+      metadata: this.metadata,
+      providerData: this.providerData
+    }
   }
 
   delete(): Promise<void> {
@@ -741,9 +775,9 @@ export class PhoneAuthProvider {
         ensureClass();
         const cb = new OnVerificationStateChangedCallbacks(resolve, reject);
         com.google.firebase.auth.PhoneAuthProvider
-        .verifyPhoneNumber(this.native.setPhoneNumber(phoneNumber)
-        .setCallbacks(cb)
-        .build());
+          .verifyPhoneNumber(this.native.setPhoneNumber(phoneNumber)
+            .setCallbacks(cb)
+            .build());
       }
     });
   }
@@ -805,8 +839,6 @@ export class OAuthCredential extends AuthCredential implements IOAuthCredential 
     return this.native?.getSecret?.();
   }
 }
-
-
 
 export class OAuthProvider implements IOAuthProvider {
   #providerId: string;
