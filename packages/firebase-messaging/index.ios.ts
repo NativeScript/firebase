@@ -107,7 +107,7 @@ export class Messaging implements IMessaging {
 						status = AuthorizationStatus.PROVISIONAL;
 						break;
 					case UNAuthorizationStatus.NotDetermined:
-						status = AuthorizationStatus.AUTHORIZED;
+						status = AuthorizationStatus.NOT_DETERMINED;
 						break;
 				}
 				resolve(status);
