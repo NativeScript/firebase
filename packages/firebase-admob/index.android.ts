@@ -479,43 +479,28 @@ export class BannerAdSize extends BannerAdSizeBase {
 		return BannerAdSize.fromNative(MEDIUM_RECTANGLE());
 	}
 
-	static createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
-		let w;
-		if (width === 'fullWidth') {
-			w = FULL_WIDTH();
-		} else if (width === 'autoHeight') {
-			w = AUTO_HEIGHT();
-		} else {
-			w = width;
-		}
-
+	static createAnchoredAdaptiveBanner(width: number, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
 		switch (orientation) {
 			case 'portrait':
-				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getPortraitAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getPortraitAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, width));
 			case 'landscape':
-				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getLandscapeAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getLandscapeAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, width));
 			default:
-				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, width));
 		}
 	}
 
-	static createInLineAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
-		let w;
-		if (width === 'fullWidth') {
-			w = FULL_WIDTH();
-		} else if (width === 'autoHeight') {
-			w = AUTO_HEIGHT();
-		} else {
-			w = width;
+	static createInLineAdaptiveBanner(width: number, maxHeight: number = 0, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
+		if (maxHeight > 0) {
+			BannerAdSize.fromNative((com as any).google.android.gms.ads.AdSize.getInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, width, maxHeight));
 		}
-
 		switch (orientation) {
 			case 'portrait':
-				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getPortraitInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getPortraitInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, width));
 			case 'landscape':
-				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getLandscapeInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getLandscapeInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, width));
 			default:
-				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, w));
+				return BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, width));
 		}
 	}
 
@@ -549,7 +534,9 @@ export class BannerAd extends BannerAdBase {
 	#listener;
 
 	[sizeProperty.setNative](value) {
-		this.#native.setAdSize(value?.native);
+		if (this.#native) {
+			this.#native.setAdSize(value?.native);
+		}
 	}
 
 	[unitIdProperty.setNative](value) {
@@ -564,6 +551,7 @@ export class BannerAd extends BannerAdBase {
 	}
 
 	initNativeView() {
+		super.initNativeView();
 		ensureAdListener();
 		this.#listener = new AdListener(new WeakRef(this));
 		this.#native.setAdListener(this.#listener);

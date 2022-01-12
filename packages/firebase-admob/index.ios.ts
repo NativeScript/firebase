@@ -282,103 +282,73 @@ export class RewardedItem implements IRewardedItem {
 export class BannerAdSize extends BannerAdSizeBase {
 	#native: GADAdSize;
 
-	constructor(width?: number, height?: number) {
+	constructor(width: number, height: number, native?) {
 		super();
-		if (width && height) {
+		if (typeof width === 'number' && typeof height === 'number') {
 			this.#native = GADAdSizeFromCGSize(CGSizeMake(width, height));
+		} else if (arguments[2] instanceof GADAdSize) {
+			this.#native = arguments[2];
+		} else {
+			this.#native = GADAdSizeInvalid;
 		}
 	}
 
 	static fromNative(size: GADAdSize) {
-		const banner = new BannerAdSize();
-		if (size instanceof GADAdSize) {
-			banner.#native = size;
-		} else {
-			banner.#native = kGADAdSizeInvalid;
-		}
-		return banner;
+		return new BannerAdSize(null, null, size);
 	}
 
 	static get BANNER(): BannerAdSize {
-		return BannerAdSize.fromNative(kGADAdSizeBanner);
+		return BannerAdSize.fromNative(GADAdSizeBanner);
 	}
 
 	static get FULL_BANNER(): BannerAdSize {
-		return BannerAdSize.fromNative(kGADAdSizeFullBanner);
+		return BannerAdSize.fromNative(GADAdSizeFullBanner);
 	}
 
 	static get LARGE_BANNER(): BannerAdSize {
-		return BannerAdSize.fromNative(kGADAdSizeLargeBanner);
+		return BannerAdSize.fromNative(GADAdSizeLargeBanner);
 	}
 
 	static get LEADERBOARD(): BannerAdSize {
-		return BannerAdSize.fromNative(kGADAdSizeLeaderboard);
+		return BannerAdSize.fromNative(GADAdSizeLeaderboard);
 	}
 
 	static get MEDIUM_RECTANGLE(): BannerAdSize {
-		return BannerAdSize.fromNative(kGADAdSizeMediumRectangle);
+		return BannerAdSize.fromNative(GADAdSizeMediumRectangle);
 	}
 
-	static createAnchoredAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
-		let banner;
+	static createAnchoredAdaptiveBanner(width: number, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
+		let nativeOrientation: Orientation = Orientation.Device;
 		if (orientation === 'portrait') {
-			if (width === 'fullWidth') {
-				banner = TNSGA.createAnchoredAdaptiveBanner(Width.FullWidth, Orientation.Portrait);
-			} else if (width === 'autoHeight') {
-				banner = TNSGA.createAnchoredAdaptiveBanner(Width.AutoHeight, Orientation.Portrait);
-			} else {
-				banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width, Orientation.Device);
-			}
+			nativeOrientation = Orientation.Portrait;
 		} else if (orientation === 'landscape') {
-			if (width === 'fullWidth') {
-				banner = TNSGA.createAnchoredAdaptiveBanner(Width.FullWidth, Orientation.Landscape);
-			} else if (width === 'autoHeight') {
-				banner = TNSGA.createAnchoredAdaptiveBanner(Width.AutoHeight, Orientation.Landscape);
-			} else {
-				banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width, Orientation.Device);
-			}
-		} else {
-			banner = TNSGA.createAnchoredAdaptiveBannerWithWidth(width as any, Orientation.Device);
+			nativeOrientation = Orientation.Landscape;
 		}
 
-		return BannerAdSize.fromNative(banner);
+		return BannerAdSize.fromNative(TNSGA.createAnchoredAdaptiveBanner(width, nativeOrientation));
 	}
 
-	static createInLineAdaptiveBanner(width: number | 'fullWidth' | 'autoHeight', orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
-		let banner;
+	static createInLineAdaptiveBanner(width: number, maxHeight: number = 0, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
+		let nativeOrientation: Orientation = Orientation.Device;
 		if (orientation === 'portrait') {
-			if (width === 'fullWidth') {
-				banner = TNSGA.createInlineAdaptiveBanner(Width.FullWidth, Orientation.Portrait);
-			} else if (width === 'autoHeight') {
-				banner = TNSGA.createInlineAdaptiveBanner(Width.AutoHeight, Orientation.Portrait);
-			} else {
-				banner = TNSGA.createInlineAdaptiveBannerWithWidth(width, Orientation.Device);
-			}
+			nativeOrientation = Orientation.Portrait;
 		} else if (orientation === 'landscape') {
-			if (width === 'fullWidth') {
-				banner = TNSGA.createInlineAdaptiveBanner(Width.FullWidth, Orientation.Landscape);
-			} else if (width === 'autoHeight') {
-				banner = TNSGA.createInlineAdaptiveBanner(Width.AutoHeight, Orientation.Landscape);
-			} else {
-				banner = TNSGA.createInlineAdaptiveBannerWithWidth(width, Orientation.Device);
-			}
-		} else {
-			banner = TNSGA.createInlineAdaptiveBannerWithWidth(width as any, Orientation.Device);
+			nativeOrientation = Orientation.Landscape;
 		}
 
-		return BannerAdSize.fromNative(banner);
+		return BannerAdSize.fromNative(TNSGA.createInlineAdaptiveBanner(width, maxHeight, nativeOrientation));
 	}
 
 	static get FLUID(): BannerAdSize {
-		return BannerAdSize.fromNative(kGADAdSizeFluid);
+		return BannerAdSize.fromNative(GADAdSizeFluid);
 	}
 
 	static get WIDE_SKYSCRAPER(): BannerAdSize {
-		return BannerAdSize.fromNative(kGADAdSizeSkyscraper);
+		return BannerAdSize.fromNative(GADAdSizeSkyscraper);
 	}
 
 	static get INVALID(): BannerAdSize {
-		return BannerAdSize.fromNative(kGADAdSizeInvalid);
+		return BannerAdSize.fromNative(GADAdSizeInvalid);
 	}
 
 	static get SEARCH(): BannerAdSize {
@@ -426,12 +396,13 @@ export class BannerAd extends BannerAdBase {
 
 	load(options: RequestOptions = {}) {
 		this.#isLoading = true;
-		this.#native?.loadRequest(toSerializeRequestOptions(options));
+		this.#native?.loadRequest?.(toSerializeRequestOptions(options));
 	}
 
 	[sizeProperty.setNative](value) {
-		console.log(this.#native.frame.origin.x, this.#native.frame.origin.y, this.#native.frame.size.width, this.#native.frame.size.height);
-		this.#native.adSize = value?.native;
+		if (this.#native) {
+			this.#native.adSize = value?.native;
+		}
 	}
 
 	[unitIdProperty.setNative](value) {
@@ -448,15 +419,6 @@ export class BannerAd extends BannerAdBase {
 			this.setMeasuredDimension(width, height);
 		}
 	}
-
-	// // @ts-ignore
-	// set unitId(id) {
-	// 	this.#native.adUnitID = id;
-	// }
-
-	// get unitId() {
-	// 	return this.#native.adUnitID;
-	// }
 }
 
 declare const FIRApp;
@@ -521,8 +483,8 @@ export class Admob implements IAdmob {
 		if (Array.isArray(requestConfiguration.testDevices)) {
 			GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = requestConfiguration.testDevices.map((item) => {
 				if (item === 'EMULATOR') {
-					if (typeof kGADSimulatorID) {
-						return kGADSimulatorID;
+					if (typeof GADSimulatorID) {
+						return GADSimulatorID;
 					}
 					return '';
 				}

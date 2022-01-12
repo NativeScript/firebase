@@ -2243,34 +2243,69 @@ declare function NSStringFromGADAdSize(size: GADAdSize): string;
 
 declare function NSValueFromGADAdSize(size: GADAdSize): NSValue;
 
-declare var kGADAdLoaderAdTypeCustomNative: string;
+// declare var kGADAdLoaderAdTypeCustomNative: string;
 
-declare var kGADAdLoaderAdTypeGAMBanner: string;
+// declare var kGADAdLoaderAdTypeGAMBanner: string;
 
-declare var kGADAdLoaderAdTypeNative: string;
+// declare var kGADAdLoaderAdTypeNative: string;
 
-declare var kGADAdSizeBanner: GADAdSize;
+// declare var kGADAdSizeBanner: GADAdSize;
 
-declare var kGADAdSizeFluid: GADAdSize;
+// declare var kGADAdSizeFluid: GADAdSize;
 
-declare var kGADAdSizeFullBanner: GADAdSize;
+// declare var kGADAdSizeFullBanner: GADAdSize;
 
-declare var kGADAdSizeInvalid: GADAdSize;
+// declare var kGADAdSizeInvalid: GADAdSize;
 
-declare var kGADAdSizeLargeBanner: GADAdSize;
+// declare var kGADAdSizeLargeBanner: GADAdSize;
 
-declare var kGADAdSizeLeaderboard: GADAdSize;
+// declare var kGADAdSizeLeaderboard: GADAdSize;
 
-declare var kGADAdSizeMediumRectangle: GADAdSize;
+// declare var kGADAdSizeMediumRectangle: GADAdSize;
 
-declare var kGADAdSizeSkyscraper: GADAdSize;
+// declare var kGADAdSizeSkyscraper: GADAdSize;
 
-declare var kGADAdSizeSmartBannerLandscape: GADAdSize;
+// declare var kGADAdSizeSmartBannerLandscape: GADAdSize;
 
-declare var kGADAdSizeSmartBannerPortrait: GADAdSize;
+// declare var kGADAdSizeSmartBannerPortrait: GADAdSize;
 
-declare var kGADErrorDomain: string;
+// declare var kGADErrorDomain: string;
 
-declare var kGADSimulatorID: string;
+// declare var kGADSimulatorID: string;
 
-declare var kGAMSimulatorID: string;
+// declare var kGAMSimulatorID: string;
+
+
+
+
+declare var GADAdLoaderAdTypeCustomNative: string;
+
+declare var GADAdLoaderAdTypeGAMBanner: string;
+
+declare var GADAdLoaderAdTypeNative: string;
+
+declare var GADAdSizeBanner: GADAdSize;
+
+declare var GADAdSizeFluid: GADAdSize;
+
+declare var GADAdSizeFullBanner: GADAdSize;
+
+declare var GADAdSizeInvalid: GADAdSize;
+
+declare var GADAdSizeLargeBanner: GADAdSize;
+
+declare var GADAdSizeLeaderboard: GADAdSize;
+
+declare var GADAdSizeMediumRectangle: GADAdSize;
+
+declare var GADAdSizeSkyscraper: GADAdSize;
+
+declare var GADAdSizeSmartBannerLandscape: GADAdSize;
+
+declare var GADAdSizeSmartBannerPortrait: GADAdSize;
+
+declare var GADErrorDomain: string;
+
+declare var GADSimulatorID: string;
+
+declare var GAMSimulatorID: string;
