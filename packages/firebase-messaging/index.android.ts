@@ -250,9 +250,3 @@ export class Messaging implements IMessaging {
 		return this.native;
 	}
 }
-
-/*
-
-curl -X POST --header "Authorization: key=AAAARAUJpsI:APA91bE1-kuJmZ5mfuYcX_1rdppafm5FhLaS4kzja4OBP8GN1Rl8VQ6wco12XUzyvXYv_7ggPfiaKMi8ntFfu1StqbxxdTSi_eOyvYhYLt6VfoJzvBqPrgDNGzu-34UQqWCWh5JrHyUz" --Header "Content-Type: application/json" https://fcm.googleapis.com/fcm/send -d "{\"notification\":{\"title\": \"My title\", \"text\": \"My text\", \"badge\": \"1\", \"sound\": \"default\"}, \"data\":{\"foo\":\"bar\"}, \"priority\": \"High\", \"to\": \"cO6BvEjNRFWv4kAF_0THqB:APA91bFk0wojdAEOfQCm9zvLj36UwNmWIKzo0QsF92TRFJaqq8ZFPFI1CiCp-S1ZW6Jx6QPOjGiiGo61enSj6II0ja_w5-dp1Mie3to18kmI8kwx8uamezG0eHgi9_T3L8J-1tMv7JNL\"}"
-
-*/
