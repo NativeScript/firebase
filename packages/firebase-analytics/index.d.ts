@@ -1,4 +1,5 @@
-import { IAnalytics, EventParameter, ConsentType, ConsentStatus} from './common';
+import { IAnalytics, EventParameter, ConsentType, ConsentStatus } from './common';
+import { Firebase } from '@nativescript/firebase-core';
 
 export * from './common';
 
