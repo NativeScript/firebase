@@ -262,7 +262,7 @@ PhoneAuthProvider.provider()
 	.then((verificationId) => {
 		// present ui to allow user to enter verificationCode
 		// use the verificationCode entered by the user to create PhoneAuthCredentials
-		const credential = PhoneAuthProvider.credential(verificationId, verificationCode);
+		const credential = PhoneAuthProvider.provider().credential(verificationId, verificationCode);
 		firebase().auth().signInWithCredential(credential);
 	});
 ```
