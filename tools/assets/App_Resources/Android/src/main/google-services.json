@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "292142294722-u1eosqh9eco1l5isgau2805df2lvk0ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.triniwiz.nativescript.firebasedemo",
+            "certificate_hash": "dad4ffbd27b6435c3fe5250c4d7d2195fa72fafb"
+          }
+        },
+        {
           "client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -40,10 +48,10 @@
               "client_type": 3
             },
             {
-              "client_id": "292142294722-f7842ip6j9s72g2vp9rc8hd18hb9h4en.apps.googleusercontent.com",
+              "client_id": "292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.nativescript.firebasedemo"
+                "bundle_id": "io.github.triniwiz.nativescript.firebasedemo"
               }
             }
           ]
@@ -58,6 +66,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "292142294722-9s58kof5a3ng34vqhj51gs04qlr6jjgf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.nativescript.firebasedemo",
+            "certificate_hash": "dad4ffbd27b6435c3fe5250c4d7d2195fa72fafb"
+          }
+        },
         {
           "client_id": "292142294722-p4kc740vu3rtfgvmmcmnntsk2qb6niah.apps.googleusercontent.com",
           "client_type": 1,
@@ -84,10 +100,10 @@
               "client_type": 3
             },
             {
-              "client_id": "292142294722-f7842ip6j9s72g2vp9rc8hd18hb9h4en.apps.googleusercontent.com",
+              "client_id": "292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.nativescript.firebasedemo"
+                "bundle_id": "io.github.triniwiz.nativescript.firebasedemo"
               }
             }
           ]

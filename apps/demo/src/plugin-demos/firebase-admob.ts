@@ -27,10 +27,9 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		// ATTrackingManager.requestTrackingAuthorizationWithCompletionHandler((status) => {
 		// 	console.log('ATTrackingManager', status);
 		// });
-
 		const testDevices = [];
 		if (global.isIOS) {
-			testDevices.push('b70c144077402b91cf8ecc5b93ac7791');
+			testDevices.push('b70c144077402b91cf8ecc5b93ac7791', 'EMULATOR');
 		} else {
 			testDevices.push('EMULATOR');
 		}
@@ -67,7 +66,7 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 				view.nativeAd = ad;
 				console.log('nativead loaded');
 			} else if (event === 'adFailedToLoad') {
-				console.log('nativead failed to load', error);
+				console.error('nativead failed to load', error);
 			}
 		});
 		loader.load();

@@ -20,7 +20,8 @@
     "@nativescript/firebase-messaging": "file:../../packages/firebase-messaging",
     "@nativescript/firebase-performance": "file:../../packages/firebase-performance",
     "@nativescript/firebase-remote-config": "file:../../packages/firebase-remote-config",
-    "@nativescript/firebase-storage": "file:../../packages/firebase-storage"
+    "@nativescript/firebase-storage": "file:../../packages/firebase-storage",
+    "@nativescript/google-signin": "^1.0.0-alpha.9"
   },
   "devDependencies": {
     "@nativescript/android": "8.2.0-alpha.2",

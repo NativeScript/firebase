@@ -1,13 +1,17 @@
-import { Observable, EventData, Page, fromObject } from '@nativescript/core';
+import { Observable, EventData, Page, fromObject, Application } from '@nativescript/core';
 import { DemoSharedFirebaseAuth } from '@demo/shared';
 import { firebase, Firebase } from '@nativescript/firebase-core';
 import '@nativescript/firebase-auth';
-import { Auth, User, OAuthProvider, PhoneAuthProvider } from '@nativescript/firebase-auth';
+import { Auth, User, OAuthProvider, PhoneAuthProvider, GoogleAuthProvider } from '@nativescript/firebase-auth';
+import { GoogleSignin } from '@nativescript/google-signin';
+
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
 	page.bindingContext = new DemoModel();
 }
 
+
+let didInit = false;
 export class DemoModel extends DemoSharedFirebaseAuth {
 	email: string;
 	password: string;
@@ -23,6 +27,28 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 			.addAuthStateChangeListener((user) => {
 				this._setCurrentUser(user);
 			});
+	}
+
+	async linkGoogle() {
+		try {
+			if (!this.user) {
+				return;
+			}
+			if (!didInit) {
+				await GoogleSignin.configure();
+				didInit = true;
+			}
+			const isAvailable = await GoogleSignin.playServicesAvailable();
+			if (!isAvailable) {
+				return;
+			}
+			const user = await GoogleSignin.signIn();
+			const cred = GoogleAuthProvider.credential(user.idToken, user.accessToken)
+			const linked = await this.user.linkWithCredential(cred);
+			console.log(linked);
+		} catch (e) {
+			console.log('linkGoogle', e.native);
+		}
 	}
 
 	async linkPhone() {
