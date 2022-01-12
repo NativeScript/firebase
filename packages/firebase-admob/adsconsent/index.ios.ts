@@ -45,8 +45,8 @@ export class AdsConsent extends AdsConsentBase {
 			if (Array.isArray(this.#deviceIds)) {
 				request.debugSettings.testDeviceIdentifiers = this.#deviceIds.map((item) => {
 					if (item === 'EMULATOR') {
-						if(typeof kGADSimulatorID){
-							return kGADSimulatorID;
+						if(typeof GADSimulatorID){
+							return GADSimulatorID;
 						}
 						return '';
 					}
