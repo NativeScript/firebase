@@ -1,4 +1,5 @@
 import { AddChildFromBuilder, Application, CSSType, ImageSource, View } from '@nativescript/core';
+import { FirebaseError } from '@nativescript/firebase-core';
 import { AdEventListener, AdEventType, ManagerRequestOptions, RequestOptions } from '../common';
 import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, MediaViewBase, NativeAdOptions, UnconfirmedClickListener, VideoStatus, AdChoicesPlacement, MediaAspectRatio, INativeAdLoader, NativeAdEventListener, NativeAdEventType, stretchProperty, NativeAdViewBase, mediaContentProperty } from './common';
 
@@ -26,7 +27,7 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 		callback(this.#child);
 	}
 
-	onLoaded(){
+	onLoaded() {
 		super.onLoaded();
 		if (this.#child && (<any>this.#native).indexOfChild(this.#child.nativeView) === -1) {
 			(<any>this.#native).addView(this.#child.nativeView);
@@ -175,6 +176,7 @@ export class NativeAdLoader implements INativeAdLoader {
 	load(): void;
 	load(arg?: any): void {
 		const ref = new WeakRef(this);
+		console.log(this.#nativeAdOptions, this.#adUnitId);
 		this.#native = org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.createLoader(
 			Application.android.foregroundActivity || Application.android.startActivity,
 			this.#adUnitId,
@@ -191,7 +193,7 @@ export class NativeAdLoader implements INativeAdLoader {
 							nativeAd?._listener?.(AdEventType.CLOSED, null, null);
 							break;
 						case AdEventType.FAILED_TO_LOAD_EVENT:
-							owner?._listener?.(AdEventType.FAILED_TO_LOAD_EVENT, null, null);
+							owner?._listener?.(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(param1), null);
 							break;
 						case AdEventType.IMPRESSION:
 							nativeAd?._listener?.(AdEventType.IMPRESSION, null, null);
