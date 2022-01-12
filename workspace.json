@@ -360,13 +360,21 @@
             "assets": [
               "packages/firebase-admob/*.md",
               "packages/firebase-admob/index.d.ts",
-              "packages/firebase-admob/nativead/index.d.ts",
-              "packages/firebase-admob/adconsent/index.d.ts",
               "LICENSE",
               {
                 "glob": "**/*",
                 "input": "packages/firebase-admob/platforms/",
                 "output": "./platforms/"
+              },
+              {
+                "glob": "**/*.d.ts",
+                "input": "packages/firebase-admob/nativead/",
+                "output": "./nativead/"
+              },
+              {
+                "glob": "**/*.d.ts",
+                "input": "packages/firebase-admob/adsconsent/",
+                "output": "./adsconsent/"
               }
             ]
           }
