@@ -29,15 +29,22 @@ function ensureCallback() {
 		}
 
 		public onError(error: any): void {}
+
 		public onSuccess(message: string): void {
 			const callback = this._owner?.get?.()?.[this._propName];
 			if (typeof callback === 'function') {
 				if (this._propName === '_onToken') {
 					callback(message);
+				} else if (this._propName === '_onNotificationTap' || this._propName === '_onMessage') {
+					try {
+						setTimeout(() => {
+							callback(JSON.parse(message));
+						});
+					} catch (e) {}
 				} else {
 					try {
 						callback(JSON.parse(message));
-					} catch (e) { }
+					} catch (e) {}
 				}
 			}
 		}
@@ -58,6 +65,7 @@ export class Messaging implements IMessaging {
 	#onTokenCallback?;
 	#onToken?: (token: string) => void;
 
+	showNotificationsWhenInForeground: boolean;
 
 	constructor() {
 		if (defaultMessaging) {
@@ -67,10 +75,8 @@ export class Messaging implements IMessaging {
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
 		this.#native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
 		ensureCallback();
-		Application.android.on(AndroidApplication.activityNewIntentEvent, this._newIntentCallback);
+		Application.android.on(AndroidApplication.activityNewIntentEvent, this._newIntentCallback.bind(this));
 	}
-	showNotificationsWhenInForeground: boolean;
-
 
 	_newIntentCallback(args: AndroidActivityNewIntentEventData) {
 		org.nativescript.firebase.messaging.FirebaseMessaging.handleActivityIntent(args.intent);
@@ -91,7 +97,6 @@ export class Messaging implements IMessaging {
 	get _onNotificationTapCallback() {
 		return this.#onNotificationTapCallback;
 	}
-
 
 	get _onToken() {
 		return this.#onToken;
@@ -117,7 +122,7 @@ export class Messaging implements IMessaging {
 		});
 	}
 
-	getAPNSToken(){
+	getAPNSToken() {
 		return null;
 	}
 
