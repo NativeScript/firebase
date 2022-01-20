@@ -2,11 +2,16 @@ package org.nativescript.firebase.admob
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.core.graphics.drawable.toBitmap
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
@@ -103,7 +108,7 @@ private const val AD_CLOSED_EVENT = "adClosed"
 private const val AD_FAILED_TO_LOAD_EVENT = "adFailedToLoad"
 private const val AD_LOADED_EVENT = "adLoaded"
 private const val AD_OPENED_EVENT = "adOpened"
-private  const val AD_IMPRESSION_EVENT = "adImpression"
+private const val AD_IMPRESSION_EVENT = "adImpression"
 private const val AD_FAILED_TO_SHOW_FULL_SCREEN_CONTENT = " adFailedToShowFullScreenContent"
 
 
@@ -664,6 +669,11 @@ class FirebaseAdmob {
   }
 
   companion object {
+
+    @JvmStatic
+    fun getBitmap(drawable: Drawable?): Bitmap? {
+      return drawable?.toBitmap()
+    }
 
     @JvmStatic
     fun setRequestConfiguration(configuration: String) {

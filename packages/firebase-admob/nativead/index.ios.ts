@@ -610,8 +610,8 @@ export class NativeAdImage implements INativeAdImage {
 		return null;
 	}
 
-	get image(): any {
-		return this.native?.image;
+	get image() {
+		return new ImageSource(this.native?.image);
 	}
 
 	get url(): string {

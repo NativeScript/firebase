@@ -123,7 +123,7 @@ export declare class MediaView extends MediaViewBase {
 }
 
 export declare class NativeAdImage implements INativeAdImage {
-	readonly image: any;
+	readonly image: ImageSource;
 
 	readonly url: string;
 

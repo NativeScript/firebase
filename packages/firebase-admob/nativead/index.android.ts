@@ -562,9 +562,9 @@ export class MediaView extends MediaViewBase {
 }
 
 export class NativeAdImage implements INativeAdImage {
-	#native: com.google.android.gms.ads.formats.NativeAd.Image;
-	static fromNative(image: com.google.android.gms.ads.formats.NativeAd.Image) {
-		if (image instanceof com.google.android.gms.ads.formats.NativeAd.Image) {
+	#native: com.google.android.gms.ads.nativead.NativeAd.Image;
+	static fromNative(image: com.google.android.gms.ads.nativead.NativeAd.Image) {
+		if (image instanceof com.google.android.gms.ads.nativead.NativeAd.Image) {
 			const nativeAdImage = new NativeAdImage();
 			nativeAdImage.#native = image;
 			return nativeAdImage;
@@ -572,8 +572,8 @@ export class NativeAdImage implements INativeAdImage {
 		return null;
 	}
 
-	get image(): any {
-		return this.native?.getDrawable?.();
+	get image() {
+		return new ImageSource(org.nativescript.firebase.admob.FirebaseAdmob.getBitmap(this.native?.getDrawable?.() || null));
 	}
 
 	get url(): string {

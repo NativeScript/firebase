@@ -26,6 +26,7 @@ declare module org {
 					public static setRequestConfiguration(param0: string): void;
 					public static getExecutorsCount(): number;
 					public static setExecutorsCount(param0: number): void;
+					public static getBitmap(param0: globalAndroid.graphics.drawable.Drawable): globalAndroid.graphics.Bitmap;
 				}
 				export module FirebaseAdmob {
 					export class AdCallback {
