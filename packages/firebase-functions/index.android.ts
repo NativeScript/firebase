@@ -179,7 +179,7 @@ export class Functions implements IFunctions {
     return (data: any) => {
       return new Promise((resolve, reject) => {
         org.nativescript.firebase.functions.FirebaseFunctions.call(
-          callable, data ? serialize(data) : null, new org.nativescript.firebase.functions.FirebaseFunctions.Callback<com.google.firebase.functions.HttpsCallableResult>({
+          callable, data ? serialize(data, true) : null, new org.nativescript.firebase.functions.FirebaseFunctions.Callback<com.google.firebase.functions.HttpsCallableResult>({
             onSuccess(result: com.google.firebase.functions.HttpsCallableResult): void {
               resolve(deserialize(result?.getData?.()))
             }, onError(error): void {
