@@ -44,7 +44,8 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		const hlv = view.getViewById('headLineView') as Label;
 		const mv = view.getViewById('mediaView');
 		const bv = view.getViewById('bodyView');
-		console.log('nativeAdLayoutChanged', hlv.nativeView, mv.nativeView, bv.nativeView);
+		const iv = view.getViewById('iconView');
+		console.log('nativeAdLayoutChanged', hlv.nativeView, mv.nativeView, bv.nativeView, iv.nativeView);
 	}
 	nativeAdLoaded(event) {
 		const view = event.object;
@@ -63,6 +64,9 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 				mv.mediaContent = ad.mediaContent;
 				const bv = view.getViewById('bodyView');
 				bv.text = ad.body;
+				const iv = view.getViewById('iconView');
+				console.log(ad.icon);
+				iv.src = ad.icon.image;
 				view.nativeAd = ad;
 				console.log('nativead loaded');
 			} else if (event === 'adFailedToLoad') {
