@@ -2,10 +2,9 @@ import { Application, ApplicationSettings, Device } from '@nativescript/core';
 import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { AuthorizationStatus, IMessaging, Permissions, Notification, RemoteMessage } from './common';
 
-
 export { AuthorizationStatus } from './common';
 
-declare const FIRApp, TNSFirebaseMessaging;
+declare const FIRApp, TNSFirebaseMessaging, FIRAuth;
 
 let _registerDeviceForRemoteMessages = {
 	resolve: null,
@@ -49,7 +48,7 @@ export class Messaging implements IMessaging {
 		Application.ios.addNotificationObserver(UIApplicationDidFinishLaunchingNotification, (notification) => {
 			UNUserNotificationCenterDelegateImpl.sharedInstance.observe();
 			const auto = ApplicationSettings.getBoolean(REMOTE_NOTIFICATIONS_REGISTRATION_STATUS) ?? false;
-			const isSimulator = UIDevice.currentDevice.name.toLocaleLowerCase().indexOf('simulator');
+			const isSimulator = UIDevice.currentDevice.name.toLocaleLowerCase().indexOf('simulator') > -1;
 			if (auto && !isSimulator) {
 				UIApplication?.sharedApplication?.registerForRemoteNotifications?.();
 			}
@@ -72,7 +71,7 @@ export class Messaging implements IMessaging {
 
 	getToken(): Promise<string> {
 		return new Promise((resolve, reject) => {
-			if (!UIDevice.currentDevice.name.toLocaleLowerCase().indexOf('simulator') && !UIApplication.sharedApplication.registeredForRemoteNotifications) {
+			if (UIDevice.currentDevice.name.toLocaleLowerCase().indexOf('simulator') !== -1 && !UIApplication.sharedApplication.registeredForRemoteNotifications) {
 				reject(new Error('You must be registered for remote messages before calling getToken, see messaging().registerDeviceForRemoteMessages()'));
 			}
 			this.native?.tokenWithCompletion((token, error) => {
@@ -85,7 +84,7 @@ export class Messaging implements IMessaging {
 		});
 	}
 
-	getAPNSToken(){
+	getAPNSToken() {
 		return TNSFirebaseMessaging.APNSTokenToString(this.native.APNSToken);
 	}
 
@@ -137,7 +136,7 @@ export class Messaging implements IMessaging {
 
 	registerDeviceForRemoteMessages(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			if (UIDevice.currentDevice.name.toLocaleLowerCase().indexOf('simulator')) {
+			if (UIDevice.currentDevice.name.toLocaleLowerCase().indexOf('simulator') > -1) {
 				ApplicationSettings.setBoolean(REMOTE_NOTIFICATIONS_REGISTRATION_STATUS, true);
 				resolve();
 			}
@@ -358,14 +357,14 @@ class UNUserNotificationCenterDelegateImpl extends NSObject implements UNUserNot
 	userNotificationCenterWillPresentNotificationWithCompletionHandler(center: UNUserNotificationCenter, notification: UNNotification, completionHandler: (p1: UNNotificationPresentationOptions) => void): void {
 		let options = UNNotificationPresentationOptionNone;
 		const aps = notification.request.content.userInfo.objectForKey('aps') as NSDictionary<any, any>;
-		if (defaultMessaging?.showNotificationsWhenInForeground || notification.request.content.userInfo.objectForKey('gcm.notification.showWhenInForeground') === 'true' || notification.request.content.userInfo.objectForKey('showWhenInForeground') === true || (aps && aps.objectForKey('showWhenInForeground') === true)) {
+		if (firebase().messaging().showNotificationsWhenInForeground || notification.request.content.userInfo.objectForKey('gcm.notification.showWhenInForeground') === 'true' || notification.request.content.userInfo.objectForKey('showWhenInForeground') === true || (aps && aps.objectForKey('showWhenInForeground') === true)) {
 			options = UNNotificationPresentationOptions.Alert | UNNotificationPresentationOptions.Sound | UNNotificationPresentationOptions.Badge;
 		}
 
 		if (notification.request.content.userInfo.objectForKey('gcm.message_id')) {
 			const message = parseNotification(notification);
 			if (!message['contentAvailable']) {
-				defaultMessaging?._onMessage?.(message);
+				(<any>firebase().messaging())?._onMessage?.(message);
 				if (message) {
 					message['foreground'] = UIApplication.sharedApplication.applicationState === UIApplicationState.Active;
 				}
@@ -636,12 +635,19 @@ class AppDelegateImpl extends UIResponder implements UIApplicationDelegate {
 	}
 
 	applicationDidReceiveRemoteNotificationFetchCompletionHandler(application: UIApplication, userInfo: NSDictionary<any, any>, completionHandler: (p1: UIBackgroundFetchResult) => void): void {
+		if (typeof FIRAuth !== undefined) {
+			if (FIRAuth.auth().canHandleNotification(userInfo)) {
+				completionHandler(UIBackgroundFetchResult.NoData);
+				return;
+			}
+		}
+
 		const message = parseRemoteMessage(userInfo);
 		if (message) {
 			message['foreground'] = application.applicationState === UIApplicationState.Active;
 		}
-		defaultMessaging?._onMessage?.(message);
 		completionHandler(UIBackgroundFetchResult.NewData);
+		(<any>firebase().messaging())._onMessage?.(message);
 	}
 
 	applicationDidRegisterUserNotificationSettings(application: UIApplication, notificationSettings: UIUserNotificationSettings): void {
