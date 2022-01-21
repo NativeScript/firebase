@@ -18,7 +18,20 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 		this.transaction();
 		this.randomData();
 		this.children();
+		this.setData();
 	}
+
+	setData(){
+		this.database
+		.ref('/person/me')
+		.set({ name: 'set', boolean: true , updated: new Date() })
+		.then((value) => {
+			console.log('set some data', value);
+		}).catch(e =>{
+			console.log('failed to set data', e);
+		});
+	}
+
 	randomData() {
 		this.database
 			.ref('/random')
