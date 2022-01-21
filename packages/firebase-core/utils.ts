@@ -1,4 +1,4 @@
-import { Firebase } from ".";
+import { Firebase } from '.';
 
 function numberHasDecimals(item: number) {
 	return !(item % 1 === 0);
@@ -48,7 +48,7 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 				let node = {} as any;
 				Object.keys(data).forEach(function (key) {
 					let value = data[key];
-					node[key] = serialize(value);
+					node[key] = serialize(value, wrapPrimitives);
 				});
 				return NSDictionary.dictionaryWithDictionary(node);
 			}
@@ -99,7 +99,7 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 
 				if (Array.isArray(data)) {
 					store = new java.util.ArrayList();
-					data.forEach((item) => store.add(serialize(item)));
+					data.forEach((item) => store.add(serialize(item, wrapPrimitives)));
 					return store;
 				}
 
@@ -108,7 +108,7 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 				}
 
 				store = new java.util.HashMap();
-				Object.keys(data).forEach((key) => store.put(key, serialize(data[key])));
+				Object.keys(data).forEach((key) => store.put(key, serialize(data[key], wrapPrimitives)));
 				return store;
 			}
 
@@ -218,7 +218,6 @@ export function deserialize(data: any): any {
 					store = null;
 				}
 				break;
-
 		}
 		return store;
 	}
