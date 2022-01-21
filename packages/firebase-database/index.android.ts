@@ -79,7 +79,7 @@ export class OnDisconnect implements IOnDisconnect {
 		return new Promise((resolve, reject) => {
 			NSOnDisconnect().set(
 				this.native,
-				value,
+				serialize(value, true),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback<java.lang.Void>({
 					onError(error) {
 						const err = FirebaseError.fromNative(error);
@@ -98,7 +98,7 @@ export class OnDisconnect implements IOnDisconnect {
 		return new Promise((resolve, reject) => {
 			NSOnDisconnect().setWithPriority(
 				this.native,
-				value,
+				serialize(value, true),
 				priority as any,
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback<java.lang.Void>({
 					onError(error) {
