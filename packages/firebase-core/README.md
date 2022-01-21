@@ -5,7 +5,12 @@ ns plugin add @nativescript/firebase-core
 ```
 
 ## Usage
-Make sure you have your `google-services.json` file located in `App_Resources/src`.
+
+### Android
+Ensure `google-services.json` file located in `App_Resources/Android/src`.
+
+### iOS
+Ensure `GoogleService-Info.plist` file located in `App_Resources/iOS`.
 
 ### Initialize Default App
 
