@@ -7,7 +7,7 @@ npm start
 
 - [@nativescript/firebase-admob](packages/firebase-admob/README.md)
 - [@nativescript/firebase-analytics](packages/firebase-analytics/README.md)
-- [@nativescript/firebase-app-check](packages/firebase-app-check]/README.md)
+- [@nativescript/firebase-app-check](packages/firebase-app-check/README.md)
 - [@nativescript/firebase-auth](packages/firebase-auth/README.md)
 - [@nativescript/firebase-core](packages/firebase-core/README.md)
 - [@nativescript/firebase-crashlytics](packages/firebase-crashlytics/README.md)
