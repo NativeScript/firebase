@@ -324,6 +324,7 @@ Through the use of NativeAdListener, you can listen for lifecycle events, such a
     <Label id="headLineView" />
     <ui:MediaView id="mediaView" height="100%"/>
     <Label id="bodyView" />
+    <Button id="callToActionView" />
   </GridLayout>
 </ui:NativeAdView>
 ```
@@ -337,8 +338,11 @@ loader.onAdEvent((event, error, data) => {
 		const hlv = view.getViewById('headLineView');
 		hlv.text = ad.headline;
 		const mv = view.getViewById('mediaView');
-    view.mediaView = mv;
+		view.mediaView = mv;
 		mv.mediaContent = ad.mediaContent;
+		const but = view.getViewById('callToActionView');
+		view.callToActionView = but;
+		but.text = ad.callToAction;
 		const bv = view.getViewById('bodyView');
 		bv.text = ad.body;
 		view.nativeAd = ad;
@@ -376,6 +380,19 @@ The [AdChoices overlay](https://developers.google.com/admob/android/native/advan
 `videoOptions`
 
 Can be used to set video options for video assets returned as part of a native ad.
+```ts
+videoOptions?: {
+    startMuted?: boolean;
+    clickToExpandRequested?: boolean;
+    customControlsRequested?: boolean;
+};
+```
+
+Remember that if an ad contains a video, this video _must_ be shown. 
+
+```ts
+ad.mediaContent.hasVideoContent = true | false
+```
 
 `mediaAspectRatio`
 
