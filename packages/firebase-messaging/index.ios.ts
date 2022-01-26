@@ -419,13 +419,13 @@ function parseRemoteMessage(remoteMessage: NSDictionary<any, any>) {
 		}
 
 		// message.sentTime
-		if ([key === 'google.c.a.ts']) {
+		if (key === 'google.c.a.ts') {
 			message['sentTime'] = remoteMessage.objectForKey(key);
 			continue;
 		}
 
 		// message.to
-		if ([key === 'to'] || [key === 'google.to']) {
+		if (key === 'to' || key === 'google.to') {
 			message['to'] = remoteMessage.objectForKey(key);
 			continue;
 		}
