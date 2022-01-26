@@ -1,6 +1,6 @@
 {
   "name": "@nativescript/firebase-core",
-  "version": "1.0.0-alpha.36",
+  "version": "1.0.0-alpha.37",
   "description": "NativeScript Firebase - Core",
   "main": "index",
   "typings": "index.d.ts",
