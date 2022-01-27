@@ -1,6 +1,6 @@
 {
   "name": "@nativescript/firebase-database",
-  "version": "1.0.0-alpha.37",
+  "version": "1.0.0-alpha.38",
   "description": "NativeScript Firebase - Database",
   "main": "index",
   "typings": "index.d.ts",
