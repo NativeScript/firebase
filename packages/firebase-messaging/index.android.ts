@@ -108,7 +108,7 @@ export class Messaging implements IMessaging {
 	getToken(): Promise<string> {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.messaging.FirebaseMessaging.getToken(
-				this.#native,
+				this.native,
 				new org.nativescript.firebase.messaging.FirebaseMessaging.Callback<string>({
 					onSuccess(result) {
 						resolve(result);
@@ -183,7 +183,7 @@ export class Messaging implements IMessaging {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.messaging.FirebaseMessaging.subscribeToTopic(
 				topic,
-				this.#native,
+				this.native,
 				new org.nativescript.firebase.messaging.FirebaseMessaging.Callback<java.lang.Void>({
 					onSuccess(result) {
 						resolve();
@@ -202,7 +202,7 @@ export class Messaging implements IMessaging {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.messaging.FirebaseMessaging.unsubscribeFromTopic(
 				topic,
-				this.#native,
+				this.native,
 				new org.nativescript.firebase.messaging.FirebaseMessaging.Callback<java.lang.Void>({
 					onSuccess(result) {
 						resolve();
@@ -218,7 +218,7 @@ export class Messaging implements IMessaging {
 	deleteToken(): Promise<void> {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.messaging.FirebaseMessaging.deleteToken(
-				this.#native,
+				this.native,
 				new org.nativescript.firebase.messaging.FirebaseMessaging.Callback<java.lang.Void>({
 					onSuccess(result) {
 						resolve();
