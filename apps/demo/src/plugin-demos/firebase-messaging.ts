@@ -33,6 +33,7 @@ export class DemoModel extends DemoSharedFirebaseMessaging {
 			let token = await messaging.getToken();
 			console.log('token', token);
 		} catch (err) {
+			console.log('issue_16: error', err);
 		}
 	}
 
