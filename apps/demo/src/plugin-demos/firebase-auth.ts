@@ -16,7 +16,7 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 	email: string;
 	password: string;
 	user: User;
-	phoneNumber: string;
+	phoneNumber: string = '18683545179';
 	code: string;
 	verificationId: string;
 	constructor() {

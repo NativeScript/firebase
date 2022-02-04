@@ -51,4 +51,6 @@ messaging
 	.catch((e) => {
 		console.error('requestPermission', e);
 	});
+
+
 Application.run({ moduleName: 'app-root' });

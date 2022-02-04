@@ -512,7 +512,6 @@ export class DynamicLinks implements IDynamicLinks {
 			GULAppDelegateSwizzler.registerAppDelegateInterceptor(AppDelegateImpl.sharedInstance);
 			DynamicLinks.#appDelegateInitialized = true;
 		}
-		this.#native = FIRDynamicLinks.dynamicLinks();
 	}
 
 	createLink(link: string, domainUriPrefix: string): DynamicLinkParameters {
@@ -558,7 +557,7 @@ export class DynamicLinks implements IDynamicLinks {
 	}
 
 	get native() {
-		return this.#native;
+		return FIRDynamicLinks.dynamicLinks();
 	}
 	get ios() {
 		return this.native;

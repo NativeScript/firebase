@@ -1,4 +1,4 @@
-import { knownFolders } from '@nativescript/core';
+import { Application, knownFolders } from '@nativescript/core';
 import { FirebaseConfig, IFirebaseOptions } from './common';
 export * from './utils';
 
@@ -256,173 +256,209 @@ export class Firebase {
 	}
 
 	initializeApp(options: FirebaseOptions = null, configOrName?: FirebaseConfig | string) {
-		const name = typeof configOrName === 'string' ? configOrName : configOrName?.name;
-		let nativeOptions: FIROptions;
-		if (name) {
-			nativeOptions = FIROptions.alloc().initWithGoogleAppIDGCMSenderID(options.googleAppId, options.gcmSenderId);
-		}
+		return new Promise((resolve, reject) => {
+			const initApp = () => {
+				try {
+					const name = typeof configOrName === 'string' ? configOrName : configOrName?.name;
+					let nativeOptions: FIROptions;
+					if (name) {
+						nativeOptions = FIROptions.alloc().initWithGoogleAppIDGCMSenderID(options.googleAppId, options.gcmSenderId);
+					}
 
-		if (!nativeOptions && options) {
-			nativeOptions = FIROptions.defaultOptions();
-		}
+					if (!nativeOptions && options) {
+						nativeOptions = FIROptions.defaultOptions();
+					}
 
-		if (options?.apiKey) {
-			nativeOptions.APIKey = options.apiKey;
-		}
+					if (options?.apiKey) {
+						nativeOptions.APIKey = options.apiKey;
+					}
 
-		if (options?.gcmSenderId) {
-			nativeOptions.GCMSenderID = options.gcmSenderId;
-		}
+					if (options?.gcmSenderId) {
+						nativeOptions.GCMSenderID = options.gcmSenderId;
+					}
 
-		if (options?.androidClientId) {
-			nativeOptions.androidClientID = options.androidClientId;
-		}
+					if (options?.androidClientId) {
+						nativeOptions.androidClientID = options.androidClientId;
+					}
 
-		if (options?.appGroupId) {
-			nativeOptions.appGroupID = options.appGroupId;
-		}
+					if (options?.appGroupId) {
+						nativeOptions.appGroupID = options.appGroupId;
+					}
 
-		if (options?.bundleId) {
-			nativeOptions.bundleID = options.bundleId;
-		}
+					if (options?.bundleId) {
+						nativeOptions.bundleID = options.bundleId;
+					}
 
-		if (options?.clientId) {
-			nativeOptions.clientID = options.clientId;
-		}
+					if (options?.clientId) {
+						nativeOptions.clientID = options.clientId;
+					}
 
-		if (options?.databaseURL) {
-			nativeOptions.databaseURL = options.databaseURL;
-		}
+					if (options?.databaseURL) {
+						nativeOptions.databaseURL = options.databaseURL;
+					}
 
-		if (options?.deepLinkURLScheme) {
-			nativeOptions.deepLinkURLScheme = options.deepLinkURLScheme;
-		}
+					if (options?.deepLinkURLScheme) {
+						nativeOptions.deepLinkURLScheme = options.deepLinkURLScheme;
+					}
 
-		if (options?.googleAppId) {
-			nativeOptions.googleAppID = options.googleAppId;
-		}
+					if (options?.googleAppId) {
+						nativeOptions.googleAppID = options.googleAppId;
+					}
 
-		if (options?.projectId) {
-			nativeOptions.projectID = options.projectId;
-		}
+					if (options?.projectId) {
+						nativeOptions.projectID = options.projectId;
+					}
 
-		if (options?.storageBucket) {
-			nativeOptions.storageBucket = options.storageBucket;
-		}
+					if (options?.storageBucket) {
+						nativeOptions.storageBucket = options.storageBucket;
+					}
 
-		if (options?.trackingId) {
-			nativeOptions.trackingID = options.trackingId;
-		}
+					if (options?.trackingId) {
+						nativeOptions.trackingID = options.trackingId;
+					}
 
-		let app: FIRApp;
-		let isDefault = false;
-		if (name) {
-			FIRApp.configureWithNameOptions(name, nativeOptions);
-			app = FIRApp.appNamed(name);
-		} else {
-			if (defaultApp) {
-				return defaultApp;
+					let app: FIRApp;
+					let isDefault = false;
+					if (name) {
+						FIRApp.configureWithNameOptions(name, nativeOptions);
+						app = FIRApp.appNamed(name);
+					} else {
+						if (defaultApp) {
+							return defaultApp;
+						}
+
+						if (nativeOptions) {
+							FIRApp.configureWithOptions(nativeOptions);
+						} else {
+							FIRApp.configure();
+						}
+
+						app = FIRApp.defaultApp();
+						isDefault = true;
+					}
+
+					if (app && typeof configOrName === 'object' && typeof configOrName.automaticDataCollectionEnabled === 'boolean') {
+						app.dataCollectionDefaultEnabled = configOrName.automaticDataCollectionEnabled;
+					}
+
+					const fbApp = FirebaseApp.fromNative(app);
+
+					if (isDefault) {
+						defaultApp = fbApp;
+					}
+
+					if (!isDefault) {
+						firebaseApps.set(name, fbApp);
+					}
+					resolve(fbApp);
+				} catch (e) {
+					reject(new FirebaseError(e.message))
+				}
 			}
 
-			if (nativeOptions) {
-				FIRApp.configureWithOptions(nativeOptions);
+			if (UIApplication.sharedApplication) {
+				Application.ios.addNotificationObserver(
+					UIApplicationDidFinishLaunchingNotification,
+					(notification) => {
+						initApp();
+					}
+				)
 			} else {
-				FIRApp.configure();
+				initApp();
 			}
-
-			app = FIRApp.defaultApp();
-			isDefault = true;
-		}
-
-		if (app && typeof configOrName === 'object' && typeof configOrName.automaticDataCollectionEnabled === 'boolean') {
-			app.dataCollectionDefaultEnabled = configOrName.automaticDataCollectionEnabled;
-		}
-
-		const fbApp = FirebaseApp.fromNative(app);
-
-		if (isDefault) {
-			defaultApp = fbApp;
-		}
-
-		if (!isDefault) {
-			firebaseApps.set(name, fbApp);
-		}
-
-		return fbApp;
+		})
 	}
 
 	initializeAppWithPath(path: string, options: FirebaseOptions = null, config?: FirebaseConfig) {
-		if (path.startsWith('res://')) {
-			path = NSBundle.mainBundle.pathForResourceOfType(path.replace('res://', '').replace('.plist', ''), 'plist')
-		} else if (path.startsWith('~/')) {
-			path = knownFolders.currentApp().path + '/' + path.replace('~/', '');
-		}
+		return new Promise((resolve, reject) => {
+			const initApp = () => {
+				try {
+					if (path.startsWith('res://')) {
+						path = NSBundle.mainBundle.pathForResourceOfType(path.replace('res://', '').replace('.plist', ''), 'plist')
+					} else if (path.startsWith('~/')) {
+						path = knownFolders.currentApp().path + '/' + path.replace('~/', '');
+					}
 
-		const nativeOptions = FIROptions.alloc().initWithContentsOfFile(path);
-
-
-		if (options?.apiKey) {
-			nativeOptions.APIKey = options.apiKey;
-		}
-
-		if (options?.gcmSenderId) {
-			nativeOptions.GCMSenderID = options.gcmSenderId;
-		}
-
-		if (options?.androidClientId) {
-			nativeOptions.androidClientID = options.androidClientId;
-		}
-
-		if (options?.appGroupId) {
-			nativeOptions.appGroupID = options.appGroupId;
-		}
-
-		if (options?.bundleId) {
-			nativeOptions.bundleID = options.bundleId;
-		}
-
-		if (options?.clientId) {
-			nativeOptions.clientID = options.clientId;
-		}
-
-		if (options?.databaseURL) {
-			nativeOptions.databaseURL = options.databaseURL;
-		}
-
-		if (options?.deepLinkURLScheme) {
-			nativeOptions.deepLinkURLScheme = options.deepLinkURLScheme;
-		}
-
-		if (options?.googleAppId) {
-			nativeOptions.googleAppID = options.googleAppId;
-		}
-
-		if (options?.projectId) {
-			nativeOptions.projectID = options.projectId;
-		}
-
-		if (options?.storageBucket) {
-			nativeOptions.storageBucket = options.storageBucket;
-		}
-
-		if (options?.trackingId) {
-			nativeOptions.trackingID = options.trackingId;
-		}
+					const nativeOptions = FIROptions.alloc().initWithContentsOfFile(path);
 
 
-		FIRApp.configureWithOptions(nativeOptions);
+					if (options?.apiKey) {
+						nativeOptions.APIKey = options.apiKey;
+					}
 
-		const app = FIRApp.defaultApp();
+					if (options?.gcmSenderId) {
+						nativeOptions.GCMSenderID = options.gcmSenderId;
+					}
 
-		if (app && typeof config === 'object' && typeof config.automaticDataCollectionEnabled === 'boolean') {
-			app.dataCollectionDefaultEnabled = config.automaticDataCollectionEnabled;
-		}
-		const fbApp = FirebaseApp.fromNative(app);
+					if (options?.androidClientId) {
+						nativeOptions.androidClientID = options.androidClientId;
+					}
 
-		if (!defaultApp) {
-			defaultApp = fbApp;
-		}
-		return fbApp;
+					if (options?.appGroupId) {
+						nativeOptions.appGroupID = options.appGroupId;
+					}
+
+					if (options?.bundleId) {
+						nativeOptions.bundleID = options.bundleId;
+					}
+
+					if (options?.clientId) {
+						nativeOptions.clientID = options.clientId;
+					}
+
+					if (options?.databaseURL) {
+						nativeOptions.databaseURL = options.databaseURL;
+					}
+
+					if (options?.deepLinkURLScheme) {
+						nativeOptions.deepLinkURLScheme = options.deepLinkURLScheme;
+					}
+
+					if (options?.googleAppId) {
+						nativeOptions.googleAppID = options.googleAppId;
+					}
+
+					if (options?.projectId) {
+						nativeOptions.projectID = options.projectId;
+					}
+
+					if (options?.storageBucket) {
+						nativeOptions.storageBucket = options.storageBucket;
+					}
+
+					if (options?.trackingId) {
+						nativeOptions.trackingID = options.trackingId;
+					}
+
+
+					FIRApp.configureWithOptions(nativeOptions);
+
+					const app = FIRApp.defaultApp();
+
+					if (app && typeof config === 'object' && typeof config.automaticDataCollectionEnabled === 'boolean') {
+						app.dataCollectionDefaultEnabled = config.automaticDataCollectionEnabled;
+					}
+					const fbApp = FirebaseApp.fromNative(app);
+
+					if (!defaultApp) {
+						defaultApp = fbApp;
+					}
+					resolve(fbApp);
+				} catch (e) {
+					reject(new FirebaseError(e.message))
+				}
+			}
+			if (!UIApplication.sharedApplication) {
+				Application.ios.addNotificationObserver(
+					UIApplicationDidFinishLaunchingNotification,
+					(notification) => {
+						initApp();
+					}
+				)
+			} else {
+				initApp();
+			}
+		})
 	}
 }
 

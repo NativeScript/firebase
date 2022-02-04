@@ -611,16 +611,24 @@ function toActionCodeOperation(operation: com.google.firebase.auth.ActionCodeRes
 function toUserCredential(authData: com.google.firebase.auth.AuthResult): UserCredential {
   const additionalUserInfo = authData.getAdditionalUserInfo();
   const credential = authData.getCredential();
-  return {
-    additionalUserInfo: {
-      newUser: additionalUserInfo.isNewUser(),
-      providerId: additionalUserInfo.getProviderId(),
-      username: additionalUserInfo.getUsername(),
-      profile: deserialize(additionalUserInfo.getProfile()),
-    },
+
+  const result = {
+    additionalUserInfo: null,
     user: User.fromNative(authData.getUser()),
     credential: credential instanceof com.google.firebase.auth.OAuthCredential ? OAuthCredential.fromNative(credential) : AuthCredential.fromNative(credential),
   };
+
+  if (additionalUserInfo) {
+    result.additionalUserInfo = {
+      newUser: additionalUserInfo?.isNewUser?.(),
+      providerId: additionalUserInfo?.getProviderId?.(),
+      username: additionalUserInfo?.getUsername?.(),
+      profile: deserialize(additionalUserInfo?.getProfile?.()),
+    }
+  };
+
+
+  return result;
 }
 
 export class ActionCodeSettings implements IActionCodeSettings {

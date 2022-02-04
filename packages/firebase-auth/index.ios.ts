@@ -1,3 +1,4 @@
+import { Application } from '@nativescript/core';
 import { FirebaseApp, firebase, deserialize, FirebaseError } from '@nativescript/firebase-core';
 import { IAuthSettings, IAuth, IUser, IUserInfo, IUserMetadata, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, AdditionalUserInfo, IAuthCredential, IActionCodeSettings, OAuthCredentialOptions, IOAuthCredential, IAuthTokenResult, IPhoneAuthCredential, UserProfileChangeRequest, IOAuthProvider } from './common';
 
@@ -526,16 +527,22 @@ function toActionCodeOperation(operation: FIRActionCodeOperation) {
 }
 
 function toUserCredential(authData: FIRAuthDataResult): UserCredential {
-	return {
-		additionalUserInfo: {
-			newUser: authData.additionalUserInfo.newUser,
-			providerId: authData.additionalUserInfo.providerID,
-			username: authData.additionalUserInfo.username,
-			profile: deserialize(authData.additionalUserInfo.profile),
-		},
+	const result = {
+		additionalUserInfo: null,
 		user: User.fromNative(authData.user),
-		credential: authData.credential instanceof FIROAuthCredential ? OAuthCredential.fromNative(authData.credential) : AuthCredential.fromNative(authData.credential),
+		credential: authData.credential instanceof FIROAuthCredential ? OAuthCredential.fromNative(authData.credential) : AuthCredential.fromNative(authData.credential)
 	};
+
+	if (authData?.additionalUserInfo) {
+		result.additionalUserInfo = {
+			newUser: authData?.additionalUserInfo?.newUser,
+			providerId: authData?.additionalUserInfo?.providerID,
+			username: authData?.additionalUserInfo?.username,
+			profile: deserialize(authData?.additionalUserInfo?.profile),
+		};
+	}
+
+	return result;
 }
 
 export class ActionCodeSettings implements IActionCodeSettings {
@@ -690,6 +697,8 @@ export class PhoneAuthProvider {
 				reject();
 			} else {
 				this.native.verifyPhoneNumberUIDelegateCompletion(phoneNumber, null, (verificationId, error) => {
+					console.log('verifyPhoneNumberUIDelegateCompletion', verificationId, error);
+					console.log(UIApplication.sharedApplication.delegate.respondsToSelector('application:didReceiveRemoteNotification:fetchCompletionHandler'));
 					if (error) {
 						reject(FirebaseError.fromNative(error));
 					} else {

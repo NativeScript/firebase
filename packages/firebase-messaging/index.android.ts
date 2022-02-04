@@ -28,7 +28,7 @@ function ensureCallback() {
 			return global.__native(this);
 		}
 
-		public onError(error: any): void {}
+		public onError(error: any): void { }
 
 		public onSuccess(message: string): void {
 			const callback = this._owner?.get?.()?.[this._propName];
@@ -40,11 +40,11 @@ function ensureCallback() {
 						setTimeout(() => {
 							callback(JSON.parse(message));
 						});
-					} catch (e) {}
+					} catch (e) { }
 				} else {
 					try {
 						callback(JSON.parse(message));
-					} catch (e) {}
+					} catch (e) { }
 				}
 			}
 		}
@@ -73,7 +73,6 @@ export class Messaging implements IMessaging {
 		}
 		defaultMessaging = this;
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
-		this.#native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
 		ensureCallback();
 		Application.android.on(AndroidApplication.activityNewIntentEvent, this._newIntentCallback.bind(this));
 	}
@@ -249,6 +248,9 @@ export class Messaging implements IMessaging {
 	}
 
 	get native() {
+		if (!this.#native) {
+			this.#native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
+		}
 		return this.#native;
 	}
 	get android() {

@@ -108,7 +108,7 @@ export class DynamicLinkAndroidParameters implements IDynamicLinkAndroidParamete
 	set fallbackUrl(value) {
 		try {
 			this.#builder.setFallbackUrl(android.net.Uri.parse(value));
-		} catch (error) {}
+		} catch (error) { }
 	}
 
 	get minimumVersion() {
@@ -181,7 +181,7 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 		try {
 			this.#builder?.setFallbackUrl?.(android.net.Uri.parse(value));
 			this.#fallbackUrl = value;
-		} catch (error) {}
+		} catch (error) { }
 	}
 
 	get iPadBundleId(): string {
@@ -199,7 +199,7 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 	set iPadFallbackUrl(value) {
 		try {
 			this.#builder?.setIpadFallbackUrl?.(android.net.Uri.parse(value));
-		} catch (error) {}
+		} catch (error) { }
 	}
 
 	get minimumVersion(): string {
@@ -331,7 +331,7 @@ export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters
 	set imageUrl(value) {
 		try {
 			this.#builder?.setImageUrl?.(android.net.Uri.parse(value));
-		} catch (error) {}
+		} catch (error) { }
 	}
 
 	get title(): string {
@@ -450,7 +450,6 @@ export class DynamicLinks implements IDynamicLinks {
 			return defaultDynamicLinks;
 		}
 		defaultDynamicLinks = this;
-		this.#native = com.google.firebase.dynamiclinks.FirebaseDynamicLinks.getInstance();
 		if (!DynamicLinks.#didInit) {
 			DynamicLinks.#callback = new org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>({
 				onSuccess(param0) {
@@ -493,7 +492,7 @@ export class DynamicLinks implements IDynamicLinks {
 		const dl = this.native.createDynamicLink();
 		try {
 			dl.setLink(android.net.Uri.parse(link));
-		} catch (error) {}
+		} catch (error) { }
 		dl.setDomainUriPrefix(domainUriPrefix);
 		return DynamicLinkParameters.fromNative(dl);
 	}
@@ -501,7 +500,7 @@ export class DynamicLinks implements IDynamicLinks {
 		const dl = this.native.createDynamicLink();
 		try {
 			dl.setLink(android.net.Uri.parse(link));
-		} catch (error) {}
+		} catch (error) { }
 		dl.setDomainUriPrefix(domainUriPrefix);
 		return DynamicLinkParameters.fromNative(dl, shortLinkType);
 	}
@@ -527,6 +526,9 @@ export class DynamicLinks implements IDynamicLinks {
 	}
 
 	get native() {
+		if (!this.#native) {
+			this.#native = com.google.firebase.dynamiclinks.FirebaseDynamicLinks.getInstance();
+		}
 		return this.#native;
 	}
 	get android() {

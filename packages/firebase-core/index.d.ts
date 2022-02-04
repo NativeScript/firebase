@@ -49,9 +49,9 @@ declare class FirebaseApp {
 export interface Firebase {
   app(name?: string): FirebaseApp;
 
-  initializeApp(options?: FirebaseOptions, configOrName?: FirebaseConfig | string): FirebaseApp;
+  initializeApp(options?: FirebaseOptions, configOrName?: FirebaseConfig | string): Promise<FirebaseApp>;
 
-  initializeAppWithPath(path: string, options?: FirebaseOptions, config?: FirebaseConfig): FirebaseApp;
+  initializeAppWithPath(path: string, options?: FirebaseOptions, config?: FirebaseConfig): Promise<FirebaseApp>;
 }
 
 export function firebase(): Firebase;

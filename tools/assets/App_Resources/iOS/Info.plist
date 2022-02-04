@@ -56,5 +56,16 @@
 	</dict>
 	<key>GADApplicationIdentifier</key>
 <string>ca-app-pub-3940256099942544~1458002511</string>
+<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>app-1-292142294722-ios-f1b9ddf525a3dbe1287d5b</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
