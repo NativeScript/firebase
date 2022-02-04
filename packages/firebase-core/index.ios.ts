@@ -356,7 +356,7 @@ export class Firebase {
 				}
 			}
 
-			if (UIApplication.sharedApplication) {
+			if (!UIApplication.sharedApplication) {
 				Application.ios.addNotificationObserver(
 					UIApplicationDidFinishLaunchingNotification,
 					(notification) => {
