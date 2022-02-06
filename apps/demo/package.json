@@ -24,7 +24,7 @@
     "@nativescript/google-signin": "^1.0.0-alpha.9"
   },
   "devDependencies": {
-    "@nativescript/android": "8.2.0-alpha.2",
+    "@nativescript/android": "^8.2.0-alpha.11",
     "@nativescript/ios": "8.1.0"
   }
 }
