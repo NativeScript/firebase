@@ -145,7 +145,7 @@ func parseRemoteMessage(_ remoteMessage:Dictionary<AnyHashable, Any>)-> Dictiona
         }
         
         
-        data[key] = msg.value
+        data[key!] = msg.value
         
     }
     
