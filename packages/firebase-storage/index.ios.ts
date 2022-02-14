@@ -557,7 +557,7 @@ export class Reference implements IReference {
 
   writeToFile(localFilePath: string): Task {
     let url;
-    if (localFilePath?.indexOf('file:')) {
+    if (localFilePath?.indexOf('file:') > -1) {
       url = NSURL.URLWithString(localFilePath);
     } else {
       url = NSURL.fileURLWithPath(localFilePath);
