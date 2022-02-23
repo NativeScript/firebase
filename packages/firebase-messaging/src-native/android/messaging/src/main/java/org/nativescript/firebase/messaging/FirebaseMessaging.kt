@@ -22,7 +22,7 @@ class FirebaseMessaging {
   }
 
 
-  class Service : FirebaseMessagingService() {
+  open class Service : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
       val message = remoteMessageToJson(remoteMessage)
