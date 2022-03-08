@@ -36,6 +36,9 @@ async function requestUserPermission() {
 
 	if (enabled) {
 		console.log('Authorization status:', authStatus);
+
+		const didRegister = await firebase().messaging()
+                .registerDeviceForRemoteMessages();
 	}
 }
 ```
@@ -70,15 +73,14 @@ Depending on the contents of the message, it's important to understand both how 
 
 The device state and message contents determines which handler will be called:
 
-|     Foreground      | Background |                  Quit                   |										   |
-| :-----------------: | :--------: | :-------------------------------------: | --------------------------------------- |
-|    Notification     | onMessage  |       setBackgroundMessageHandler       | setBackgroundMessageHandler             |
-| Notification + Data | onMessage  |       setBackgroundMessageHandler       | setBackgroundMessageHandler             |
-|        Data         | onMessage  | setBackgroundMessageHandler (see below) | setBackgroundMessageHandler (see below) |
+|     Foreground      | Background |
+| :-----------------: | :--------: |
+|    Notification     | onMessage  |
+| Notification + Data | onMessage  |
+|        Data         | onMessage  |
 
 - In cases where the message is data-only and the device is in the background or quit, both Android & iOS treat the message as low priority and will ignore it (i.e. no event will be sent). You can however increase the priority by setting the priority to high (Android) and content-available to true (iOS) properties on the payload.
 
-- On iOS in cases where the message is data-only and the device is in the background or quit, the message will be delayed until the background message handler is registered via setBackgroundMessageHandler, signaling the application's javascript is loaded and ready to run.
 
 To learn more about how to send these options in your message payload, view the Firebase documentation for your [FCM API implementation](https://firebase.google.com/docs/cloud-messaging/concept-options).
 
@@ -111,7 +113,7 @@ firebase()
 
 ### Data-only messages
 
-When an incoming message is "data-only" (contains no notification option), both Android & iOS regard it as low priority and will prevent the application from waking (ignoring the message). To allow data-only messages to trigger the background handler, you must set the "priority" to "high" on Android, and enable the content-available flag on iOS. For example, if using the Node.js [firebase-admin](https://www.npmjs.com/package/firebase-admin) package to send a message:
+When an incoming message is "data-only" (contains no notification option), both Android & iOS regard it as low priority and will prevent the application from waking (ignoring the message). To allow data-only messages to trigger , you must set the "priority" to "high" on Android, and enable the content-available flag on iOS. For example, if using the Node.js [firebase-admin](https://www.npmjs.com/package/firebase-admin) package to send a message:
 
 ```ts
 admin.messaging().sendToDevice(
@@ -132,7 +134,7 @@ admin.messaging().sendToDevice(
 );
 ```
 
-For iOS specific "data-only" messages, the message must include the appropriate APNs headers as well as the content-available flag in order to trigger the background handler. For example, if using the Node.js [firebase-admin](https://www.npmjs.com/package/firebase-admin) package to send a "data-only" message to an iOS device:
+For iOS specific "data-only" messages, the message must include the appropriate APNs headers as well as the content-available flag in order to trigger the handler. For example, if using the Node.js [firebase-admin](https://www.npmjs.com/package/firebase-admin) package to send a "data-only" message to an iOS device:
 
 ```ts
 dmin.messaging().send({

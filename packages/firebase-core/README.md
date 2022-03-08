@@ -16,7 +16,7 @@ Ensure `GoogleService-Info.plist` file located in `App_Resources/iOS`.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core'
-const defaultApp = firebase().initializeApp()
+const defaultApp = await firebase().initializeApp();
 ```
 
 ### Initialize Secondary App
@@ -24,7 +24,7 @@ const defaultApp = firebase().initializeApp()
 ```ts
 import { firebase, FirebaseOptions } from '@nativescript/firebase-core'
 const config = new FirebaseOptions()
-const secondaryApp = firebase().initializeApp(config, 'SECONDARY_APP')
+const secondaryApp = await firebase().initializeApp(config, 'SECONDARY_APP');
 ```
 
 
