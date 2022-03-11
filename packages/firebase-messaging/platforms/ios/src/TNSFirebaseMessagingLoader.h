@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface TNSFirebaseCoreLoader: NSObject
+@interface TNSFirebaseMessagingLoader: NSObject
 @end
