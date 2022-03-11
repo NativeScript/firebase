@@ -1,0 +1,5 @@
+ module TNSFirebaseCore {
+  umbrella header "TNSFirebaseCoreUmbrella.h"
+  export *
+  module * { export * }
+}

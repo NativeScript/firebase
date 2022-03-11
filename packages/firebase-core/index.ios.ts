@@ -234,6 +234,17 @@ export class FirebaseApp {
 	}
 }
 
+const launchQueue = [];
+
+declare const TNSFirebaseCore;
+
+const launchCallback = () => {
+	launchQueue.forEach((item) => item());
+	launchQueue.splice(0);
+};
+
+TNSFirebaseCore.setOnAppFinishLaunchingCallback(launchCallback);
+
 export class Firebase {
 	constructor() {
 		if (firebaseInstance) {
@@ -352,21 +363,18 @@ export class Firebase {
 					}
 					resolve(fbApp);
 				} catch (e) {
-					reject(new FirebaseError(e.message))
+					reject(new FirebaseError(e.message));
 				}
-			}
+			};
 
 			if (!UIApplication.sharedApplication) {
-				Application.ios.addNotificationObserver(
-					UIApplicationDidFinishLaunchingNotification,
-					(notification) => {
-						initApp();
-					}
-				)
+				launchQueue.push(() => {
+					initApp();
+				});
 			} else {
 				initApp();
 			}
-		})
+		});
 	}
 
 	initializeAppWithPath(path: string, options: FirebaseOptions = null, config?: FirebaseConfig) {
@@ -374,13 +382,12 @@ export class Firebase {
 			const initApp = () => {
 				try {
 					if (path.startsWith('res://')) {
-						path = NSBundle.mainBundle.pathForResourceOfType(path.replace('res://', '').replace('.plist', ''), 'plist')
+						path = NSBundle.mainBundle.pathForResourceOfType(path.replace('res://', '').replace('.plist', ''), 'plist');
 					} else if (path.startsWith('~/')) {
 						path = knownFolders.currentApp().path + '/' + path.replace('~/', '');
 					}
 
 					const nativeOptions = FIROptions.alloc().initWithContentsOfFile(path);
-
 
 					if (options?.apiKey) {
 						nativeOptions.APIKey = options.apiKey;
@@ -430,7 +437,6 @@ export class Firebase {
 						nativeOptions.trackingID = options.trackingId;
 					}
 
-
 					FIRApp.configureWithOptions(nativeOptions);
 
 					const app = FIRApp.defaultApp();
@@ -445,20 +451,17 @@ export class Firebase {
 					}
 					resolve(fbApp);
 				} catch (e) {
-					reject(new FirebaseError(e.message))
+					reject(new FirebaseError(e.message));
 				}
-			}
+			};
 			if (!UIApplication.sharedApplication) {
-				Application.ios.addNotificationObserver(
-					UIApplicationDidFinishLaunchingNotification,
-					(notification) => {
-						initApp();
-					}
-				)
+				launchQueue.push(() => {
+					initApp();
+				});
 			} else {
 				initApp();
 			}
-		})
+		});
 	}
 }
 

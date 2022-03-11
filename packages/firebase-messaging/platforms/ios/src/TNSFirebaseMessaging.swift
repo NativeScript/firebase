@@ -13,8 +13,7 @@ public class TNSFirebaseMessaging: NSObject {
     
     @objc public static var onMessageCallback: ((NSDictionary) -> Void)? = nil
     
-    public static var onTokenCallback: ((String) -> Void)? = nil
-    
+    @objc public static var onTokenCallback: ((String) -> Void)? = nil
     
     @objc public static func APNSTokenToString(_ tokenData: NSData)-> String {
         var token = ""
