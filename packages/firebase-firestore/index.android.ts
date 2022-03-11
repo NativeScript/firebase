@@ -852,7 +852,7 @@ export class CollectionReference<T extends DocumentData = DocumentData> extends 
 	}
 
 	doc(documentPath?: string) {
-		return DocumentReference.fromNative(this.native.document(documentPath || '/'));
+		return DocumentReference.fromNative(documentPath ? this.native.document(documentPath) : this.native.document());
 	}
 
 	toJSON() {

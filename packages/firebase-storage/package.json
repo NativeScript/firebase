@@ -1,6 +1,6 @@
 {
   "name": "@nativescript/firebase-storage",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NativeScript Firebase - Storage",
   "main": "index",
   "typings": "index.d.ts",
