@@ -139,11 +139,20 @@ Next, ensure that your app have the "Sign in with Apple" capability.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
-import { OAuthProvider } from '@nativescript/firebase-auth';
-const oauthCredential = new OAuthProvider('apple.com');
-oauthCredential.credential(appleCredentialIdentityToken /* idToken */, rawNonce /* nonce */);
+import { AppleAuthProvider } from '@nativescript/firebase-auth';
+import { SignIn, User } from "@nativescript/apple-sign-in";
 
-firebase().auth().signInWithCredential(oauthCredential);
+signIn(
+    {
+        scopes: ["EMAIL", "FULLNAME"]
+    })
+    .then((result: User) => {
+		const oauthCredential = AppleAuthProvider.credential(result.identityToken, result.nonce);
+
+		firebase().auth().signInWithCredential(oauthCredential);
+    })
+    .catch(err => console.log("Error signing in: " + err));
+
 ```
 
 #### Facebook
