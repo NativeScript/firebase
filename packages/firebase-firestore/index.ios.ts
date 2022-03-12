@@ -2,7 +2,7 @@ import { ICollectionReference, IDocumentReference, IFieldPath, IFieldValue, IGeo
 
 const main_queue = dispatch_get_current_queue();
 
-import { deserialize, firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 
 let defaultFirestore: Firestore;
 
@@ -1190,18 +1190,18 @@ export class WriteBatch implements IWriteBatch {
 	set(documentRef: DocumentReference, data: DocumentData, options?: SetOptions): WriteBatch {
 		if (options) {
 			if (typeof options?.merge === 'boolean') {
-				return WriteBatch.fromNative(this.native.setDataForDocumentMerge(serialize(data), documentRef.native, options.merge));
+				return WriteBatch.fromNative(this.native.setDataForDocumentMerge(serializeItems(data), documentRef.native, options.merge));
 			}
 
 			if (options.mergeFields) {
 				if (Array.isArray(options.mergeFields)) {
 					if (typeof options.mergeFields[0] === 'string') {
-						return WriteBatch.fromNative(this.native.setDataForDocumentMergeFields(serialize(data), documentRef.native, options.mergeFields));
+						return WriteBatch.fromNative(this.native.setDataForDocumentMergeFields(serializeItems(data), documentRef.native, options.mergeFields));
 					}
 
 					return WriteBatch.fromNative(
 						this.native.setDataForDocumentMergeFields(
-							serialize(data),
+							serializeItems(data),
 							documentRef.native,
 							options.mergeFields.map((field) => field.native)
 						)
@@ -1211,7 +1211,7 @@ export class WriteBatch implements IWriteBatch {
 
 			return null;
 		} else {
-			return WriteBatch.fromNative(this.native.setDataForDocument(serialize(data), documentRef.native));
+			return WriteBatch.fromNative(this.native.setDataForDocument(serializeItems(data), documentRef.native));
 		}
 	}
 

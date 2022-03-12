@@ -2,7 +2,7 @@ import { ICollectionReference, IDocumentReference, IFieldPath, IFieldValue, IGeo
 
 export { SetOptions, DocumentData, GetOptions, WhereFilterOp };
 
-import { deserialize, firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 
 let defaultFirestore: Firestore;
 
@@ -1371,23 +1371,23 @@ export class WriteBatch implements IWriteBatch {
 		if (options) {
 			if (typeof options?.merge === 'boolean') {
 				const opts = com.google.firebase.firestore.SetOptions.merge();
-				return WriteBatch.fromNative(this.native.set(serialize(data), documentRef.native, opts));
+				return WriteBatch.fromNative(this.native.set(serializeItems(data), documentRef.native, opts));
 			}
 
 			if (options.mergeFields) {
 				if (Array.isArray(options.mergeFields)) {
 					if (typeof options.mergeFields[0] === 'string') {
-						return WriteBatch.fromNative(this.native.set(serialize(data), documentRef.native, com.google.firebase.firestore.SetOptions.mergeFields(options.mergeFields as any)));
+						return WriteBatch.fromNative(this.native.set(serializeItems(data), documentRef.native, com.google.firebase.firestore.SetOptions.mergeFields(options.mergeFields as any)));
 					}
 
 					const list = java.util.Arrays.asList(options.mergeFields.map((field) => field.native));
-					return WriteBatch.fromNative(this.native.set(serialize(data), documentRef.native, com.google.firebase.firestore.SetOptions.mergeFields(list)));
+					return WriteBatch.fromNative(this.native.set(serializeItems(data), documentRef.native, com.google.firebase.firestore.SetOptions.mergeFields(list)));
 				}
 			}
 
 			return null;
 		} else {
-			return WriteBatch.fromNative(this.native.set(serialize(data), documentRef.native));
+			return WriteBatch.fromNative(this.native.set(serializeItems(data), documentRef.native));
 		}
 	}
 
