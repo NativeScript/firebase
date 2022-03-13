@@ -13,6 +13,21 @@ export class FirebaseError extends Error {
 	get native() {
 		return this.#native;
 	}
+
+	intoNative() {
+		if (!this.#native) {
+			const exception = NSException.exceptionWithNameReasonUserInfo(NSGenericException, this.message, null);
+			const info = {};
+			info['ExceptionName'] = exception.name;
+			info['ExceptionReason'] = exception.reason;
+			info['ExceptionCallStackReturnAddresses'] = exception.callStackReturnAddresses;
+			info['ExceptionCallStackSymbols'] = exception.callStackSymbols;
+			info['ExceptionUserInfo'] = exception.userInfo;
+			const error = NSError.alloc().initWithDomainCodeUserInfo('NativeScript', 1000, info as any);
+			return error;
+		}
+		return this.#native;
+	}
 }
 
 export class FirebaseOptions implements IFirebaseOptions {

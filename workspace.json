@@ -103,7 +103,8 @@
               "nx run firebase-installations:build.all",
               "nx run firebase-dynamic-links:build.all",
               "nx run firebase-messaging:build.all",
-              "nx run firebase-functions:build.all"
+              "nx run firebase-functions:build.all",
+              "nx run firebase-app-check-debug:build.all"
             ],
             "parallel": false
           }
@@ -883,6 +884,51 @@
           "executor": "@nativescript/nx:build",
           "options": {
             "clean": true
+          }
+        }
+      }
+    },
+    "firebase-app-check-debug": {
+      "root": "packages/firebase-app-check-debug",
+      "projectType": "library",
+      "sourceRoot": "packages/firebase-app-check-debug",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/firebase-app-check-debug",
+            "tsConfig": "packages/firebase-app-check-debug/tsconfig.json",
+            "packageJson": "packages/firebase-app-check-debug/package.json",
+            "main": "packages/firebase-app-check-debug/index.d.ts",
+            "assets": [
+              "packages/firebase-app-check-debug/*.md",
+              "packages/firebase-app-check-debug/index.d.ts",
+              "LICENSE",
+              {
+                "glob": "**/*",
+                "input": "packages/firebase-app-check-debug/platforms/",
+                "output": "./platforms/"
+              }
+            ]
+          }
+        },
+        "build.all": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx run firebase-app-check-debug:build",
+              "node tools/scripts/build-finish.ts firebase-app-check-debug"
+            ],
+            "parallel": false
+          }
+        },
+        "focus": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "nx g @nativescript/plugin-tools:focus-packages firebase-app-check-debug"
+            ],
+            "parallel": false
           }
         }
       }

@@ -2,13 +2,48 @@ package org.nativescript.firebase.app_check
 
 import android.os.Handler
 import android.os.Looper
-import com.google.firebase.appcheck.AppCheckToken
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
+import com.google.firebase.appcheck.AppCheckProvider
+import java.lang.Exception
 import java.util.concurrent.Executors
 
 class FirebaseAppCheck {
   interface Callback<T> {
     fun onSuccess(result: T?)
     fun onError(error: Any?)
+  }
+
+  class AppCheckToken(private val checkToken: String, private val expireTime: Long) :
+    com.google.firebase.appcheck.AppCheckToken() {
+
+    override fun getToken(): String {
+      return checkToken
+    }
+
+    override fun getExpireTimeMillis(): Long {
+      return expireTime
+    }
+  }
+
+
+  class CustomAppCheckProvider(private val callback: Callback) : AppCheckProvider {
+    interface Callback {
+      fun getToken(): Any
+    }
+
+    override fun getToken(): Task<com.google.firebase.appcheck.AppCheckToken> {
+      val source = TaskCompletionSource<com.google.firebase.appcheck.AppCheckToken>()
+      executors.execute {
+        val value = callback.getToken()
+        if (value is Exception) {
+          source.setException(value)
+        } else {
+          source.setResult(value as AppCheckToken)
+        }
+      }
+      return source.task
+    }
   }
 
   companion object {
@@ -30,7 +65,7 @@ class FirebaseAppCheck {
     fun getToken(
       appCheck: com.google.firebase.appcheck.FirebaseAppCheck,
       forceRefresh: Boolean,
-      callback: Callback<AppCheckToken>
+      callback: Callback<com.google.firebase.appcheck.AppCheckToken>
     ) {
       appCheck
         .getAppCheckToken(forceRefresh)

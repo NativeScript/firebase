@@ -1,5 +1,5 @@
 import { IFirebaseOptions, FirebaseConfig } from './common';
-import { knownFolders, Utils, File } from '@nativescript/core';
+import { knownFolders, Utils } from '@nativescript/core';
 export * from './utils';
 declare const __non_webpack_require__;
 export class FirebaseError extends Error {
@@ -11,6 +11,13 @@ export class FirebaseError extends Error {
 	}
 
 	get native() {
+		return this.#native;
+	}
+
+	intoNative() {
+		if (!this.#native) {
+			return new java.lang.Exception(this.message);
+		}
 		return this.#native;
 	}
 }
@@ -258,11 +265,10 @@ export class Firebase {
 				}
 				resolve(fbApp);
 			} catch (e) {
-				reject(new FirebaseError(e.message))
+				reject(new FirebaseError(e.message));
 			}
-		})
+		});
 	}
-
 
 	initializeAppWithPath(path: string, options: FirebaseOptions = null, config?: FirebaseConfig) {
 		return new Promise((resolve, reject) => {
@@ -279,14 +285,12 @@ export class Firebase {
 					json = __non_webpack_require__(path);
 				}
 
-
 				// always use first client
 
 				const client = json['client'][0];
 				const oauth_clients = client['oauth_client'];
 				const project_info = json['project_info'];
 				const client_info = client['client_info'];
-
 
 				let default_web_client_id = null;
 				const firebase_database_url = project_info['firebase_url'] || null;
@@ -325,11 +329,9 @@ export class Firebase {
 					nativeOptions.setProjectId(project_id);
 				}
 
-
 				if (google_storage_bucket) {
 					nativeOptions.setStorageBucket(google_storage_bucket);
 				}
-
 
 				if (options?.apiKey) {
 					nativeOptions.setApiKey(options.apiKey);
@@ -359,13 +361,11 @@ export class Firebase {
 					nativeOptions.setGaTrackingId(options.trackingId);
 				}
 
-
 				const app = com.google.firebase.FirebaseApp.initializeApp(ctx, nativeOptions.build());
 
 				if (app && typeof config === 'object' && typeof config.automaticResourceManagement === 'boolean') {
 					app.setAutomaticResourceManagementEnabled(config.automaticDataCollectionEnabled);
 				}
-
 
 				const fbApp = FirebaseApp.fromNative(app);
 
@@ -376,7 +376,7 @@ export class Firebase {
 			} catch (e) {
 				reject(new FirebaseError(e.message));
 			}
-		})
+		});
 	}
 }
 

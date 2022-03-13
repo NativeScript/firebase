@@ -73,6 +73,9 @@
     },
     "demo-vue": {
       "tags": []
+    },
+    "firebase-app-check-debug": {
+      "tags": []
     }
   },
   "workspaceLayout": {

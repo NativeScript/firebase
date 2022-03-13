@@ -17,7 +17,8 @@
     "@nativescript/firebase-installations": "file:../../dist/packages/firebase-installations",
     "@nativescript/firebase-dynamic-links": "file:../../dist/packages/firebase-dynamic-links",
     "@nativescript/firebase-messaging": "file:../../dist/packages/firebase-messaging",
-    "@nativescript/firebase-functions": "file:../../dist/packages/firebase-functions"
+    "@nativescript/firebase-functions": "file:../../dist/packages/firebase-functions",
+    "@nativescript/firebase-app-check-debug": "file:../../dist/packages/firebase-app-check-debug"
   },
   "devDependencies": {
     "@nativescript/android": "8.0.0",

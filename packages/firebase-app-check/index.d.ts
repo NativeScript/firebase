@@ -1,6 +1,6 @@
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 
-declare interface AppCheck {
+declare class AppCheck {
 	readonly ios: any;
 	readonly android: any;
 	readonly native: any;
@@ -8,12 +8,33 @@ declare interface AppCheck {
 
 	constructor(app?: FirebaseApp);
 
+	static setProviderFactory(custom?: AppCheckProviderFactory);
+
 	activate(isTokenAutoRefreshEnabled: boolean);
 
 	setTokenAutoRefreshEnabled(enabled: boolean);
 
 	getToken(forceRefresh: boolean): Promise<AppCheckToken>;
 }
+
+declare abstract class AppCheckProviderFactory {
+	abstract createProvider(app: FirebaseApp): AppCheckProvider;
+	readonly native;
+}
+
+declare abstract class AppCheckProvider {
+	abstract getToken(
+		done: (
+			token: {
+				token: string;
+				expirationDate: Date;
+			},
+			error: FirebaseError
+		) => void
+	);
+	readonly native;
+}
+
 
 declare class AppCheckToken {
 	readonly ios: any;

@@ -17,7 +17,13 @@ import '@nativescript/firebase-storage';
 
 import { Admob } from '@nativescript/firebase-admob';
 
-firebase().initializeApp();
+import { AppCheck } from '@nativescript/firebase-app-check-debug';
+
+AppCheck.setProviderFactory();
+
+firebase().initializeApp().then(app =>{
+	firebase().appCheck().activate(true);
+})
 
 Admob.init();
 

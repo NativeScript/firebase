@@ -10,6 +10,7 @@ const routes: Routes = [
 	{ path: 'firebase-admob', loadChildren: () => import('./plugin-demos/firebase-admob.module').then(m => m.FirebaseAdmobModule) },
 	{ path: 'firebase-analytics', loadChildren: () => import('./plugin-demos/firebase-analytics.module').then(m => m.FirebaseAnalyticsModule) },
 	{ path: 'firebase-app-check', loadChildren: () => import('./plugin-demos/firebase-app-check.module').then(m => m.FirebaseAppCheckModule) },
+	{ path: 'firebase-app-check-debug', loadChildren: () => import('./plugin-demos/firebase-app-check-debug.module').then(m => m.FirebaseAppCheckDebugModule) },
 	{ path: 'firebase-auth', loadChildren: () => import('./plugin-demos/firebase-auth.module').then(m => m.FirebaseAuthModule) },
 	{ path: 'firebase-core', loadChildren: () => import('./plugin-demos/firebase-core.module').then(m => m.FirebaseCoreModule) },
 	{ path: 'firebase-crashlytics', loadChildren: () => import('./plugin-demos/firebase-crashlytics.module').then(m => m.FirebaseCrashlyticsModule) },

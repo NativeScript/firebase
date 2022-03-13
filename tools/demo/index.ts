@@ -2,6 +2,7 @@ export * from './utils';
 export * from './firebase-admob';
 export * from './firebase-analytics';
 export * from './firebase-app-check';
+export * from './firebase-app-check-debug';
 export * from './firebase-auth';
 export * from './firebase-core';
 export * from './firebase-crashlytics';

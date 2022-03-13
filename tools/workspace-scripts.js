@@ -196,6 +196,13 @@ module.exports = {
 					description: '@nativescript/firebase-functions: Build',
 				},
 			},
+			// @nativescript/firebase-app-check-debug
+			'firebase-app-check-debug': {
+				build: {
+					script: 'nx run firebase-app-check-debug:build.all',
+					description: '@nativescript/firebase-app-check-debug: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run all:build',
 				description: 'Build all packages',
@@ -269,6 +276,10 @@ module.exports = {
 			'firebase-functions': {
 				script: 'nx run firebase-functions:focus',
 				description: 'Focus on @nativescript/firebase-functions',
+			},
+			'firebase-app-check-debug': {
+				script: 'nx run firebase-app-check-debug:focus',
+				description: 'Focus on @nativescript/firebase-app-check-debug',
 			},
 			reset: {
 				script: 'nx run all:focus',

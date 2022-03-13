@@ -16,6 +16,9 @@ export class HomeComponent {
 		name: 'firebase-app-check'
 	},
 	{
+		name: 'firebase-app-check-debug'
+	},
+	{
 		name: 'firebase-auth'
 	},
 	{

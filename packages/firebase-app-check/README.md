@@ -33,12 +33,62 @@ The [official Firebase App Check documentation](https://firebase.google.com/docs
 
 ### Activate
 
+```ts
+import { firebase } from '@nativescript/firebase-core';
+import { AppCheck } from '@nativescript/firebase-app-check';
 
-On iOS if you include the App Check package, it is activated by default. The only configuration possible is the token auto refresh. When you call activate, the provider (DeviceCheck by default) stays the same but the token auto refresh setting will be changed based on the argument provided.
+AppCheck.setProviderFactory(); // call before the fb app is initialized 
+firebase.initializeApp()
+.then(app =>{
+    firebase().appCheck().activate(true);
+})
 
-On Android, App Check is not activated until you call the activate method. The provider is not configurable here either but if your app is "debuggable", then the Debug app check provider will be installed, otherwise the SafetyNet provider will be installed.
+
+```
+
+ The only configuration possible is the token auto refresh. When you call activate, the provider stays the same but the token auto refresh setting will be changed based on the argument provided.
 
 You must call activate prior to calling any firebase back-end services for App Check to function.
+
+
+#### Custom Provider
+
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+import { AppCheck, AppCheckProviderFactory, AppCheckProvider } from '@nativescript/firebase-app-check';
+
+
+class AppCheckProviderFactoryImpl extends AppCheckProviderFactory {
+	createProvider(app: FirebaseApp) {
+        // we could potentiall do something with the app 
+        return new AppCheckProviderImpl();
+    }
+}
+
+
+class AppCheckProviderImpl extends AppCheckProvider {
+    getToken(done){
+        // do some call probably http
+        // finally call done when you're ready passing in a token along with the expirationDate
+        done({
+            token: someToken,
+            expirationDate: someDate 
+        })
+    }
+}
+
+
+
+AppCheck.setProviderFactory(new AppCheckProviderFactoryImpl()); // call before the fb app is initialized 
+firebase.initializeApp()
+.then(app =>{
+    firebase().appCheck().activate(true);
+})
+
+
+```
+
 
 
 
