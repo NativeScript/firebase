@@ -20,6 +20,13 @@ Object.defineProperty(fb, 'database', {
 const NSOnDisconnect = lazy(() => org.nativescript.firebase.database.FirebaseDatabase.OnDisconnect);
 const NSDatabaseReference = lazy(() => org.nativescript.firebase.database.FirebaseDatabase.DatabaseReference);
 
+function serializeItems(data, wrapPrimitives = false) {
+	if (data instanceof ServerValue) {
+		return data.native;
+	}
+	return serialize(data, wrapPrimitives);
+}
+
 export class OnDisconnect implements IOnDisconnect {
 	#native: com.google.firebase.database.OnDisconnect;
 	static fromNative(disconnect: com.google.firebase.database.OnDisconnect) {
@@ -79,7 +86,7 @@ export class OnDisconnect implements IOnDisconnect {
 		return new Promise((resolve, reject) => {
 			NSOnDisconnect().set(
 				this.native,
-				serialize(value, true),
+				serializeItems(value, true),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback<java.lang.Void>({
 					onError(error) {
 						const err = FirebaseError.fromNative(error);
@@ -98,7 +105,7 @@ export class OnDisconnect implements IOnDisconnect {
 		return new Promise((resolve, reject) => {
 			NSOnDisconnect().setWithPriority(
 				this.native,
-				serialize(value, true),
+				serializeItems(value, true),
 				priority as any,
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback<java.lang.Void>({
 					onError(error) {
@@ -443,7 +450,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().set(
 				this.native,
-				serialize(value, true),
+				serializeItems(value, true),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
 						onComplete?.(null);
@@ -481,7 +488,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().setWithPriority(
 				this.native,
-				serialize(newVal, true),
+				serializeItems(newVal, true),
 				newPriority as any,
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
@@ -506,7 +513,7 @@ export class Reference extends Query implements IReference {
 					doTransaction(data: any): any {
 						const newData = transactionUpdate(deserialize(data));
 						// TODO improve
-						return serialize(newData, true);
+						return serializeItems(newData, true);
 					},
 					onComplete(error: com.google.firebase.database.DatabaseError, commited: boolean, snapshot: com.google.firebase.database.DataSnapshot): void {
 						const ss = DataSnapshot.fromNative(snapshot);
@@ -530,7 +537,7 @@ export class Reference extends Query implements IReference {
 		return new Promise((resolve, reject) => {
 			NSDatabaseReference().update(
 				this.native,
-				serialize(values, true),
+				serializeItems(values, true),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback({
 					onSuccess(param0) {
 						onComplete?.(null);
@@ -631,7 +638,7 @@ export class Database implements IDatabase {
 		if (app?.native) {
 			this.#native = com.google.firebase.database.FirebaseDatabase.getInstance(app.native);
 		} else {
-			if(defaultDatabase){
+			if (defaultDatabase) {
 				return defaultDatabase;
 			}
 			defaultDatabase = this;
@@ -639,13 +646,11 @@ export class Database implements IDatabase {
 		}
 	}
 
+	useEmulator(host: string, port: number) {
+		this.native.useEmulator(host === 'localhost' ? '10.0.2.2' : host, port);
+	}
 
-  useEmulator(host: string, port: number) {
-    this.native.useEmulator(host === 'localhost' ? '10.0.2.2' : host, port);
-  }
-
-
-  #persistenceCacheSizeBytes = 10 * 1024 * 1024;
+	#persistenceCacheSizeBytes = 10 * 1024 * 1024;
 	get persistenceCacheSizeBytes(): number {
 		return this.#persistenceCacheSizeBytes;
 	}

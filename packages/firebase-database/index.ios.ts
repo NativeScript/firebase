@@ -16,6 +16,15 @@ Object.defineProperty(fb, 'database', {
 	writable: false,
 });
 
+
+function serializeItems(data, wrapPrimitives = false) {
+	if (data instanceof ServerValue) {
+		return data.native;
+	}
+	return serialize(data, wrapPrimitives);
+}
+
+
 export class OnDisconnect implements IOnDisconnect {
   #native: FIRDatabaseReference;
 
@@ -102,7 +111,7 @@ export class OnDisconnect implements IOnDisconnect {
 
   update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.native.onDisconnectUpdateChildValuesWithCompletionBlock(serialize(values), (error, ref) => {
+      this.native.onDisconnectUpdateChildValuesWithCompletionBlock(serializeItems(values), (error, ref) => {
         if (error) {
           const err = FirebaseError.fromNative(error);
           onComplete?.(err);
@@ -378,7 +387,7 @@ export class Reference extends Query implements IReference {
 
   set(value: any, onComplete?: (error: FirebaseError) => void): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.native.setValueWithCompletionBlock(serialize(value), (error, ref) => {
+      this.native.setValueWithCompletionBlock(serializeItems(value), (error, ref) => {
         if (error) {
           const err = FirebaseError.fromNative(error);
           onComplete?.(err);
@@ -412,7 +421,7 @@ export class Reference extends Query implements IReference {
 
   setWithPriority(newVal: any, newPriority: string | number, onComplete?: (error: FirebaseError) => void): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.native.setValueAndPriorityWithCompletionBlock(serialize(newVal), newPriority, (error, ref) => {
+      this.native.setValueAndPriorityWithCompletionBlock(serializeItems(newVal), newPriority, (error, ref) => {
         if (error) {
           const err = FirebaseError.fromNative(error);
           onComplete?.(err);
@@ -430,7 +439,7 @@ export class Reference extends Query implements IReference {
       this.native.runTransactionBlockAndCompletionBlockWithLocalEvents(
         (data) => {
           const newData = transactionUpdate(deserialize(data.value));
-          data.value = serialize(newData);
+          data.value = serializeItems(newData);
           return FIRTransactionResult.successWithValue(data);
         },
         (error, commited, snapshot) => {
@@ -454,7 +463,7 @@ export class Reference extends Query implements IReference {
 
   update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.native.updateChildValuesWithCompletionBlock(serialize(values), (error, ref) => {
+      this.native.updateChildValuesWithCompletionBlock(serializeItems(values), (error, ref) => {
         if (error) {
           const err = FirebaseError.fromNative(error);
           onComplete?.(err);
