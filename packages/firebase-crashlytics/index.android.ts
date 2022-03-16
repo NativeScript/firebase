@@ -73,7 +73,7 @@ export class Crashlytics implements ICrashlytics {
 			StackTrace.fromError(error).then((stack) => {
 				const traceElements = Array.create('java.lang.StackTraceElement', stack.length);
 				stack.forEach((item, i) => {
-					traceElements[i] = new java.lang.StackTraceElement('', item.functionName, item.fileName, -1);
+					traceElements[i] = new java.lang.StackTraceElement('', item.functionName || '(anonymous)', item.fileName, -1);
 				});
 				const t = new java.lang.Throwable(error.message);
 				t.setStackTrace(traceElements);

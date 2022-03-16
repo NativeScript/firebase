@@ -67,7 +67,7 @@ export class Crashlytics implements ICrashlytics {
 			StackTrace.fromError(error).then((stack) => {
 				const traceElements = [];
 				stack.forEach((item, i) => {
-					traceElements[i] = FIRStackFrame.stackFrameWithSymbolFileLine(item.functionName, item.fileName, item.lineNumber);
+					traceElements[i] = FIRStackFrame.stackFrameWithSymbolFileLine(item.functionName || '(anonymous)', item.fileName, item.lineNumber);
 				});
 				const e = FIRExceptionModel.exceptionModelWithNameReason('JavaScriptError', error.message);
 				this.native.recordExceptionModel(e);
