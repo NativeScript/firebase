@@ -1,6 +1,6 @@
 {
   "name": "@nativescript/firebase-performance",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "NativeScript Firebase - Performancee",
   "main": "index",
   "typings": "index.d.ts",
