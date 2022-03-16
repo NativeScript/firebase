@@ -1,0 +1,73 @@
+{
+	"root": "packages/firebase-admob",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-admob",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-admob",
+				"tsConfig": "packages/firebase-admob/tsconfig.json",
+				"packageJson": "packages/firebase-admob/package.json",
+				"main": "packages/firebase-admob/index.d.ts",
+				"assets": [
+					"packages/firebase-admob/*.md",
+					"packages/firebase-admob/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-admob/platforms/",
+						"output": "./platforms/"
+					},
+					{
+						"glob": "**/*.d.ts",
+						"input": "packages/firebase-admob/nativead/",
+						"output": "./nativead/"
+					},
+					{
+						"glob": "**/*.d.ts",
+						"input": "packages/firebase-admob/adsconsent/",
+						"output": "./adsconsent/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-admob"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-admob"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-admob"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-admob/**/*.ts"]
+			}
+		}
+	}
+}

@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-storage",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-storage",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-storage",
+				"tsConfig": "packages/firebase-storage/tsconfig.json",
+				"packageJson": "packages/firebase-storage/package.json",
+				"main": "packages/firebase-storage/index.d.ts",
+				"assets": [
+					"packages/firebase-storage/*.md",
+					"packages/firebase-storage/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-storage/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-storage"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-storage"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-storage"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-storage/**/*.ts"]
+			}
+		}
+	}
+}

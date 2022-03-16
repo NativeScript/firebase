@@ -19,65 +19,64 @@ module.exports = {
 		},
 		// demos
 		apps: {
-        '...Vanilla...': {
-          script: 'npx cowsay "Nothing wrong with vanilla 🍦"',
-          description: ' 🔻 Vanilla',
-        },
-        demo: {
-          clean: {
-            script: 'nx run demo:clean',
-            description: '⚆  Clean  🧹',
-          },
-          ios: {
-            script: 'nx run demo:ios',
-            description: '⚆  Run iOS  ',
-          },
-          android: {
-            script: 'nx run demo:android',
-            description: '⚆  Run Android  🤖',
-          },
-        },
-        '...Angular...': {
-          script: 'npx cowsay "Test all the Angles!"',
-          description: ' 🔻 Angular',
-        },
-        'demo-angular': {
-          clean: {
-            script: 'nx run demo-angular:clean',
-            description: '⚆  Clean  🧹',
-          },
-          ios: {
-            script: 'nx run demo-angular:ios',
-            description: '⚆  Run iOS  ',
-          },
-          android: {
-            script: 'nx run demo-angular:android',
-            description: '⚆  Run Android  🤖',
-          },
-        },
-        
-        
-        '...Vue...': {
-    script: 'npx cowsay "You like the vue here..."',
-    description: ' 🔻 Vue',
-  },
-  'demo-vue': {
-    clean: {
-      script: 'nx run demo-vue:clean',
-      description: '⚆  Clean  🧹',
-    },
-    ios: {
-      script: 'nx run demo-vue:ios',
-      description: '⚆  Run iOS  ',
-    },
-    android: {
-      script: 'nx run demo-vue:android',
-      description: '⚆  Run Android  🤖',
-    },
-  },
-  },
+			'...Vanilla...': {
+				script: 'npx cowsay "Nothing wrong with vanilla 🍦"',
+				description: ' 🔻 Vanilla',
+			},
+			demo: {
+				clean: {
+					script: 'nx run demo:clean',
+					description: '⚆  Clean  🧹',
+				},
+				ios: {
+					script: 'nx run demo:ios',
+					description: '⚆  Run iOS  ',
+				},
+				android: {
+					script: 'nx run demo:android',
+					description: '⚆  Run Android  🤖',
+				},
+			},
+			'...Angular...': {
+				script: 'npx cowsay "Test all the Angles!"',
+				description: ' 🔻 Angular',
+			},
+			'demo-angular': {
+				clean: {
+					script: 'nx run demo-angular:clean',
+					description: '⚆  Clean  🧹',
+				},
+				ios: {
+					script: 'nx run demo-angular:ios',
+					description: '⚆  Run iOS  ',
+				},
+				android: {
+					script: 'nx run demo-angular:android',
+					description: '⚆  Run Android  🤖',
+				},
+			},
 
-    '⚙️': {
+			'...Vue...': {
+				script: 'npx cowsay "You like the vue here..."',
+				description: ' 🔻 Vue',
+			},
+			'demo-vue': {
+				clean: {
+					script: 'nx run demo-vue:clean',
+					description: '⚆  Clean  🧹',
+				},
+				ios: {
+					script: 'nx run demo-vue:ios',
+					description: '⚆  Run iOS  ',
+				},
+				android: {
+					script: 'nx run demo-vue:android',
+					description: '⚆  Run Android  🤖',
+				},
+			},
+		},
+
+		'⚙️': {
 			script: `npx cowsay "@nativescript/* packages will keep your ⚙️ cranking"`,
 			description: '_____________  @nativescript/*  _____________',
 		},
@@ -204,7 +203,7 @@ module.exports = {
 				},
 			},
 			'build-all': {
-				script: 'nx run all:build',
+				script: 'nx run-many --target=build.all --all',
 				description: 'Build all packages',
 			},
 		},
@@ -282,9 +281,9 @@ module.exports = {
 				description: 'Focus on @nativescript/firebase-app-check-debug',
 			},
 			reset: {
-				script: 'nx run all:focus',
+				script: 'nx g @nativescript/plugin-tools:focus-packages',
 				description: 'Reset Focus',
-			}
+			},
 		},
 		'.....................': {
 			script: `npx cowsay "That's all for now folks ~"`,

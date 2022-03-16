@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-analytics",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-analytics",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-analytics",
+				"tsConfig": "packages/firebase-analytics/tsconfig.json",
+				"packageJson": "packages/firebase-analytics/package.json",
+				"main": "packages/firebase-analytics/index.d.ts",
+				"assets": [
+					"packages/firebase-analytics/*.md",
+					"packages/firebase-analytics/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-analytics/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-analytics"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-analytics"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-analytics"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-analytics/**/*.ts"]
+			}
+		}
+	}
+}

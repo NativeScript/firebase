@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-app-check-debug",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-app-check-debug",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-app-check-debug",
+				"tsConfig": "packages/firebase-app-check-debug/tsconfig.json",
+				"packageJson": "packages/firebase-app-check-debug/package.json",
+				"main": "packages/firebase-app-check-debug/index.d.ts",
+				"assets": [
+					"packages/firebase-app-check-debug/*.md",
+					"packages/firebase-app-check-debug/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-app-check-debug/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-app-check-debug"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-app-check-debug"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-app-check-debug"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-app-check-debug/**/*.ts"]
+			}
+		}
+	}
+}

@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-dynamic-links",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-dynamic-links",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-dynamic-links",
+				"tsConfig": "packages/firebase-dynamic-links/tsconfig.json",
+				"packageJson": "packages/firebase-dynamic-links/package.json",
+				"main": "packages/firebase-dynamic-links/index.d.ts",
+				"assets": [
+					"packages/firebase-dynamic-links/*.md",
+					"packages/firebase-dynamic-links/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-dynamic-links/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-dynamic-links"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-dynamic-links"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-dynamic-links"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-dynamic-links/**/*.ts"]
+			}
+		}
+	}
+}

@@ -1,5 +1,3 @@
-import {FieldValue} from "@nativescript/firebase-firestore/index.ios";
-
 export type WhereFilterOp =
   '<'
   | '<='

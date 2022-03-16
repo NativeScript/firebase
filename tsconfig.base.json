@@ -1,39 +1,46 @@
 {
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noEmitHelpers": false,
-    "target": "es2015",
-    "module": "esnext",
-    "allowSyntheticDefaultImports": true,
-    "lib": [
-      "es2017",
-      "dom"
-    ],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "plugins": [
-      {
-        "transform": "@nativescript/webpack/dist/transformers/NativeClass",
-        "type": "raw"
-      }
-    ],
-    "paths": {
-      "@demo/shared": [
-        "tools/demo/index.ts"
-      ],
-      "@nativescript/*": [
-        "packages/*"
-      ]
-    }
-  },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+	"compilerOptions": {
+		"rootDir": ".",
+		"sourceMap": true,
+		"declaration": true,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"noEmitHelpers": false,
+		"target": "es2015",
+		"module": "esnext",
+		"allowSyntheticDefaultImports": true,
+		"lib": ["es2017", "dom"],
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"baseUrl": ".",
+		"plugins": [
+			{
+				"transform": "@nativescript/webpack/dist/transformers/NativeClass",
+				"type": "raw"
+			}
+		],
+		"paths": {
+			"@demo/shared": ["tools/demo/index.ts"],
+			"@nativescript/firebase-admob": ["packages/firebase-admob/index.d.ts"],
+			"@nativescript/firebase-admob/angular": ["packages/firebase-admob/angular/index.ts"],
+			"@nativescript/firebase-analytics": ["packages/firebase-analytics/index.d.ts"],
+			"@nativescript/firebase-app-check": ["packages/firebase-app-check/index.d.ts"],
+			"@nativescript/firebase-app-check-debug": ["packages/firebase-app-check-debug/index.d.ts"],
+			"@nativescript/firebase-auth": ["packages/firebase-auth/index.d.ts"],
+			"@nativescript/firebase-core": ["packages/firebase-core/index.d.ts"],
+			"@nativescript/firebase-crashlytics": ["packages/firebase-crashlytics/index.d.ts"],
+			"@nativescript/firebase-database": ["packages/firebase-database/index.d.ts"],
+			"@nativescript/firebase-dynamic-links": ["packages/firebase-dynamic-links/index.d.ts"],
+			"@nativescript/firebase-firestore": ["packages/firebase-firestore/index.d.ts"],
+			"@nativescript/firebase-functions": ["packages/firebase-functions/index.d.ts"],
+			"@nativescript/firebase-in-app-messaging": ["packages/firebase-in-app-messaging/index.d.ts"],
+			"@nativescript/firebase-installations": ["packages/firebase-installations/index.d.ts"],
+			"@nativescript/firebase-messaging": ["packages/firebase-messaging/index.d.ts"],
+			"@nativescript/firebase-performance": ["packages/firebase-performance/index.d.ts"],
+			"@nativescript/firebase-remote-config": ["packages/firebase-remote-config/index.d.ts"],
+			"@nativescript/firebase-storage": ["packages/firebase-storage/index.d.ts"]
+		}
+	},
+	"exclude": ["node_modules", "tmp"]
 }

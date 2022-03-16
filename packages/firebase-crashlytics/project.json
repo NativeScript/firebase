@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-crashlytics",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-crashlytics",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-crashlytics",
+				"tsConfig": "packages/firebase-crashlytics/tsconfig.json",
+				"packageJson": "packages/firebase-crashlytics/package.json",
+				"main": "packages/firebase-crashlytics/index.d.ts",
+				"assets": [
+					"packages/firebase-crashlytics/*.md",
+					"packages/firebase-crashlytics/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-crashlytics/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-crashlytics"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-crashlytics"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-crashlytics"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-crashlytics/**/*.ts"]
+			}
+		}
+	}
+}

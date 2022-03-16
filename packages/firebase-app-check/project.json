@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-app-check",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-app-check",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-app-check",
+				"tsConfig": "packages/firebase-app-check/tsconfig.json",
+				"packageJson": "packages/firebase-app-check/package.json",
+				"main": "packages/firebase-app-check/index.d.ts",
+				"assets": [
+					"packages/firebase-app-check/*.md",
+					"packages/firebase-app-check/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-app-check/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-app-check"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-app-check"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-app-check"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-app-check/**/*.ts"]
+			}
+		}
+	}
+}

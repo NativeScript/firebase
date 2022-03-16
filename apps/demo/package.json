@@ -1,31 +1,31 @@
 {
-  "main": "./src/app.ts",
-  "description": "NativeScript Application",
-  "license": "SEE LICENSE IN <your-license-filename>",
-  "repository": "<fill-your-repository-here>",
-  "dependencies": {
-    "@nativescript/core": "file:../../node_modules/@nativescript/core",
-    "@nativescript/firebase-admob": "file:../../packages/firebase-admob",
-    "@nativescript/firebase-analytics": "file:../../packages/firebase-analytics",
-    "@nativescript/firebase-app-check": "file:../../packages/firebase-app-check",
-    "@nativescript/firebase-auth": "file:../../packages/firebase-auth",
-    "@nativescript/firebase-core": "file:../../packages/firebase-core",
-    "@nativescript/firebase-crashlytics": "file:../../packages/firebase-crashlytics",
-    "@nativescript/firebase-database": "file:../../packages/firebase-database",
-    "@nativescript/firebase-dynamic-links": "file:../../packages/firebase-dynamic-links",
-    "@nativescript/firebase-firestore": "file:../../packages/firebase-firestore",
-    "@nativescript/firebase-functions": "file:../../packages/firebase-functions",
-    "@nativescript/firebase-in-app-messaging": "file:../../packages/firebase-in-app-messaging",
-    "@nativescript/firebase-installations": "file:../../packages/firebase-installations",
-    "@nativescript/firebase-messaging": "file:../../packages/firebase-messaging",
-    "@nativescript/firebase-performance": "file:../../packages/firebase-performance",
-    "@nativescript/firebase-remote-config": "file:../../packages/firebase-remote-config",
-    "@nativescript/firebase-storage": "file:../../packages/firebase-storage",
-    "@nativescript/google-signin": "^1.0.0-alpha.9",
-    "@nativescript/firebase-app-check-debug": "file:../../packages/firebase-app-check-debug"
-  },
-  "devDependencies": {
-    "@nativescript/android": "^8.2.0-alpha.11",
-    "@nativescript/ios": "8.1.0"
-  }
+	"main": "./src/app.ts",
+	"description": "NativeScript Application",
+	"license": "SEE LICENSE IN <your-license-filename>",
+	"repository": "<fill-your-repository-here>",
+	"dependencies": {
+		"@nativescript/core": "file:../../node_modules/@nativescript/core",
+		"@nativescript/firebase-admob": "file:../../packages/firebase-admob",
+		"@nativescript/firebase-analytics": "file:../../packages/firebase-analytics",
+		"@nativescript/firebase-app-check": "file:../../packages/firebase-app-check",
+		"@nativescript/firebase-auth": "file:../../packages/firebase-auth",
+		"@nativescript/firebase-core": "file:../../packages/firebase-core",
+		"@nativescript/firebase-crashlytics": "file:../../packages/firebase-crashlytics",
+		"@nativescript/firebase-database": "file:../../packages/firebase-database",
+		"@nativescript/firebase-dynamic-links": "file:../../packages/firebase-dynamic-links",
+		"@nativescript/firebase-firestore": "file:../../packages/firebase-firestore",
+		"@nativescript/firebase-functions": "file:../../packages/firebase-functions",
+		"@nativescript/firebase-in-app-messaging": "file:../../packages/firebase-in-app-messaging",
+		"@nativescript/firebase-installations": "file:../../packages/firebase-installations",
+		"@nativescript/firebase-messaging": "file:../../packages/firebase-messaging",
+		"@nativescript/firebase-performance": "file:../../packages/firebase-performance",
+		"@nativescript/firebase-remote-config": "file:../../packages/firebase-remote-config",
+		"@nativescript/firebase-storage": "file:../../packages/firebase-storage",
+		"@nativescript/google-signin": "^1.0.0-alpha.9",
+		"@nativescript/firebase-app-check-debug": "file:../../packages/firebase-app-check-debug"
+	},
+	"devDependencies": {
+		"@nativescript/android": "~8.2.0",
+		"@nativescript/ios": "~8.2.0"
+	}
 }

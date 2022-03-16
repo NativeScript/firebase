@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-auth",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-auth",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-auth",
+				"tsConfig": "packages/firebase-auth/tsconfig.json",
+				"packageJson": "packages/firebase-auth/package.json",
+				"main": "packages/firebase-auth/index.d.ts",
+				"assets": [
+					"packages/firebase-auth/*.md",
+					"packages/firebase-auth/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-auth/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-auth"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-auth"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-auth"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-auth/**/*.ts"]
+			}
+		}
+	}
+}

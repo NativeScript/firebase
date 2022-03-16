@@ -1,85 +1,32 @@
 {
-  "npmScope": "nativescript",
-  "affected": {
-    "defaultBase": "master"
-  },
-  "implicitDependencies": {
-    "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    "nx.json": "*"
-  },
-  "projects": {
-    "demo": {
-      "tags": []
-    },
-    "demo-angular": {
-      "tags": []
-    },
-    "all": {
-      "tags": []
-    },
-    "firebase-core": {
-      "tags": []
-    },
-    "firebase-auth": {
-      "tags": []
-    },
-    "firebase-database": {
-      "tags": []
-    },
-    "firebase-firestore": {
-      "tags": []
-    },
-    "firebase-analytics": {
-      "tags": []
-    },
-    "firebase-admob": {
-      "tags": []
-    },
-    "firebase-crashlytics": {
-      "tags": []
-    },
-    "firebase-app-check": {
-      "tags": []
-    },
-    "firebase-remote-config": {
-      "tags": []
-    },
-    "firebase-storage": {
-      "tags": []
-    },
-    "firebase-in-app-messaging": {
-      "tags": []
-    },
-    "firebase-performance": {
-      "tags": []
-    },
-    "firebase-installations": {
-      "tags": []
-    },
-    "firebase-dynamic-links": {
-      "tags": []
-    },
-    "firebase-messaging": {
-      "tags": []
-    },
-    "firebase-functions": {
-      "tags": []
-    },
-    "demo-vue": {
-      "tags": []
-    },
-    "firebase-app-check-debug": {
-      "tags": []
-    }
-  },
-  "workspaceLayout": {
-    "appsDir": "apps",
-    "libsDir": "packages"
-  }
+	"npmScope": "nativescript",
+	"affected": {
+		"defaultBase": "master"
+	},
+	"implicitDependencies": {
+		"workspace.json": "*",
+		"package.json": {
+			"dependencies": "*",
+			"devDependencies": "*"
+		},
+		"tsconfig.base.json": "*",
+		"tslint.json": "*",
+		"nx.json": "*"
+	},
+	"workspaceLayout": {
+		"appsDir": "apps",
+		"libsDir": "packages"
+	},
+	"tasksRunnerOptions": {
+		"default": {
+			"runner": "@nrwl/workspace/tasks-runners/default",
+			"options": {
+				"cacheableOperations": ["build", "build.all", "lint", "test", "e2e"],
+				"runtimeCacheInputs": ["node -v"]
+			}
+		}
+	},
+	"cli": {
+		"defaultCollection": "@nrwl/workspace"
+	}
 }

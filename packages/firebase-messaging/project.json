@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-messaging",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-messaging",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-messaging",
+				"tsConfig": "packages/firebase-messaging/tsconfig.json",
+				"packageJson": "packages/firebase-messaging/package.json",
+				"main": "packages/firebase-messaging/index.d.ts",
+				"assets": [
+					"packages/firebase-messaging/*.md",
+					"packages/firebase-messaging/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-messaging/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-messaging"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-messaging"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-messaging"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-messaging/**/*.ts"]
+			}
+		}
+	}
+}

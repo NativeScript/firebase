@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-installations",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-installations",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-installations",
+				"tsConfig": "packages/firebase-installations/tsconfig.json",
+				"packageJson": "packages/firebase-installations/package.json",
+				"main": "packages/firebase-installations/index.d.ts",
+				"assets": [
+					"packages/firebase-installations/*.md",
+					"packages/firebase-installations/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-installations/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-installations"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-installations"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-installations"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-installations/**/*.ts"]
+			}
+		}
+	}
+}

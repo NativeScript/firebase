@@ -1,0 +1,63 @@
+{
+	"root": "packages/firebase-in-app-messaging",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-in-app-messaging",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-in-app-messaging",
+				"tsConfig": "packages/firebase-in-app-messaging/tsconfig.json",
+				"packageJson": "packages/firebase-in-app-messaging/package.json",
+				"main": "packages/firebase-in-app-messaging/index.d.ts",
+				"assets": [
+					"packages/firebase-in-app-messaging/*.md",
+					"packages/firebase-in-app-messaging/index.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-in-app-messaging/platforms/",
+						"output": "./platforms/"
+					}
+				]
+			},
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				}
+			]
+		},
+		"build.all": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-in-app-messaging"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-in-app-messaging"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "@nrwl/workspace:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-in-app-messaging"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-in-app-messaging/**/*.ts"]
+			}
+		}
+	}
+}
