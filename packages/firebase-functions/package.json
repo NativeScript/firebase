@@ -1,6 +1,6 @@
 {
   "name": "@nativescript/firebase-functions",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "NativeScript Firebase - Functions",
   "main": "index",
   "typings": "index.d.ts",

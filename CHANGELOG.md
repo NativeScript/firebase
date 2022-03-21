@@ -1,3 +1,12 @@
+## [1.1.5](https://github.com/NativeScript/firebase/compare/1.1.4...1.1.5) (2022-03-21)
+
+
+### Bug Fixes
+
+* **auth:** return currentUser directly from the native instance ([#69](https://github.com/NativeScript/firebase/issues/69)) ([e368012](https://github.com/NativeScript/firebase/commit/e3680127f1e05c41b180f11276edf7207dd8f15c))
+
+
+
 ## [1.1.4](https://github.com/NativeScript/firebase/compare/1.1.2...1.1.4) (2022-03-16)
 
 
