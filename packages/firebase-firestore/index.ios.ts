@@ -83,6 +83,10 @@ function serializeItems(value) {
 		return value;
 	}
 
+	if (value instanceof Date) {
+		return NSDate.dateWithTimeIntervalSince1970(value.getTime() / 1000);
+	}
+
 	if (value instanceof Timestamp) {
 		return value.native;
 	}
