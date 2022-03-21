@@ -1247,12 +1247,8 @@ export class Auth implements IAuth {
 		return this.#app;
 	}
 
-	#user: User;
 	get currentUser(): User {
-		if (!this.#user) {
-			this.#user = User.fromNative(this.native.currentUser);
-		}
-		return this.#user;
+		return this.native ? User.fromNative(this.native.currentUser) : null;
 	}
 
 	get languageCode(): string {
