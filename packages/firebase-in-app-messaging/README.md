@@ -1,7 +1,7 @@
 # @nativescript/firebase-in-app-messaging
 
 ```cli
-ns plugin add @nativescript/firebase-in-app-messaging
+npm install @nativescript/firebase-in-app-messaging
 ```
 
 ## What does it do

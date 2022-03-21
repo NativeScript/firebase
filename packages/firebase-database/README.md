@@ -1,7 +1,7 @@
 # @nativescript/firebase-database
 
 ```cli
-ns plugin add @nativescript/firebase-database
+npm install @nativescript/firebase-database
 ```
 
 ## What does it do

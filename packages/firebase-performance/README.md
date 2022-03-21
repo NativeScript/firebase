@@ -1,7 +1,7 @@
 # @nativescript/firebase-performance
 
 ```cli
-ns plugin add @nativescript/firebase-performance
+npm install @nativescript/firebase-performance
 ```
 
 ## What does it do

@@ -1,7 +1,7 @@
 # @nativescript/firebase-functions
 
 ```cli
-ns plugin add @nativescript/firebase-functions
+npm install @nativescript/firebase-functions
 ```
 
 ## What does it do

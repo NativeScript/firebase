@@ -1,7 +1,7 @@
 # @nativescript/firebase-messaging
 
 ```cli
-ns plugin add @nativescript/firebase-messaging
+npm install @nativescript/firebase-messaging
 ```
 
 ## What does it do?

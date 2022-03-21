@@ -1,7 +1,7 @@
 # @nativescript/firebase-auth
 
 ```cli
-ns plugin add @nativescript/firebase-auth
+npm install @nativescript/firebase-auth
 ```
 
 ## Authentication

@@ -1,7 +1,7 @@
 # @nativescript/firebase-firestore
 
 ```cli
-ns plugin add @nativescript/firebase-firestore
+npm install @nativescript/firebase-firestore
 ```
 
 ## What does it do?

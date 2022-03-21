@@ -1,7 +1,7 @@
 # @nativescript/firebase-crashlytics
 
 ```cli
-ns plugin add @nativescript/firebase-crashlytics
+npm install @nativescript/firebase-crashlytics
 ```
 
 ## What does it do

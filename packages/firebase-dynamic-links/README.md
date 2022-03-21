@@ -1,7 +1,7 @@
 # @nativescript/firebase-dynamic-links
 
 ```cli
-ns plugin add @nativescript/firebase-dynamic-links
+npm install @nativescript/firebase-dynamic-links
 ```
 
 ## What does it do
