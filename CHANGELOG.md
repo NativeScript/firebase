@@ -1,3 +1,13 @@
+## [1.1.5](https://github.com/nativescript/firebase/compare/1.1.6...1.1.5) (2022-03-21)
+
+
+### Bug Fixes
+
+* **firestore:** android write batch ([5a3b2a9](https://github.com/nativescript/firebase/commit/5a3b2a9289041c0c7749a21a20e501bae8a974cd))
+* **firestore:** ios date serialization ([0182618](https://github.com/nativescript/firebase/commit/0182618696efdd4e662cb6bb48cd2fe9c3334a3c))
+
+
+
 ## [1.1.5](https://github.com/NativeScript/firebase/compare/1.1.4...1.1.5) (2022-03-21)
 
 
