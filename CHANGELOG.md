@@ -1,4 +1,4 @@
-## [1.1.5](https://github.com/nativescript/firebase/compare/1.1.6...1.1.5) (2022-03-21)
+## [1.2.0](https://github.com/nativescript/firebase/compare/1.1.5...1.2.0) (2022-03-21)
 
 
 ### Bug Fixes
