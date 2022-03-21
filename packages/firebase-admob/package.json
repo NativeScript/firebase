@@ -1,6 +1,6 @@
 {
   "name": "@nativescript/firebase-admob",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "NativeScript Firebase - Admob",
   "main": "index",
   "typings": "index.d.ts",

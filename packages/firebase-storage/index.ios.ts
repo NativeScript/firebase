@@ -321,7 +321,7 @@ export class Metadata implements IMetadata {
   }
 
   set customMetadata(value) {
-    this.native.customMetadata = serialize(this.native.customMetadata);
+    this.native.customMetadata = serialize(value);
   }
 
   get fullPath(): string {
