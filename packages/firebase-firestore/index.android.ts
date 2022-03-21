@@ -139,6 +139,10 @@ function serializeItems(value) {
 		return java.lang.Boolean.valueOf(value);
 	}
 
+	if (value instanceof Date) {
+		return new java.util.Date(value.getTime());
+	}
+
 	if (value instanceof Timestamp) {
 		return value.native;
 	}
@@ -1371,23 +1375,23 @@ export class WriteBatch implements IWriteBatch {
 		if (options) {
 			if (typeof options?.merge === 'boolean') {
 				const opts = com.google.firebase.firestore.SetOptions.merge();
-				return WriteBatch.fromNative(this.native.set(serializeItems(data), documentRef.native, opts));
+				return WriteBatch.fromNative(this.native.set(documentRef.native, serializeItems(data), opts));
 			}
 
 			if (options.mergeFields) {
 				if (Array.isArray(options.mergeFields)) {
 					if (typeof options.mergeFields[0] === 'string') {
-						return WriteBatch.fromNative(this.native.set(serializeItems(data), documentRef.native, com.google.firebase.firestore.SetOptions.mergeFields(options.mergeFields as any)));
+						return WriteBatch.fromNative(this.native.set(documentRef.native, serializeItems(data), com.google.firebase.firestore.SetOptions.mergeFields(options.mergeFields as any)));
 					}
 
 					const list = java.util.Arrays.asList(options.mergeFields.map((field) => field.native));
-					return WriteBatch.fromNative(this.native.set(serializeItems(data), documentRef.native, com.google.firebase.firestore.SetOptions.mergeFields(list)));
+					return WriteBatch.fromNative(this.native.set(documentRef.native, serializeItems(data), com.google.firebase.firestore.SetOptions.mergeFields(list)));
 				}
 			}
 
 			return null;
 		} else {
-			return WriteBatch.fromNative(this.native.set(serializeItems(data), documentRef.native));
+			return WriteBatch.fromNative(this.native.set(documentRef.native, serializeItems(data)));
 		}
 	}
 
