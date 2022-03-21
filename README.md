@@ -1,20 +1,20 @@
-- @nativescript/firebase-admob
-- @nativescript/firebase-analytics
-- @nativescript/firebase-app-check
-- @nativescript/firebase-app-check-debug
-- @nativescript/firebase-auth
-- @nativescript/firebase-core
-- @nativescript/firebase-crashlytics
-- @nativescript/firebase-database
-- @nativescript/firebase-dynamic-links
-- @nativescript/firebase-firestore
-- @nativescript/firebase-functions
-- @nativescript/firebase-in-app-messaging
-- @nativescript/firebase-installations
-- @nativescript/firebase-messaging
-- @nativescript/firebase-performance
-- @nativescript/firebase-remote-config
-- @nativescript/firebase-storage
+- [@nativescript/firebase-admob](packages/firebase-admob/README.md)
+- [@nativescript/firebase-analytics](packages/firebase-analytics/README.md)
+- [@nativescript/firebase-app-check](packages/firebase-app-check/README.md)
+- [@nativescript/firebase-app-check-debug](packages/firebase-app-check-debug/README.md)
+- [@nativescript/firebase-auth](packages/firebase-auth/README.md)
+- [@nativescript/firebase-core](packages/firebase-core/README.md)
+- [@nativescript/firebase-crashlytics](packages/firebase-crashlytics/README.md)
+- [@nativescript/firebase-database](packages/firebase-database/README.md)
+- [@nativescript/firebase-dynamic-links](packages/firebase-dynamic-links/README.md)
+- [@nativescript/firebase-firestore](packages/firebase-firestore/README.md)
+- [@nativescript/firebase-functions](packages/firebase-functions/README.md)
+- [@nativescript/firebase-in-app-messaging](packages/firebase-in-app-messaging/README.md)
+- [@nativescript/firebase-installations](packages/firebase-installations/README.md)
+- [@nativescript/firebase-messaging](packages/firebase-messaging/README.md)
+- [@nativescript/firebase-performance](packages/firebase-performance/README.md)
+- [@nativescript/firebase-remote-config](packages/firebase-remote-config/README.md)
+- [@nativescript/firebase-storage](packages/firebase-storage/README.md)
 
 # How to use?
 
