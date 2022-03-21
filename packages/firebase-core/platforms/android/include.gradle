@@ -3,6 +3,6 @@ dependencies {
     def computeKotlinVersion = { -> project.hasProperty("kotlinVersion") ? kotlinVersion : "1.4.32" }
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$computeKotlinVersion"
     
-    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "28.3.1" }
+    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "28.4.2" }
     implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
 }

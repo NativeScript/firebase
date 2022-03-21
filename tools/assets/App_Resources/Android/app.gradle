@@ -1,9 +1,8 @@
-// Add your native dependencies here:
-
-// Uncomment to add recyclerview-v7 dependency
-//dependencies {
-//	compile 'com.android.support:recyclerview-v7:+'
-//}
+dependencies {
+	  constraints {
+    implementation 'androidx.work:work-runtime:2.7.0'
+}
+}
 
 android {  
   compileSdkVersion 31

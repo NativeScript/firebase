@@ -33,7 +33,7 @@ android {
 
 dependencies {
   def computeFirebaseBomVersion = { ->
-    project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "28.3.1" }
+    project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "28.4.2" }
   implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'

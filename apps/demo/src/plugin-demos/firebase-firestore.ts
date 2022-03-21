@@ -9,18 +9,14 @@ export function navigatingTo(args: EventData) {
 }
 
 export class DemoModel extends DemoSharedFirebaseFirestore {
-
 	constructor() {
 		super();
-		Promise.all(
-			[
-				this.invalid_field_path()
-			]
-		)
+		Promise.all([this.init(),this.invalid_field_path()]);
 	}
 
 	async init() {
-		firebase().firestore()
+		firebase()
+			.firestore()
 			.collection('users')
 			.add({
 				first: 'Ada',
@@ -35,7 +31,8 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 			});
 
 		const geo = new GeoPoint(10, -10);
-		firebase().firestore()
+		firebase()
+			.firestore()
 			.collection('geo')
 			.add({
 				thing: 'it',
@@ -48,29 +45,51 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 				console.error('Error adding geo document: ', error);
 			});
 
-
-		firebase().firestore().collection('items')
+		firebase()
+			.firestore()
+			.collection('items')
 			.get()
-			.then(items => {
-				console.log(items.docs[0].data())
-			})
+			.then((items) => {
+				console.log(items.docs[0].data());
+			});
+
+		const exampleDoc = firebase().firestore().collection('things').doc('exampleDoc');
+		const exampleDoc2 = firebase().firestore().collection('things').doc('exampleDoc2');
+
+		firebase()
+				.firestore()
+				.batch()
+				.set(exampleDoc, {
+					message: 'Hello doc',
+				})
+				.set(exampleDoc2, {
+					date: new Date(),
+				})
+				.commit()
+				.then(() => {})
+				.catch((error) => {
+					console.error(error);
+				});
 	}
+	
 
 	async invalid_field_path() {
 		try {
-			await firebase().firestore()
-				.collection("products")
-				.doc("Oq4eU5p4Lj7Eh6dfjbBX")
+			await firebase()
+				.firestore()
+				.collection('products')
+				.doc('Oq4eU5p4Lj7Eh6dfjbBX')
 				.set({
-					name: "Product 1",
-					ts: Timestamp.fromDate(new Date())
+					name: 'Product 1',
+					ts: Timestamp.fromDate(new Date()),
 				});
-			await firebase().firestore()
-				.collection("products")
-				.doc("Oq4eU5p4Lj7Eh6dfjbBX")
+			await firebase()
+				.firestore()
+				.collection('products')
+				.doc('Oq4eU5p4Lj7Eh6dfjbBX')
 				.update({
-					name: "Product 2",
-					ts: Timestamp.fromDate(new Date())
+					name: 'Product 2',
+					ts: Timestamp.fromDate(new Date()),
 				});
 		} catch (error) {
 			console.log('error', error);
