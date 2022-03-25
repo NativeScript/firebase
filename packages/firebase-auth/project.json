@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-auth/*.md",
 					"packages/firebase-auth/index.d.ts",
+					"packages/firebase-auth/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",

@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-crashlytics/*.md",
 					"packages/firebase-crashlytics/index.d.ts",
+					"packages/firebase-crashlytics/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",

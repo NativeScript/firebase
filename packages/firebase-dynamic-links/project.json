@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-dynamic-links/*.md",
 					"packages/firebase-dynamic-links/index.d.ts",
+					"packages/firebase-dynamic-links/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",
