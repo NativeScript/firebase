@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-storage/*.md",
 					"packages/firebase-storage/index.d.ts",
+					"packages/firebase-storage/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",

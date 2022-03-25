@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-admob/*.md",
 					"packages/firebase-admob/index.d.ts",
+					"packages/firebase-admob/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",

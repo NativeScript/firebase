@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-core/*.md",
 					"packages/firebase-core/index.d.ts",
+					"packages/firebase-core/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",

@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-analytics/*.md",
 					"packages/firebase-analytics/index.d.ts",
+					"packages/firebase-analytics/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",

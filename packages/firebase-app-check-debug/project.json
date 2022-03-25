@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-app-check-debug/*.md",
 					"packages/firebase-app-check-debug/index.d.ts",
+					"packages/firebase-app-check-debug/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",

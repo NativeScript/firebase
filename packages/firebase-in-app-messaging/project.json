@@ -13,6 +13,7 @@
 				"assets": [
 					"packages/firebase-in-app-messaging/*.md",
 					"packages/firebase-in-app-messaging/index.d.ts",
+					"packages/firebase-in-app-messaging/typings/*.d.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",
