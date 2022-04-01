@@ -53,8 +53,8 @@ export class UserMetadata implements IUserMetadata {
 	toJSON() {
 		return {
 			creationDate: this.creationDate,
-			lastSignInDate: this.lastSignInDate
-		}
+			lastSignInDate: this.lastSignInDate,
+		};
 	}
 }
 
@@ -110,7 +110,7 @@ export class UserInfo implements IUserInfo {
 			phoneNumber: this.phoneNumber,
 			providerId: this.providerId,
 			photoURL: this.photoURL,
-		}
+		};
 	}
 }
 
@@ -190,8 +190,8 @@ export class User implements IUser {
 			providerId: this.providerId,
 			photoURL: this.photoURL,
 			metadata: this.metadata,
-			providerData: this.providerData
-		}
+			providerData: this.providerData,
+		};
 	}
 
 	delete(): Promise<void> {
@@ -285,7 +285,7 @@ export class User implements IUser {
 			} else {
 				provider._builder.getCredentialWithUIDelegateCompletion(null, (credential, error) => {
 					if (error) {
-						reject(FirebaseError.fromNative(error))
+						reject(FirebaseError.fromNative(error));
 					} else {
 						this.native.reauthenticateWithCredentialCompletion(credential, (result, error) => {
 							if (error) {
@@ -295,9 +295,9 @@ export class User implements IUser {
 							}
 						});
 					}
-				})
+				});
 			}
-		})
+		});
 	}
 
 	reauthenticateWithCredential(credential: AuthCredential): Promise<UserCredential> {
@@ -435,7 +435,7 @@ export class User implements IUser {
 				if (profile.photoUri) {
 					try {
 						request.photoURL = NSURL.URLWithString(profile.photoUri);
-					} catch (e) { }
+					} catch (e) {}
 				}
 
 				request.commitChangesWithCompletion((error) => {
@@ -530,7 +530,7 @@ function toUserCredential(authData: FIRAuthDataResult): UserCredential {
 	const result = {
 		additionalUserInfo: null,
 		user: User.fromNative(authData.user),
-		credential: authData.credential instanceof FIROAuthCredential ? OAuthCredential.fromNative(authData.credential) : AuthCredential.fromNative(authData.credential)
+		credential: authData.credential instanceof FIROAuthCredential ? OAuthCredential.fromNative(authData.credential) : AuthCredential.fromNative(authData.credential),
 	};
 
 	if (authData?.additionalUserInfo) {
@@ -768,10 +768,9 @@ export class OAuthCredential extends AuthCredential implements IOAuthCredential 
 	}
 }
 
-
 export class OAuthProvider implements IOAuthProvider {
 	#providerId: string;
-	#customParameters: { [key: string]: string }
+	#customParameters: { [key: string]: string };
 	#scopes: string[];
 	constructor(providerId: string) {
 		this.#providerId = providerId;
@@ -891,14 +890,8 @@ export class AuthTokenResult implements IAuthTokenResult {
 
 export class Auth implements IAuth {
 	#native: FIRAuth;
-
 	constructor(app?: FirebaseApp) {
-		if (app?.native) {
-			FIRAuth.auth();
-			this.#native = FIRAuth.authWithApp(app.native);
-		} else {
-			this.#native = FIRAuth.authWithApp(FIRApp.defaultApp());
-		}
+		this.#app = app;
 	}
 
 	useEmulator(host: string, port: number) {
@@ -1033,7 +1026,7 @@ export class Auth implements IAuth {
 			} else {
 				provider._builder.getCredentialWithUIDelegateCompletion(null, (credential, error) => {
 					if (error) {
-						reject(FirebaseError.fromNative(error))
+						reject(FirebaseError.fromNative(error));
 					} else {
 						this.native.signInWithCredentialCompletion(credential, (result, error) => {
 							if (error) {
@@ -1043,9 +1036,9 @@ export class Auth implements IAuth {
 							}
 						});
 					}
-				})
+				});
 			}
-		})
+		});
 	}
 
 	signInWithCredential(credential: AuthCredential): Promise<UserCredential> {
@@ -1231,6 +1224,13 @@ export class Auth implements IAuth {
 	}
 
 	get native() {
+		if (!this.#native) {
+			if (this.#app?.native) {
+				this.#native = FIRAuth.authWithApp(this.#app.native);
+			} else {
+				this.#native = FIRAuth.auth();
+			}
+		}
 		return this.#native;
 	}
 
