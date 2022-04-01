@@ -23,9 +23,11 @@ export class Crashlytics implements ICrashlytics {
 			return defaultCrashlytics;
 		}
 		defaultCrashlytics = this;
-		this.#native = com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance();
 	}
 	get native() {
+		if (!this.#native) {
+			this.#native = com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance();
+		}
 		return this.#native;
 	}
 	get android() {
