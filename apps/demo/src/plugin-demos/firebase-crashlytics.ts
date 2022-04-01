@@ -14,37 +14,28 @@ export class DemoModel extends DemoSharedFirebaseCrashlytics {
 	constructor() {
 		super();
 		this.crashlytics = firebase().crashlytics();
-		this.crashlytics.setCrashlyticsCollectionEnabled(true);
-		//this.crash();
-		this.logError();
 	}
 
 	logError() {
+		//this.crashlytics.setCrashlyticsCollectionEnabled(true);
+		// this.crashlytics.crash();
 		this.crashlytics.setAttributes({
 			name: 'logError',
 		});
-		this.crashlytics.log('Thing');
+		this.crashlytics.log('Thing ' + new Date());
 		if (global.isIOS) {
 			let userInfo = {};
-			userInfo[NSLocalizedDescriptionKey] = 'NativeScript Error Test';
+			userInfo[NSLocalizedDescriptionKey] = 'NativeScript iOS Error Test';
 			const ns = NSError.alloc().initWithDomainCodeUserInfo(NSCocoaErrorDomain, -1001, userInfo as any);
 			this.crashlytics.recordError(ns);
 		}
 
 		if (global.isAndroid) {
-			const exc = new java.lang.Exception('NativeScript Error Test');
+			const exc = new java.lang.Exception('NativeScript Android Error Test');
 			this.crashlytics.recordError(exc);
 		}
 
-		this.crashlytics.sendUnsentReports();
-		this.crashlytics
-			.checkForUnsentReports()
-			.then((val) => {
-				console.log('checkForUnsentReports', val);
-			})
-			.catch((e) => {
-				console.error('checkForUnsentReports', e);
-			});
+		this.crashlytics.recordError(new Error('NativeScript Error Test ' + new Date()));
 	}
 
 	crash() {

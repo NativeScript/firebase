@@ -20,10 +20,13 @@ import { Admob } from '@nativescript/firebase-admob';
 import { AppCheck } from '@nativescript/firebase-app-check-debug';
 
 AppCheck.setProviderFactory();
-
-firebase().initializeApp().then(app =>{
-	firebase().appCheck().activate(true);
-})
+declare const TNSFirebaseCore;
+firebase()
+	.initializeApp()
+	.then((app) => {
+		firebase().appCheck().activate(true);
+		firebase().crashlytics().setCrashlyticsCollectionEnabled(true);
+	});
 
 Admob.init();
 
@@ -57,6 +60,5 @@ messaging
 	.catch((e) => {
 		console.error('requestPermission', e);
 	});
-
 
 Application.run({ moduleName: 'app-root' });
