@@ -10,7 +10,6 @@ export function navigatingTo(args: EventData) {
 	page.bindingContext = new DemoModel();
 }
 
-
 let didInit = false;
 export class DemoModel extends DemoSharedFirebaseAuth {
 	email: string;
@@ -43,7 +42,7 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 				return;
 			}
 			const user = await GoogleSignin.signIn();
-			const cred = GoogleAuthProvider.credential(user.idToken, user.accessToken)
+			const cred = GoogleAuthProvider.credential(user.idToken, user.accessToken);
 			const linked = await this.user.linkWithCredential(cred);
 			console.log(linked);
 		} catch (e) {
@@ -58,10 +57,7 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 		}
 		try {
 			const cred = PhoneAuthProvider.provider().credential(this.verificationId, this.code);
-			const linkedCred = await firebase()
-				.auth()
-				.currentUser
-				.linkWithCredential(cred);
+			const linkedCred = await firebase().auth().currentUser.linkWithCredential(cred);
 			console.log('verificationId', linkedCred);
 		} catch (e) {
 			console.log('linkPhone error:', e);
@@ -79,9 +75,7 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 	async loginWithPhone() {
 		try {
 			const cred = PhoneAuthProvider.provider().credential(this.verificationId, this.code);
-			const value = await firebase()
-				.auth()
-				.signInWithCredential(cred);
+			const value = await firebase().auth().signInWithCredential(cred);
 			console.log('verificationId', this.verificationId);
 			console.log('loginUser', value);
 			this._setCurrentUser(value.user);
@@ -96,6 +90,7 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 			.createUserWithEmailAndPassword(this.email, this.password)
 			.then((user) => {
 				this.set('user', user);
+				user.user.sendEmailVerification();
 			})
 			.catch((e) => {
 				console.error('createUser', e);
@@ -133,25 +128,20 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 		this._setCurrentUser(undefined);
 	}
 
-
 	loginMs() {
 		// https://firebase.google.com/docs/auth/android/microsoft-oauth#handle_the_sign-in_flow_with_the_firebase_sdk
 
 		const provider = new OAuthProvider('microsoft.com');
-		provider.addCustomParameter("prompt", "consent");
-		provider.addCustomParameter("login_hint", "user@firstadd.onmicrosoft.com");
-		provider.addCustomParameter("tenant", "TENANT_ID");
+		provider.addCustomParameter('prompt', 'consent');
+		provider.addCustomParameter('login_hint', 'user@firstadd.onmicrosoft.com');
+		provider.addCustomParameter('tenant', 'TENANT_ID');
 
-		provider.setScopes(["mail.read", "calendars.read"]);
+		provider.setScopes(['mail.read', 'calendars.read']);
 
 		firebase()
 			.auth()
 			.signInWithProvider(provider)
-			.then(credentials => {
-
-			})
-			.catch(err => {
-
-			});
+			.then((credentials) => {})
+			.catch((err) => {});
 	}
 }
