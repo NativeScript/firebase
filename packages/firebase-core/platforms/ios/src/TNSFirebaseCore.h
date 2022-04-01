@@ -4,4 +4,5 @@ typedef void(^LaunchCallback)();
 @interface TNSFirebaseCore: NSObject
 +(LaunchCallback) onAppFinishLaunchingCallback;
 +(void) setOnAppFinishLaunchingCallback:(LaunchCallback)callback;
++(BOOL) isSimulator;
 @end

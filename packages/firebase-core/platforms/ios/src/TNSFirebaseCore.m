@@ -9,4 +9,12 @@ static LaunchCallback _Nullable _onAppFinishLaunchingCallback;
 + (void)setOnAppFinishLaunchingCallback:(nullable LaunchCallback)callback {
     _onAppFinishLaunchingCallback = callback;
 }
+
++(BOOL) isSimulator {
+#if TARGET_IPHONE_SIMULATOR
+    return true;
+#else
+   return false;
+#endif
+}
 @end

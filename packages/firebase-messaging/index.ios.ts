@@ -4,7 +4,7 @@ import { AuthorizationStatus, IMessaging, Permissions, Notification, RemoteMessa
 
 export { AuthorizationStatus } from './common';
 
-declare const FIRApp, TNSFirebaseMessaging, FIRAuth, TNSUIApplicationDelegate;
+declare const FIRApp, TNSFirebaseMessaging, TNSFirebaseCore;
 
 let _registerDeviceForRemoteMessages = {
 	resolve: null,
@@ -60,8 +60,9 @@ export class Messaging implements IMessaging {
 
 	getToken(): Promise<string> {
 		return new Promise((resolve, reject) => {
-			if (UIDevice.currentDevice.name.toLocaleLowerCase().indexOf('simulator') !== -1 && !UIApplication.sharedApplication.registeredForRemoteNotifications) {
+			if (!TNSFirebaseCore.isSimulator() && !UIApplication.sharedApplication.registeredForRemoteNotifications) {
 				reject(new Error('You must be registered for remote messages before calling getToken, see messaging().registerDeviceForRemoteMessages()'));
+				return;
 			}
 			this.native?.tokenWithCompletion((token, error) => {
 				if (error) {
@@ -115,9 +116,8 @@ export class Messaging implements IMessaging {
 		this.#onMessage = listener;
 		if (listener) {
 			TNSFirebaseMessaging.onMessageCallback = (dict) => {
-				listener(deserialize(dict))
-			}
-
+				listener(deserialize(dict));
+			};
 		} else {
 			TNSFirebaseMessaging.onMessageCallback = null;
 		}
@@ -127,8 +127,8 @@ export class Messaging implements IMessaging {
 		this.#onToken = listener;
 		if (listener) {
 			TNSFirebaseMessaging.onTokenCallback = (value) => {
-				listener(value)
-			}
+				listener(value);
+			};
 		} else {
 			TNSFirebaseMessaging.onTokenCallback = null;
 		}
@@ -138,8 +138,8 @@ export class Messaging implements IMessaging {
 		this.#onNotificationTap = listener;
 		if (listener) {
 			TNSFirebaseMessaging.onNotificationTapCallback = (dict) => {
-				listener(deserialize(dict))
-			}
+				listener(deserialize(dict));
+			};
 		} else {
 			TNSFirebaseMessaging.onNotificationTapCallback = null;
 		}
@@ -147,17 +147,17 @@ export class Messaging implements IMessaging {
 
 	registerDeviceForRemoteMessages(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			if (UIDevice.currentDevice.name.toLocaleLowerCase().indexOf('simulator') > -1) {
+			if (TNSFirebaseCore.isSimulator()) {
 				ApplicationSettings.setBoolean(REMOTE_NOTIFICATIONS_REGISTRATION_STATUS, true);
 				resolve();
 			}
-			TNSFirebaseMessaging.registerDeviceForRemoteMessagesCallback = (result, error)=>{
-				if(error){
+			TNSFirebaseMessaging.registerDeviceForRemoteMessagesCallback = (result, error) => {
+				if (error) {
 					reject(FirebaseError.fromNative(error));
-				}else {
+				} else {
 					resolve(result);
 				}
-			}
+			};
 			if (UIApplication?.sharedApplication) {
 				UIApplication?.sharedApplication?.registerForRemoteNotifications?.();
 			} else {
