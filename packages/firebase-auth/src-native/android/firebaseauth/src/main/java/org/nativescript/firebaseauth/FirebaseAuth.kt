@@ -3,7 +3,7 @@ package org.nativescript.firebaseauth
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.Nullable
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import java.util.concurrent.Executors
 
@@ -163,21 +163,26 @@ class FirebaseAuth {
       @JvmStatic
       fun sendEmailVerification(
         user: FirebaseUser,
-        @Nullable actionCodeSettings: ActionCodeSettings,
+        actionCodeSettings: ActionCodeSettings?,
         callback: Callback<Void>
       ) {
-        user.sendEmailVerification(actionCodeSettings)
-          .addOnCompleteListener(executors) {
-            if (it.isSuccessful) {
-              runOnMain {
-                callback.onSuccess(it.result)
-              }
-            } else {
-              runOnMain {
-                callback.onError(it.exception)
-              }
+        val call = if (actionCodeSettings == null) {
+          user.sendEmailVerification()
+        } else {
+          user.sendEmailVerification(actionCodeSettings)
+        }
+
+        call.addOnCompleteListener(executors) {
+          if (it.isSuccessful) {
+            runOnMain {
+              callback.onSuccess(it.result)
+            }
+          } else {
+            runOnMain {
+              callback.onError(it.exception)
             }
           }
+        }
       }
 
 
@@ -288,7 +293,7 @@ class FirebaseAuth {
       fun verifyBeforeUpdateEmail(
         user: FirebaseUser,
         email: String,
-        @Nullable actionCodeSettings: ActionCodeSettings,
+        actionCodeSettings: ActionCodeSettings?,
         callback: Callback<Void>
       ) {
         user.verifyBeforeUpdateEmail(email, actionCodeSettings)
