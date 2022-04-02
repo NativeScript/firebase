@@ -1,3 +1,12 @@
+## [1.2.2](https://github.com/nativescript/firebase/compare/1.2.1...1.2.2) (2022-04-02)
+
+
+### Bug Fixes
+
+* **dynamiclinks:** improve onLink handling ([9d3fb8c](https://github.com/nativescript/firebase/commit/9d3fb8c552ed66e02d687affa2d47b1c91c65960))
+
+
+
 ## [1.2.1](https://github.com/nativescript/firebase/compare/1.2.0...1.2.1) (2022-04-01)
 
 
