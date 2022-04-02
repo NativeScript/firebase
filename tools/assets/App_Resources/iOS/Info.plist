@@ -66,6 +66,17 @@
 				<string>app-1-292142294722-ios-f1b9ddf525a3dbe1287d5b</string>
 			</array>
 		</dict>
+
+		    <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>io.github.triniwiz.nativescript.firebasedemo</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>iogithubtriniwiznativescriptfirebasedemo</string>
+        </array>
+      </dict>
 	</array>
 </dict>
 </plist>
