@@ -108,7 +108,7 @@ export class DynamicLinkAndroidParameters implements IDynamicLinkAndroidParamete
 	set fallbackUrl(value) {
 		try {
 			this.#builder.setFallbackUrl(android.net.Uri.parse(value));
-		} catch (error) { }
+		} catch (error) {}
 	}
 
 	get minimumVersion() {
@@ -181,7 +181,7 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 		try {
 			this.#builder?.setFallbackUrl?.(android.net.Uri.parse(value));
 			this.#fallbackUrl = value;
-		} catch (error) { }
+		} catch (error) {}
 	}
 
 	get iPadBundleId(): string {
@@ -199,7 +199,7 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 	set iPadFallbackUrl(value) {
 		try {
 			this.#builder?.setIpadFallbackUrl?.(android.net.Uri.parse(value));
-		} catch (error) { }
+		} catch (error) {}
 	}
 
 	get minimumVersion(): string {
@@ -331,7 +331,7 @@ export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters
 	set imageUrl(value) {
 		try {
 			this.#builder?.setImageUrl?.(android.net.Uri.parse(value));
-		} catch (error) { }
+		} catch (error) {}
 	}
 
 	get title(): string {
@@ -437,6 +437,14 @@ export class DynamicLink implements IDynamicLink {
 	get android() {
 		return this.native;
 	}
+
+	toJSON() {
+		return {
+			minimumAppVersion: this.minimumAppVersion,
+			url: this.url,
+			utmParameters: this.utmParameters,
+		};
+	}
 }
 
 export class DynamicLinks implements IDynamicLinks {
@@ -450,6 +458,7 @@ export class DynamicLinks implements IDynamicLinks {
 			return defaultDynamicLinks;
 		}
 		defaultDynamicLinks = this;
+
 		if (!DynamicLinks.#didInit) {
 			DynamicLinks.#callback = new org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>({
 				onSuccess(param0) {
@@ -461,7 +470,8 @@ export class DynamicLinks implements IDynamicLinks {
 					console.error('Unknown error occurred when attempting to handle a universal link', param0);
 				},
 			});
-			Application.on(AndroidApplication.activityNewIntentEvent, (data: AndroidActivityNewIntentEventData) => {
+
+			Application.android.on(AndroidApplication.activityNewIntentEvent, (data: AndroidActivityNewIntentEventData) => {
 				org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.onNewIntent(com.google.firebase.dynamiclinks.FirebaseDynamicLinks.getInstance(), data.intent, DynamicLinks.#callback);
 			});
 			DynamicLinks.#didInit = true;
@@ -492,7 +502,7 @@ export class DynamicLinks implements IDynamicLinks {
 		const dl = this.native.createDynamicLink();
 		try {
 			dl.setLink(android.net.Uri.parse(link));
-		} catch (error) { }
+		} catch (error) {}
 		dl.setDomainUriPrefix(domainUriPrefix);
 		return DynamicLinkParameters.fromNative(dl);
 	}
@@ -500,7 +510,7 @@ export class DynamicLinks implements IDynamicLinks {
 		const dl = this.native.createDynamicLink();
 		try {
 			dl.setLink(android.net.Uri.parse(link));
-		} catch (error) { }
+		} catch (error) {}
 		dl.setDomainUriPrefix(domainUriPrefix);
 		return DynamicLinkParameters.fromNative(dl, shortLinkType);
 	}

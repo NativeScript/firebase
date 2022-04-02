@@ -1,3 +1,4 @@
+import { Application } from '@nativescript/core';
 import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, ShortLinkType } from './common';
 
@@ -13,73 +14,7 @@ Object.defineProperty(fb, 'dynamicLinks', {
 	writable: false,
 });
 
-declare const FIRApp;
-let appDelegate: AppDelegateImpl;
-let _launchOptions: NSDictionary<string, any>;
-@NativeClass
-@ObjCClass(UIApplicationDelegate)
-class AppDelegateImpl extends UIResponder implements UIApplicationDelegate {
-	static get sharedInstance() {
-		if (!appDelegate) {
-			appDelegate = AppDelegateImpl.alloc().init() as AppDelegateImpl;
-		}
-		return appDelegate;
-	}
-
-	static get launchOptions() {
-		return _launchOptions;
-	}
-	applicationOpenURLOptions(app: UIApplication, url: NSURL, options: NSDictionary<string, any>): boolean {
-		return this.applicationOpenURLSourceApplicationAnnotation(app, url, options.objectForKey(UIApplicationOpenURLOptionsSourceApplicationKey), options.objectForKey(UIApplicationOpenURLOptionsAnnotationKey));
-	}
-
-	applicationOpenURLSourceApplicationAnnotation(application: UIApplication, url: NSURL, sourceApplication: string, annotation: any): boolean {
-		let dynamicLink = FIRDynamicLinks.dynamicLinks().dynamicLinkFromCustomSchemeURL(url);
-
-		if (!dynamicLink) {
-			dynamicLink = FIRDynamicLinks.dynamicLinks().dynamicLinkFromUniversalLinkURL(url);
-		}
-
-		if (!dynamicLink) {
-			return false;
-		}
-
-		if (dynamicLink.url) {
-			if (typeof DynamicLinks._onLink === 'function') {
-				DynamicLinks._onLink(DynamicLink.fromNative(dynamicLink));
-			}
-		}
-
-		return false;
-	}
-
-	applicationContinueUserActivityRestorationHandler(application: UIApplication, userActivity: NSUserActivity, restorationHandler: (p1: NSArray<UIUserActivityRestoring>) => void): boolean {
-		let retried = false;
-		let callback = (dynamicLink, error) => {
-			if (!error && dynamicLink?.url) {
-				if (typeof DynamicLinks._onLink === 'function') {
-					DynamicLinks._onLink(DynamicLink.fromNative(dynamicLink));
-				}
-			}
-
-			if (error && !retried && NSPOSIXErrorDomain === error.domain && error.code === 53) {
-				retried = true;
-				FIRDynamicLinks.dynamicLinks().handleUniversalLinkCompletion(userActivity.webpageURL, callback);
-			}
-
-			if (error) {
-				console.error('Unknown error occurred when attempting to handle a universal link', error);
-			}
-		};
-		FIRDynamicLinks.dynamicLinks().handleUniversalLinkCompletion(userActivity.webpageURL, callback);
-		return false;
-	}
-
-	applicationDidFinishLaunchingWithOptions?(application: UIApplication, launchOptions: NSDictionary<string, any>): boolean {
-		_launchOptions = launchOptions;
-		return false;
-	}
-}
+declare const FIRApp, TNSFirebaseDynamicLinksAppDelegate;
 
 export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsParameters {
 	#native: FIRDynamicLinkGoogleAnalyticsParameters;
@@ -494,24 +429,25 @@ export class DynamicLink implements IDynamicLink {
 	get ios() {
 		return this.native;
 	}
+
+	toJSON() {
+		return {
+			minimumAppVersion: this.minimumAppVersion,
+			url: this.url,
+			utmParameters: this.utmParameters,
+		};
+	}
 }
 
 export class DynamicLinks implements IDynamicLinks {
 	#native: FIRDynamicLinks;
 	#app: FirebaseApp;
-	static _onLink: (link: DynamicLink) => void;
-	static #appDelegateInitialized = false;
+	static #onLink: (link: DynamicLink) => void;
 	constructor() {
-		if(defaultDynamicLinks){
+		if (defaultDynamicLinks) {
 			return defaultDynamicLinks;
 		}
 		defaultDynamicLinks = this;
-		
-		if (!DynamicLinks.#appDelegateInitialized) {
-			GULAppDelegateSwizzler.proxyOriginalDelegate();
-			GULAppDelegateSwizzler.registerAppDelegateInterceptor(AppDelegateImpl.sharedInstance);
-			DynamicLinks.#appDelegateInitialized = true;
-		}
 	}
 
 	createLink(link: string, domainUriPrefix: string): DynamicLinkParameters {
@@ -542,7 +478,14 @@ export class DynamicLinks implements IDynamicLinks {
 	}
 
 	onLink(listener: (link: DynamicLink) => void) {
-		DynamicLinks._onLink = listener;
+		DynamicLinks.#onLink = listener;
+		if (listener) {
+			TNSFirebaseDynamicLinksAppDelegate.onLinkCallback = (link) => {
+				listener(DynamicLink.fromNative(link));
+			};
+		} else {
+			TNSFirebaseDynamicLinksAppDelegate.onLinkCallback = null;
+		}
 	}
 	resolveLink(link: string): Promise<DynamicLink> {
 		return new Promise((resolve, reject) => {
