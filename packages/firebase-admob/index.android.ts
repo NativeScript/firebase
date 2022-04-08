@@ -492,7 +492,7 @@ export class BannerAdSize extends BannerAdSizeBase {
 
 	static createInLineAdaptiveBanner(width: number, maxHeight: number = 0, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
 		if (maxHeight > 0) {
-			BannerAdSize.fromNative((com as any).google.android.gms.ads.AdSize.getInlineAdaptiveBannerAdSize(Application.android.foregroundActivity || Application.android.startActivity, width, maxHeight));
+			BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getInlineAdaptiveBannerAdSize(width, maxHeight));
 		}
 		switch (orientation) {
 			case 'portrait':
