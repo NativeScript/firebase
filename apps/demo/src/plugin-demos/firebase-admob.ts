@@ -45,7 +45,6 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		const mv = view.getViewById('mediaView');
 		const bv = view.getViewById('bodyView');
 		const iv = view.getViewById('iconView');
-		console.log('nativeAdLayoutChanged', hlv.nativeView, mv.nativeView, bv.nativeView, iv.nativeView);
 	}
 	nativeAdLoaded(event) {
 		const view = event.object;
@@ -85,7 +84,7 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		bannerAd.on('adFailedToLoad', (args) => {
 			console.log('bannerad failed to load', args.error);
 		});
-		bannerAd.size = BannerAdSize.createInLineAdaptiveBanner(100);
+		bannerAd.size = BannerAdSize.FULL_BANNER;
 		bannerAd.load();
 	}
 
