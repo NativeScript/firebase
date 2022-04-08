@@ -176,7 +176,6 @@ export class NativeAdLoader implements INativeAdLoader {
 	load(): void;
 	load(arg?: any): void {
 		const ref = new WeakRef(this);
-		console.log(this.#nativeAdOptions, this.#adUnitId);
 		this.#native = org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.createLoader(
 			Application.android.foregroundActivity || Application.android.startActivity,
 			this.#adUnitId,
