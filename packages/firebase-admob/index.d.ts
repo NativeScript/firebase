@@ -95,23 +95,23 @@ export declare class BannerAd extends BannerAdBase {
 export declare class BannerAdSize extends BannerAdSizeBase {
 	constructor(width: number, height: number);
 
-	readonly BANNER: BannerAdSize;
+	static readonly BANNER: BannerAdSize;
 
-	readonly FULL_BANNER: BannerAdSize;
+	static readonly FULL_BANNER: BannerAdSize;
 
-	readonly LARGE_BANNER: BannerAdSize;
+	static readonly LARGE_BANNER: BannerAdSize;
 
-	readonly LEADERBOARD: BannerAdSize;
+	static readonly LEADERBOARD: BannerAdSize;
 
-	readonly MEDIUM_RECTANGLE: BannerAdSize;
+	static readonly MEDIUM_RECTANGLE: BannerAdSize;
 
-	readonly FLUID: BannerAdSize;
+	static readonly FLUID: BannerAdSize;
 
-	readonly WIDE_SKYSCRAPER: BannerAdSize;
+	static readonly WIDE_SKYSCRAPER: BannerAdSize;
 
-	readonly INVALID: BannerAdSize;
+	static readonly INVALID: BannerAdSize;
 
-	readonly SEARCH: BannerAdSize;
+	static readonly SEARCH: BannerAdSize;
 
 	static createAnchoredAdaptiveBanner(width: number, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize;
 
