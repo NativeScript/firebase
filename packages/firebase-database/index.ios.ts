@@ -378,7 +378,7 @@ export class Reference extends Query implements IReference {
           onComplete?.(err);
           reject(err);
         } else {
-          onComplete(null);
+          onComplete?.(null);
           resolve();
         }
       });
