@@ -62,7 +62,7 @@ class FirebaseMessaging {
         remoteMessage.notification?.let {
           remoteMessage.messageId?.let { messageId ->
             remoteMessageMap[messageId] = remoteMessage
-            preferences?.edit()?.putString(messageId, remoteMessageToJson(remoteMessage).toString())
+            preferences?.edit()?.putString(messageId, remoteMessageToJson(remoteMessage).toString())?.apply()
           }
         }
 
