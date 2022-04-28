@@ -24,9 +24,7 @@ export interface HttpsCallableOptions {
   timeout?: number;
 }
 
-export interface HttpsCallableResult {
-  readonly data: any;
-}
+export type HttpsCallableResult = any;
 
 
 export interface HttpsCallable {
