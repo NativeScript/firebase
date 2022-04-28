@@ -166,7 +166,7 @@ export declare class AuthTokenResult implements IAuthTokenResult {
 
 export declare class Auth implements IAuth {
 	readonly app: FirebaseApp;
-	readonly currentUser: User;
+	readonly currentUser: User | null;
 	readonly languageCode: string;
 	readonly settings: AuthSettings;
 	readonly tenantId: string;
