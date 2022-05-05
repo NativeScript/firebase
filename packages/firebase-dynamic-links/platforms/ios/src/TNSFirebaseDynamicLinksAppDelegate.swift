@@ -27,7 +27,7 @@ public class TNSFirebaseDynamicLinksAppDelegate: UIResponder , UIApplicationDele
     
     @objc public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        return application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation]!)
+        return application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
     }
     
     @objc public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
