@@ -1,115 +1,167 @@
 {
-  "project_info": {
-    "project_number": "292142294722",
-    "firebase_url": "https://nativescript-firebase-a55a0.firebaseio.com",
-    "project_id": "nativescript-firebase-a55a0",
-    "storage_bucket": "nativescript-firebase-a55a0.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:292142294722:android:834a7a9094ffdb32287d5b",
-        "android_client_info": {
-          "package_name": "io.github.triniwiz.nativescript.firebasedemo"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "292142294722-ckf8oa3neiemb5ju5naesnkqqidbn92o.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "io.github.triniwiz.nativescript.firebasedemo",
-            "certificate_hash": "17816f5cf2666cabd896c79e4957884c23f016da"
-          }
-        },
-        {
-          "client_id": "292142294722-u1eosqh9eco1l5isgau2805df2lvk0ek.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "io.github.triniwiz.nativescript.firebasedemo",
-            "certificate_hash": "dad4ffbd27b6435c3fe5250c4d7d2195fa72fafb"
-          }
-        },
-        {
-          "client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAL69oiwiL5z7ngogAvc7cguxBh81eG25I"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.github.triniwiz.nativescript.firebasedemo"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:292142294722:android:502a8a2497c98cb1287d5b",
-        "android_client_info": {
-          "package_name": "org.nativescript.firebasedemo"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "292142294722-9s58kof5a3ng34vqhj51gs04qlr6jjgf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.nativescript.firebasedemo",
-            "certificate_hash": "dad4ffbd27b6435c3fe5250c4d7d2195fa72fafb"
-          }
-        },
-        {
-          "client_id": "292142294722-p4kc740vu3rtfgvmmcmnntsk2qb6niah.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.nativescript.firebasedemo",
-            "certificate_hash": "17816f5cf2666cabd896c79e4957884c23f016da"
-          }
-        },
-        {
-          "client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAL69oiwiL5z7ngogAvc7cguxBh81eG25I"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.github.triniwiz.nativescript.firebasedemo"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+	"project_info": {
+		"project_number": "292142294722",
+		"firebase_url": "https://nativescript-firebase-a55a0.firebaseio.com",
+		"project_id": "nativescript-firebase-a55a0",
+		"storage_bucket": "nativescript-firebase-a55a0.appspot.com"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:292142294722:android:834a7a9094ffdb32287d5b",
+				"android_client_info": {
+					"package_name": "io.github.triniwiz.nativescript.firebasedemo"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "292142294722-ckf8oa3neiemb5ju5naesnkqqidbn92o.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "io.github.triniwiz.nativescript.firebasedemo",
+						"certificate_hash": "17816f5cf2666cabd896c79e4957884c23f016da"
+					}
+				},
+				{
+					"client_id": "292142294722-u1eosqh9eco1l5isgau2805df2lvk0ek.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "io.github.triniwiz.nativescript.firebasedemo",
+						"certificate_hash": "dad4ffbd27b6435c3fe5250c4d7d2195fa72fafb"
+					}
+				},
+				{
+					"client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyAL69oiwiL5z7ngogAvc7cguxBh81eG25I"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
+							"client_type": 3
+						},
+						{
+							"client_id": "292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf.apps.googleusercontent.com",
+							"client_type": 2,
+							"ios_info": {
+								"bundle_id": "io.github.triniwiz.nativescript.firebasedemo"
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:292142294722:android:aeab85b4cab64d0b287d5b",
+				"android_client_info": {
+					"package_name": "io.github.triniwiz.nativescript.plugindemo"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "292142294722-b9jtkhq62nblpacl7tajv896t8a6k9lc.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "io.github.triniwiz.nativescript.plugindemo",
+						"certificate_hash": "dad4ffbd27b6435c3fe5250c4d7d2195fa72fafb"
+					}
+				},
+				{
+					"client_id": "292142294722-p0kkquj76f5qehroteosr5s070tq1idn.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "io.github.triniwiz.nativescript.plugindemo",
+						"certificate_hash": "17816f5cf2666cabd896c79e4957884c23f016da"
+					}
+				},
+				{
+					"client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyAL69oiwiL5z7ngogAvc7cguxBh81eG25I"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
+							"client_type": 3
+						},
+						{
+							"client_id": "292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf.apps.googleusercontent.com",
+							"client_type": 2,
+							"ios_info": {
+								"bundle_id": "io.github.triniwiz.nativescript.firebasedemo"
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:292142294722:android:502a8a2497c98cb1287d5b",
+				"android_client_info": {
+					"package_name": "org.nativescript.firebasedemo"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "292142294722-9s58kof5a3ng34vqhj51gs04qlr6jjgf.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "org.nativescript.firebasedemo",
+						"certificate_hash": "dad4ffbd27b6435c3fe5250c4d7d2195fa72fafb"
+					}
+				},
+				{
+					"client_id": "292142294722-p4kc740vu3rtfgvmmcmnntsk2qb6niah.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "org.nativescript.firebasedemo",
+						"certificate_hash": "17816f5cf2666cabd896c79e4957884c23f016da"
+					}
+				},
+				{
+					"client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
+					"client_type": 3
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyAL69oiwiL5z7ngogAvc7cguxBh81eG25I"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "292142294722-uenpeed8drufjhsgfj9vhk3o73l9vp6b.apps.googleusercontent.com",
+							"client_type": 3
+						},
+						{
+							"client_id": "292142294722-23nmrq9mn8rhpqipjc1bt4qecga3qgsf.apps.googleusercontent.com",
+							"client_type": 2,
+							"ios_info": {
+								"bundle_id": "io.github.triniwiz.nativescript.firebasedemo"
+							}
+						}
+					]
+				}
+			}
+		}
+	],
+	"configuration_version": "1"
 }

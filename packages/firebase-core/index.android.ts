@@ -1,5 +1,5 @@
 import { IFirebaseOptions, FirebaseConfig } from './common';
-import { knownFolders, Utils } from '@nativescript/core';
+import { Application, knownFolders, Utils } from '@nativescript/core';
 export * from './utils';
 declare const __non_webpack_require__;
 export class FirebaseError extends Error {
@@ -174,11 +174,33 @@ export class FirebaseApp {
 }
 
 export class Firebase {
+	static #onResumeQueue = [];
+	static addToResumeQueue(callback: () => void) {
+		if (typeof callback !== 'function') {
+			return;
+		}
+		Firebase.#onResumeQueue.push(callback);
+	}
+	static #inForeground = false;
+	static get inForeground() {
+		return Firebase.#inForeground;
+	}
 	constructor() {
 		if (firebaseInstance) {
 			return firebaseInstance;
 		}
 		firebaseInstance = this;
+		Application.android.on('activityResumed', (args) => {
+			Firebase.#inForeground = true;
+			Firebase.#onResumeQueue.forEach((callback) => {
+				callback();
+			});
+			Firebase.#onResumeQueue.splice(0);
+		});
+
+		Application.android.on('activityPaused', (args) => {
+			Firebase.#inForeground = false;
+		});
 		return firebaseInstance;
 	}
 

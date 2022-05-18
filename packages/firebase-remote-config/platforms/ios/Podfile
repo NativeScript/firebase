@@ -1,1 +1,1 @@
-pod 'Firebase/RemoteConfig', '~> 8.6'
+pod 'Firebase/RemoteConfig', '~> 9.0'

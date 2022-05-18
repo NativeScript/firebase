@@ -17,7 +17,7 @@ Object.defineProperty(fb, 'appCheck', {
 	writable: false,
 });
 
-const NSAppCheck = lazy(() => org.nativescript.firebase.app_check_debug.FirebaseAppCheck);
+const NSAppCheck = lazy(() => org.nativescript.firebase.app_check_debug.FirebaseAppCheckDebug);
 
 export class AppCheckToken implements IAppCheckToken {
 	#native: com.google.firebase.appcheck.AppCheckToken;
@@ -66,8 +66,7 @@ export class AppCheck implements IAppCheck {
 	static setProviderFactory() {}
 
 	activate(isTokenAutoRefreshEnabled: boolean) {
-		this.native.setTokenAutoRefreshEnabled(isTokenAutoRefreshEnabled);
-		this.native.installAppCheckProviderFactory(com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory.getInstance());
+		this.native.installAppCheckProviderFactory(com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory.getInstance(), isTokenAutoRefreshEnabled);
 	}
 
 	getToken(forceRefresh: boolean): Promise<AppCheckToken> {
@@ -75,7 +74,7 @@ export class AppCheck implements IAppCheck {
 			NSAppCheck().getToken(
 				this.native,
 				forceRefresh,
-				new org.nativescript.firebase.app_check_debug.FirebaseAppCheck.Callback({
+				new org.nativescript.firebase.app_check_debug.FirebaseAppCheckDebug.Callback({
 					onSuccess(param0) {
 						resolve(AppCheckToken.fromNative(param0));
 					},

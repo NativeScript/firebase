@@ -261,11 +261,37 @@ const launchCallback = () => {
 TNSFirebaseCore.setOnAppFinishLaunchingCallback(launchCallback);
 
 export class Firebase {
+	static #onResumeQueue = [];
+	static addToResumeQueue(callback: () => void) {
+		if (typeof callback !== 'function') {
+			return;
+		}
+		Firebase.#onResumeQueue.push(callback);
+	}
+	static #inForeground = false;
+	static get inForeground() {
+		return Firebase.#inForeground;
+	}
 	constructor() {
 		if (firebaseInstance) {
 			return firebaseInstance;
 		}
 		firebaseInstance = this;
+
+		Application.on('launch', (args) => {
+			Firebase.#onResumeQueue.forEach((callback) => {
+				callback();
+			});
+			Firebase.#onResumeQueue.splice(0);
+		});
+
+		Application.on('resume', (args) => {
+			Firebase.#inForeground = true;
+		});
+
+		Application.on('suspend', (args) => {
+			Firebase.#inForeground = false;
+		});
 		return firebaseInstance;
 	}
 	app(name?: string) {

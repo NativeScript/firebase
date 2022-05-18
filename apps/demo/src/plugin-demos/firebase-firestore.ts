@@ -11,7 +11,10 @@ export function navigatingTo(args: EventData) {
 export class DemoModel extends DemoSharedFirebaseFirestore {
 	constructor() {
 		super();
-		Promise.all([this.init(),this.invalid_field_path()]);
+	}
+
+	testIt(): void {
+		Promise.all([this.init(), this.invalid_field_path()]);
 	}
 
 	async init() {
@@ -57,21 +60,20 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 		const exampleDoc2 = firebase().firestore().collection('things').doc('exampleDoc2');
 
 		firebase()
-				.firestore()
-				.batch()
-				.set(exampleDoc, {
-					message: 'Hello doc',
-				})
-				.set(exampleDoc2, {
-					date: new Date(),
-				})
-				.commit()
-				.then(() => {})
-				.catch((error) => {
-					console.error(error);
-				});
+			.firestore()
+			.batch()
+			.set(exampleDoc, {
+				message: 'Hello doc',
+			})
+			.set(exampleDoc2, {
+				date: new Date(),
+			})
+			.commit()
+			.then(() => {})
+			.catch((error) => {
+				console.error(error);
+			});
 	}
-	
 
 	async invalid_field_path() {
 		try {

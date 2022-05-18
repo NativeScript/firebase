@@ -15,21 +15,25 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 		super();
 		this.auth = firebase().auth();
 		this.database = firebase().database();
+	}
+
+	testIt(): void {
 		this.transaction();
 		this.randomData();
 		this.children();
 		this.setData();
 	}
 
-	setData(){
+	setData() {
 		this.database
-		.ref('/person/me')
-		.set({ name: 'set', boolean: true , updated: new Date() })
-		.then((value) => {
-			console.log('set some data', value);
-		}).catch(e =>{
-			console.log('failed to set data', e);
-		});
+			.ref('/person/me')
+			.set({ name: 'set', boolean: true, updated: new Date() })
+			.then((value) => {
+				console.log('set some data', value);
+			})
+			.catch((e) => {
+				console.log('failed to set data', e);
+			});
 	}
 
 	randomData() {

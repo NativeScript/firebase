@@ -1,5 +1,5 @@
 import { AndroidActivityNewIntentEventData, AndroidApplication, Application, Utils } from '@nativescript/core';
-import { FirebaseApp, FirebaseError, firebase, deserialize } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError, firebase, deserialize, Firebase } from '@nativescript/firebase-core';
 import { AuthorizationStatus, IMessaging, RemoteMessage } from './common';
 
 let defaultMessaging: Messaging;
@@ -28,24 +28,32 @@ function ensureCallback() {
 			return global.__native(this);
 		}
 
-		public onError(error: any): void { }
+		public onError(error: any): void {}
 
 		public onSuccess(message: string): void {
-			const callback = this._owner?.get?.()?.[this._propName];
-			if (typeof callback === 'function') {
-				if (this._propName === '_onToken') {
-					callback(message);
-				} else if (this._propName === '_onNotificationTap' || this._propName === '_onMessage') {
-					try {
-						setTimeout(() => {
+			const exec = () => {
+				const callback = this._owner?.get?.()?.[this._propName];
+				if (typeof callback === 'function') {
+					if (this._propName === '_onToken') {
+						callback(message);
+					} else if (this._propName === '_onNotificationTap' || this._propName === '_onMessage') {
+						try {
+							setTimeout(() => {
+								callback(JSON.parse(message));
+							});
+						} catch (e) {}
+					} else {
+						try {
 							callback(JSON.parse(message));
-						});
-					} catch (e) { }
-				} else {
-					try {
-						callback(JSON.parse(message));
-					} catch (e) { }
+						} catch (e) {}
+					}
 				}
+			};
+			const fb = require('@nativescript/firebase-core');
+			if (!fb.Firebase.inForeground) {
+				fb.Firebase.addToResumeQueue(exec);
+			} else {
+				exec();
 			}
 		}
 	}
@@ -74,6 +82,37 @@ export class Messaging implements IMessaging {
 		defaultMessaging = this;
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
 		ensureCallback();
+
+		// Setup onmessage handling
+
+		if (!this.#onMessageCallback) {
+			this.#onMessageCallback = new Callback();
+			this.#onMessageCallback._propName = '_onMessage';
+
+			this.#onMessageCallback._owner = new WeakRef(this);
+
+			org.nativescript.firebase.messaging.FirebaseMessaging.setOnMessageListener(this.#onMessageCallback);
+		}
+
+		// Setup tap notification handling
+
+		if (!this.#onNotificationTapCallback) {
+			this.#onNotificationTapCallback = new Callback();
+			this.#onNotificationTapCallback._propName = '_onNotificationTap';
+
+			this.#onNotificationTapCallback._owner = new WeakRef(this);
+
+			org.nativescript.firebase.messaging.FirebaseMessaging.setOnMessageTapListener(this.#onNotificationTapCallback);
+		}
+
+		if (!this.#onTokenCallback) {
+			this.#onTokenCallback = new Callback();
+			this.#onTokenCallback._propName = '_onToken';
+			this.#onTokenCallback._owner = new WeakRef(this);
+
+			org.nativescript.firebase.messaging.FirebaseMessaging.setOnTokenListener(this.#onTokenCallback);
+		}
+
 		Application.android.on(AndroidApplication.activityNewIntentEvent, this._newIntentCallback.bind(this));
 	}
 
@@ -131,43 +170,15 @@ export class Messaging implements IMessaging {
 
 	onMessage(listener: (message: RemoteMessage) => any) {
 		this.#onMessage = listener;
-		if (listener) {
-			if (!this.#onMessageCallback) {
-				this.#onMessageCallback = new Callback();
-				this.#onMessageCallback._propName = '_onMessage';
-			}
-
-			this.#onMessageCallback._owner = new WeakRef(this);
-
-			org.nativescript.firebase.messaging.FirebaseMessaging.setOnMessageListener(this.#onMessageCallback);
-		}
 	}
 
 	onNotificationTap(listener: (message: RemoteMessage) => any) {
 		this.#onNotificationTap = listener;
-		if (listener) {
-			if (!this.#onNotificationTapCallback) {
-				this.#onNotificationTapCallback = new Callback();
-				this.#onNotificationTapCallback._propName = '_onNotificationTap';
-			}
-
-			this.#onNotificationTapCallback._owner = new WeakRef(this);
-
-			org.nativescript.firebase.messaging.FirebaseMessaging.setOnMessageTapListener(this.#onNotificationTapCallback);
-		}
 	}
 
 	onToken(listener: (token: string) => any) {
 		this.#onToken = listener;
-
 		if (listener) {
-			if (!this.#onTokenCallback) {
-				this.#onTokenCallback = new Callback();
-				this.#onTokenCallback._propName = '_onToken';
-			}
-
-			this.#onTokenCallback._owner = new WeakRef(this);
-
 			org.nativescript.firebase.messaging.FirebaseMessaging.setOnTokenListener(this.#onTokenCallback);
 		} else {
 			org.nativescript.firebase.messaging.FirebaseMessaging.setOnTokenListener(null);

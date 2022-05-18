@@ -1,1 +1,1 @@
-pod 'Firebase/Database','~>8.6'
+pod 'Firebase/Database','~>9.0'

@@ -36,6 +36,24 @@ export class Messaging implements IMessaging {
 			return defaultMessaging;
 		}
 		defaultMessaging = this;
+
+		TNSFirebaseMessaging.onMessageCallback = (dict) => {
+			if (this.#onMessage) {
+				this.#onMessage(deserialize(dict));
+			}
+		};
+
+		TNSFirebaseMessaging.onTokenCallback = (value) => {
+			if (this.#onToken) {
+				this.#onToken(value);
+			}
+		};
+
+		TNSFirebaseMessaging.onNotificationTapCallback = (dict) => {
+			if (this.#onNotificationTap) {
+				this.#onNotificationTap(deserialize(dict));
+			}
+		};
 	}
 
 	get showNotificationsWhenInForeground(): boolean {
@@ -114,35 +132,14 @@ export class Messaging implements IMessaging {
 
 	onMessage(listener: (message: RemoteMessage) => any) {
 		this.#onMessage = listener;
-		if (listener) {
-			TNSFirebaseMessaging.onMessageCallback = (dict) => {
-				listener(deserialize(dict));
-			};
-		} else {
-			TNSFirebaseMessaging.onMessageCallback = null;
-		}
 	}
 
 	onToken(listener: (token: string) => any) {
 		this.#onToken = listener;
-		if (listener) {
-			TNSFirebaseMessaging.onTokenCallback = (value) => {
-				listener(value);
-			};
-		} else {
-			TNSFirebaseMessaging.onTokenCallback = null;
-		}
 	}
 
 	onNotificationTap(listener: (message: RemoteMessage) => any) {
 		this.#onNotificationTap = listener;
-		if (listener) {
-			TNSFirebaseMessaging.onNotificationTapCallback = (dict) => {
-				listener(deserialize(dict));
-			};
-		} else {
-			TNSFirebaseMessaging.onNotificationTapCallback = null;
-		}
 	}
 
 	registerDeviceForRemoteMessages(): Promise<void> {

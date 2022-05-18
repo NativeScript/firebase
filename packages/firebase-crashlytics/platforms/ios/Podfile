@@ -1,2 +1,2 @@
-pod 'Firebase/Crashlytics','~>8.6'
-pod 'Firebase/Analytics','~>8.6'
+pod 'Firebase/Crashlytics','~>9.0'
+pod 'Firebase/Analytics','~>9.0'

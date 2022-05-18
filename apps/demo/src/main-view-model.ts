@@ -27,6 +27,9 @@ export class MainViewModel extends Observable {
 			name: 'firebase-app-check',
 		},
 		{
+			name: 'firebase-app-check-debug',
+		},
+		{
 			name: 'firebase-in-app-messaging',
 		},
 		{
@@ -38,9 +41,9 @@ export class MainViewModel extends Observable {
 		{
 			name: 'firebase-messaging',
 		},
-    {
-      name: 'firebase-firestore',
-    },
+		{
+			name: 'firebase-firestore',
+		},
 	];
 
 	viewDemo(args) {

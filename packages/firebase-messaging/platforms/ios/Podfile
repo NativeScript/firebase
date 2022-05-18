@@ -1,1 +1,1 @@
-pod 'Firebase/Messaging', '~> 8.6'
+pod 'Firebase/Messaging', '~> 9.0'

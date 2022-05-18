@@ -697,8 +697,6 @@ export class PhoneAuthProvider {
 				reject();
 			} else {
 				this.native.verifyPhoneNumberUIDelegateCompletion(phoneNumber, null, (verificationId, error) => {
-					console.log('verifyPhoneNumberUIDelegateCompletion', verificationId, error);
-					console.log(UIApplication.sharedApplication.delegate.respondsToSelector('application:didReceiveRemoteNotification:fetchCompletionHandler'));
 					if (error) {
 						reject(FirebaseError.fromNative(error));
 					} else {

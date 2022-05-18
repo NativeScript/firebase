@@ -1,2 +1,2 @@
 platform :ios, '11.0'
-pod 'Firebase/AppCheck', '~>8.6'
+pod 'Firebase/AppCheck', '~>9.0'
