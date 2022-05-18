@@ -1,3 +1,23 @@
+# [2.0.0](https://github.com/nativescript/firebase/compare/1.2.2...2.0.0) (2022-05-18)
+
+
+### Bug Fixes
+
+* **admob:** declare as static ([44f66b9](https://github.com/nativescript/firebase/commit/44f66b99e83c2dfb07b230297db8fd8d1249b61b))
+* **admob:** update input ([dcb2b07](https://github.com/nativescript/firebase/commit/dcb2b072aac9e51c2e99b840cd15dad9af4c9644))
+* **auth:** currentUser is nullable ([#82](https://github.com/nativescript/firebase/issues/82)) ([8f5cab1](https://github.com/nativescript/firebase/commit/8f5cab1f4067e4cee47b4e5fe5a5c5f5d5b7b210))
+* **dynamic-links:** prevent crash when annotation is null ([#86](https://github.com/nativescript/firebase/issues/86)) ([8a53b8b](https://github.com/nativescript/firebase/commit/8a53b8b0d002c987d2d521682ee8a1c011be0d8a))
+* HttpsCallableResult type ([#81](https://github.com/nativescript/firebase/issues/81)) ([b6e431b](https://github.com/nativescript/firebase/commit/b6e431b58afe1b57afbd05f3fdc0838fa2458891))
+* **messaging:** prevent loss of messages when app is closed. ([#84](https://github.com/nativescript/firebase/issues/84)) ([f75d682](https://github.com/nativescript/firebase/commit/f75d6826566c561ede416d79f72f1352c334ed77))
+* TypeError onComplete is not a function ([#80](https://github.com/nativescript/firebase/issues/80)) ([e575475](https://github.com/nativescript/firebase/commit/e575475869388fbe8f7707b7b9d4986c7b0b9002))
+* **appcheck:** declare as static ([#88](https://github.com/nativescript/firebase/issues/88))  ([4dc8122](https://github.com/nativescript/firebase/commit/4dc81226d6901d0e05c92f8e2a6d47d7c7f0c4df))
+* **messaging:** declare as static ([#77](https://github.com/nativescript/firebase/issues/77))  ([4dc8122](https://github.com/nativescript/firebase/commit/4dc81226d6901d0e05c92f8e2a6d47d7c7f0c4df))
+
+### Features
+
+* v2 ([4dc8122](https://github.com/nativescript/firebase/commit/4dc81226d6901d0e05c92f8e2a6d47d7c7f0c4df))
+
+
 ## [1.2.2](https://github.com/nativescript/firebase/compare/1.2.1...1.2.2) (2022-04-02)
 
 
