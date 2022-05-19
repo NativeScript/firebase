@@ -1,3 +1,12 @@
+## [2.0.1](https://github.com/nativescript/firebase/compare/2.0.0...2.0.1) (2022-05-19)
+
+
+### Bug Fixes
+
+* **messaging:** update lib ([a85a64d](https://github.com/nativescript/firebase/commit/a85a64dc66cc905f817de6aa0590c6d95258c094))
+
+
+
 # [2.0.0](https://github.com/nativescript/firebase/compare/1.2.2...2.0.0) (2022-05-18)
 
 
