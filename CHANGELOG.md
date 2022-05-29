@@ -1,3 +1,13 @@
+## [2.0.2](https://github.com/nativescript/firebase/compare/2.0.1...2.0.2) (2022-05-29)
+
+
+### Bug Fixes
+
+* **admob:** remove deleted method ([f0ccb4a](https://github.com/nativescript/firebase/commit/f0ccb4aba87981a1b72e39f42ce29a610d513974))
+* **functions:** remove deleted method ([35c3f44](https://github.com/nativescript/firebase/commit/35c3f44aa9ddcb96c6b0904efe5cf94979be92d0))
+
+
+
 ## [2.0.1](https://github.com/nativescript/firebase/compare/2.0.0...2.0.1) (2022-05-19)
 
 
