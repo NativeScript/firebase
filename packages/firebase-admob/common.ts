@@ -133,8 +133,6 @@ export interface RequestConfiguration {
 export interface RequestOptions {
 	contentUrl?: undefined | string;
 	keywords?: string[];
-	location?: [number, number];
-	locationAccuracy?: undefined | number;
 	networkExtras?: undefined | { [key: string]: string };
 	requestAgent?: undefined | string;
 	requestNonPersonalizedAdsOnly?: undefined | false | true;
