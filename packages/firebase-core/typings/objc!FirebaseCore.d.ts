@@ -1,6 +1,4 @@
-
 declare class FIRApp extends NSObject {
-
 	static alloc(): FIRApp; // inherited from NSObject
 
 	static appNamed(name: string): FIRApp;
@@ -13,9 +11,27 @@ declare class FIRApp extends NSObject {
 
 	static defaultApp(): FIRApp;
 
+	static firebaseUserAgent(): string;
+
+	static isDefaultAppConfigured(): boolean;
+
 	static new(): FIRApp; // inherited from NSObject
 
+	static registerInternalLibraryWithName(library: typeof NSObject, name: string): void;
+
+	static registerInternalLibraryWithNameWithVersion(library: typeof NSObject, name: string, version: string): void;
+
+	static registerLibraryWithVersion(name: string, version: string): void;
+
+	static resetApps(): void;
+
+	container: FIRComponentContainer;
+
 	dataCollectionDefaultEnabled: boolean;
+
+	readonly heartbeatLogger: FIRHeartbeatLogger;
+
+	readonly isDefaultApp: boolean;
 
 	readonly name: string;
 
@@ -23,11 +39,14 @@ declare class FIRApp extends NSObject {
 
 	static readonly allApps: NSDictionary<string, FIRApp>;
 
+	constructor(o: { instanceWithName: string; options: FIROptions });
+
 	deleteApp(completion: (p1: boolean) => void): void;
+
+	initInstanceWithNameOptions(name: string, options: FIROptions): this;
 }
 
 declare class FIRConfiguration extends NSObject {
-
 	static alloc(): FIRConfiguration; // inherited from NSObject
 
 	static new(): FIRConfiguration; // inherited from NSObject
@@ -40,7 +59,6 @@ declare class FIRConfiguration extends NSObject {
 declare function FIRFirebaseVersion(): string;
 
 declare const enum FIRLoggerLevel {
-
 	Error = 3,
 
 	Warning = 4,
@@ -53,16 +71,19 @@ declare const enum FIRLoggerLevel {
 
 	Min = 3,
 
-	Max = 7
+	Max = 7,
 }
 
 declare class FIROptions extends NSObject implements NSCopying {
-
 	static alloc(): FIROptions; // inherited from NSObject
 
 	static defaultOptions(): FIROptions;
 
+	static defaultOptionsDictionary(): NSDictionary<any, any>;
+
 	static new(): FIROptions; // inherited from NSObject
+
+	static resetDefaultOptions(): void;
 
 	APIKey: string;
 
@@ -80,7 +101,23 @@ declare class FIROptions extends NSObject implements NSCopying {
 
 	deepLinkURLScheme: string;
 
+	editingLocked: boolean;
+
 	googleAppID: string;
+
+	readonly isAnalyticsCollectionDeactivated: boolean;
+
+	readonly isAnalyticsCollectionEnabled: boolean;
+
+	readonly isAnalyticsCollectionExplicitlySet: boolean;
+
+	readonly isAnalyticsEnabled: boolean;
+
+	readonly isMeasurementEnabled: boolean;
+
+	readonly isSignInEnabled: boolean;
+
+	readonly libraryVersionID: string;
 
 	projectID: string;
 
@@ -88,11 +125,17 @@ declare class FIROptions extends NSObject implements NSCopying {
 
 	trackingID: string;
 
-	constructor(o: { contentsOfFile: string; });
+	usingOptionsFromDefaultPlist: boolean;
 
-	constructor(o: { googleAppID: string; GCMSenderID: string; });
+	constructor(o: { internalWithOptionsDictionary: NSDictionary<any, any> });
+
+	constructor(o: { contentsOfFile: string });
+
+	constructor(o: { googleAppID: string; GCMSenderID: string });
 
 	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
+
+	initInternalWithOptionsDictionary(serviceInfoDictionary: NSDictionary<any, any>): this;
 
 	initWithContentsOfFile(plistPath: string): this;
 

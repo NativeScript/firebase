@@ -1,6 +1,4 @@
-
 declare class FIRFunctions extends NSObject {
-
 	static alloc(): FIRFunctions; // inherited from NSObject
 
 	static functions(): FIRFunctions;
@@ -17,17 +15,14 @@ declare class FIRFunctions extends NSObject {
 
 	static new(): FIRFunctions; // inherited from NSObject
 
-	readonly emulatorOrigin: string;
-
 	HTTPSCallableWithName(name: string): FIRHTTPSCallable;
 
-	useEmulatorWithHostPort(host: string, port: number): void;
+	HTTPSCallableWithURL(url: NSURL): FIRHTTPSCallable;
 
-	useFunctionsEmulatorOrigin(origin: string): void;
+	useEmulatorWithHostPort(host: string, port: number): void;
 }
 
 declare const enum FIRFunctionsErrorCode {
-
 	OK = 0,
 
 	Cancelled = 1,
@@ -60,15 +55,10 @@ declare const enum FIRFunctionsErrorCode {
 
 	DataLoss = 15,
 
-	Unauthenticated = 16
+	Unauthenticated = 16,
 }
 
-declare var FIRFunctionsErrorDetailsKey: string;
-
-declare var FIRFunctionsErrorDomain: string;
-
 declare class FIRHTTPSCallable extends NSObject {
-
 	static alloc(): FIRHTTPSCallable; // inherited from NSObject
 
 	static new(): FIRHTTPSCallable; // inherited from NSObject
@@ -81,7 +71,6 @@ declare class FIRHTTPSCallable extends NSObject {
 }
 
 declare class FIRHTTPSCallableResult extends NSObject {
-
 	static alloc(): FIRHTTPSCallableResult; // inherited from NSObject
 
 	static new(): FIRHTTPSCallableResult; // inherited from NSObject

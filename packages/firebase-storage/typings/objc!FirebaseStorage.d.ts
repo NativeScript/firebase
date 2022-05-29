@@ -1,6 +1,4 @@
-
 declare class FIRStorage extends NSObject {
-
 	static alloc(): FIRStorage; // inherited from NSObject
 
 	static new(): FIRStorage; // inherited from NSObject
@@ -33,7 +31,6 @@ declare class FIRStorage extends NSObject {
 }
 
 declare class FIRStorageDownloadTask extends FIRStorageObservableTask implements FIRStorageTaskManagement {
-
 	static alloc(): FIRStorageDownloadTask; // inherited from NSObject
 
 	static new(): FIRStorageDownloadTask; // inherited from NSObject
@@ -48,7 +45,7 @@ declare class FIRStorageDownloadTask extends FIRStorageObservableTask implements
 
 	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
 
-	readonly  // inherited from NSObjectProtocol
+	readonly; // inherited from NSObjectProtocol
 
 	cancel(): void;
 
@@ -82,7 +79,6 @@ declare class FIRStorageDownloadTask extends FIRStorageObservableTask implements
 }
 
 declare const enum FIRStorageErrorCode {
-
 	Unknown = -13000,
 
 	ObjectNotFound = -13010,
@@ -105,13 +101,10 @@ declare const enum FIRStorageErrorCode {
 
 	Cancelled = -13040,
 
-	InvalidArgument = -13050
+	InvalidArgument = -13050,
 }
 
-declare var FIRStorageErrorDomain: string;
-
-declare class FIRStorageListResult extends NSObject implements NSCopying {
-
+declare class FIRStorageListResult extends NSObject {
 	static alloc(): FIRStorageListResult; // inherited from NSObject
 
 	static new(): FIRStorageListResult; // inherited from NSObject
@@ -121,12 +114,9 @@ declare class FIRStorageListResult extends NSObject implements NSCopying {
 	readonly pageToken: string;
 
 	readonly prefixes: NSArray<FIRStorageReference>;
-
-	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
 }
 
-declare class FIRStorageMetadata extends NSObject implements NSCopying {
-
+declare class FIRStorageMetadata extends NSObject {
 	static alloc(): FIRStorageMetadata; // inherited from NSObject
 
 	static new(): FIRStorageMetadata; // inherited from NSObject
@@ -145,11 +135,11 @@ declare class FIRStorageMetadata extends NSObject implements NSCopying {
 
 	customMetadata: NSDictionary<string, string>;
 
-	readonly file: boolean;
-
-	readonly folder: boolean;
-
 	readonly generation: number;
+
+	readonly isFile: boolean;
+
+	readonly isFolder: boolean;
 
 	readonly md5Hash: string;
 
@@ -167,9 +157,7 @@ declare class FIRStorageMetadata extends NSObject implements NSCopying {
 
 	readonly updated: Date;
 
-	constructor(o: { dictionary: NSDictionary<string, any>; });
-
-	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
+	constructor(o: { dictionary: NSDictionary<string, any> });
 
 	dictionaryRepresentation(): NSDictionary<string, any>;
 
@@ -177,7 +165,6 @@ declare class FIRStorageMetadata extends NSObject implements NSCopying {
 }
 
 declare class FIRStorageObservableTask extends FIRStorageTask {
-
 	static alloc(): FIRStorageObservableTask; // inherited from NSObject
 
 	static new(): FIRStorageObservableTask; // inherited from NSObject
@@ -192,7 +179,6 @@ declare class FIRStorageObservableTask extends FIRStorageTask {
 }
 
 declare class FIRStorageReference extends NSObject {
-
 	static alloc(): FIRStorageReference; // inherited from NSObject
 
 	static new(): FIRStorageReference; // inherited from NSObject
@@ -207,7 +193,9 @@ declare class FIRStorageReference extends NSObject {
 
 	child(path: string): FIRStorageReference;
 
-	dataWithMaxSizeCompletion(size: number, completion: (p1: NSData, p2: NSError) => void): FIRStorageDownloadTask;
+	copy(zone: interop.Pointer | interop.Reference<any>): FIRStorageReference;
+
+	dataWithMaxSizeCompletion(maxSize: number, completion: (p1: NSData, p2: NSError) => void): FIRStorageDownloadTask;
 
 	deleteWithCompletion(completion: (p1: NSError) => void): void;
 
@@ -245,7 +233,6 @@ declare class FIRStorageReference extends NSObject {
 }
 
 declare class FIRStorageTask extends NSObject {
-
 	static alloc(): FIRStorageTask; // inherited from NSObject
 
 	static new(): FIRStorageTask; // inherited from NSObject
@@ -254,7 +241,6 @@ declare class FIRStorageTask extends NSObject {
 }
 
 interface FIRStorageTaskManagement extends NSObjectProtocol {
-
 	cancel?(): void;
 
 	enqueue(): void;
@@ -264,12 +250,10 @@ interface FIRStorageTaskManagement extends NSObjectProtocol {
 	resume?(): void;
 }
 declare var FIRStorageTaskManagement: {
-
 	prototype: FIRStorageTaskManagement;
 };
 
 declare class FIRStorageTaskSnapshot extends NSObject {
-
 	static alloc(): FIRStorageTaskSnapshot; // inherited from NSObject
 
 	static new(): FIRStorageTaskSnapshot; // inherited from NSObject
@@ -288,7 +272,6 @@ declare class FIRStorageTaskSnapshot extends NSObject {
 }
 
 declare const enum FIRStorageTaskStatus {
-
 	Unknown = 0,
 
 	Resume = 1,
@@ -299,11 +282,10 @@ declare const enum FIRStorageTaskStatus {
 
 	Success = 4,
 
-	Failure = 5
+	Failure = 5,
 }
 
 declare class FIRStorageUploadTask extends FIRStorageObservableTask implements FIRStorageTaskManagement {
-
 	static alloc(): FIRStorageUploadTask; // inherited from NSObject
 
 	static new(): FIRStorageUploadTask; // inherited from NSObject
@@ -318,7 +300,7 @@ declare class FIRStorageUploadTask extends FIRStorageObservableTask implements F
 
 	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
 
-	readonly  // inherited from NSObjectProtocol
+	readonly; // inherited from NSObjectProtocol
 
 	cancel(): void;
 

@@ -1,6 +1,4 @@
-
 declare class FIRMessaging extends NSObject {
-
 	static alloc(): FIRMessaging; // inherited from NSObject
 
 	static extensionHelper(): FIRMessagingExtensionHelper;
@@ -41,25 +39,21 @@ declare class FIRMessaging extends NSObject {
 }
 
 declare const enum FIRMessagingAPNSTokenType {
-
 	Unknown = 0,
 
 	Sandbox = 1,
 
-	Prod = 2
+	Prod = 2,
 }
 
 interface FIRMessagingDelegate extends NSObjectProtocol {
-
 	messagingDidReceiveRegistrationToken?(messaging: FIRMessaging, fcmToken: string): void;
 }
 declare var FIRMessagingDelegate: {
-
 	prototype: FIRMessagingDelegate;
 };
 
 declare const enum FIRMessagingError {
-
 	Unknown = 0,
 
 	Authentication = 1,
@@ -74,11 +68,12 @@ declare const enum FIRMessagingError {
 
 	InvalidRequest = 7,
 
-	InvalidTopicName = 8
+	InvalidTopicName = 8,
 }
 
-declare class FIRMessagingExtensionHelper extends NSObject {
+declare var FIRMessagingErrorDomain: string;
 
+declare class FIRMessagingExtensionHelper extends NSObject {
 	static alloc(): FIRMessagingExtensionHelper; // inherited from NSObject
 
 	static new(): FIRMessagingExtensionHelper; // inherited from NSObject
@@ -89,7 +84,6 @@ declare class FIRMessagingExtensionHelper extends NSObject {
 }
 
 declare class FIRMessagingMessageInfo extends NSObject {
-
 	static alloc(): FIRMessagingMessageInfo; // inherited from NSObject
 
 	static new(): FIRMessagingMessageInfo; // inherited from NSObject
@@ -98,10 +92,9 @@ declare class FIRMessagingMessageInfo extends NSObject {
 }
 
 declare const enum FIRMessagingMessageStatus {
-
 	Unknown = 0,
 
-	New = 1
+	New = 1,
 }
 
 declare var FIRMessagingRegistrationTokenRefreshedNotification: string;

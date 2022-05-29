@@ -1,6 +1,4 @@
-
 declare class FIRAnalytics extends NSObject {
-
 	static alloc(): FIRAnalytics; // inherited from NSObject
 
 	static appInstanceID(): string;
@@ -10,6 +8,8 @@ declare class FIRAnalytics extends NSObject {
 	static handleOpenURL(url: NSURL): void;
 
 	static handleUserActivity(userActivity: any): void;
+
+	static initiateOnDeviceConversionMeasurementWithEmailAddress(emailAddress: string): void;
 
 	static logEventWithNameParameters(name: string, parameters: NSDictionary<string, any>): void;
 
@@ -37,3 +37,7 @@ declare var FIRConsentStatusGranted: string;
 declare var FIRConsentTypeAdStorage: string;
 
 declare var FIRConsentTypeAnalyticsStorage: string;
+
+declare var FirebaseAnalyticsVersionNumber: number;
+
+declare var FirebaseAnalyticsVersionString: interop.Reference<number>;
