@@ -4,7 +4,7 @@ import { AuthorizationStatus, IMessaging, Permissions, Notification, RemoteMessa
 
 export { AuthorizationStatus } from './common';
 
-declare const FIRApp, TNSFirebaseMessaging, TNSFirebaseCore;
+declare const FIRApp, TNSFirebaseCore;
 
 let _registerDeviceForRemoteMessages = {
 	resolve: null,
@@ -152,7 +152,7 @@ export class Messaging implements IMessaging {
 				if (error) {
 					reject(FirebaseError.fromNative(error));
 				} else {
-					resolve(result);
+					resolve();
 				}
 			};
 			if (UIApplication?.sharedApplication) {

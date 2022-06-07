@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import FirebaseMessaging
+import TNSFirebaseMessaging
 
 struct OriginalDelegateRespondsTo {
     var willPresentNotification: Bool
@@ -53,7 +54,7 @@ public class TNSUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
         if (remoteNotification["gcm.message_id"] != nil) {
             var message = parseNotification(response.notification)
             message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
-            TNSFirebaseMessaging.onNotificationTapCallback?(message as NSDictionary)
+            TNSFirebaseMessaging.onNotificationTapCallback?(message)
         }
         
         if (TNSUNUserNotificationCenterDelegate.originalNotificationCenterDelegate != nil && TNSUNUserNotificationCenterDelegate.originalDelegateRespondsTo.didReceiveNotificationResponse) {
@@ -78,7 +79,7 @@ public class TNSUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
         if (notification.request.content.userInfo["gcm.message_id"] != nil) {
             var message = parseNotification(notification)
             if (message["contentAvailable"] == nil) {
-                TNSFirebaseMessaging.onMessageCallback?(message as NSDictionary)
+                TNSFirebaseMessaging.onMessageCallback?(message)
                 message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
             }
             completionHandler(options)

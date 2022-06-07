@@ -1,6 +1,7 @@
 import Foundation
 import FirebaseMessaging
 import GoogleUtilities
+import TNSFirebaseMessaging
 
 @objc(TNSFIRMessagingDelegate)
 public class TNSFIRMessagingDelegate: NSObject, MessagingDelegate {
@@ -21,6 +22,7 @@ public class TNSFIRMessagingDelegate: NSObject, MessagingDelegate {
         guard fcmToken != nil else {
             return
         }
+    
         TNSFirebaseMessaging.onTokenCallback?(fcmToken!)
         
         if((GULAppDelegateSwizzler.sharedApplication()?.delegate?.responds(to: #selector(MessagingDelegate.messaging(_:didReceiveRegistrationToken:)))) == true) {

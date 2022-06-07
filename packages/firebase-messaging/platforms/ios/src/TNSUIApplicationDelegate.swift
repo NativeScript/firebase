@@ -5,6 +5,7 @@ import FirebaseMessaging
 #if canImport(FirebaseAuth)
 import FirebaseAuth
 #endif
+import TNSFirebaseMessaging
 
 @objc(TNSUIApplicationDelegate)
 public class TNSUIApplicationDelegate: UIResponder , UIApplicationDelegate {
@@ -122,7 +123,7 @@ public class TNSUIApplicationDelegate: UIResponder , UIApplicationDelegate {
         
         var message = parseRemoteMessage(userInfo)
         message["foreground"] = application.applicationState == UIApplication.State.active
-        TNSFirebaseMessaging.onMessageCallback?(message as NSDictionary)
+        TNSFirebaseMessaging.onMessageCallback?(message)
         completionHandler(.newData)
         
     }
