@@ -3,13 +3,11 @@ import { Firebase, FirebaseApp } from '@nativescript/firebase-core';
 
 export { AdditionalUserInfo, ActionCodeInfo, ActionCodeInfoOperation, UserProfileChangeRequest };
 
-
 export interface UserCredential {
 	additionalUserInfo: AdditionalUserInfo;
 	user: User;
 	credential: AuthCredential;
 }
-
 
 export declare class UserMetadata implements IUserMetadata {
 	readonly native;
@@ -49,7 +47,7 @@ export declare class User implements IUser {
 	getIdToken(forceRefresh?: undefined | false | true): Promise<string>;
 	getIdTokenResult(forceRefresh?: undefined | false | true): Promise<AuthTokenResult>;
 	linkWithCredential(credential: AuthCredential): Promise<UserCredential>;
-	reauthenticateWithProvider(provider: OAuthProvider): Promise<UserCredential>
+	reauthenticateWithProvider(provider: OAuthProvider): Promise<UserCredential>;
 	reauthenticateWithCredential(credential: AuthCredential): Promise<UserCredential>;
 	reload(): Promise<void>;
 	sendEmailVerification(actionCodeSettings?: ActionCodeSettings): Promise<void>;
@@ -138,7 +136,7 @@ export declare class OAuthCredential extends AuthCredential implements IOAuthCre
 	readonly secret: string;
 }
 
-export declare class OAuthProvider implements IOAuthProvider{
+export declare class OAuthProvider implements IOAuthProvider {
 	constructor(providerId: string);
 	addCustomParameter(key: string, value: string);
 	setScopes(scopes: string[]);
@@ -199,7 +197,9 @@ export declare class Auth implements IAuth {
 
 	signInAnonymously(): Promise<UserCredential>;
 
-	signInWithProvider(provider: OAuthProvider): Promise<UserCredential>
+	signInWithProvider(provider: OAuthProvider): Promise<UserCredential>;
+
+	getProviderCredential(provider: OAuthProvider): Promise<OAuthCredential>;
 
 	signInWithCredential(credential: AuthCredential): Promise<UserCredential>;
 
@@ -217,7 +217,7 @@ export declare class Auth implements IAuth {
 }
 
 declare module '@nativescript/firebase-core' {
-	export interface Firebase extends FirebaseAuth { }
+	export interface Firebase extends FirebaseAuth {}
 }
 
 export interface FirebaseAuth {

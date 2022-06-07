@@ -736,10 +736,10 @@ export class OAuthCredential extends AuthCredential implements IOAuthCredential 
 	signInMethod: string;
 	protected _native: FIROAuthCredential;
 
-	static fromNative(credential: FIROAuthCredential) {
+	static fromNative(credential: any) {
 		if (credential instanceof FIRAuthCredential) {
 			const nativeCredential = new OAuthCredential();
-			nativeCredential._native = credential;
+			nativeCredential._native = credential as any;
 			return nativeCredential;
 		}
 		return null;
@@ -1033,6 +1033,22 @@ export class Auth implements IAuth {
 								resolve(toUserCredential(result));
 							}
 						});
+					}
+				});
+			}
+		});
+	}
+
+	getProviderCredential(provider: OAuthProvider): Promise<OAuthCredential> {
+		return new Promise((resolve, reject) => {
+			if (!this.native) {
+				reject();
+			} else {
+				provider._builder.getCredentialWithUIDelegateCompletion(null, (credential, error) => {
+					if (error) {
+						reject(FirebaseError.fromNative(error));
+					} else {
+						resolve(OAuthCredential.fromNative(credential));
 					}
 				});
 			}
