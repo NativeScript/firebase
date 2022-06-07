@@ -210,7 +210,7 @@ export class Query implements IQuery {
 				callback(DataSnapshot.fromNative(snapshot), key);
 			},
 			(error) => {
-				cancelCallbackOrContext({
+				cancelCallbackOrContext?.({
 					message: error.localizedDescription,
 					native: error,
 				});
