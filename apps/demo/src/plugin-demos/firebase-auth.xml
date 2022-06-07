@@ -16,6 +16,8 @@
             <Button text="Login User With Phone" tap="{{ loginWithPhone }}" class="btn btn-primary"/>
             <Button text="Link User Phone" tap="{{ linkPhone }}" class="btn btn-primary"/>
             <Button text="Link Google" tap="{{ linkGoogle }}" class="btn btn-primary"/>
+            <Button text="Link user with Github" tap="{{ linkGithub }}" class="btn btn-primary"/>
+            <Button text="Login user with Yahoo" tap="{{ linkYahoo }}" class="btn btn-primary"/>
             <Button text="Get Current User" tap="{{ getCurrentUser }}" class="btn btn-primary"/>
             <Button text="Logout User" tap="{{ logOutUser }}" class="btn btn-primary"/>
             <StackLayout>

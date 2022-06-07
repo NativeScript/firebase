@@ -28,6 +28,45 @@ export class DemoModel extends DemoSharedFirebaseAuth {
 			});
 	}
 
+	async linkGithub() {
+		if (!this.user) {
+			return;
+		}
+		const provider = new OAuthProvider('github.com');
+		provider.addCustomParameter('allow_signup', 'false');
+		provider.setScopes(['user:email']);
+
+		firebase()
+			.auth()
+			.getProviderCredential(provider)
+			.then((cred) => {
+				firebase().auth().currentUser.linkWithCredential(cred);
+				console.log('cred', cred);
+			})
+			.catch((e) => {
+				console.log('Failed to link Github', e);
+			});
+	}
+
+	async linkYahoo() {
+		if (!this.user) {
+			return;
+		}
+		const provider = new OAuthProvider('yahoo.com');
+		provider.addCustomParameter('prompt', 'login');
+		provider.addCustomParameter('language', 'en');
+
+		firebase()
+			.auth()
+			.getProviderCredential(provider)
+			.then((cred) => {
+				firebase().auth().currentUser.linkWithCredential(cred);
+			})
+			.catch((e) => {
+				console.log('Failed to link Yahoo', e);
+			});
+	}
+
 	async linkGoogle() {
 		try {
 			if (!this.user) {
