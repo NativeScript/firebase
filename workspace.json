@@ -20,6 +20,7 @@
 		"firebase-messaging": "packages/firebase-messaging",
 		"firebase-performance": "packages/firebase-performance",
 		"firebase-remote-config": "packages/firebase-remote-config",
-		"firebase-storage": "packages/firebase-storage"
+		"firebase-storage": "packages/firebase-storage",
+		"firebase-messaging-core": "packages/firebase-messaging-core"
 	}
 }

@@ -1,0 +1,5 @@
+ module NSCFirebaseMessagingCore {
+  umbrella header "NSCFirebaseMessagingCoreUmbrella.h"
+  export *
+  module * { export * }
+}

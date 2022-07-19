@@ -1,5 +1,0 @@
- module TNSFirebaseMessaging {
-  umbrella header "TNSFirebaseMessagingUmbrella.h"
-  export *
-  module * { export * }
-}
