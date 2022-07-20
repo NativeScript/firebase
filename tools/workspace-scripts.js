@@ -200,6 +200,13 @@ module.exports = {
 					description: '@nativescript/firebase-app-check-debug: Build',
 				},
 			},
+			// @nativescript/firebase-messaging-core
+			'firebase-messaging-core': {
+				build: {
+					script: 'nx run firebase-messaging-core:build.all',
+					description: '@nativescript/firebase-messaging-core: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run-many --target=build.all --all',
 				description: 'Build all packages',
@@ -277,6 +284,10 @@ module.exports = {
 			'firebase-app-check-debug': {
 				script: 'nx run firebase-app-check-debug:focus',
 				description: 'Focus on @nativescript/firebase-app-check-debug',
+			},
+			'firebase-messaging-core': {
+				script: 'nx run firebase-messaging-core:focus',
+				description: 'Focus on @nativescript/firebase-messaging-core',
 			},
 			reset: {
 				script: 'nx g @nativescript/plugin-tools:focus-packages',

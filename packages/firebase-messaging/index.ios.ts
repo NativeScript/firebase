@@ -1,8 +1,6 @@
-import { Application, ApplicationSettings, Device } from '@nativescript/core';
-import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { AuthorizationStatus, IMessaging, Permissions, Notification, RemoteMessage } from './common';
-
-export { AuthorizationStatus } from './common';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { IMessaging, Notification, RemoteMessage, AuthorizationStatus } from '.';
+import { MessagingCore, Permissions } from '@nativescript/firebase-messaging-core';
 
 declare const FIRApp, TNSFirebaseCore;
 
@@ -24,36 +22,18 @@ Object.defineProperty(fb, 'messaging', {
 	writable: false,
 });
 
-const REMOTE_NOTIFICATIONS_REGISTRATION_STATUS = 'org.nativescript.firebase.notifications.status';
-
 export class Messaging implements IMessaging {
 	#app: FirebaseApp;
 	#onMessage?: (message: RemoteMessage) => void;
 	#onToken?: (token: string) => void;
 	#onNotificationTap?: (message: RemoteMessage) => void;
+	#instance: MessagingCore;
 	constructor() {
 		if (defaultMessaging) {
 			return defaultMessaging;
 		}
 		defaultMessaging = this;
-
-		TNSFirebaseMessaging.onMessageCallback = (dict) => {
-			if (this.#onMessage) {
-				this.#onMessage(deserialize(dict));
-			}
-		};
-
-		TNSFirebaseMessaging.onTokenCallback = (value) => {
-			if (this.#onToken) {
-				this.#onToken(value);
-			}
-		};
-
-		TNSFirebaseMessaging.onNotificationTapCallback = (dict) => {
-			if (this.#onNotificationTap) {
-				this.#onNotificationTap(deserialize(dict));
-			}
-		};
+		this.#instance = MessagingCore.getInstance();
 	}
 
 	get showNotificationsWhenInForeground(): boolean {
@@ -96,126 +76,46 @@ export class Messaging implements IMessaging {
 		return TNSFirebaseMessaging.APNSTokenToString(this.native.APNSToken);
 	}
 
-	_hasPermission(resolve, reject) {
-		if (parseInt(Device.osVersion) >= 10) {
-			UNUserNotificationCenter.currentNotificationCenter().getNotificationSettingsWithCompletionHandler((settings) => {
-				let status = AuthorizationStatus.NOT_DETERMINED;
-				switch (settings.authorizationStatus) {
-					case UNAuthorizationStatus.Authorized:
-						status = AuthorizationStatus.AUTHORIZED;
-						break;
-					case UNAuthorizationStatus.Denied:
-						status = AuthorizationStatus.DENIED;
-						break;
-					case UNAuthorizationStatus.Ephemeral:
-						status = AuthorizationStatus.EPHEMERAL;
-						break;
-					case UNAuthorizationStatus.Provisional:
-						status = AuthorizationStatus.PROVISIONAL;
-						break;
-					case UNAuthorizationStatus.NotDetermined:
-						status = AuthorizationStatus.NOT_DETERMINED;
-						break;
-				}
-				resolve(status);
-			});
-		} else {
-			resolve(AuthorizationStatus.AUTHORIZED);
-		}
-	}
-
 	hasPermission(): Promise<AuthorizationStatus> {
-		return new Promise((resolve, reject) => {
-			this._hasPermission(resolve, reject);
-		});
+		return this.#instance.hasPermission() as any;
 	}
 
 	onMessage(listener: (message: RemoteMessage) => any) {
+		if (!listener && this.#onMessage) {
+			this.#instance.removeOnMessage(this.#onMessage);
+		} else {
+			this.#instance.addOnMessage(listener);
+		}
+
 		this.#onMessage = listener;
 	}
 
 	onToken(listener: (token: string) => any) {
+		if (!listener && this.#onToken) {
+			this.#instance.removeOnToken(this.#onToken);
+		} else {
+			this.#instance.addOnToken(listener);
+		}
+
 		this.#onToken = listener;
 	}
 
 	onNotificationTap(listener: (message: RemoteMessage) => any) {
+		if (!listener && this.#onNotificationTap) {
+			this.#instance.removeOnNotificationTap(this.#onNotificationTap);
+		} else {
+			this.#instance.addOnNotificationTap(listener);
+		}
+
 		this.#onNotificationTap = listener;
 	}
 
 	registerDeviceForRemoteMessages(): Promise<void> {
-		return new Promise((resolve, reject) => {
-			if (TNSFirebaseCore.isSimulator()) {
-				ApplicationSettings.setBoolean(REMOTE_NOTIFICATIONS_REGISTRATION_STATUS, true);
-				resolve();
-			}
-			TNSFirebaseMessaging.registerDeviceForRemoteMessagesCallback = (result, error) => {
-				if (error) {
-					reject(FirebaseError.fromNative(error));
-				} else {
-					resolve();
-				}
-			};
-			if (UIApplication?.sharedApplication) {
-				UIApplication?.sharedApplication?.registerForRemoteNotifications?.();
-			} else {
-				const cb = (args) => {
-					UIApplication?.sharedApplication?.registerForRemoteNotifications?.();
-					Application.off('launch', cb);
-				};
-				Application.on('launch', cb);
-			}
-		});
+		return this.#instance.registerDeviceForRemoteMessages();
 	}
 
-	requestPermission(permissions?: Permissions): Promise<AuthorizationStatus> {
-		return new Promise((resolve, reject) => {
-			const version = parseInt(Device.osVersion);
-			if (version >= 10) {
-				let options = UNAuthorizationOptionNone;
-				if (permissions?.ios?.alert ?? true) {
-					options = options | UNAuthorizationOptions.Alert;
-				}
-
-				if (permissions?.ios?.badge ?? true) {
-					options = options | UNAuthorizationOptions.Badge;
-				}
-
-				if (permissions?.ios?.sound ?? true) {
-					options = options | UNAuthorizationOptions.Sound;
-				}
-
-				if (permissions?.ios?.carPlay ?? true) {
-					options = options | UNAuthorizationOptions.CarPlay;
-				}
-
-				if (version >= 12) {
-					if (permissions?.ios?.criticalAlert) {
-						options = options | UNAuthorizationOptions.CriticalAlert;
-					}
-
-					if (permissions?.ios?.provisional) {
-						options = options | UNAuthorizationOptions.Provisional;
-					}
-				}
-
-				if (version >= 13 && version <= 15) {
-					options = options | UNAuthorizationOptions.Announcement;
-				}
-
-				UNUserNotificationCenter.currentNotificationCenter().requestAuthorizationWithOptionsCompletionHandler(options, (result, error) => {
-					if (error) {
-						reject(FirebaseError.fromNative(error));
-					} else {
-						this._hasPermission(resolve, reject);
-					}
-				});
-			} else {
-				const notificationTypes = UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge;
-				const settings = UIUserNotificationSettings.settingsForTypesCategories(notificationTypes, null);
-				UIApplication.sharedApplication.registerUserNotificationSettings(settings);
-				this._hasPermission(resolve, reject);
-			}
-		});
+	requestPermission(permissions?: any): Promise<AuthorizationStatus> {
+		return this.#instance.requestPermission(permissions) as any;
 	}
 
 	subscribeToTopic(topic: string): Promise<void> {
@@ -230,15 +130,7 @@ export class Messaging implements IMessaging {
 		});
 	}
 	unregisterDeviceForRemoteMessages(): Promise<void> {
-		return new Promise((resolve, reject) => {
-			try {
-				UIApplication.sharedApplication.unregisterForRemoteNotifications();
-				ApplicationSettings.setBoolean(REMOTE_NOTIFICATIONS_REGISTRATION_STATUS, false);
-				resolve();
-			} catch (e) {
-				reject(e);
-			}
-		});
+		return this.#instance.unregisterDeviceForRemoteMessages();
 	}
 	unsubscribeFromTopic(topic: string): Promise<void> {
 		return new Promise((resolve, reject) => {
@@ -263,7 +155,7 @@ export class Messaging implements IMessaging {
 		});
 	}
 	get isDeviceRegisteredForRemoteMessages(): boolean {
-		return UIApplication.sharedApplication.registeredForRemoteNotifications;
+		return this.#instance.isDeviceRegisteredForRemoteMessages;
 	}
 	get autoInitEnabled(): boolean {
 		return this.native?.autoInitEnabled;

@@ -1,3 +1,17 @@
+# [2.2.0-alpha](https://github.com/nativescript/firebase/compare/2.1.0...2.2.0-alpha) (2022-07-20)
+
+
+### Bug Fixes
+
+* **messaging:** use new requestPermission & permission check for API 33+ ([d1328ef](https://github.com/nativescript/firebase/commit/d1328ef39140d6a7cd6a289df353f69b67499e78))
+
+
+### Features
+
+* support external push provider ([a53d5a9](https://github.com/nativescript/firebase/commit/a53d5a9647a20d1dceb2ed6905933d2889b15fe5)), closes [#7](https://github.com/nativescript/firebase/issues/7)
+
+
+
 # [2.1.0](https://github.com/nativescript/firebase/compare/2.0.2...2.1.0) (2022-06-07)
 
 

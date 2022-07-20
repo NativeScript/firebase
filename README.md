@@ -12,6 +12,7 @@
 - [@nativescript/firebase-in-app-messaging](packages/firebase-in-app-messaging/README.md)
 - [@nativescript/firebase-installations](packages/firebase-installations/README.md)
 - [@nativescript/firebase-messaging](packages/firebase-messaging/README.md)
+- [@nativescript/firebase-messaging-core](packages/firebase-messaging-core/README.md)
 - [@nativescript/firebase-performance](packages/firebase-performance/README.md)
 - [@nativescript/firebase-remote-config](packages/firebase-remote-config/README.md)
 - [@nativescript/firebase-storage](packages/firebase-storage/README.md)
