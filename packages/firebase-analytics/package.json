@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-analytics",
-	"version": "2.2.0-alpha",
+	"version": "2.2.0-alpha.1",
 	"description": "NativeScript Firebase - Analytics",
 	"main": "index",
 	"typings": "index.d.ts",

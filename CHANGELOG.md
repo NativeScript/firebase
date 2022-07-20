@@ -1,3 +1,12 @@
+# [2.2.0-alpha.1](https://github.com/NativeScript/firebase/compare/2.2.0-alpha...2.2.0-alpha.1) (2022-07-20)
+
+
+### Bug Fixes
+
+* **messaging-core:** AuthorizationStatus enum export ([#101](https://github.com/NativeScript/firebase/issues/101)) ([fa4b6bd](https://github.com/NativeScript/firebase/commit/fa4b6bdb6defefb3430844f59ece3f49affbb507))
+
+
+
 # [2.2.0-alpha](https://github.com/nativescript/firebase/compare/2.1.0...2.2.0-alpha) (2022-07-20)
 
 
