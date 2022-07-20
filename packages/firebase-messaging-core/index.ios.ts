@@ -103,11 +103,11 @@ export class MessagingCore implements IMessagingCore {
 			MessagingCore.#inForeground = false;
 		});
 
-		NSCFirebaseMessagingCore.onMessageCallback = this.#onMessage;
+		NSCFirebaseMessagingCore.onMessageCallback = this.#onMessage.bind(this);
 
-		NSCFirebaseMessagingCore.onTokenCallback = this.#onToken;
+		NSCFirebaseMessagingCore.onTokenCallback = this.#onToken.bind(this);
 
-		NSCFirebaseMessagingCore.onNotificationTapCallback = this.#onNotificationTap;
+		NSCFirebaseMessagingCore.onNotificationTapCallback = this.#onNotificationTap.bind(this);
 	}
 
 	static getInstance() {
