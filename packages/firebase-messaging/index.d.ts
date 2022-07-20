@@ -1,8 +1,28 @@
 import { FirebaseApp, Firebase } from '@nativescript/firebase-core';
 
-import { AuthorizationStatus, Permissions, AndroidPermissions, IOSPermissions } from '@nativescript/firebase-messaging-core';
+export { Permissions, AndroidPermissions, IOSPermissions } from '@nativescript/firebase-messaging-core';
 
-export { NotificationAndroidVisibility, NotificationAndroidPriority, AuthorizationStatus, Permissions, AndroidPermissions, IOSPermissions } from './enums';
+export const enum NotificationAndroidVisibility {
+	VISIBILITY_PRIVATE,
+	VISIBILITY_PUBLIC,
+	VISIBILITY_SECRET,
+}
+
+export const enum NotificationAndroidPriority {
+	PRIORITY_DEFAULT,
+	PRIORITY_HIGH,
+	PRIORITY_LOW,
+	PRIORITY_MAX,
+	PRIORITY_MIN,
+}
+
+export const enum AuthorizationStatus {
+	AUTHORIZED,
+	DENIED,
+	NOT_DETERMINED,
+	PROVISIONAL,
+	EPHEMERAL,
+}
 
 export interface NotificationIOSCriticalSound {
 	critical: undefined | false | true;

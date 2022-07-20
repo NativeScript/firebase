@@ -1,8 +1,6 @@
 import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { IMessaging, Notification, RemoteMessage } from '.';
-import { MessagingCore, AuthorizationStatus, Permissions } from '@nativescript/firebase-messaging-core';
-export { NotificationAndroidPriority, NotificationAndroidVisibility } from './enums';
-export { AuthorizationStatus };
+import { IMessaging, Notification, RemoteMessage, AuthorizationStatus } from '.';
+import { MessagingCore, Permissions } from '@nativescript/firebase-messaging-core';
 
 declare const FIRApp, TNSFirebaseCore;
 
@@ -79,7 +77,7 @@ export class Messaging implements IMessaging {
 	}
 
 	hasPermission(): Promise<AuthorizationStatus> {
-		return this.#instance.hasPermission();
+		return this.#instance.hasPermission() as any;
 	}
 
 	onMessage(listener: (message: RemoteMessage) => any) {
@@ -116,8 +114,8 @@ export class Messaging implements IMessaging {
 		return this.#instance.registerDeviceForRemoteMessages();
 	}
 
-	requestPermission(permissions?: Permissions): Promise<AuthorizationStatus> {
-		return this.#instance.requestPermission(permissions);
+	requestPermission(permissions?: any): Promise<AuthorizationStatus> {
+		return this.#instance.requestPermission(permissions) as any;
 	}
 
 	subscribeToTopic(topic: string): Promise<void> {

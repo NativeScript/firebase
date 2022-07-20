@@ -1,7 +1,5 @@
-import { AndroidActivityNewIntentEventData, AndroidApplication, Application, Utils } from '@nativescript/core';
+import { AndroidActivityNewIntentEventData, AndroidApplication, Application, Device, Utils } from '@nativescript/core';
 import { AuthorizationStatus, IMessagingCore } from '.';
-
-export { AuthorizationStatus } from './enums';
 
 let defaultInstance: MessagingCore;
 
@@ -20,7 +18,6 @@ function ensureCallback() {
 		public onError(error: any): void {}
 
 		public onSuccess(message: string): void {
-			console.log('onSuccess', message);
 			const exec = () => {
 				const callback = this._owner?.get?.()?.[this._propName];
 				if (typeof callback === 'function') {
@@ -76,7 +73,6 @@ export class MessagingCore implements IMessagingCore {
 
 	#onTokenCallback?;
 	#onToken(token: string) {
-		console.log('onToken test', onTokenCallbacks.size);
 		if (onTokenCallbacks.size > 0) {
 			onTokenCallbacks.forEach((cb) => {
 				cb(token);
@@ -176,7 +172,6 @@ export class MessagingCore implements IMessagingCore {
 	}
 
 	get _onToken() {
-		console.log('_onToken');
 		return this.#onToken;
 	}
 
@@ -184,7 +179,7 @@ export class MessagingCore implements IMessagingCore {
 		return this.#onTokenCallback;
 	}
 
-	getToken(): Promise<string> {
+	getCurrentToken(): Promise<string> {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.messaging.FirebaseMessaging.getToken(
 				this.#native,
@@ -202,12 +197,16 @@ export class MessagingCore implements IMessagingCore {
 		});
 	}
 
-	getAPNSToken() {
-		return null;
-	}
-
 	hasPermission(): Promise<AuthorizationStatus> {
-		return Promise.resolve(org.nativescript.firebase.messaging.FirebaseMessaging.hasPermission(Utils.android.getApplicationContext()) ? AuthorizationStatus.AUTHORIZED : AuthorizationStatus.DENIED);
+		const context = Utils.android.getApplicationContext();
+		if (parseInt(Device.sdkVersion) >= 33) {
+			if (androidx.core.content.ContextCompat.checkSelfPermission(context, (android as any).Manifest.permission.POST_NOTIFICATIONS) === android.content.pm.PackageManager.PERMISSION_GRANTED) {
+				return Promise.resolve(0);
+			} else {
+				return Promise.resolve(1);
+			}
+		}
+		return Promise.resolve(org.nativescript.firebase.messaging.FirebaseMessaging.hasPermission(context) ? 0 : 1);
 	}
 
 	addOnMessage(listener: (message: any) => any) {
@@ -253,6 +252,33 @@ export class MessagingCore implements IMessagingCore {
 		return Promise.resolve();
 	}
 	requestPermission(permissions?: any): Promise<AuthorizationStatus> {
+		const POST_NOTIFICATIONS = (android as any).Manifest.permission.POST_NOTIFICATIONS;
+		if (parseInt(Device.sdkVersion) >= 33 && POST_NOTIFICATIONS) {
+			const activity: androidx.appcompat.app.AppCompatActivity = Application.android.foregroundActivity || Application.android.startActivity;
+
+			return new Promise((resolve, reject) => {
+				const launch = (activity) => {
+					const requestPermissionLauncher = activity.registerForActivityResult(
+						new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
+						new androidx.activity.result.ActivityResultCallback({
+							onActivityResult(isGranted: boolean) {
+								resolve(isGranted ? 0 : 1);
+							},
+						})
+					);
+
+					requestPermissionLauncher.launch((android as any).Manifest.permission.POST_NOTIFICATIONS);
+				};
+
+				if (!activity) {
+					Application.android.once('activityCreated', (args: any) => {
+						launch(args.activity);
+					});
+				} else {
+					launch(activity);
+				}
+			});
+		}
 		return this.hasPermission();
 	}
 

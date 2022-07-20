@@ -1,8 +1,6 @@
 import { Application, ApplicationSettings, Device } from '@nativescript/core';
 import { AuthorizationStatus, IMessagingCore, Permissions } from '.';
 
-export { AuthorizationStatus } from './enums';
-
 declare const TNSFirebaseCore;
 
 let _registerDeviceForRemoteMessages = {
@@ -136,7 +134,7 @@ export class MessagingCore implements IMessagingCore {
 		return this.#onToken;
 	}
 
-	getToken(): Promise<string> {
+	getCurrentToken(): Promise<string> {
 		return new Promise((resolve, reject) => {
 			if (!TNSFirebaseCore.isSimulator() && !UIApplication.sharedApplication.registeredForRemoteNotifications) {
 				reject(new Error('You must be registered for remote messages before calling getToken, see MessagingCore.getInstance().registerDeviceForRemoteMessages()'));

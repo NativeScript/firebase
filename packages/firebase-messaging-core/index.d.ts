@@ -1,4 +1,10 @@
-export * from './enums';
+export enum AuthorizationStatus {
+	AUTHORIZED,
+	DENIED,
+	NOT_DETERMINED,
+	PROVISIONAL,
+	EPHEMERAL,
+}
 
 export interface AndroidPermissions {}
 
@@ -20,6 +26,8 @@ export interface IMessagingCore {
 	isDeviceRegisteredForRemoteMessages: boolean;
 
 	showNotificationsWhenInForeground: boolean;
+
+	getCurrentToken(): Promise<string>;
 
 	hasPermission(): Promise<AuthorizationStatus>;
 
@@ -45,7 +53,7 @@ export interface IMessagingCore {
 export declare class MessagingCore implements IMessagingCore {
 	static getInstance(): MessagingCore;
 
-	getAPNSToken(): string | null;
+	getCurrentToken(): Promise<string>;
 
 	hasPermission(): Promise<AuthorizationStatus>;
 
