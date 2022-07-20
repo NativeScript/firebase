@@ -48,21 +48,7 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
         }
     }
     
-    public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let remoteNotification = response.notification.request.content.userInfo
-        if (remoteNotification["gcm.message_id"] != nil) {
-            var message = parseNotification(response.notification)
-            message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
-            NSCFirebaseMessagingCore.onNotificationTapCallback?(message)
-        }
-        
-        if (NSCUNUserNotificationCenterDelegate.originalNotificationCenterDelegate != nil && NSCUNUserNotificationCenterDelegate.originalDelegateRespondsTo.didReceiveNotificationResponse) {
-            NSCUNUserNotificationCenterDelegate.originalNotificationCenterDelegate?.userNotificationCenter?(center, didReceive: response, withCompletionHandler: completionHandler)
-        } else {
-            completionHandler()
-        }
-    }
-    
+    // called when a notification comes in
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         var options = UNNotificationPresentationOptions(rawValue: 0)
         
@@ -86,6 +72,22 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
             NSCUNUserNotificationCenterDelegate.originalNotificationCenterDelegate?.userNotificationCenter?(center, willPresent: notification, withCompletionHandler: completionHandler)
         } else {
             completionHandler(options)
+        }
+    }
+
+    // called when the user taps on a notification
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let remoteNotification = response.notification.request.content.userInfo
+        if (remoteNotification["gcm.message_id"] != nil) {
+            var message = parseNotification(response.notification)
+            message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
+            NSCFirebaseMessagingCore.onNotificationTapCallback?(message)
+        }
+        
+        if (NSCUNUserNotificationCenterDelegate.originalNotificationCenterDelegate != nil && NSCUNUserNotificationCenterDelegate.originalDelegateRespondsTo.didReceiveNotificationResponse) {
+            NSCUNUserNotificationCenterDelegate.originalNotificationCenterDelegate?.userNotificationCenter?(center, didReceive: response, withCompletionHandler: completionHandler)
+        } else {
+            completionHandler()
         }
     }
     

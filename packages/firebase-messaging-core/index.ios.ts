@@ -6,16 +6,14 @@ export { AuthorizationStatus };
 
 declare const TNSFirebaseCore;
 
-let _registerDeviceForRemoteMessages = {
-	resolve: null,
-	reject: null,
-};
-
 const REMOTE_NOTIFICATIONS_REGISTRATION_STATUS = 'org.nativescript.firebase.notifications.status';
 
 let defaultInstance: MessagingCore;
-const onMessageCallbacks: Set<(message: any) => void> = new Set();
+
 const onTokenCallbacks: Set<(token: any) => void> = new Set();
+
+const onNotificationCallbacks: Set<(message: any) => void> = new Set();
+const onMutableNotificationCallbacks: Set<(message: any) => boolean> = new Set();
 const onNotificationTapCallbacks: Set<(message: any) => void> = new Set();
 
 function deserialize(data: any): any {
@@ -45,10 +43,12 @@ function deserialize(data: any): any {
 
 export class MessagingCore implements IMessagingCore {
 	#APNSToken;
+	#returnTokenOnSimulator: false | string = false;
+
 	#onMessage(message: any) {
-		if (onMessageCallbacks.size > 0) {
+		if (onNotificationCallbacks.size > 0) {
 			const msg = deserialize(message);
-			onMessageCallbacks.forEach((cb) => {
+			onNotificationCallbacks.forEach((cb) => {
 				cb(msg);
 			});
 		}
@@ -88,25 +88,23 @@ export class MessagingCore implements IMessagingCore {
 		}
 		defaultInstance = this;
 
-		Application.on('launch', (args) => {
+		Application.on('launch', (_args) => {
 			MessagingCore.#onResumeQueue.forEach((callback) => {
 				callback();
 			});
 			MessagingCore.#onResumeQueue.splice(0);
 		});
 
-		Application.on('resume', (args) => {
+		Application.on('resume', (_args) => {
 			MessagingCore.#inForeground = true;
 		});
 
-		Application.on('suspend', (args) => {
+		Application.on('suspend', (_args) => {
 			MessagingCore.#inForeground = false;
 		});
 
 		NSCFirebaseMessagingCore.onMessageCallback = this.#onMessage.bind(this);
-
 		NSCFirebaseMessagingCore.onTokenCallback = this.#onToken.bind(this);
-
 		NSCFirebaseMessagingCore.onNotificationTapCallback = this.#onNotificationTap.bind(this);
 	}
 
@@ -123,6 +121,14 @@ export class MessagingCore implements IMessagingCore {
 
 	set showNotificationsWhenInForeground(value: boolean) {
 		NSCFirebaseMessagingCore.showNotificationsWhenInForeground = value;
+	}
+
+	get returnTokenOnSimulator(): false | string {
+		return this.#returnTokenOnSimulator;
+	}
+
+	set returnTokenOnSimulator(value: false | string) {
+		this.#returnTokenOnSimulator = value;
 	}
 
 	get _onMessage() {
@@ -144,8 +150,11 @@ export class MessagingCore implements IMessagingCore {
 				return;
 			}
 			if (!this.#APNSToken) {
-				reject(new Error('No token found'));
-				return;
+				if (TNSFirebaseCore.isSimulator() && this.returnTokenOnSimulator) {
+					return resolve(this.returnTokenOnSimulator);
+				}
+
+				return reject(new Error('No token found'));
 			}
 			resolve(this.getAPNSToken());
 		});
@@ -155,7 +164,117 @@ export class MessagingCore implements IMessagingCore {
 		return NSCFirebaseMessagingCore.APNSTokenToString(this.#APNSToken);
 	}
 
-	_hasPermission(resolve, reject) {
+	/**
+	 * Add a callback to when a new APNs token is received.
+	 *
+	 * @param listener
+	 */
+	addOnToken(listener: (token: string) => any) {
+		if (typeof listener === 'function') {
+			onTokenCallbacks.add(listener);
+		}
+	}
+
+	removeOnToken(listener: (token: string) => any): boolean {
+		if (typeof listener === 'function') {
+			return onTokenCallbacks.delete(listener);
+		}
+		return false;
+	}
+
+	/**
+	 * @deprecated use addOnNotification instead
+	 */
+	addOnMessage(listener: (message: any) => any) {
+		return this.addOnNotification(listener);
+	}
+
+	/**
+	 * @deprecated use addOnNotification/removeOnNotification instead
+	 */
+	removeOnMessage(listener: (message: any) => any): boolean {
+		return this.removeOnNotification(listener);
+	}
+
+	/**
+	 * Add a notification callback - called whenever a notification arrives
+	 *
+	 * @param listener
+	 */
+	addOnNotification(listener: (message: any) => void) {
+		if (typeof listener === 'function') {
+			onNotificationCallbacks.add(listener);
+		}
+	}
+
+	removeOnNotification(listener: (message: any) => void): boolean {
+		if (typeof listener === 'function') {
+			return onNotificationCallbacks.delete(listener);
+		}
+		return false;
+	}
+
+	/**
+	 * Add a mutable notification callback - called when the payload contains "mutable-content": 1
+	 *
+	 * Return true to display the notification - otherwise it's not displayed.
+	 *
+	 * @param listener
+	 */
+	addOnMutableNotification(listener: (message: any) => boolean) {
+		if (typeof listener === 'function') {
+			onMutableNotificationCallbacks.add(listener);
+		}
+	}
+
+	removeOnMutableNotification(listener: (message: any) => boolean): boolean {
+		if (typeof listener === 'function') {
+			return onMutableNotificationCallbacks.delete(listener);
+		}
+		return false;
+	}
+
+	addOnNotificationTap(listener: (message: any) => any) {
+		if (typeof listener === 'function') {
+			onNotificationTapCallbacks.add(listener);
+		}
+	}
+
+	removeOnNotificationTap(listener: (message: any) => any): boolean {
+		if (typeof listener === 'function') {
+			return onNotificationTapCallbacks.delete(listener);
+		}
+		return false;
+	}
+
+	registerDeviceForRemoteMessages(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			if (TNSFirebaseCore.isSimulator()) {
+				ApplicationSettings.setBoolean(REMOTE_NOTIFICATIONS_REGISTRATION_STATUS, true);
+				return resolve();
+			}
+			NSCFirebaseMessagingCore.registerDeviceForRemoteMessagesCallback = (result, error) => {
+				if (error) {
+					const err: any = new Error(error?.localizedDescription);
+					err.native = error;
+					reject(err);
+				} else {
+					resolve();
+				}
+			};
+			if (UIApplication?.sharedApplication) {
+				UIApplication?.sharedApplication?.registerForRemoteNotifications?.();
+			} else {
+				const cb = (args) => {
+					UIApplication?.sharedApplication?.registerForRemoteNotifications?.();
+					Application.off('launch', cb);
+				};
+				Application.on('launch', cb);
+			}
+		});
+	}
+
+	_hasPermission(resolve, _reject) {
 		if (parseInt(Device.osVersion) >= 10) {
 			UNUserNotificationCenter.currentNotificationCenter().getNotificationSettingsWithCompletionHandler((settings) => {
 				let status = AuthorizationStatus.NOT_DETERMINED;
@@ -189,112 +308,45 @@ export class MessagingCore implements IMessagingCore {
 		});
 	}
 
-	addOnMessage(listener: (message: any) => any) {
-		if (typeof listener === 'function') {
-			onMessageCallbacks.add(listener);
-		}
-	}
-
-	removeOnMessage(listener: (message: any) => any): boolean {
-		if (typeof listener === 'function') {
-			return onMessageCallbacks.delete(listener);
-		}
-		return false;
-	}
-
-	addOnToken(listener: (token: string) => any) {
-		if (typeof listener === 'function') {
-			onTokenCallbacks.add(listener);
-		}
-	}
-
-	removeOnToken(listener: (token: string) => any): boolean {
-		if (typeof listener === 'function') {
-			return onTokenCallbacks.delete(listener);
-		}
-		return false;
-	}
-
-	addOnNotificationTap(listener: (message: any) => any) {
-		if (typeof listener === 'function') {
-			onNotificationTapCallbacks.add(listener);
-		}
-	}
-
-	removeOnNotificationTap(listener: (message: any) => any): boolean {
-		if (typeof listener === 'function') {
-			return onNotificationTapCallbacks.delete(listener);
-		}
-		return false;
-	}
-
-	registerDeviceForRemoteMessages(): Promise<void> {
-		return new Promise((resolve, reject) => {
-			if (TNSFirebaseCore.isSimulator()) {
-				ApplicationSettings.setBoolean(REMOTE_NOTIFICATIONS_REGISTRATION_STATUS, true);
-				resolve();
-			}
-			NSCFirebaseMessagingCore.registerDeviceForRemoteMessagesCallback = (result, error) => {
-				if (error) {
-					const err: any = new Error(error?.localizedDescription);
-					err.native = error;
-					reject(err);
-				} else {
-					resolve();
-				}
-			};
-			if (UIApplication?.sharedApplication) {
-				UIApplication?.sharedApplication?.registerForRemoteNotifications?.();
-			} else {
-				const cb = (args) => {
-					UIApplication?.sharedApplication?.registerForRemoteNotifications?.();
-					Application.off('launch', cb);
-				};
-				Application.on('launch', cb);
-			}
-		});
-	}
-
 	requestPermission(permissions?: Permissions): Promise<AuthorizationStatus> {
 		return new Promise((resolve, reject) => {
 			const version = parseInt(Device.osVersion);
 			if (version >= 10) {
 				let options = UNAuthorizationOptionNone;
 				if (permissions?.ios?.alert ?? true) {
-					options = options | UNAuthorizationOptions.Alert;
+					options |= UNAuthorizationOptions.Alert;
 				}
 
 				if (permissions?.ios?.badge ?? true) {
-					options = options | UNAuthorizationOptions.Badge;
+					options |= UNAuthorizationOptions.Badge;
 				}
 
 				if (permissions?.ios?.sound ?? true) {
-					options = options | UNAuthorizationOptions.Sound;
+					options |= UNAuthorizationOptions.Sound;
 				}
 
 				if (permissions?.ios?.carPlay ?? true) {
-					options = options | UNAuthorizationOptions.CarPlay;
+					options |= UNAuthorizationOptions.CarPlay;
 				}
 
 				if (version >= 12) {
 					if (permissions?.ios?.criticalAlert) {
-						options = options | UNAuthorizationOptions.CriticalAlert;
+						options |= UNAuthorizationOptions.CriticalAlert;
 					}
 
 					if (permissions?.ios?.provisional) {
-						options = options | UNAuthorizationOptions.Provisional;
+						options |= UNAuthorizationOptions.Provisional;
 					}
 				}
 
 				if (version >= 13 && version <= 15) {
-					options = options | UNAuthorizationOptions.Announcement;
+					options |= UNAuthorizationOptions.Announcement;
 				}
 
 				UNUserNotificationCenter.currentNotificationCenter().requestAuthorizationWithOptionsCompletionHandler(options, (result, error) => {
 					if (error) {
 						const err: any = new Error(error?.localizedDescription);
 						err.native = error;
-						reject(err);
 						reject(err);
 					} else {
 						this._hasPermission(resolve, reject);
@@ -320,6 +372,7 @@ export class MessagingCore implements IMessagingCore {
 			}
 		});
 	}
+
 	get isDeviceRegisteredForRemoteMessages(): boolean {
 		return UIApplication.sharedApplication.registeredForRemoteNotifications;
 	}

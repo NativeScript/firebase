@@ -24,8 +24,6 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
         
         let selector = #selector((NSCUIApplicationDelegate).application(_:didReceiveRemoteNotification:fetchCompletionHandler:))
         if (!(GULAppDelegateSwizzler.sharedApplication()!.delegate!.responds(to: selector))) {
-            
-            
             let method = class_getInstanceMethod(
                 object_getClass(NSCUIApplicationDelegate.sharedInstance),
                 selector
@@ -48,8 +46,6 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
         
         let tokenSelector = #selector(NSCUIApplicationDelegate.application(_:didRegisterForRemoteNotificationsWithDeviceToken:))
         if (!(GULAppDelegateSwizzler.sharedApplication()!.delegate!.responds(to: tokenSelector))) {
-            
-            
             let method = class_getInstanceMethod(
                 object_getClass(NSCUIApplicationDelegate.sharedInstance),
                 tokenSelector
@@ -71,8 +67,6 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
         
         let urlHandlingSelector = #selector(NSCUIApplicationDelegate.application(_:open:options:))
         if (!(GULAppDelegateSwizzler.sharedApplication()!.delegate!.responds(to: urlHandlingSelector))) {
-            
-            
             let method = class_getInstanceMethod(
                 object_getClass(NSCUIApplicationDelegate.sharedInstance),
                 urlHandlingSelector
@@ -96,9 +90,10 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
     
     @objc public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         var result = false
-        #if canImport(FirebaseAuth)
+
+#if canImport(FirebaseAuth)
         result = Auth.auth().canHandle(url)
-        #endif
+#endif
         return result
     }
     
@@ -109,9 +104,9 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
     }
     
     @objc public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    #if canImport(FirebaseMessaging)
+#if canImport(FirebaseMessaging)
         Messaging.messaging().apnsToken = deviceToken
-    #endif
+#endif
         UserDefaults.standard.set(true, forKey: NSCNotificationHelper.REMOTE_NOTIFICATIONS_REGISTRATION_STATUS)
         NSCFirebaseMessagingCore.registerDeviceForRemoteMessagesCallback?(UIApplication.shared.isRegisteredForRemoteNotifications, nil)
         NSCFirebaseMessagingCore.registerDeviceForRemoteMessagesCallback = nil
@@ -127,17 +122,18 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
             return
         }
 #endif
-        
 
-    
         var message = userInfo
-        #if canImport(FirebaseMessaging)
+
+#if canImport(FirebaseMessaging)
         message = parseRemoteMessage(userInfo)
-        #endif
+#endif
+
         message["foreground"] = application.applicationState == UIApplication.State.active
         NSCFirebaseMessagingCore.onMessageCallback?(message)
+
+        // todo: return .newData only if there's truly new data...
         completionHandler(.newData)
-        
     }
     
 }
