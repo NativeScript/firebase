@@ -1,10 +1,6 @@
-export enum AuthorizationStatus {
-	AUTHORIZED,
-	DENIED,
-	NOT_DETERMINED,
-	PROVISIONAL,
-	EPHEMERAL,
-}
+import { AuthorizationStatus } from './common';
+
+export { AuthorizationStatus };
 
 export interface AndroidPermissions {}
 

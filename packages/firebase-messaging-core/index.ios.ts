@@ -1,5 +1,8 @@
 import { Application, ApplicationSettings, Device } from '@nativescript/core';
-import { AuthorizationStatus, IMessagingCore, Permissions } from '.';
+import { IMessagingCore, Permissions } from '.';
+import { AuthorizationStatus } from './common';
+
+export { AuthorizationStatus };
 
 declare const TNSFirebaseCore;
 
