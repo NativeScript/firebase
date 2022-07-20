@@ -27,7 +27,10 @@ public class NSCNotificationHelper: NSObject {
         if #available(iOS 10.0, *) {
             NSCUNUserNotificationCenterDelegate.sharedInstance.observe()
         }
+
+#if canImport(NSCFIRMessagingDelegate)
         NSCFIRMessagingDelegate.sharedInstance.observe()
+#endif
         let auto = UserDefaults.standard.bool(forKey: NSCNotificationHelper.REMOTE_NOTIFICATIONS_REGISTRATION_STATUS)
         let isSimulator = UIDevice.current.name.lowercased().contains("simulator")
         if (auto && !isSimulator) {

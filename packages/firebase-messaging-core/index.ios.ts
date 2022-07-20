@@ -1,5 +1,8 @@
 import { Application, ApplicationSettings, Device } from '@nativescript/core';
-import { AuthorizationStatus, IMessagingCore, Permissions } from '.';
+import { IMessagingCore, Permissions } from '.';
+import { AuthorizationStatus } from './common';
+
+export { AuthorizationStatus };
 
 declare const TNSFirebaseCore;
 
@@ -100,11 +103,11 @@ export class MessagingCore implements IMessagingCore {
 			MessagingCore.#inForeground = false;
 		});
 
-		NSCFirebaseMessagingCore.onMessageCallback = this.#onMessage;
+		NSCFirebaseMessagingCore.onMessageCallback = this.#onMessage.bind(this);
 
-		NSCFirebaseMessagingCore.onTokenCallback = this.#onToken;
+		NSCFirebaseMessagingCore.onTokenCallback = this.#onToken.bind(this);
 
-		NSCFirebaseMessagingCore.onNotificationTapCallback = this.#onNotificationTap;
+		NSCFirebaseMessagingCore.onNotificationTapCallback = this.#onNotificationTap.bind(this);
 	}
 
 	static getInstance() {

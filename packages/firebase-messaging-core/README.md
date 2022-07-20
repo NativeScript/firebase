@@ -1,6 +1,6 @@
 # @nativescript/firebase-messaging-core
 
-```javascript
+```cli
 ns plugin add @nativescript/firebase-messaging-core
 ```
 
@@ -9,8 +9,6 @@ ns plugin add @nativescript/firebase-messaging-core
 Firebase Messaging Core is a lite package which enables you to use a third-party push service on Android and iOS.
 
 On Android it will always use FCM.
-
-
 
 ## Usage
 
@@ -24,21 +22,17 @@ This module provides a requestPermission method which triggers a native permissi
 import { MessagingCore, AuthorizationStatus } from '@nativescript/firebase-messaging-core';
 
 async function requestUserPermission() {
-	const authStatus = await MessagingCore
-		.getInstance()
-		.requestPermission({
-			ios: {
-				alert: true,
-			},
-		});
+	const authStatus = await MessagingCore.getInstance().requestPermission({
+		ios: {
+			alert: true,
+		},
+	});
 	const enabled = authStatus === AuthorizationStatus.AUTHORIZED || authStatus === AuthorizationStatus.PROVISIONAL;
 
 	if (enabled) {
 		console.log('Authorization status:', authStatus);
 
-		const didRegister = await MessagingCore
-		        .getInstance()
-                .registerDeviceForRemoteMessages();
+		const didRegister = await MessagingCore.getInstance().registerDeviceForRemoteMessages();
 	}
 }
 ```
@@ -46,8 +40,6 @@ async function requestUserPermission() {
 The permissions API for iOS provides much more fine-grain control over permissions and how they're handled within your application. To learn more, view the advanced iOS Permissions documentation.
 
 On Android, you do not need to request user permission. This method can still be called on Android devices; however, and will always resolve successfully.
-
-
 
 ### Foreground state messages
 
@@ -59,11 +51,9 @@ For example, the Alert API could be used to display a new Alert each time a mess
 import { alert } from '@nativescript/core';
 import { MessagingCore } from '@nativescript/firebase-messaging-core';
 
-MessagingCore
-	.getInstance()
-	.addOnMessage(async (remoteMessage) => {
-		alert('A new Push message arrived!', JSON.stringify(remoteMessage));
-	});
+MessagingCore.getInstance().addOnMessage(async (remoteMessage) => {
+	alert('A new Push message arrived!', JSON.stringify(remoteMessage));
+});
 ```
 
 # Always show notifications when the application is in foreground
@@ -88,40 +78,37 @@ The examples below use a NativeScript ApplicationSettings to store and manage th
 Once your application has started, you can call the getToken method on the Cloud Messaging module to get the unique device token (if using a different push notification provider, such as Amazon SNS, you will need to call getAPNSToken on iOS):
 
 ```ts
-
 import { ApplicationSettings } from '@nativescript/core';
 import { MessagingCore } from '@nativescript/firebase-messaging-core';
 
-
 async function saveTokenToDatabase(token) {
-  ApplicationSettings.setString(token);
+	ApplicationSettings.setString(token);
 }
 
 // Get the device token
-    MessagingCore
-		.getInstance()	
-      	.getCurrentToken()
-      	.then(token => {
-        	saveTokenToDatabase(token);
-      	});
+MessagingCore.getInstance()
+	.getCurrentToken()
+	.then((token) => {
+		saveTokenToDatabase(token);
+	});
 
-    // Listen to whether the token changes
-    MessagingCore
-		.getInstance().addOnToken(token => {
-      		saveTokenToDatabase(token);
-		});
+// Listen to whether the token changes
+MessagingCore.getInstance().addOnToken((token) => {
+	saveTokenToDatabase(token);
+});
 ```
+
 ### Android Integration
 
 Push notification icon and color
 
-If you want to use a specific icon for the push notification, it has to be configured in the tag in the AndroidManifest.xml
+If you want to use a specific icon for the push notification, it has to be configured in the tag in the `AndroidManifest.xml`
 
 ```xml
 <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
-  android:resource="@drawable/your_drawable_name" />
+           android:resource="@drawable/your_drawable_name" />
 <meta-data android:name="com.google.firebase.messaging.default_notification_color"
-  android:resource="@color/ns_primary" />
+           android:resource="@color/ns_primary" />
 ```
 
 ### Apple Integration
@@ -140,8 +127,8 @@ Copy that file to `app/App_Resources/iOS/` (if it doesn't exist yet, otherwise m
 so it's not removed when you remove and re-add the iOS platform. The relevant content for background push in that file is:
 
 ```xml
-	<key>aps-environment</key>
-	<string>development</string>
+<key>aps-environment</key>
+<string>development</string>
 ```
 
 #### Allow processing when a background push is received
@@ -154,7 +141,6 @@ Open `app/App_Resources/iOS/Info.plist` and add this to the bottom:
   <string>remote-notification</string>
 </array>
 ```
-
 
 ## License
 

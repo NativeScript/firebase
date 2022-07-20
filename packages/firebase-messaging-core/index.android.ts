@@ -1,5 +1,8 @@
 import { AndroidActivityNewIntentEventData, AndroidApplication, Application, Device, Utils } from '@nativescript/core';
-import { AuthorizationStatus, IMessagingCore } from '.';
+import { IMessagingCore } from '.';
+import { AuthorizationStatus } from './common';
+
+export { AuthorizationStatus };
 
 let defaultInstance: MessagingCore;
 
