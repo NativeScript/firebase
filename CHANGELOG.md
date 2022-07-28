@@ -1,3 +1,17 @@
+# [2.2.0](https://github.com/nativescript/firebase/compare/2.2.0-alpha.1...2.2.0) (2022-07-28)
+
+
+### Bug Fixes
+
+* **admob:** _BannerAd_listener not defined ([2ee0bcf](https://github.com/nativescript/firebase/commit/2ee0bcf4ba5e23f395668bbc002361233ce547eb)), closes [#97](https://github.com/nativescript/firebase/issues/97)
+* **admob:** request configuration ignored ([9d06c1e](https://github.com/nativescript/firebase/commit/9d06c1e642caf1d94d5b657719dc9ce5d530eb89)), closes [#103](https://github.com/nativescript/firebase/issues/103)
+* **database:** handle null serialize ([e49d15b](https://github.com/nativescript/firebase/commit/e49d15bf4ca84283d56c298de5b87f19d7ab6eaf)), closes [#105](https://github.com/nativescript/firebase/issues/105)
+* **database:** setPersistenceEnabled called multiple times ([73c2d72](https://github.com/nativescript/firebase/commit/73c2d72281062c6ab0a5a07efd3a1511e9fdeb43)), closes [#91](https://github.com/nativescript/firebase/issues/91)
+* **dynamic-links:** include GoogleUtilities pod ([2bbfe51](https://github.com/nativescript/firebase/commit/2bbfe5195dc1dee88a60e89832a8772b54f24ade)), closes [#104](https://github.com/nativescript/firebase/issues/104)
+* **messaging:** remove POST_NOTIFICATIONS for older api ([48397a5](https://github.com/nativescript/firebase/commit/48397a521600d366db321ab7802eb94d6f745d3f))
+
+
+
 # [2.2.0-alpha.1](https://github.com/NativeScript/firebase/compare/2.2.0-alpha...2.2.0-alpha.1) (2022-07-20)
 
 
