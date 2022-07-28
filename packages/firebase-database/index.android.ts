@@ -656,16 +656,20 @@ export class Database implements IDatabase {
 	}
 
 	set persistenceCacheSizeBytes(bytes) {
-		this.native.setPersistenceCacheSizeBytes(bytes);
-		this.#persistenceCacheSizeBytes = bytes;
+		try {
+			this.native.setPersistenceCacheSizeBytes(bytes);
+			this.#persistenceCacheSizeBytes = bytes;
+		} catch (e) {}
 	}
 	#persistenceEnabled: boolean = false;
 	get persistenceEnabled(): boolean {
 		return this.#persistenceEnabled;
 	}
 	set persistenceEnabled(value) {
-		this.native.setPersistenceEnabled(value);
-		this.#persistenceEnabled = value;
+		try {
+			this.native.setPersistenceEnabled(value);
+			this.#persistenceEnabled = value;
+		} catch (e) {}
 	}
 
 	refFromURL(url: string): Reference {
