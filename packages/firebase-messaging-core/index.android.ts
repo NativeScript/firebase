@@ -255,8 +255,7 @@ export class MessagingCore implements IMessagingCore {
 		return Promise.resolve();
 	}
 	requestPermission(permissions?: any): Promise<AuthorizationStatus> {
-		const POST_NOTIFICATIONS = (android as any).Manifest.permission.POST_NOTIFICATIONS;
-		if (parseInt(Device.sdkVersion) >= 33 && POST_NOTIFICATIONS) {
+		if (parseInt(Device.sdkVersion) >= 33) {
 			const activity: androidx.appcompat.app.AppCompatActivity = Application.android.foregroundActivity || Application.android.startActivity;
 
 			return new Promise((resolve, reject) => {
