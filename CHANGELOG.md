@@ -1,3 +1,12 @@
+## [2.2.1](https://github.com/nativescript/firebase/compare/2.2.0...2.2.1) (2022-07-28)
+
+
+### Bug Fixes
+
+* **core:** wrap null as NSNull when wrapping primitives ([0e81ad9](https://github.com/nativescript/firebase/commit/0e81ad908687d8b81fed78d7b76a1fed9729a2b5))
+
+
+
 # [2.2.0](https://github.com/nativescript/firebase/compare/2.2.0-alpha.1...2.2.0) (2022-07-28)
 
 
