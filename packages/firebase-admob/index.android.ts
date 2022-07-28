@@ -23,68 +23,58 @@ if (!fb.admob) {
 	});
 }
 
-let AdListener;
+@NativeClass()
+class AdListener extends com.google.android.gms.ads.AdListener {
+	_owner: WeakRef<BannerAd>;
 
-function ensureAdListener() {
-	if (AdListener) {
-		return;
+	constructor(owner: WeakRef<BannerAd>) {
+		super();
+		this._owner = owner;
+		return global.__native(this);
 	}
 
-	@NativeClass()
-	class AdListenerImpl extends com.google.android.gms.ads.AdListener {
-		_owner: WeakRef<BannerAd>;
-
-		constructor(owner: WeakRef<BannerAd>) {
-			super();
-			this._owner = owner;
-			return global.__native(this);
-		}
-
-		onAdLoaded() {
-			this._owner?.get?.().notify({
-				eventName: BannerAd.onAdLoadedEvent,
-				object: this._owner?.get?.(),
-			});
-		}
-
-		onAdClicked() {
-			this._owner?.get?.().notify({
-				eventName: BannerAd.onAdClickedEvent,
-				object: this._owner?.get?.(),
-			});
-		}
-
-		onAdFailedToLoad(error: com.google.android.gms.ads.LoadAdError) {
-			this._owner?.get?.().notify({
-				eventName: BannerAd.onAdFailedToLoadEvent,
-				object: this._owner?.get?.(),
-				error: FirebaseError.fromNative(error),
-			});
-		}
-
-		onAdClosed() {
-			this._owner?.get?.().notify({
-				eventName: BannerAd.onAdClosedEvent,
-				object: this._owner?.get?.(),
-			});
-		}
-
-		onAdImpression() {
-			this._owner?.get?.().notify({
-				eventName: BannerAd.onAdImpression,
-				object: this._owner?.get?.(),
-			});
-		}
-
-		onAdOpened() {
-			this._owner?.get?.().notify({
-				eventName: BannerAd.onAdOpenedEvent,
-				object: this._owner?.get?.(),
-			});
-		}
+	onAdLoaded() {
+		this._owner?.get?.().notify({
+			eventName: BannerAd.onAdLoadedEvent,
+			object: this._owner?.get?.(),
+		});
 	}
 
-	AdListener = AdListenerImpl;
+	onAdClicked() {
+		this._owner?.get?.().notify({
+			eventName: BannerAd.onAdClickedEvent,
+			object: this._owner?.get?.(),
+		});
+	}
+
+	onAdFailedToLoad(error: com.google.android.gms.ads.LoadAdError) {
+		this._owner?.get?.().notify({
+			eventName: BannerAd.onAdFailedToLoadEvent,
+			object: this._owner?.get?.(),
+			error: FirebaseError.fromNative(error),
+		});
+	}
+
+	onAdClosed() {
+		this._owner?.get?.().notify({
+			eventName: BannerAd.onAdClosedEvent,
+			object: this._owner?.get?.(),
+		});
+	}
+
+	onAdImpression() {
+		this._owner?.get?.().notify({
+			eventName: BannerAd.onAdImpression,
+			object: this._owner?.get?.(),
+		});
+	}
+
+	onAdOpened() {
+		this._owner?.get?.().notify({
+			eventName: BannerAd.onAdOpenedEvent,
+			object: this._owner?.get?.(),
+		});
+	}
 }
 
 export class AdRequest {
@@ -616,7 +606,6 @@ export class BannerAd extends BannerAdBase {
 
 	initNativeView() {
 		super.initNativeView();
-		ensureAdListener();
 		this.#listener = new AdListener(new WeakRef(this));
 		this.#native.setAdListener(this.#listener);
 	}
