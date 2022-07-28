@@ -87,11 +87,61 @@ function ensureAdListener() {
 	AdListener = AdListenerImpl;
 }
 
+export class AdRequest {
+	#native: com.google.android.gms.ads.AdRequest;
+
+	static fromNative(request: com.google.android.gms.ads.AdRequest) {
+		if (request instanceof com.google.android.gms.ads.AdRequest) {
+			const ret = new AdRequest();
+			ret.#native = request;
+			return ret;
+		}
+		return null;
+	}
+
+	get contentUrl(): string {
+		return this.#native.getContentUrl();
+	}
+
+	get keywords(): string[] {
+		const kw = this.#native.getKeywords().toArray();
+		const count = kw.length;
+		const ret = [];
+		for (let i = 0; i < count; i++) {
+			ret.push(kw[i]);
+		}
+		return ret;
+	}
+
+	get neighboringContentUrls(): string[] {
+		const urls = this.#native.getNeighboringContentUrls();
+		const count = urls.size();
+		const ret = [];
+		for (let i = 0; i < count; i++) {
+			ret.push(urls.get(i));
+		}
+		return ret;
+	}
+
+	isTestDevice(): boolean {
+		return this.#native.isTestDevice(Utils.android.getApplicationContext());
+	}
+
+	get native() {
+		return this.#native;
+	}
+
+	get android() {
+		return this.native;
+	}
+}
+
 export class InterstitialAd implements IInterstitialAd {
 	#native: com.google.android.gms.ads.interstitial.InterstitialAd;
 	#adUnitId: string;
 	#requestOptions?: RequestOptions;
 	#loaded = false;
+	#nativeRequest: com.google.android.gms.ads.AdRequest;
 
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): InterstitialAd {
 		const ad = new InterstitialAd();
@@ -120,7 +170,7 @@ export class InterstitialAd implements IInterstitialAd {
 
 	load(): void {
 		const ref = new WeakRef(this);
-		org.nativescript.firebase.admob.FirebaseAdmob.InterstitialAd.load(
+		this.#nativeRequest = org.nativescript.firebase.admob.FirebaseAdmob.InterstitialAd.load(
 			Application.android.foregroundActivity || Application.android.startActivity,
 			this.#adUnitId,
 			JSON.stringify(this.#requestOptions || {}),
@@ -173,6 +223,10 @@ export class InterstitialAd implements IInterstitialAd {
 	get android() {
 		return this.native;
 	}
+
+	get request() {
+		return AdRequest.fromNative(this.#nativeRequest);
+	}
 }
 
 export class RewardedInterstitialAd implements IRewardedInterstitialAd {
@@ -180,6 +234,7 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 	#adUnitId: string;
 	#requestOptions?: RequestOptions;
 	#loaded = false;
+	#nativeRequest: com.google.android.gms.ads.AdRequest;
 
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedInterstitialAd {
 		const ad = new RewardedInterstitialAd();
@@ -206,7 +261,7 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 
 	load(): void {
 		const ref = new WeakRef(this);
-		org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd.load(
+		this.#nativeRequest = org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd.load(
 			Application.android.foregroundActivity || Application.android.startActivity,
 			this.#adUnitId,
 			JSON.stringify(this.#requestOptions || {}),
@@ -284,6 +339,10 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 	get android() {
 		return this.native;
 	}
+
+	get request() {
+		return AdRequest.fromNative(this.#nativeRequest);
+	}
 }
 
 export class RewardedAd implements IRewardedAd {
@@ -291,6 +350,7 @@ export class RewardedAd implements IRewardedAd {
 	#adUnitId: string;
 	#requestOptions?: RequestOptions;
 	#loaded = false;
+	#nativeRequest: com.google.android.gms.ads.AdRequest;
 
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedAd {
 		const reward = new RewardedAd();
@@ -317,7 +377,7 @@ export class RewardedAd implements IRewardedAd {
 
 	load(): void {
 		const ref = new WeakRef(this);
-		org.nativescript.firebase.admob.FirebaseAdmob.RewardedAd.load(
+		this.#nativeRequest = org.nativescript.firebase.admob.FirebaseAdmob.RewardedAd.load(
 			Application.android.foregroundActivity || Application.android.startActivity,
 			this.#adUnitId,
 			JSON.stringify(this.#requestOptions || {}),
@@ -394,6 +454,10 @@ export class RewardedAd implements IRewardedAd {
 
 	get android() {
 		return this.native;
+	}
+
+	get request() {
+		return AdRequest.fromNative(this.#nativeRequest);
 	}
 }
 
@@ -532,7 +596,7 @@ export class BannerAdSize extends BannerAdSizeBase {
 export class BannerAd extends BannerAdBase {
 	#native: com.google.android.gms.ads.AdView;
 	#listener;
-
+	#nativeRequest: com.google.android.gms.ads.AdRequest;
 	[sizeProperty.setNative](value) {
 		if (this.#native) {
 			this.#native.setAdSize(value?.native);
@@ -559,12 +623,16 @@ export class BannerAd extends BannerAdBase {
 
 	load(options?: RequestOptions) {
 		if (this.#native) {
-			org.nativescript.firebase.admob.FirebaseAdmob.BannerAd.load(JSON.stringify(options || {}), this.#native);
+			this.#nativeRequest = org.nativescript.firebase.admob.FirebaseAdmob.BannerAd.load(JSON.stringify(options || {}), this.#native);
 		}
 	}
 
 	isLoading(): boolean {
 		return this.#native?.isLoading?.();
+	}
+
+	get request() {
+		return AdRequest.fromNative(this.#nativeRequest);
 	}
 }
 
@@ -595,7 +663,7 @@ export class Admob implements IAdmob {
 		});
 	}
 
-	setRequestConfiguration(requestConfiguration: RequestConfiguration) {
+	set requestConfiguration(requestConfiguration: RequestConfiguration) {
 		try {
 			const parsedConfiguration: any = { ...requestConfiguration };
 			if (typeof parsedConfiguration.tagForChildDirectedTreatment === 'boolean') {
@@ -611,6 +679,71 @@ export class Admob implements IAdmob {
 			}
 			org.nativescript.firebase.admob.FirebaseAdmob.setRequestConfiguration(JSON.stringify(requestConfiguration));
 		} catch (e) {}
+	}
+
+	get requestConfiguration(): RequestConfiguration {
+		let ret: RequestConfiguration = {};
+		const config = com.google.android.gms.ads.MobileAds.getRequestConfiguration();
+
+		switch (config.getTagForChildDirectedTreatment()) {
+			case com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE:
+				ret.tagForChildDirectedTreatment = true;
+				break;
+			case com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_FALSE:
+				ret.tagForChildDirectedTreatment = false;
+				break;
+			default:
+				// noop
+				break;
+		}
+
+		switch (config.getTagForUnderAgeOfConsent()) {
+			case com.google.android.gms.ads.RequestConfiguration.TAG_FOR_UNDER_AGE_OF_CONSENT_TRUE:
+				ret.tagForUnderAgeOfConsent = true;
+				break;
+			case com.google.android.gms.ads.RequestConfiguration.TAG_FOR_UNDER_AGE_OF_CONSENT_FALSE:
+				ret.tagForUnderAgeOfConsent = false;
+				break;
+			default:
+				// noop
+				break;
+		}
+
+		switch (config.getMaxAdContentRating()) {
+			case com.google.android.gms.ads.RequestConfiguration.MAX_AD_CONTENT_RATING_G:
+				ret.maxAdContentRating = MaxAdContentRating.G;
+				break;
+			case com.google.android.gms.ads.RequestConfiguration.MAX_AD_CONTENT_RATING_MA:
+				ret.maxAdContentRating = MaxAdContentRating.MA;
+				break;
+			case com.google.android.gms.ads.RequestConfiguration.MAX_AD_CONTENT_RATING_PG:
+				ret.maxAdContentRating = MaxAdContentRating.PG;
+				break;
+			case com.google.android.gms.ads.RequestConfiguration.MAX_AD_CONTENT_RATING_T:
+				ret.maxAdContentRating = MaxAdContentRating.T;
+				break;
+			default:
+				// noop
+				break;
+		}
+
+		ret.testDevices = [];
+
+		const devices = config.getTestDeviceIds();
+		if (devices) {
+			const count = devices.size();
+			for (let i = 0; i < count; i++) {
+				ret.testDevices.push(devices.get(i));
+			}
+		}
+		return ret;
+	}
+
+	setRequestConfiguration(requestConfiguration: RequestConfiguration) {
+		this.requestConfiguration = requestConfiguration;
+	}
+	getRequestConfiguration(): RequestConfiguration {
+		return this.requestConfiguration;
 	}
 
 	get app(): FirebaseApp {

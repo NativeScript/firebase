@@ -129,12 +129,12 @@ class FirebaseAdmob {
   class RewardedAd {
     companion object {
       @JvmStatic
-      fun load(activity: Activity, adUnitId: String, request: String, callback: AdCallback) {
-
+      fun load(activity: Activity, adUnitId: String, request: String, callback: AdCallback): AdRequest {
+        val adRequest = buildRequest(request)
         com.google.android.gms.ads.rewarded.RewardedAd.load(
           activity,
           adUnitId,
-          buildRequest(request),
+          adRequest,
           object :
             RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(error: LoadAdError) {
@@ -162,6 +162,7 @@ class FirebaseAdmob {
               callback.onEvent(AD_LOADED_EVENT, ad)
             }
           })
+        return adRequest
       }
 
       @JvmStatic
@@ -180,11 +181,12 @@ class FirebaseAdmob {
   class RewardedInterstitialAd {
     companion object {
       @JvmStatic
-      fun load(activity: Activity, adUnitId: String, request: String, callback: AdCallback) {
+      fun load(activity: Activity, adUnitId: String, request: String, callback: AdCallback): AdRequest {
+        val adRequest = buildRequest(request)
         com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd.load(
           activity,
           adUnitId,
-          buildRequest(request),
+          adRequest,
           object :
             RewardedInterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(error: LoadAdError) {
@@ -212,6 +214,7 @@ class FirebaseAdmob {
               callback.onEvent(AD_LOADED_EVENT, ad)
             }
           })
+        return adRequest
       }
 
       @JvmStatic
@@ -230,11 +233,17 @@ class FirebaseAdmob {
   class InterstitialAd {
     companion object {
       @JvmStatic
-      fun load(activity: Activity, adUnitId: String, request: String, callback: AdCallback) {
+      fun load(
+        activity: Activity,
+        adUnitId: String,
+        request: String,
+        callback: AdCallback
+      ): AdRequest {
+        val adRequest = buildRequest(request)
         com.google.android.gms.ads.interstitial.InterstitialAd.load(
           activity,
           adUnitId,
-          buildRequest(request),
+          adRequest,
           object :
             InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(error: LoadAdError) {
@@ -262,6 +271,7 @@ class FirebaseAdmob {
               callback.onEvent(AD_LOADED_EVENT, ad)
             }
           })
+        return adRequest
       }
     }
   }
@@ -491,19 +501,24 @@ class FirebaseAdmob {
 
 
       @JvmStatic
-      fun load(adLoader: AdLoader, request: String, isAdManager: Boolean) {
+      fun load(adLoader: AdLoader, request: String, isAdManager: Boolean): AdRequest {
+        val adRequest: AdRequest
         if (isAdManager) {
-          adLoader.loadAd(buildAdManagerRequest(request))
+          adRequest = buildAdManagerRequest(request)
+          adLoader.loadAd(adRequest)
         } else {
-          adLoader.loadAd(buildRequest(request))
+          adRequest = buildRequest(request)
+          adLoader.loadAd(adRequest)
         }
-
+        return adRequest
       }
 
 
       @JvmStatic
-      fun load(adLoader: AdLoader, request: String, maxAdsCount: Int) {
-        adLoader.loadAds(buildRequest(request), maxAdsCount)
+      fun load(adLoader: AdLoader, request: String, maxAdsCount: Int): AdRequest {
+        val adRequest = buildRequest(request)
+        adLoader.loadAds(adRequest, maxAdsCount)
+        return adRequest
       }
     }
   }
@@ -511,10 +526,10 @@ class FirebaseAdmob {
   class BannerAd {
     companion object {
       @JvmStatic
-      fun load(request: String, baseAdView: BaseAdView) {
-        baseAdView.loadAd(
-          buildRequest(request)
-        )
+      fun load(request: String, baseAdView: BaseAdView): AdRequest {
+        val adRequest = buildRequest(request)
+        baseAdView.loadAd(adRequest)
+        return adRequest
       }
     }
   }
@@ -761,6 +776,8 @@ class FirebaseAdmob {
 
           currentConfig.setTestDeviceIds(list)
         }
+
+        MobileAds.setRequestConfiguration(currentConfig.build())
 
       } catch (e: Exception) {
       }

@@ -22,12 +22,63 @@ if (!fb.admob) {
 	});
 }
 
+export class AdRequest {
+	#native: GADRequest;
+
+	static fromNative(request: GADRequest) {
+		if (request instanceof GADRequest) {
+			const ret = new AdRequest();
+			ret.#native = request;
+			return ret;
+		}
+		return null;
+	}
+
+	get contentUrl(): string {
+		return this.#native.contentURL;
+	}
+
+	get keywords(): string[] {
+		const kw = this.#native.keywords;
+		const count = kw.count;
+		const ret = [];
+		for (let i = 0; i < count; i++) {
+			ret.push(kw.objectAtIndex(i));
+		}
+		return ret;
+	}
+
+	get neighboringContentUrls(): string[] {
+		const urls = this.#native.keywords;
+		const count = urls.count;
+		const ret = [];
+		for (let i = 0; i < count; i++) {
+			ret.push(urls.objectAtIndex(i));
+		}
+		return ret;
+	}
+
+	isTestDevice(): boolean {
+		// todo
+		return false;
+	}
+
+	get native() {
+		return this.#native;
+	}
+
+	get ios() {
+		return this.native;
+	}
+}
+
 export class InterstitialAd implements IInterstitialAd {
 	#native: GADInterstitialAd;
 	#adUnitId: string;
 	#requestOptions?: RequestOptions;
 	#delegate: GADFullScreenContentDelegateImpl;
 	#loaded = false;
+	#nativeRequest: GADRequest;
 
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): InterstitialAd {
 		const ad = new InterstitialAd();
@@ -58,6 +109,7 @@ export class InterstitialAd implements IInterstitialAd {
 				ref.get()?._onAdEvent?.(AdEventType.LOADED);
 			}
 		});
+		this.#nativeRequest = request;
 	}
 
 	get _delegate() {
@@ -81,6 +133,10 @@ export class InterstitialAd implements IInterstitialAd {
 	show(showOptions?: AdShowOptions) {
 		this.#native.presentFromRootViewController(topViewController());
 	}
+
+	get request() {
+		return AdRequest.fromNative(this.#nativeRequest);
+	}
 }
 
 export class RewardedInterstitialAd implements IRewardedInterstitialAd {
@@ -89,6 +145,7 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 	#requestOptions?: RequestOptions;
 	#loaded = false;
 	#delegate: GADFullScreenContentDelegateImpl;
+	#nativeRequest: GADRequest;
 
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedInterstitialAd {
 		const ad = new RewardedInterstitialAd();
@@ -119,6 +176,7 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 				ref.get()?._onAdEvent?.(AdEventType.LOADED);
 			}
 		});
+		this.#nativeRequest = request;
 	}
 
 	get _delegate() {
@@ -165,6 +223,10 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 	get ios() {
 		return this.native;
 	}
+
+	get request() {
+		return AdRequest.fromNative(this.#nativeRequest);
+	}
 }
 
 export class RewardedAd implements IRewardedAd {
@@ -173,6 +235,7 @@ export class RewardedAd implements IRewardedAd {
 	#requestOptions?: RequestOptions;
 	#delegate: GADFullScreenContentDelegateImpl;
 	#loaded = false;
+	#nativeRequest: GADRequest;
 	get loaded() {
 		return this.#loaded;
 	}
@@ -202,6 +265,7 @@ export class RewardedAd implements IRewardedAd {
 				ref.get()?._onAdEvent?.(AdEventType.LOADED);
 			}
 		});
+		this.#nativeRequest = request;
 	}
 
 	get _delegate() {
@@ -247,6 +311,10 @@ export class RewardedAd implements IRewardedAd {
 
 	get ios() {
 		return this.native;
+	}
+
+	get request() {
+		return AdRequest.fromNative(this.#nativeRequest);
 	}
 }
 
@@ -379,6 +447,8 @@ export class BannerAd extends BannerAdBase {
 	#native: GADBannerView;
 	#delegate: GADBannerViewDelegateImpl;
 
+	#nativeRequest: GADRequest;
+
 	createNativeView() {
 		this.#native = GADBannerView.new();
 		this.#delegate = GADBannerViewDelegateImpl.initWithOwner(new WeakRef(this));
@@ -396,7 +466,9 @@ export class BannerAd extends BannerAdBase {
 
 	load(options: RequestOptions = {}) {
 		this.#isLoading = true;
-		this.#native?.loadRequest?.(toSerializeRequestOptions(options));
+		const request = toSerializeRequestOptions(options);
+		this.#native?.loadRequest?.(request);
+		this.#nativeRequest = request;
 	}
 
 	[sizeProperty.setNative](value) {
@@ -418,6 +490,10 @@ export class BannerAd extends BannerAdBase {
 			const height = Utils.layout.getMeasureSpecSize(heightMeasureSpec);
 			this.setMeasuredDimension(width, height);
 		}
+	}
+
+	get request() {
+		return AdRequest.fromNative(this.#nativeRequest);
 	}
 }
 
@@ -454,33 +530,35 @@ export class Admob implements IAdmob {
 		});
 	}
 
-	setRequestConfiguration(requestConfiguration: RequestConfiguration) {
-		if (requestConfiguration.maxAdContentRating) {
-			switch (requestConfiguration?.maxAdContentRating) {
-				case MaxAdContentRating.G:
-					GADMobileAds.sharedInstance().requestConfiguration.maxAdContentRating = GADMaxAdContentRatingGeneral;
-					break;
-				case MaxAdContentRating.MA:
-					GADMobileAds.sharedInstance().requestConfiguration.maxAdContentRating = GADMaxAdContentRatingMatureAudience;
-					break;
-				case MaxAdContentRating.PG:
-					GADMobileAds.sharedInstance().requestConfiguration.maxAdContentRating = GADMaxAdContentRatingParentalGuidance;
-					break;
-				case MaxAdContentRating.T:
-					GADMobileAds.sharedInstance().requestConfiguration.maxAdContentRating = GADMaxAdContentRatingTeen;
-					break;
-			}
+	#requestConfiguration: RequestConfiguration = {};
+
+	set requestConfiguration(requestConfiguration: RequestConfiguration) {
+		switch (requestConfiguration?.maxAdContentRating) {
+			case MaxAdContentRating.G:
+				GADMobileAds.sharedInstance().requestConfiguration.maxAdContentRating = GADMaxAdContentRatingGeneral;
+				break;
+			case MaxAdContentRating.MA:
+				GADMobileAds.sharedInstance().requestConfiguration.maxAdContentRating = GADMaxAdContentRatingMatureAudience;
+				break;
+			case MaxAdContentRating.PG:
+				GADMobileAds.sharedInstance().requestConfiguration.maxAdContentRating = GADMaxAdContentRatingParentalGuidance;
+				break;
+			case MaxAdContentRating.T:
+				GADMobileAds.sharedInstance().requestConfiguration.maxAdContentRating = GADMaxAdContentRatingTeen;
+				break;
 		}
 
-		if (typeof requestConfiguration.tagForChildDirectedTreatment === 'boolean') {
+		if (typeof requestConfiguration?.tagForChildDirectedTreatment === 'boolean') {
+			this.#requestConfiguration.tagForChildDirectedTreatment = requestConfiguration.tagForChildDirectedTreatment;
 			GADMobileAds.sharedInstance().requestConfiguration.tagForChildDirectedTreatment(requestConfiguration.tagForChildDirectedTreatment);
 		}
 
-		if (typeof requestConfiguration.tagForUnderAgeOfConsent === 'boolean') {
+		if (typeof requestConfiguration?.tagForUnderAgeOfConsent === 'boolean') {
+			this.#requestConfiguration.tagForUnderAgeOfConsent = requestConfiguration.tagForUnderAgeOfConsent;
 			GADMobileAds.sharedInstance().requestConfiguration.tagForUnderAgeOfConsent(requestConfiguration.tagForUnderAgeOfConsent);
 		}
 
-		if (Array.isArray(requestConfiguration.testDevices)) {
+		if (Array.isArray(requestConfiguration?.testDevices)) {
 			GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = requestConfiguration.testDevices.map((item) => {
 				if (item === 'EMULATOR') {
 					if (typeof GADSimulatorID) {
@@ -491,6 +569,49 @@ export class Admob implements IAdmob {
 				return item;
 			}) as any;
 		}
+	}
+
+	get requestConfiguration(): RequestConfiguration {
+		const ret: RequestConfiguration = Object.assign({}, ...(this.#requestConfiguration as any));
+
+		const config = GADMobileAds.sharedInstance().requestConfiguration;
+
+		switch (config.maxAdContentRating) {
+			case GADMaxAdContentRatingGeneral:
+				ret.maxAdContentRating = MaxAdContentRating.G;
+				break;
+			case GADMaxAdContentRatingMatureAudience:
+				ret.maxAdContentRating = MaxAdContentRating.MA;
+				break;
+			case GADMaxAdContentRatingParentalGuidance:
+				ret.maxAdContentRating = MaxAdContentRating.PG;
+				break;
+			case GADMaxAdContentRatingTeen:
+				ret.maxAdContentRating = MaxAdContentRating.T;
+				break;
+			default:
+				// noop
+				break;
+		}
+
+		ret.testDevices = [];
+
+		const devices = config.testDeviceIdentifiers;
+		if (devices) {
+			const count = devices.count;
+			for (let i = 0; i < count; i++) {
+				ret.testDevices.push(devices.objectAtIndex(i));
+			}
+		}
+		return ret;
+	}
+
+	setRequestConfiguration(requestConfiguration: RequestConfiguration) {
+		this.requestConfiguration = requestConfiguration;
+	}
+
+	getRequestConfiguration(): RequestConfiguration {
+		return this.requestConfiguration;
 	}
 
 	get app(): FirebaseApp {

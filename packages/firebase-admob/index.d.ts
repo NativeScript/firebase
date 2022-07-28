@@ -8,6 +8,20 @@ export { MaxAdContentRating, AdEventType, RewardedAdEventType };
 export * from './adsconsent';
 export * from './nativead';
 
+export declare class AdRequest {
+	readonly contentUrl: string;
+
+	readonly keywords: string[];
+
+	readonly neighboringContentUrls: string[];
+
+	readonly native: any;
+	readonly android: any;
+	readonly ios: any;
+
+	isTestDevice(): boolean;
+}
+
 export declare class InterstitialAd implements IInterstitialAd {
 	static createForAdRequest(adUnitId: string): InterstitialAd;
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): InterstitialAd;
@@ -127,7 +141,17 @@ export declare class Admob implements IAdmob {
 
 	static init(): Promise<{ [key: string]: AdapterStatus }>;
 
+	requestConfiguration: RequestConfiguration;
+
+	/**
+	 * @deprecated Use requestConfiguration
+	 */
 	setRequestConfiguration(requestConfiguration: RequestConfiguration);
+
+	/**
+	 * @deprecated Use requestConfiguration
+	 */
+	getRequestConfiguration(requestConfiguration: RequestConfiguration);
 }
 
 declare module '@nativescript/firebase-core' {

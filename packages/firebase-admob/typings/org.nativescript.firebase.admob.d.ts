@@ -21,7 +21,7 @@ declare module org {
 				export class FirebaseAdmob {
 					public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob>;
 					public static Companion: org.nativescript.firebase.admob.FirebaseAdmob.Companion;
-					public static toJSONStatusMap(param0: java.util.Map<string,any>): string;
+					public static toJSONStatusMap(param0: java.util.Map<string, any>): string;
 					public constructor();
 					public static setRequestConfiguration(param0: string): void;
 					public static getExecutorsCount(): number;
@@ -34,9 +34,7 @@ declare module org {
 						/**
 						 * Constructs a new instance of the org.nativescript.firebase.admob.FirebaseAdmob$AdCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onEvent(param0: string, param1: any): void;
-						});
+						public constructor(implementation: { onEvent(param0: string, param1: any): void });
 						public constructor();
 						public onEvent(param0: string, param1: any): void;
 					}
@@ -74,9 +72,7 @@ declare module org {
 						/**
 						 * Constructs a new instance of the org.nativescript.firebase.admob.FirebaseAdmob$AdLoaderCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onEvent(param0: string, param1: any): void;
-						});
+						public constructor(implementation: { onEvent(param0: string, param1: any): void });
 						public constructor();
 						public onEvent(param0: string, param1: any): void;
 					}
@@ -84,23 +80,20 @@ declare module org {
 						public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.BannerAd>;
 						public static Companion: org.nativescript.firebase.admob.FirebaseAdmob.BannerAd.Companion;
 						public constructor();
-						public static load(param0: string, param1: com.google.android.gms.ads.BaseAdView): void;
+						public static load(param0: string, param1: com.google.android.gms.ads.BaseAdView): com.google.android.gms.ads.AdRequest;
 					}
 					export module BannerAd {
 						export class Companion {
 							public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.BannerAd.Companion>;
-							public load(param0: string, param1: com.google.android.gms.ads.BaseAdView): void;
+							public load(param0: string, param1: com.google.android.gms.ads.BaseAdView): com.google.android.gms.ads.AdRequest;
 						}
 					}
-					export class Callback<T>  extends java.lang.Object {
+					export class Callback<T> extends java.lang.Object {
 						public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.Callback<any>>;
 						/**
 						 * Constructs a new instance of the org.nativescript.firebase.admob.FirebaseAdmob$Callback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onSuccess(param0: T): void;
-							onError(param0: any): void;
-						});
+						public constructor(implementation: { onSuccess(param0: T): void; onError(param0: any): void });
 						public constructor();
 						public onError(param0: any): void;
 						public onSuccess(param0: T): void;
@@ -109,19 +102,19 @@ declare module org {
 						public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.Companion>;
 						public setRequestConfiguration(param0: string): void;
 						public setExecutorsCount(param0: number): void;
-						public toJSONStatusMap(param0: java.util.Map<string,any>): string;
+						public toJSONStatusMap(param0: java.util.Map<string, any>): string;
 						public getExecutorsCount(): number;
 					}
 					export class InterstitialAd {
 						public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.InterstitialAd>;
 						public static Companion: org.nativescript.firebase.admob.FirebaseAdmob.InterstitialAd.Companion;
 						public constructor();
-						public static load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): void;
+						public static load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): com.google.android.gms.ads.AdRequest;
 					}
 					export module InterstitialAd {
 						export class Companion {
 							public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.InterstitialAd.Companion>;
-							public load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): void;
+							public load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): com.google.android.gms.ads.AdRequest;
 						}
 					}
 					export class MaxAdContentRating {
@@ -140,8 +133,8 @@ declare module org {
 						public static Companion: org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.Companion;
 						public static createLoader(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdLoaderCallback): com.google.android.gms.ads.AdLoader;
 						public constructor();
-						public static load(param0: com.google.android.gms.ads.AdLoader, param1: string, param2: boolean): void;
-						public static load(param0: com.google.android.gms.ads.AdLoader, param1: string, param2: number): void;
+						public static load(param0: com.google.android.gms.ads.AdLoader, param1: string, param2: boolean): com.google.android.gms.ads.AdRequest;
+						public static load(param0: com.google.android.gms.ads.AdLoader, param1: string, param2: number): com.google.android.gms.ads.AdRequest;
 					}
 					export module NativeAd {
 						export class BannerAdSize {
@@ -173,8 +166,8 @@ declare module org {
 						}
 						export class Companion {
 							public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.Companion>;
-							public load(param0: com.google.android.gms.ads.AdLoader, param1: string, param2: number): void;
-							public load(param0: com.google.android.gms.ads.AdLoader, param1: string, param2: boolean): void;
+							public load(param0: com.google.android.gms.ads.AdLoader, param1: string, param2: number): com.google.android.gms.ads.AdRequest;
+							public load(param0: com.google.android.gms.ads.AdLoader, param1: string, param2: boolean): com.google.android.gms.ads.AdRequest;
 							public createLoader(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdLoaderCallback): com.google.android.gms.ads.AdLoader;
 						}
 					}
@@ -193,12 +186,12 @@ declare module org {
 						public static Companion: org.nativescript.firebase.admob.FirebaseAdmob.RewardedAd.Companion;
 						public constructor();
 						public static show(param0: globalAndroid.app.Activity, param1: com.google.android.gms.ads.rewarded.RewardedAd, param2: org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.gms.ads.rewarded.RewardItem>): void;
-						public static load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): void;
+						public static load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): com.google.android.gms.ads.AdRequest;
 					}
 					export module RewardedAd {
 						export class Companion {
 							public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.RewardedAd.Companion>;
-							public load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): void;
+							public load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): com.google.android.gms.ads.AdRequest;
 							public show(param0: globalAndroid.app.Activity, param1: com.google.android.gms.ads.rewarded.RewardedAd, param2: org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.gms.ads.rewarded.RewardItem>): void;
 						}
 					}
@@ -206,13 +199,13 @@ declare module org {
 						public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd>;
 						public static Companion: org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd.Companion;
 						public constructor();
-						public static load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): void;
+						public static load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): com.google.android.gms.ads.AdRequest;
 						public static show(param0: globalAndroid.app.Activity, param1: com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd, param2: org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.gms.ads.rewarded.RewardItem>): void;
 					}
 					export module RewardedInterstitialAd {
 						export class Companion {
 							public static class: java.lang.Class<org.nativescript.firebase.admob.FirebaseAdmob.RewardedInterstitialAd.Companion>;
-							public load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): void;
+							public load(param0: globalAndroid.app.Activity, param1: string, param2: string, param3: org.nativescript.firebase.admob.FirebaseAdmob.AdCallback): com.google.android.gms.ads.AdRequest;
 							public show(param0: globalAndroid.app.Activity, param1: com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd, param2: org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.gms.ads.rewarded.RewardItem>): void;
 						}
 					}
@@ -236,4 +229,3 @@ declare module org {
 
 //Generics information:
 //org.nativescript.firebase.admob.FirebaseAdmob.Callback:1
-
