@@ -38,7 +38,7 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 				}
 
 				if (!data) {
-					return null;
+					return NSNull.new();
 				}
 
 				if (Array.isArray(data)) {
@@ -54,7 +54,7 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 			}
 
 			default:
-				return null;
+				return NSNull.new();
 		}
 	}
 
