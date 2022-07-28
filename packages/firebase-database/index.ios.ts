@@ -16,7 +16,7 @@ Object.defineProperty(fb, 'database', {
 	writable: false,
 });
 
-function serializeItems(data, wrapPrimitives = false) {
+function serializeItems(data, wrapPrimitives = true) {
 	if (data instanceof ServerValue) {
 		return data.native;
 	}
