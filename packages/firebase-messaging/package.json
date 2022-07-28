@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-messaging",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"description": "NativeScript Firebase - Messaging",
 	"main": "index",
 	"typings": "index.d.ts",
@@ -31,5 +31,8 @@
 	"license": "Apache-2.0",
 	"homepage": "https://github.com/NativeScript/firebase",
 	"readmeFilename": "README.md",
-	"bootstrapper": "@nativescript/plugin-seed"
+	"bootstrapper": "@nativescript/plugin-seed",
+	"dependencies": {
+		"@nativescript/firebase-messaging-core": "*"
+	}
 }
