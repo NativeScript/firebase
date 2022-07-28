@@ -1,3 +1,12 @@
+## [2.2.2](https://github.com/nativescript/firebase/compare/2.2.1...2.2.2) (2022-07-28)
+
+
+### Bug Fixes
+
+* **messaging:** include messaging-core dep ([93cfc78](https://github.com/nativescript/firebase/commit/93cfc78cc9dab90adef122eccf9f7d3a7a9f2e0a))
+
+
+
 ## [2.2.1](https://github.com/nativescript/firebase/compare/2.2.0...2.2.1) (2022-07-28)
 
 
