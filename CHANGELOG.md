@@ -1,3 +1,12 @@
+## [2.2.3](https://github.com/nativescript/firebase/compare/2.2.2...2.2.3) (2022-07-29)
+
+
+### Bug Fixes
+
+* **database:** null handling ([1cd39e9](https://github.com/nativescript/firebase/commit/1cd39e98251ed5795a067c2511ee7a2667e4d3e2))
+
+
+
 ## [2.2.2](https://github.com/nativescript/firebase/compare/2.2.1...2.2.2) (2022-07-28)
 
 
