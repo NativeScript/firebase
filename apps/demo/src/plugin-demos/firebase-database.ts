@@ -24,6 +24,24 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 		this.setData();
 	}
 
+	issue105() {
+		var obj = {
+			list: [
+				{ propertyA: 'valueA', propertyB: null },
+				{ propertyA: 'aaa', propertyB: null },
+			],
+		};
+		this.database
+			.ref('/issues/105')
+			.set(obj)
+			.then((v) => {
+				console.log('done');
+			})
+			.catch((e) => {
+				console.log('error', e);
+			});
+	}
+
 	setData() {
 		this.database
 			.ref('/person/me')

@@ -1,4 +1,4 @@
-import { deserialize, firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IDatabase, IReference, IDataSnapshot, EventType, IQuery, IOnDisconnect, IThenableReference } from './common';
 
 let defaultDatabase: Database;
@@ -16,11 +16,66 @@ Object.defineProperty(fb, 'database', {
 	writable: false,
 });
 
-function serializeItems(data, wrapPrimitives = true) {
+function numberHasDecimals(item: number) {
+	return !(item % 1 === 0);
+}
+
+function numberIs64Bit(item: number) {
+	return item < -Math.pow(2, 31) + 1 || item > Math.pow(2, 31) - 1;
+}
+
+export function serialize(data: any): any {
+	switch (typeof data) {
+		case 'string':
+		case 'boolean': {
+			return data;
+		}
+		case 'number': {
+			const hasDecimals = numberHasDecimals(data);
+			if (numberIs64Bit(data)) {
+				if (hasDecimals) {
+					return NSNumber.alloc().initWithDouble(data);
+				} else {
+					return NSNumber.alloc().initWithLongLong(data);
+				}
+			} else {
+				if (hasDecimals) {
+					return NSNumber.alloc().initWithFloat(data);
+				} else {
+					return data;
+				}
+			}
+		}
+
+		case 'object': {
+			if (data instanceof Date) {
+				return NSDate.dateWithTimeIntervalSince1970(data.getTime() / 1000);
+			}
+			if (!data) {
+				return NSNull.new();
+			}
+
+			if (Array.isArray(data)) {
+				return NSArray.arrayWithArray((<any>data).map(serialize));
+			}
+
+			const node = {} as any;
+			Object.keys(data).forEach((key) => {
+				const value = data[key];
+				node[key] = serialize(value);
+			});
+			return NSDictionary.dictionaryWithDictionary(node);
+		}
+
+		default:
+			return NSNull.new();
+	}
+}
+function serializeItems(data) {
 	if (data instanceof ServerValue) {
 		return data.native;
 	}
-	return serialize(data, wrapPrimitives);
+	return serialize(data);
 }
 
 export class OnDisconnect implements IOnDisconnect {
@@ -79,7 +134,7 @@ export class OnDisconnect implements IOnDisconnect {
 
 	set(value: any, onComplete?: (error: FirebaseError) => void): Promise<void> {
 		return new Promise((resolve, reject) => {
-			this.native.onDisconnectSetValueWithCompletionBlock(value, (error, ref) => {
+			this.native.onDisconnectSetValueWithCompletionBlock(serializeItems(value), (error, ref) => {
 				if (error) {
 					const err = FirebaseError.fromNative(error);
 					onComplete?.(err);
@@ -94,7 +149,7 @@ export class OnDisconnect implements IOnDisconnect {
 
 	setWithPriority(value: any, priority: string | number, onComplete?: (error: FirebaseError) => void): Promise<void> {
 		return new Promise((resolve, reject) => {
-			this.native.onDisconnectSetValueAndPriorityWithCompletionBlock(value, priority, (error, ref) => {
+			this.native.onDisconnectSetValueAndPriorityWithCompletionBlock(serializeItems(value), priority, (error, ref) => {
 				if (error) {
 					const err = FirebaseError.fromNative(error);
 					onComplete?.(err);
