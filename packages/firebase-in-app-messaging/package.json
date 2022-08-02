@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-in-app-messaging",
-	"version": "2.2.5",
+	"version": "2.2.6",
 	"description": "NativeScript Firebase - In App Messaging",
 	"main": "index",
 	"typings": "index.d.ts",

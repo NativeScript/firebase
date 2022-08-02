@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-dynamic-links",
-	"version": "2.2.5",
+	"version": "2.2.6",
 	"description": "NativeScript Firebase - Dynamic Links",
 	"main": "index",
 	"typings": "index.d.ts",
