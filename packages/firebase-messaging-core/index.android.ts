@@ -2,8 +2,6 @@ import { AndroidActivityNewIntentEventData, AndroidApplication, Application, Dev
 import { IMessagingCore } from '.';
 import { AuthorizationStatus } from './common';
 
-export { AuthorizationStatus };
-
 let defaultInstance: MessagingCore;
 
 let Callback;
@@ -292,3 +290,5 @@ export class MessagingCore implements IMessagingCore {
 		return org.nativescript.firebase.messaging.FirebaseMessaging.hasPermission(Utils.android.getApplicationContext());
 	}
 }
+
+export { AuthorizationStatus } from './common';

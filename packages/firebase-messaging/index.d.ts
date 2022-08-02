@@ -54,7 +54,7 @@ export interface IMessaging {
 
 	autoInitEnabled: boolean;
 
-	isDeviceRegisteredForRemoteMessages: boolean;
+	readonly isDeviceRegisteredForRemoteMessages: boolean;
 
 	showNotificationsWhenInForeground: boolean;
 
@@ -106,10 +106,10 @@ export declare class Messaging implements IMessaging {
 
 	deleteToken(): Promise<void>;
 
-	isDeviceRegisteredForRemoteMessages(): boolean;
-
 	isAutoInitEnabled: boolean;
 	showNotificationsWhenInForeground: boolean;
+
+	readonly isDeviceRegisteredForRemoteMessages: boolean;
 
 	readonly app: FirebaseApp;
 

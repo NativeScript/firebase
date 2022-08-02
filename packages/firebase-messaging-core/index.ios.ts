@@ -2,8 +2,6 @@ import { Application, ApplicationSettings, Device } from '@nativescript/core';
 import { IMessagingCore, Permissions } from '.';
 import { AuthorizationStatus } from './common';
 
-export { AuthorizationStatus };
-
 declare const TNSFirebaseCore;
 
 let _registerDeviceForRemoteMessages = {
@@ -324,3 +322,5 @@ export class MessagingCore implements IMessagingCore {
 		return UIApplication.sharedApplication.registeredForRemoteNotifications;
 	}
 }
+
+export { AuthorizationStatus } from './common';

@@ -1,5 +1,7 @@
 export * from './common';
 
+import { AuthorizationStatus } from './common';
+
 export interface AndroidPermissions {}
 
 export interface IOSPermissions {
@@ -17,7 +19,7 @@ export interface Permissions {
 }
 
 export interface IMessagingCore {
-	isDeviceRegisteredForRemoteMessages: boolean;
+	readonly isDeviceRegisteredForRemoteMessages: boolean;
 
 	showNotificationsWhenInForeground: boolean;
 
