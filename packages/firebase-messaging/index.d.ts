@@ -2,13 +2,13 @@ import { FirebaseApp, Firebase } from '@nativescript/firebase-core';
 
 export { Permissions, AndroidPermissions, IOSPermissions, AuthorizationStatus } from '@nativescript/firebase-messaging-core';
 
-export const enum NotificationAndroidVisibility {
+export enum NotificationAndroidVisibility {
 	VISIBILITY_PRIVATE,
 	VISIBILITY_PUBLIC,
 	VISIBILITY_SECRET,
 }
 
-export const enum NotificationAndroidPriority {
+export enum NotificationAndroidPriority {
 	PRIORITY_DEFAULT,
 	PRIORITY_HIGH,
 	PRIORITY_LOW,

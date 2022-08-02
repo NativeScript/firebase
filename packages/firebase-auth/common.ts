@@ -1,4 +1,4 @@
-export const enum ActionCodeInfoOperation {
+export enum ActionCodeInfoOperation {
 	Unknown = 'Unknown',
 	PasswordReset = 'PasswordReset',
 	VerifyEmail = 'VerifyEmail',

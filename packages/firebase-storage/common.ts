@@ -1,4 +1,4 @@
-export const enum TaskState {
+export enum TaskState {
 	CANCELLED = 'cancelled',
 	ERROR = 'error',
 	PAUSED = 'paused',
@@ -7,11 +7,11 @@ export const enum TaskState {
 	UNKNOWN = 'unknown',
 }
 
-export const enum TaskEvent {
+export enum TaskEvent {
 	STATE_CHANGED = 'state_changed',
 }
 
-export const enum StringFormat {
+export enum StringFormat {
 	BASE64 = 'base64',
 	BASE64URL = 'base64url',
 	DATA_URL = 'data_url',

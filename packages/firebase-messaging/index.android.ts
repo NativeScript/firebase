@@ -3,7 +3,7 @@ import { FirebaseApp, FirebaseError, firebase } from '@nativescript/firebase-cor
 import { IMessaging, RemoteMessage } from '.';
 import { MessagingCore, AuthorizationStatus } from '@nativescript/firebase-messaging-core';
 
-export { AuthorizationStatus } from '@nativescript/firebase-messaging-core';
+export { AuthorizationStatus };
 
 let defaultMessaging: Messaging;
 
