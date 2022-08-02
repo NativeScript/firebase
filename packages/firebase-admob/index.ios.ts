@@ -1,7 +1,7 @@
 import { Utils } from '@nativescript/core';
 import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { IAdmob, RequestConfiguration, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, ServerSideVerificationOptions, IRewardedInterstitialAd, IRewardedItem, AdapterStatus } from '.';
-import { MaxAdContentRating, AdEventListener, AdEventType, BannerAdBase, RewardedAdEventType, unitIdProperty, BannerAdSizeBase, sizeProperty } from './common';
+import { IAdmob, AdEventListener, RequestConfiguration, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, ServerSideVerificationOptions, IRewardedInterstitialAd, IRewardedItem, AdapterStatus } from '.';
+import { MaxAdContentRating, AdEventType, BannerAdBase, RewardedAdEventType, unitIdProperty, BannerAdSizeBase, sizeProperty } from './common';
 import { topViewController, toSerializeRequestOptions } from './utils';
 
 export { MaxAdContentRating, AdEventType };

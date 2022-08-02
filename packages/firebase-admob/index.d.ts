@@ -1,9 +1,11 @@
 import { Application } from '@nativescript/core';
 
 import { FirebaseApp } from '@nativescript/firebase-core';
-import { IAdmob, AdEventListener, IInterstitialAd, IRewardedAd, AdEventType, BannerAdBase, IRewardedInterstitialAd, RewardedAdEventType, MaxAdContentRating, ServerSideVerificationOptions } from './common';
+import { IAdmob, IInterstitialAd, IRewardedAd, BannerAdBase, IRewardedInterstitialAd, RewardedAdEventType, MaxAdContentRating, ServerSideVerificationOptions } from './common';
 
-export { MaxAdContentRating, AdEventType, RewardedAdEventType };
+export { MaxAdContentRating, RewardedAdEventType };
+
+export type AdEventListener = (type: AdEventType | RewardedAdEventType, error?: Error, data?: any | IRewardedItem) => void;
 
 export * from './adsconsent';
 export * from './nativead';

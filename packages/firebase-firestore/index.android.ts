@@ -2,7 +2,7 @@ import { GetOptions, DocumentChangeType } from './common';
 
 export { GetOptions, DocumentChangeType };
 
-import { ICollectionReference, IDocumentReference, IFieldPath, IFieldValue, IGeoPoint, IQuery, ITimestamp, IWriteBatch, SetOptions, DocumentData, IDocumentSnapshot, IQuerySnapshot, SnapshotListenOptions, ISnapshotMetadata, IDocumentChange, IQueryDocumentSnapshot, ITransaction, ISettings, IFirestore, IBytes } from '.';
+import { WhereFilterOp, ICollectionReference, IDocumentReference, IFieldPath, IFieldValue, IGeoPoint, IQuery, ITimestamp, IWriteBatch, SetOptions, DocumentData, IDocumentSnapshot, IQuerySnapshot, SnapshotListenOptions, ISnapshotMetadata, IDocumentChange, IQueryDocumentSnapshot, ITransaction, ISettings, IFirestore, IBytes, DocumentFieldType } from '.';
 
 import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 

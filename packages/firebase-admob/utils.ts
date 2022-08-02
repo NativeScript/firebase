@@ -1,4 +1,4 @@
-import { ManagerRequestOptions, RequestOptions } from './common';
+import { ManagerRequestOptions, RequestOptions } from '.';
 
 export function toSerializeRequestOptions(requestOptions?: RequestOptions, isManager: boolean = false) {
 	if (global.isAndroid) {

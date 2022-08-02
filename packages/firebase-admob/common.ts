@@ -102,5 +102,3 @@ export enum AdapterStatusState {
 	NOT_READY,
 	READY,
 }
-
-export type AdEventListener = (type: AdEventType | RewardedAdEventType, error?: Error, data?: any | IRewardedItem) => void;
