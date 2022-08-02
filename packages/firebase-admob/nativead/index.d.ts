@@ -2,9 +2,92 @@ import { ImageSource, CoreTypes, AddChildFromBuilder } from '@nativescript/core'
 import { FirebaseError } from '@nativescript/firebase-core';
 import { AdEventListener, AdEventType, ManagerRequestOptions, RequestOptions } from '../common';
 import { topViewController, toSerializeManagerRequestOptions, toSerializeRequestOptions } from '../utils';
-import { AdChoicesPlacement, IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, INativeAdLoader, IVideoController, MediaAspectRatio, MediaViewBase, NativeAdEventListener, NativeAdEventType, NativeAdOptions, UnconfirmedClickListener, VideoStatus } from './common';
+import { AdChoicesPlacement, MediaAspectRatio, MediaViewBase, NativeAdEventListener, NativeAdEventType, VideoStatus } from './common';
 
 export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio, NativeAdEventType };
+
+export interface IMediaContent {
+	aspectRatio: number;
+	currentTime: number;
+	duration: number;
+	mainImage: any;
+	hasVideoContent: boolean;
+}
+
+export interface IVideoController {
+	status: VideoStatus;
+
+	clickToExpandEnabled(): boolean;
+
+	customControlsEnabled(): boolean;
+
+	pause(): void;
+
+	play(): void;
+
+	mute: boolean;
+
+	stop(): void;
+}
+
+export interface NativeAdOptions {
+	nativeAdOptions?: {
+		adChoicesPlacement?: AdChoicesPlacement;
+		mediaAspectRatio?: MediaAspectRatio;
+		customMuteThisAd?: boolean;
+		multipleImages?: boolean;
+		returnUrlsForImageAssets?: boolean;
+		videoOptions?: {
+			startMuted?: boolean;
+			clickToExpandRequested?: boolean;
+			customControlsRequested?: boolean;
+		};
+	};
+	adSizes?: BannerAdSizeBase[];
+	adManagerAdViewOptions?: {
+		manualImpressionsEnabled?: boolean;
+		shouldDelayBannerRendering?: boolean;
+	};
+}
+
+export interface IResponseInfo {}
+
+export interface UnconfirmedClickListener {
+	unconfirmedClickReceived?(value: string);
+	unconfirmedClickCancelled?(): void;
+}
+
+export interface IMuteThisAdReason {
+	description: string;
+}
+
+export interface INativeAdLoader {
+	isLoading(): boolean;
+	load(maxAdCount?: number): void;
+	load(requestOptions?: ManagerRequestOptions): void;
+	load(): void;
+	onAdEvent(listener: NativeAdEventListener);
+}
+
+export interface INativeAd {
+	adUnitId: string;
+	onAdEvent(listener: AdEventListener);
+	destroy(): void;
+	advertiser: string;
+	body: string;
+	callToAction: string;
+	headline: string;
+	price: string;
+	isCustomClickGestureEnabled(): boolean;
+	enableCustomClickGesture(): void;
+	recordCustomClickGesture(): void;
+	setUnconfirmedClickListener(listener?: UnconfirmedClickListener): void;
+	images: INativeAdImage[];
+	icon: INativeAdImage;
+	store: string;
+	starRating: number;
+	muteThisAdReasons: IMuteThisAdReason[];
+}
 
 export declare class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
 	adChoicesView: View;
@@ -120,6 +203,12 @@ export declare class VideoController implements IVideoController {
 export declare class MediaView extends MediaViewBase {
 	mediaContent: MediaContent;
 	stretch: CoreTypes.ImageStretchType;
+}
+
+export interface INativeAdImage {
+	image: any;
+	url: string;
+	scale: number;
 }
 
 export declare class NativeAdImage implements INativeAdImage {

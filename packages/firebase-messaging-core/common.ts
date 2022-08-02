@@ -1,4 +1,4 @@
-export enum AuthorizationStatus {
+export const enum AuthorizationStatus {
 	AUTHORIZED,
 	DENIED,
 	NOT_DETERMINED,

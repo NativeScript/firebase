@@ -1,8 +1,10 @@
-import { ICollectionReference, IDocumentReference, IFieldPath, IFieldValue, IGeoPoint, IQuery, ITimestamp, IWriteBatch, SetOptions, DocumentData, GetOptions, IDocumentSnapshot, IQuerySnapshot, SnapshotListenOptions, WhereFilterOp, DocumentFieldType, ISnapshotMetadata, IDocumentChange, IQueryDocumentSnapshot, DocumentChangeType, ITransaction, ISettings, IFirestore, IBytes } from './common';
+import { GetOptions, DocumentChangeType } from './common';
 
-export { SetOptions, DocumentData, GetOptions, WhereFilterOp };
+export { GetOptions, DocumentChangeType };
 
-import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { ICollectionReference, IDocumentReference, IFieldPath, IFieldValue, IGeoPoint, IQuery, ITimestamp, IWriteBatch, SetOptions, DocumentData, IDocumentSnapshot, IQuerySnapshot, SnapshotListenOptions, ISnapshotMetadata, IDocumentChange, IQueryDocumentSnapshot, ITransaction, ISettings, IFirestore, IBytes } from '.';
+
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 
 let defaultFirestore: Firestore;
 

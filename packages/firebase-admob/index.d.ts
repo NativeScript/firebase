@@ -1,12 +1,87 @@
 import { Application } from '@nativescript/core';
 
 import { FirebaseApp } from '@nativescript/firebase-core';
-import { IAdmob, RequestConfiguration, AdEventListener, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, AdEventType, BannerAdBase, IRewardedInterstitialAd, IRewardedItem, RewardedAdEventType, MaxAdContentRating, ServerSideVerificationOptions } from './common';
+import { IAdmob, AdEventListener, IInterstitialAd, IRewardedAd, AdEventType, BannerAdBase, IRewardedInterstitialAd, RewardedAdEventType, MaxAdContentRating, ServerSideVerificationOptions } from './common';
 
 export { MaxAdContentRating, AdEventType, RewardedAdEventType };
 
 export * from './adsconsent';
 export * from './nativead';
+
+export interface AdShowOptions {
+	immersiveModeEnabled: undefined | false | true;
+}
+
+export interface RequestConfiguration {
+	maxAdContentRating?: MaxAdContentRating.G | MaxAdContentRating.PG | MaxAdContentRating.T | MaxAdContentRating.MA;
+	tagForChildDirectedTreatment?: undefined | false | true;
+	tagForUnderAgeOfConsent?: undefined | false | true;
+	testDevices?: string[];
+}
+
+export interface RequestOptions {
+	contentUrl?: undefined | string;
+	keywords?: string[];
+	networkExtras?: undefined | { [key: string]: string };
+	requestAgent?: undefined | string;
+	requestNonPersonalizedAdsOnly?: undefined | false | true;
+}
+
+export interface ManagerRequestOptions extends RequestOptions {
+	publisherProvidedId?: string;
+	customTargeting?: { [key: string]: string | string[] };
+	categoryExclusions?: string[];
+	adString?: string;
+}
+
+export interface IRewardedItem {
+	amount: number;
+	type: string;
+}
+
+export interface TestIds {
+	BANNER: string;
+	INTERSTITIAL: string;
+	REWARDED: string;
+}
+
+export interface IAdmob {
+	app: FirebaseApp;
+
+	setRequestConfiguration(requestConfiguration: RequestConfiguration);
+}
+
+export interface AdapterStatus {
+	description: string;
+	latency: number;
+	initializationState: AdapterStatusState;
+}
+
+export interface IMobileAd {
+	adUnitId: string;
+	loaded: boolean;
+
+	load(): void;
+
+	onAdEvent(listener?: AdEventListener);
+
+	show(showOptions?: AdShowOptions);
+}
+
+export interface IRewardedInterstitialAd extends IInterstitialAd {
+	setServerSideVerificationOptions(options: ServerSideVerificationOptions): void;
+}
+
+export interface ServerSideVerificationOptions {
+	userId: string;
+	customData: string;
+}
+
+export interface IInterstitialAd extends IMobileAd {}
+
+export interface IRewardedAd extends IMobileAd {
+	setServerSideVerificationOptions(options: ServerSideVerificationOptions): void;
+}
 
 export declare class AdRequest {
 	readonly contentUrl: string;

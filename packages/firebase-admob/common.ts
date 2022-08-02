@@ -1,31 +1,5 @@
-import { FirebaseApp } from '@nativescript/firebase-core';
 import { CSSType, Property, View } from '@nativescript/core';
-
-export interface IMobileAd {
-	adUnitId: string;
-	loaded: boolean;
-
-	load(): void;
-
-	onAdEvent(listener?: AdEventListener);
-
-	show(showOptions?: AdShowOptions);
-}
-
-export interface IRewardedInterstitialAd extends IInterstitialAd {
-	setServerSideVerificationOptions(options: ServerSideVerificationOptions): void;
-}
-
-export interface ServerSideVerificationOptions {
-	userId: string;
-	customData: string;
-}
-
-export interface IInterstitialAd extends IMobileAd {}
-
-export interface IRewardedAd extends IMobileAd {
-	setServerSideVerificationOptions(options: ServerSideVerificationOptions): void;
-}
+import { IRewardedItem, RequestOptions } from '.';
 
 export abstract class BannerAdSizeBase {
 	static get BANNER(): BannerAdSizeBase {
@@ -119,46 +93,9 @@ export enum AdEventType {
 	FAILED_TO_LOAD_EVENT = 'adFailedToLoad',
 }
 
-export interface AdShowOptions {
-	immersiveModeEnabled: undefined | false | true;
-}
-
-export interface RequestConfiguration {
-	maxAdContentRating?: MaxAdContentRating.G | MaxAdContentRating.PG | MaxAdContentRating.T | MaxAdContentRating.MA;
-	tagForChildDirectedTreatment?: undefined | false | true;
-	tagForUnderAgeOfConsent?: undefined | false | true;
-	testDevices?: string[];
-}
-
-export interface RequestOptions {
-	contentUrl?: undefined | string;
-	keywords?: string[];
-	networkExtras?: undefined | { [key: string]: string };
-	requestAgent?: undefined | string;
-	requestNonPersonalizedAdsOnly?: undefined | false | true;
-}
-
-export interface ManagerRequestOptions extends RequestOptions {
-	publisherProvidedId?: string;
-	customTargeting?: { [key: string]: string | string[] };
-	categoryExclusions?: string[];
-	adString?: string;
-}
-
 export enum RewardedAdEventType {
 	EARNED_REWARD = 'rewarded_earned_reward',
 	LOADED = 'rewarded_loaded',
-}
-
-export interface IRewardedItem {
-	amount: number;
-	type: string;
-}
-
-export interface TestIds {
-	BANNER: string;
-	INTERSTITIAL: string;
-	REWARDED: string;
 }
 
 export enum AdapterStatusState {
@@ -166,16 +103,4 @@ export enum AdapterStatusState {
 	READY,
 }
 
-export interface AdapterStatus {
-	description: string;
-	latency: number;
-	initializationState: AdapterStatusState;
-}
-
 export type AdEventListener = (type: AdEventType | RewardedAdEventType, error?: Error, data?: any | IRewardedItem) => void;
-
-export interface IAdmob {
-	app: FirebaseApp;
-
-	setRequestConfiguration(requestConfiguration: RequestConfiguration);
-}

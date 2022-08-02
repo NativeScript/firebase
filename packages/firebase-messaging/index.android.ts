@@ -1,7 +1,9 @@
 import { Utils } from '@nativescript/core';
 import { FirebaseApp, FirebaseError, firebase } from '@nativescript/firebase-core';
-import { IMessaging, RemoteMessage, AuthorizationStatus } from '.';
-import { MessagingCore } from '@nativescript/firebase-messaging-core';
+import { IMessaging, RemoteMessage } from '.';
+import { MessagingCore, AuthorizationStatus } from '@nativescript/firebase-messaging-core';
+
+export { AuthorizationStatus } from '@nativescript/firebase-messaging-core';
 
 let defaultMessaging: Messaging;
 

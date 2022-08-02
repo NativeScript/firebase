@@ -1,7 +1,9 @@
-import { AddChildFromBuilder, Application, CSSType, ImageSource, View } from '@nativescript/core';
+import { AddChildFromBuilder, Application, ImageSource, View } from '@nativescript/core';
 import { FirebaseError } from '@nativescript/firebase-core';
-import { AdEventListener, AdEventType, ManagerRequestOptions, RequestOptions } from '../common';
-import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, MediaViewBase, NativeAdOptions, UnconfirmedClickListener, VideoStatus, AdChoicesPlacement, MediaAspectRatio, INativeAdLoader, NativeAdEventListener, NativeAdEventType, stretchProperty, NativeAdViewBase, mediaContentProperty } from './common';
+import { ManagerRequestOptions, RequestOptions } from '..';
+import { AdEventListener, AdEventType } from '../common';
+import { NativeAdEventListener, NativeAdViewBase, MediaViewBase, mediaContentProperty, stretchProperty } from './common';
+import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, NativeAdOptions, UnconfirmedClickListener, VideoStatus, AdChoicesPlacement, MediaAspectRatio, INativeAdLoader, NativeAdEventType } from '.';
 
 export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio, NativeAdEventType };
 

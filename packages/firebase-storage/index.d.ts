@@ -1,7 +1,90 @@
 import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { IMetadata, IListResult, IModule, IReference, IStorage, ITask, ITaskSnapshot, TaskSnapshotObserver, ListOptions, TaskEvent, StringFormat } from './common';
+import { TaskEvent, StringFormat } from './common';
 
-export { TaskSnapshotObserver, StringFormat, TaskEvent };
+export { StringFormat, TaskEvent };
+
+export interface TaskSnapshotObserver {
+	complete?: () => void;
+	error?: (error: FirebaseError) => void;
+	next?: (taskSnapshot: ITaskSnapshot) => void;
+}
+
+export interface ITaskSnapshot {
+	bytesTransferred: number;
+	error: FirebaseError;
+	metadata: IMetadata;
+	ref: IReference;
+	state: TaskState;
+	task: ITask;
+	totalBytes: number;
+}
+
+export interface ITask {
+	snapshot?: ITaskSnapshot;
+	cancel(): boolean;
+	on(event: TaskEvent, nextOrObserver?: TaskSnapshotObserver | ((a: ITaskSnapshot) => any), error?: (a: FirebaseError) => any | null, complete?: () => void | null);
+	pause(): boolean;
+	resume(): boolean;
+}
+
+export interface IListResult {
+	items: IReference[];
+	nextPageToken: string | null;
+	prefixes: IReference[];
+}
+
+export interface ListOptions {
+	maxResults: undefined | number;
+	pageToken: undefined | string;
+}
+
+export interface IMetadata {
+	bucket: string;
+	cacheControl: string | null;
+	contentDisposition: string | null;
+	contentEncoding: string | null;
+	contentLanguage: string | null;
+	contentType: string | null;
+	customMetadata: { [key: string]: string } | null;
+	fullPath: string;
+	generation: string;
+	md5hash: string | null;
+	metageneration: string;
+	name: string;
+	size: number;
+	timeCreated: Date;
+	updated: Date;
+}
+
+export interface IReference {
+	bucket: string;
+	fullPath: string;
+	name: string;
+	parent: IReference | null;
+	root: IReference;
+	storage: IStorage;
+	child(path: string): IReference;
+	delete(): Promise<void>;
+	getDownloadURL(): Promise<string>;
+	getMetadata(): Promise<IMetadata>;
+	list(options?: ListOptions): Promise<IListResult>;
+	listAll(): Promise<IListResult>;
+	put(data: Blob | Uint8Array | ArrayBuffer, metadata?: IMetadata): ITask;
+	putString(data: string, format?: StringFormat, metadata?: IMetadata): ITask;
+	putFile(path: string, metadata?: IMetadata): ITask;
+	updateMetadata(metadata: IMetadata): Promise<IMetadata>;
+	writeToFile(localFilePath: string): ITask;
+}
+
+export interface IStorage {
+	readonly app: FirebaseApp;
+	maxDownloadRetryTime: number;
+	maxOperationRetryTime: number;
+	maxUploadRetryTime: number;
+	useEmulator(host: string, port: number);
+	ref(path?: undefined | string): IReference;
+	refFromURL(url: string): IReference;
+}
 
 export declare class TaskSnapshot implements ITaskSnapshot {
 	readonly native;
@@ -100,7 +183,7 @@ export declare class Reference implements IReference {
 
 	putString(data: string, format: StringFormat = StringFormat.RAW, metadata?: Metadata): Task;
 
-	putFile(path: string, metadata?: Metadata): Task
+	putFile(path: string, metadata?: Metadata): Task;
 
 	updateMetadata(metadata: Metadata): Promise<Metadata>;
 

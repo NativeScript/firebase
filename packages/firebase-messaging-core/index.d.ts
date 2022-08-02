@@ -1,6 +1,4 @@
-import { AuthorizationStatus } from './common';
-
-export { AuthorizationStatus };
+export * from './common';
 
 export interface AndroidPermissions {}
 

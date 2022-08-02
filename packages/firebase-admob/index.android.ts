@@ -1,9 +1,10 @@
 import { Application, Utils } from '@nativescript/core';
 import lazy from '@nativescript/core/utils/lazy';
 import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { IAdmob, RequestConfiguration, AdEventListener, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, AdEventType, BannerAdBase, IRewardedInterstitialAd, IRewardedItem, RewardedAdEventType, MaxAdContentRating, ServerSideVerificationOptions, unitIdProperty, BannerAdSizeBase, sizeProperty, AdapterStatus } from './common';
+import { IAdmob, RequestConfiguration, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, IRewardedInterstitialAd, IRewardedItem, ServerSideVerificationOptions, AdapterStatus } from '.';
+import { AdEventListener, AdEventType, BannerAdBase, RewardedAdEventType, MaxAdContentRating, unitIdProperty, BannerAdSizeBase, sizeProperty } from './common';
 
-export { MaxAdContentRating, AdEventType, AdapterStatus };
+export { MaxAdContentRating, AdEventType };
 
 export * from './adsconsent';
 export * from './nativead';

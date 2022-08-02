@@ -1,10 +1,11 @@
 import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { ActionCodeInfo, ActionCodeInfoOperation, IActionCodeSettings, IAuth, IAuthCredential, IAuthSettings, IAuthTokenResult, IOAuthCredential, IPhoneAuthCredential, IUser, IUserInfo, IUserMetadata, OAuthCredentialOptions, UserCredential, UserProfileChangeRequest, AdditionalUserInfo, IOAuthProvider } from './common';
+import { ActionCodeInfoOperation } from './common';
 import lazy from '@nativescript/core/utils/lazy';
 import { Application } from '@nativescript/core';
-import { FirebaseAuth } from '.';
 
-export { AdditionalUserInfo, ActionCodeInfo, ActionCodeInfoOperation, UserCredential, UserProfileChangeRequest };
+import { ActionCodeInfo, IUserCredential, IActionCodeSettings, IAuth, IAuthCredential, IAuthSettings, IAuthTokenResult, IOAuthCredential, IPhoneAuthCredential, IUser, IUserInfo, IUserMetadata, OAuthCredentialOptions, UserCredential, UserProfileChangeRequest, IOAuthProvider } from '.';
+
+export { ActionCodeInfoOperation };
 
 let defaultAuth: Auth;
 const fb = firebase();
@@ -269,7 +270,7 @@ export class User implements IUser {
 		});
 	}
 
-	linkWithCredential(credential: AuthCredential): Promise<UserCredential> {
+	linkWithCredential(credential: AuthCredential): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
 				reject();
@@ -290,7 +291,7 @@ export class User implements IUser {
 		});
 	}
 
-	reauthenticateWithProvider(provider: OAuthProvider): Promise<UserCredential> {
+	reauthenticateWithProvider(provider: OAuthProvider): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (provider._isCustomProvider && provider._builder) {
 				org.nativescript.firebaseauth.FirebaseAuth.User.reauthenticateWithProvider(
@@ -315,7 +316,7 @@ export class User implements IUser {
 		});
 	}
 
-	reauthenticateWithCredential(credential: AuthCredential): Promise<UserCredential> {
+	reauthenticateWithCredential(credential: AuthCredential): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
 				reject();
@@ -587,7 +588,7 @@ function toActionCodeOperation(operation: com.google.firebase.auth.ActionCodeRes
 	}
 }
 
-function toUserCredential(authData: com.google.firebase.auth.AuthResult): UserCredential {
+function toUserCredential(authData: com.google.firebase.auth.AuthResult): IUserCredential {
 	const additionalUserInfo = authData.getAdditionalUserInfo();
 	const credential = authData.getCredential();
 
@@ -1104,7 +1105,7 @@ export class Auth implements IAuth {
 		});
 	}
 
-	signInAnonymously(): Promise<UserCredential> {
+	signInAnonymously(): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
 				reject();
@@ -1124,7 +1125,7 @@ export class Auth implements IAuth {
 		});
 	}
 
-	signInWithProvider(provider: OAuthProvider): Promise<UserCredential> {
+	signInWithProvider(provider: OAuthProvider): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (provider._isCustomProvider && provider._builder) {
 				org.nativescript.firebaseauth.FirebaseAuth.signInWithProvider(
@@ -1174,7 +1175,7 @@ export class Auth implements IAuth {
 		});
 	}
 
-	signInWithCredential(credential: AuthCredential): Promise<UserCredential> {
+	signInWithCredential(credential: AuthCredential): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
 				reject();
@@ -1195,7 +1196,7 @@ export class Auth implements IAuth {
 		});
 	}
 
-	signInWithCustomToken(customToken: string): Promise<UserCredential> {
+	signInWithCustomToken(customToken: string): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
 				reject();
@@ -1216,7 +1217,7 @@ export class Auth implements IAuth {
 		});
 	}
 
-	signInWithEmailLink(email: string, emailLink: string): Promise<UserCredential> {
+	signInWithEmailLink(email: string, emailLink: string): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
 				reject();
@@ -1263,7 +1264,7 @@ export class Auth implements IAuth {
 		});
 	}
 
-	createUserWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
+	createUserWithEmailAndPassword(email: string, password: string): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
 				reject();
@@ -1375,7 +1376,7 @@ export class Auth implements IAuth {
 		});
 	}
 
-	signInWithEmailAndPassword(email: string, password: string): Promise<UserCredential> {
+	signInWithEmailAndPassword(email: string, password: string): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
 				reject();

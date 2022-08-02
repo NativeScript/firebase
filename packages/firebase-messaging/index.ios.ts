@@ -1,6 +1,8 @@
 import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { IMessaging, Notification, RemoteMessage, AuthorizationStatus } from '.';
-import { MessagingCore, Permissions } from '@nativescript/firebase-messaging-core';
+import { IMessaging, RemoteMessage } from '.';
+import { MessagingCore, AuthorizationStatus } from '@nativescript/firebase-messaging-core';
+
+export { AuthorizationStatus } from '@nativescript/firebase-messaging-core';
 
 declare const FIRApp, TNSFirebaseCore;
 

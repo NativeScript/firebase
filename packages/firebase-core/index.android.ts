@@ -1,4 +1,4 @@
-import { IFirebaseOptions, FirebaseConfig } from './common';
+import { IFirebaseOptions, FirebaseConfig } from '.';
 import { Application, knownFolders, Utils } from '@nativescript/core';
 export * from './utils';
 declare const __non_webpack_require__;

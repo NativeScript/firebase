@@ -1,5 +1,5 @@
 import { Application, knownFolders } from '@nativescript/core';
-import { FirebaseConfig, IFirebaseOptions } from './common';
+import { FirebaseConfig, IFirebaseOptions } from '.';
 export * from './utils';
 
 export class FirebaseError extends Error {
