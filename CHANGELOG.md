@@ -1,3 +1,12 @@
+## [2.2.4](https://github.com/nativescript/firebase/compare/2.2.3...2.2.4) (2022-08-02)
+
+
+### Bug Fixes
+
+* typings ([076469e](https://github.com/nativescript/firebase/commit/076469e76e068a7d6e0108b20bc343173cb69433))
+
+
+
 ## [2.2.3](https://github.com/nativescript/firebase/compare/2.2.2...2.2.3) (2022-07-29)
 
 
