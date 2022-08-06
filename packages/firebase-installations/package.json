@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-installations",
-	"version": "2.2.7",
+	"version": "2.2.8",
 	"description": "NativeScript Firebase - Installations",
 	"main": "index",
 	"typings": "index.d.ts",
