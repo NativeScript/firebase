@@ -17,18 +17,10 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 			}
 			case 'number': {
 				const hasDecimals = numberHasDecimals(data);
-				if (numberIs64Bit(data)) {
-					if (hasDecimals) {
-						return NSNumber.alloc().initWithDouble(data);
-					} else {
-						return NSNumber.alloc().initWithLongLong(data);
-					}
+				if (hasDecimals) {
+					return NSNumber.alloc().initWithDouble(data);
 				} else {
-					if (hasDecimals) {
-						return NSNumber.alloc().initWithFloat(data);
-					} else {
-						return data;
-					}
+					return NSNumber.alloc().initWithLongLong(data);
 				}
 			}
 
@@ -79,18 +71,10 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 			}
 			case 'number': {
 				const hasDecimals = numberHasDecimals(data);
-				if (numberIs64Bit(data)) {
-					if (hasDecimals) {
-						return java.lang.Double.valueOf(data);
-					} else {
-						return java.lang.Long.valueOf(data);
-					}
+				if (hasDecimals) {
+					return java.lang.Double.valueOf(data);
 				} else {
-					if (hasDecimals) {
-						return java.lang.Float.valueOf(data);
-					} else {
-						return java.lang.Integer.valueOf(data);
-					}
+					return java.lang.Long.valueOf(data);
 				}
 			}
 
