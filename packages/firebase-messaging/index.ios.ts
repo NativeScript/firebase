@@ -39,11 +39,11 @@ export class Messaging implements IMessaging {
 	}
 
 	get showNotificationsWhenInForeground(): boolean {
-		return TNSFirebaseMessaging.showNotificationsWhenInForeground;
+		return NSCFirebaseMessagingCore.showNotificationsWhenInForeground;
 	}
 
 	set showNotificationsWhenInForeground(value: boolean) {
-		TNSFirebaseMessaging.showNotificationsWhenInForeground = value;
+		NSCFirebaseMessagingCore.showNotificationsWhenInForeground = value;
 	}
 
 	get _onMessage() {
@@ -75,7 +75,7 @@ export class Messaging implements IMessaging {
 	}
 
 	getAPNSToken() {
-		return TNSFirebaseMessaging.APNSTokenToString(this.native.APNSToken);
+		return NSCFirebaseMessagingCore.APNSTokenToString(this.native.APNSToken);
 	}
 
 	hasPermission(): Promise<AuthorizationStatus> {
