@@ -1,3 +1,16 @@
+## [2.2.7](https://github.com/nativescript/firebase/compare/2.2.6...2.2.7) (2022-08-06)
+
+
+### Bug Fixes
+
+* **database:** Set decimal value ([bf6c2c5](https://github.com/nativescript/firebase/commit/bf6c2c5566983ce2bb82ce0c00b2ac2e9a826030)), closes [#113](https://github.com/nativescript/firebase/issues/113)
+* **database:** Unsubscribe to event doesn't work ([bda9f9c](https://github.com/nativescript/firebase/commit/bda9f9cd43647d7d240039e69ff2e433f793da3f)), closes [#109](https://github.com/nativescript/firebase/issues/109)
+* **dynamicLinks:** initial crash ([f052651](https://github.com/nativescript/firebase/commit/f052651844d98c24a1f971c05de3356ce84be8ff)), closes [#111](https://github.com/nativescript/firebase/issues/111)
+* **messaging:** TNSFirebaseMessaging is not defined ([9e129bc](https://github.com/nativescript/firebase/commit/9e129bcf7aaba68d3a9ed99653adfb5c53b313b0)), closes [#112](https://github.com/nativescript/firebase/issues/112)
+* **messaging:** Typings for reexported Types that are used in the method definitions ([#114](https://github.com/nativescript/firebase/issues/114)) ([452fee4](https://github.com/nativescript/firebase/commit/452fee4a83d50a6c1d90c57c612550d9b60888df))
+
+
+
 ## [2.2.6](https://github.com/nativescript/firebase/compare/2.2.4...2.2.6) (2022-08-02)
 
 
