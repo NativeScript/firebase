@@ -22,6 +22,7 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 		this.randomData();
 		this.children();
 		this.setData();
+		this.issue113();
 	}
 
 	issue105() {
@@ -34,6 +35,18 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 		this.database
 			.ref('/issues/105')
 			.set(obj)
+			.then((v) => {
+				console.log('done');
+			})
+			.catch((e) => {
+				console.log('error', e);
+			});
+	}
+
+	issue113() {
+		this.database
+			.ref('/issues/113')
+			.set(2.1)
 			.then((v) => {
 				console.log('done');
 			})
