@@ -32,18 +32,10 @@ export function serialize(data: any): any {
 		}
 		case 'number': {
 			const hasDecimals = numberHasDecimals(data);
-			if (numberIs64Bit(data)) {
-				if (hasDecimals) {
-					return NSNumber.alloc().initWithDouble(data);
-				} else {
-					return NSNumber.alloc().initWithLongLong(data);
-				}
+			if (hasDecimals) {
+				return NSNumber.numberWithDouble(data);
 			} else {
-				if (hasDecimals) {
-					return NSNumber.alloc().initWithFloat(data);
-				} else {
-					return data;
-				}
+				return NSNumber.numberWithLongLong(data);
 			}
 		}
 
@@ -245,16 +237,19 @@ export class Query implements IQuery {
 		return Query.fromNative(this.native.queryLimitedToLast(limit));
 	}
 
-	#handles: Map<{ eventType: EventType; callback?: (a: DataSnapshot, b: string) => void; context?: any }, number> = new Map();
+	#handles: Map<(a: DataSnapshot, b: string) => void, number> = new Map();
 
 	off(eventType?: EventType, callback?: (a: DataSnapshot, b: string) => void, context?: Record<string, any>): void {
-		const handle = this.#handles.get({
-			eventType,
-			callback,
-			context,
-		});
-		if (handle) {
-			this.native.removeObserverWithHandle(handle);
+		const handle = callback?.['__fbHandle'];
+		const event = callback?.['__fbEventType'];
+		if (typeof handle === 'number' && event === eventType) {
+			if (this.#handles.has(callback)) {
+				this.native.removeObserverWithHandle(handle);
+				callback['__fbHandle'] = undefined;
+				callback['__fbEventType'] = undefined;
+				callback['__fbContext'] = undefined;
+				this.#handles.delete(callback);
+			}
 		}
 	}
 
@@ -271,15 +266,11 @@ export class Query implements IQuery {
 				});
 			}
 		);
+		callback['__fbHandle'] = handle;
+		callback['__fbEventType'] = eventType;
+		callback['__fbContext'] = context;
 
-		this.#handles.set(
-			{
-				eventType,
-				callback,
-				context,
-			},
-			handle
-		);
+		this.#handles.set(callback, handle);
 
 		return callback;
 	}

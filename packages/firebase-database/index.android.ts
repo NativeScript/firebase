@@ -189,17 +189,20 @@ export class Query implements IQuery {
 		return Query.fromNative(this.native.limitToLast(limit));
 	}
 	off(eventType?: EventType, callback?: (a: DataSnapshot, b: string) => void, context?: Record<string, any>): void {
-		const handle = this.#handles.get({
-			eventType,
-			callback,
-			context,
-		});
-		if (handle) {
-			this.native.removeEventListener(handle as any);
+		const handle = callback?.['__fbHandle'];
+		const event = callback?.['__fbEventType'];
+		if (typeof handle === 'number' && event === eventType) {
+			if (this.#handles.has(callback)) {
+				this.native.removeEventListener(handle as any);
+				callback['__fbHandle'] = undefined;
+				callback['__fbEventType'] = undefined;
+				callback['__fbContext'] = undefined;
+				this.#handles.delete(callback);
+			}
 		}
 	}
 
-	#handles: Map<{ eventType: EventType; callback?: (a: DataSnapshot, b: string) => void; context?: any }, com.google.firebase.database.ValueEventListener | com.google.firebase.database.ChildEventListener> = new Map();
+	#handles: Map<(a: DataSnapshot, b: string) => void, com.google.firebase.database.ValueEventListener | com.google.firebase.database.ChildEventListener> = new Map();
 
 	on(eventType: EventType, callback: (data: DataSnapshot, previousChildKey: string) => void, cancelCallbackOrContext?: (a: FirebaseError) => void | Record<string, any>, context?: Record<string, any>): (a: DataSnapshot, b: string) => void {
 		let handle;
@@ -246,14 +249,11 @@ export class Query implements IQuery {
 			);
 		}
 
-		this.#handles.set(
-			{
-				eventType,
-				callback,
-				context,
-			},
-			handle
-		);
+		callback['__fbHandle'] = handle;
+		callback['__fbEventType'] = eventType;
+		callback['__fbContext'] = context;
+
+		this.#handles.set(callback, handle);
 
 		return callback;
 	}
