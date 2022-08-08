@@ -1,3 +1,14 @@
+## [2.2.9](https://github.com/NativeScript/firebase/compare/2.2.7...2.2.9) (2022-08-08)
+
+
+### Bug Fixes
+
+* **analytics:** AnalyticsWithoutAdIdSupport ([#115](https://github.com/NativeScript/firebase/issues/115)) ([9f2d612](https://github.com/NativeScript/firebase/commit/9f2d61292326e63606bf108b00d9bafa015bef2c))
+* **analytics:** missing postinstall - removing for now ([e66578d](https://github.com/NativeScript/firebase/commit/e66578d96570f96bbfa577e0e39482cc3eb5a5ab))
+* **database:** issue with date handling and accepted ios types ([de62bfb](https://github.com/NativeScript/firebase/commit/de62bfba085d862456fa7babccdfc059e9e4ba35))
+
+
+
 ## [2.2.7](https://github.com/nativescript/firebase/compare/2.2.6...2.2.7) (2022-08-06)
 
 
