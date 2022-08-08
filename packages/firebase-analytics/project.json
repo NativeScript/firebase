@@ -32,7 +32,7 @@
 		"build.all": {
 			"executor": "@nrwl/workspace:run-commands",
 			"options": {
-				"commands": ["node tools/scripts/build-finish.ts firebase-analytics"],
+				"commands": ["./node_modules/.bin/tsc -p packages/firebase-analytics/hooks/tsconfig.json", "node tools/scripts/build-finish.ts firebase-analytics"],
 				"parallel": false
 			},
 			"outputs": ["dist/packages/firebase-analytics"],

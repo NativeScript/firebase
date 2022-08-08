@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = function ($logger, $projectData, hookArgs) {
+export = function ($logger, $projectData, hookArgs) {
 	const platformName = ((hookArgs.prepareData && hookArgs.prepareData.platform) || (hookArgs.platformData && hookArgs.platformData.normalizedPlatformName) || '').toLowerCase();
 
 	if (platformName === 'ios') {
