@@ -6,7 +6,7 @@
 	"dependencies": {
 		"@nativescript/core": "file:../../node_modules/@nativescript/core",
 		"@nativescript/firebase-admob": "file:../../packages/firebase-admob",
-		"@nativescript/firebase-analytics": "file:../../packages/firebase-analytics",
+		"@nativescript/firebase-analytics": "file:../../dist/packages/firebase-analytics",
 		"@nativescript/firebase-app-check": "file:../../packages/firebase-app-check",
 		"@nativescript/firebase-auth": "file:../../packages/firebase-auth",
 		"@nativescript/firebase-core": "file:../../packages/firebase-core",
