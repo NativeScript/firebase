@@ -41,7 +41,7 @@ export function serialize(data: any): any {
 
 		case 'object': {
 			if (data instanceof Date) {
-				return NSDate.dateWithTimeIntervalSince1970(data.getTime() / 1000);
+				return data.toString();
 			}
 			if (!data) {
 				return NSNull.new();
@@ -396,7 +396,7 @@ export class Reference extends Query implements IReference {
 		const pushRef = Reference.fromNative(id);
 		let promise;
 		if (value) {
-			promise = thennablePushRef.set(value, onComplete).then(() => pushRef);
+			promise = thennablePushRef.set(serialize(value), onComplete).then(() => pushRef);
 		} else {
 			promise = Promise.resolve(pushRef);
 		}
