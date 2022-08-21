@@ -37,7 +37,7 @@ function ensureCallback() {
 					}
 				}
 			};
-			if (!MessagingCore.inForeground) {
+			if (!MessagingCore.inForeground || !MessagingCore.appDidLaunch) {
 				MessagingCore.addToResumeQueue(exec);
 			} else {
 				exec();
@@ -91,8 +91,12 @@ export class MessagingCore implements IMessagingCore {
 		MessagingCore.#onResumeQueue.push(callback);
 	}
 	static #inForeground = false;
+	static #appDidLaunch = false;
 	static get inForeground() {
 		return MessagingCore.#inForeground;
+	}
+	static get appDidLaunch() {
+		return MessagingCore.#appDidLaunch;
 	}
 
 	constructor() {
@@ -105,6 +109,7 @@ export class MessagingCore implements IMessagingCore {
 
 		Application.android.on('activityResumed', (args) => {
 			MessagingCore.#inForeground = true;
+			MessagingCore.#appDidLaunch = true;
 			MessagingCore.#onResumeQueue.forEach((callback) => {
 				callback();
 			});

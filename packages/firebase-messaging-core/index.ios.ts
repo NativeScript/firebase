@@ -76,8 +76,12 @@ export class MessagingCore implements IMessagingCore {
 		MessagingCore.#onResumeQueue.push(callback);
 	}
 	static #inForeground = false;
+	static #appDidLaunch = false;
 	static get inForeground() {
 		return MessagingCore.#inForeground;
+	}
+	static get appDidLaunch() {
+		return MessagingCore.#appDidLaunch;
 	}
 
 	constructor() {
@@ -95,6 +99,7 @@ export class MessagingCore implements IMessagingCore {
 
 		Application.on('resume', (args) => {
 			MessagingCore.#inForeground = true;
+			MessagingCore.#appDidLaunch = true;
 		});
 
 		Application.on('suspend', (args) => {
