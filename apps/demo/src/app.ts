@@ -1,6 +1,5 @@
 import { Application, Utils } from '@nativescript/core';
 import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-admob';
 import '@nativescript/firebase-analytics';
 import '@nativescript/firebase-auth';
 import '@nativescript/firebase-crashlytics';

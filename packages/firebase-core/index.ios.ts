@@ -269,6 +269,7 @@ export class Firebase {
 		Firebase.#onResumeQueue.push(callback);
 	}
 	static #inForeground = false;
+	static #appDidLaunch = false;
 	static get inForeground() {
 		return Firebase.#inForeground;
 	}
@@ -287,6 +288,7 @@ export class Firebase {
 
 		Application.on('resume', (args) => {
 			Firebase.#inForeground = true;
+			Firebase.#appDidLaunch = true;
 		});
 
 		Application.on('suspend', (args) => {
@@ -397,6 +399,8 @@ export class Firebase {
 
 					if (isDefault) {
 						defaultApp = fbApp;
+						// For backward compat remove @v3
+						global.__defaultFirebaseApp = fbApp;
 					}
 
 					if (!isDefault) {
@@ -503,6 +507,11 @@ export class Firebase {
 				initApp();
 			}
 		});
+	}
+
+	// For backward compat remove @v3
+	admob() {
+		return global?.__admob;
 	}
 }
 

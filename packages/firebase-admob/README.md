@@ -506,12 +506,11 @@ Use the argument `tagForChildDirectedTreatment: undefined` or do not set this ta
 The following example indicates that you want your content treated as child-directed for purposes of COPPA:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core'
-import '@nativescript/firebase-admob'
+import { Admob, RequestConfiguration } from '@nativescript/firebase-admob';
 const requestConfiguration: RequestConfiguration = {
   tagForChildDirectedTreatment: true
 }
-firebase().admob().setRequestConfiguration(requestConfiguration)
+Admob.getInstance().requestConfiguration = requestConfiguration;
 ```
 
 ### Users under the age of consent
@@ -527,12 +526,11 @@ Use the argument `tagForUnderAgeOfConsent: false` to indicates that you don't wa
 Use the argument `tagForUnderAgeOfConsent: undefined` or do not set this tag to indicate that you have not specified whether the ad request should receive treatment for users in the European Economic Area (EEA) under the age of consent. The following example indicates that you want TFUA included in your ad request:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core'
-import '@nativescript/firebase-admob'
+import { Admob, RequestConfiguration } from '@nativescript/firebase-admob';
 const requestConfiguration: RequestConfiguration = {
   tagForUnderAgeOfConsent: true
 }
-firebase().admob().setRequestConfiguration(requestConfiguration)
+Admob.getInstance().requestConfiguration = requestConfiguration;
 ```
 
 The tags to enable the Child-directed setting and `tagForUnderAgeOfConsent` should not both simultaneously be set to true. If they are, the child-directed setting takes precedence.
@@ -551,12 +549,11 @@ AdMob ads returned for these requests have a content rating at or below that lev
 The following code configures a `RequestConfiguration` object to specify that ad content returned should correspond to a digital content label designation no higher than G:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core'
-import { MaxAdContentRating } from '@nativescript/firebase-admob'
+import { Admob, MaxAdContentRating, RequestConfiguration } from '@nativescript/firebase-admob';
 const requestConfiguration: RequestConfiguration = {
   maxAdContentRating: MaxAdContentRating.G
 }
-firebase().admob().setRequestConfiguration(requestConfiguration)
+Admob.getInstance().requestConfiguration = requestConfiguration;
 ```
 
 ## License
