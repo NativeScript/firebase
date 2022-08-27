@@ -181,6 +181,7 @@ export class Firebase {
 		}
 		Firebase.#onResumeQueue.push(callback);
 	}
+	static #appDidLaunch = false;
 	static #inForeground = false;
 	static get inForeground() {
 		return Firebase.#inForeground;
@@ -192,6 +193,7 @@ export class Firebase {
 		firebaseInstance = this;
 		Application.android.on('activityResumed', (args) => {
 			Firebase.#inForeground = true;
+			Firebase.#appDidLaunch = true;
 			Firebase.#onResumeQueue.forEach((callback) => {
 				callback();
 			});
@@ -393,12 +395,19 @@ export class Firebase {
 
 				if (!defaultApp) {
 					defaultApp = fbApp;
+					// For backward compat remove @v3
+					global.__defaultFirebaseApp = fbApp;
 				}
 				resolve(fbApp);
 			} catch (e) {
 				reject(new FirebaseError(e.message));
 			}
 		});
+	}
+
+	// For backward compat remove @v3
+	admob() {
+		return global?.__admob;
 	}
 }
 

@@ -1,9 +1,6 @@
 import { Observable, EventData, Page, View, Label } from '@nativescript/core';
 import { DemoSharedFirebaseAdmob } from '@demo/shared';
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-admob';
-import { AdEventType, InterstitialAd, RewardedInterstitialAd, RewardedAd, BannerAd, BannerAdSize, Admob, AdsConsent, NativeAd, NativeAdLoader, NativeAdView } from '@nativescript/firebase-admob';
-import { AdChoicesPlacement, NativeAdEventType } from '@nativescript/firebase-admob';
+import { AdChoicesPlacement, NativeAdEventType, AdEventType, InterstitialAd, RewardedInterstitialAd, RewardedAd, BannerAd, BannerAdSize, Admob, AdsConsent, NativeAd, NativeAdLoader, NativeAdView } from '@nativescript/firebase-admob';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
@@ -33,10 +30,7 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		} else {
 			testDevices.push('EMULATOR');
 		}
-		const admob = firebase().admob();
-		admob.setRequestConfiguration({
-			testDevices,
-		});
+		Admob.getInstance().requestConfiguration = { testDevices };
 	}
 
 	nativeAdLayoutChanged(event) {

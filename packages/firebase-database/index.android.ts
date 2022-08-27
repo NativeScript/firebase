@@ -191,7 +191,7 @@ export class Query implements IQuery {
 	off(eventType?: EventType, callback?: (a: DataSnapshot, b: string) => void, context?: Record<string, any>): void {
 		const handle = callback?.['__fbHandle'];
 		const event = callback?.['__fbEventType'];
-		if (typeof handle === 'number' && event === eventType) {
+		if (handle && event === eventType) {
 			if (this.#handles.has(callback)) {
 				this.native.removeEventListener(handle as any);
 				callback['__fbHandle'] = undefined;

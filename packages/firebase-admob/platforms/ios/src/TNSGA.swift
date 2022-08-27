@@ -98,4 +98,38 @@ public class TNSGA:NSObject {
             return GADCurrentOrientationInlineAdaptiveBannerAdSizeWithWidth(width)
         }
     }
+    
+    @objc(NSCGABannersSize)
+    public enum NSCGABannersSize: Int8, RawRepresentable {
+        public typealias RawValue = Int8
+        case Banner
+        case FullBanner
+        case LargeBanner
+        case LeaderBoard
+        case MediumRectangle
+        case Fluid
+        case WideSkyScraper
+        case Invalid
+    }
+
+    public static func createBanner(_ size: NSCGABannersSize) -> GADAdSize {
+        switch size {
+        case .Banner:
+            return GADAdSizeBanner
+        case .FullBanner:
+            return GADAdSizeFullBanner
+        case .LargeBanner:
+            return GADAdSizeLargeBanner
+        case .LeaderBoard:
+            return GADAdSizeLeaderboard
+        case .MediumRectangle:
+            return GADAdSizeMediumRectangle
+        case .Fluid:
+            return GADAdSizeFluid
+        case .WideSkyScraper:
+            return GADAdSizeSkyscraper
+        case .Invalid:
+            return GADAdSizeInvalid
+        }
+    }
 }

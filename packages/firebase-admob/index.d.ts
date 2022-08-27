@@ -1,6 +1,5 @@
 import { Application } from '@nativescript/core';
 
-import { FirebaseApp } from '@nativescript/firebase-core';
 import { IAdmob, IInterstitialAd, IRewardedAd, BannerAdBase, IRewardedInterstitialAd, RewardedAdEventType, MaxAdContentRating, ServerSideVerificationOptions } from './common';
 
 export { MaxAdContentRating, RewardedAdEventType };
@@ -214,9 +213,11 @@ export declare class BannerAdSize extends BannerAdSizeBase {
 }
 
 export declare class Admob implements IAdmob {
-	readonly app: FirebaseApp;
+	readonly app: any;
 
 	static init(): Promise<{ [key: string]: AdapterStatus }>;
+
+	static getInstance(): Admob;
 
 	requestConfiguration: RequestConfiguration;
 
@@ -231,10 +232,6 @@ export declare class Admob implements IAdmob {
 	getRequestConfiguration(requestConfiguration: RequestConfiguration);
 }
 
-declare module '@nativescript/firebase-core' {
-	export interface Firebase extends FirebaseAdmob {}
-}
-
 export enum AdapterStatusState {
 	NOT_READY,
 	READY,
@@ -244,8 +241,4 @@ export interface AdapterStatus {
 	description: string;
 	latency: number;
 	initializationState: AdapterStatusState;
-}
-
-export interface FirebaseAdmob {
-	static admob(): Admob;
 }

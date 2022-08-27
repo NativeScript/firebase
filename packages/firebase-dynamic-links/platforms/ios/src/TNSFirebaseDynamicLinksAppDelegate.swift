@@ -25,17 +25,18 @@ public class TNSFirebaseDynamicLinksAppDelegate: UIResponder , UIApplicationDele
     }
     
     
-    @objc public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        
-        return application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String ?? "", annotation: options[UIApplication.OpenURLOptionsKey.annotation])
-    }
-    
-    @objc public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        
-        var dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url);
+    static func handleLink(url: URL) -> Bool {
+        let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url);
         
         if (dynamicLink == nil) {
-            dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromUniversalLink: url);
+           DynamicLinks.dynamicLinks().dynamicLink(fromUniversalLink: url, completion: { dynamicLink, error in
+                if (dynamicLink?.url != nil) {
+                    DispatchQueue.main.async {
+                        TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink!)
+                    }
+                }
+            })
+            return false
         }
         
         if (dynamicLink == nil) {
@@ -47,7 +48,14 @@ public class TNSFirebaseDynamicLinksAppDelegate: UIResponder , UIApplicationDele
         }
         
         return false
-        
+    }
+    
+    @objc public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        return TNSFirebaseDynamicLinksAppDelegate.handleLink(url: url)
+    }
+    
+    @objc public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return TNSFirebaseDynamicLinksAppDelegate.handleLink(url: url)
     }
     
     @objc public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {

@@ -1,5 +1,4 @@
 import { Utils } from '@nativescript/core';
-import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IAdmob, AdEventListener, RequestConfiguration, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, ServerSideVerificationOptions, IRewardedInterstitialAd, IRewardedItem, AdapterStatus } from '.';
 import { MaxAdContentRating, AdEventType, BannerAdBase, RewardedAdEventType, unitIdProperty, BannerAdSizeBase, sizeProperty } from './common';
 import { topViewController, toSerializeRequestOptions } from './utils';
@@ -9,10 +8,38 @@ export { MaxAdContentRating, AdEventType };
 export * from './adsconsent';
 export * from './nativead';
 
+export class AdmobError extends Error {
+	#native: NSError;
+	static fromNative(native: NSError, message?: string) {
+		const error = new AdmobError(message || native?.localizedDescription);
+		error.#native = native;
+		return error;
+	}
+
+	get native() {
+		return this.#native;
+	}
+
+	intoNative() {
+		if (!this.#native) {
+			const exception = NSException.exceptionWithNameReasonUserInfo(NSGenericException, this.message, null);
+			const info = {};
+			info['ExceptionName'] = exception.name;
+			info['ExceptionReason'] = exception.reason;
+			info['ExceptionCallStackReturnAddresses'] = exception.callStackReturnAddresses;
+			info['ExceptionCallStackSymbols'] = exception.callStackSymbols;
+			info['ExceptionUserInfo'] = exception.userInfo;
+			const error = NSError.alloc().initWithDomainCodeUserInfo('NativeScript', 1000, info as any);
+			return error;
+		}
+		return this.#native;
+	}
+}
+
 let defaultAdmob: Admob;
-const fb = firebase();
-if (!fb.admob) {
-	Object.defineProperty(fb, 'admob', {
+
+if (!global.__admob) {
+	Object.defineProperty(global, '__admob', {
 		value: () => {
 			if (!defaultAdmob) {
 				defaultAdmob = new Admob();
@@ -102,7 +129,7 @@ export class InterstitialAd implements IInterstitialAd {
 		const request = toSerializeRequestOptions(this.#requestOptions);
 		GADInterstitialAd.loadWithAdUnitIDRequestCompletionHandler(this.#adUnitId, request, (ad, error) => {
 			if (error) {
-				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(error));
+				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(error));
 			} else {
 				ad.fullScreenContentDelegate = ref.get()?._delegate;
 				ref.get()?._setNative(ad);
@@ -169,7 +196,7 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 		const request = toSerializeRequestOptions(this.#requestOptions);
 		GADRewardedInterstitialAd.loadWithAdUnitIDRequestCompletionHandler(this.#adUnitId, request, (ad, error) => {
 			if (error) {
-				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(error));
+				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(error));
 			} else {
 				ad.fullScreenContentDelegate = ref.get()?._delegate;
 				ref.get()?._setNative(ad);
@@ -258,7 +285,7 @@ export class RewardedAd implements IRewardedAd {
 		const ref = new WeakRef(this);
 		GADRewardedAd.loadWithAdUnitIDRequestCompletionHandler(this.#adUnitId, request, (ad, error) => {
 			if (error) {
-				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(error));
+				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(error));
 			} else {
 				ad.fullScreenContentDelegate = ref.get()?._delegate;
 				ref.get()?._setNative(ad);
@@ -367,23 +394,23 @@ export class BannerAdSize extends BannerAdSizeBase {
 	}
 
 	static get BANNER(): BannerAdSize {
-		return BannerAdSize.fromNative(GADAdSizeBanner);
+		return BannerAdSize.fromNative(TNSGA.createBanner(NSCGABannersSize.Banner));
 	}
 
 	static get FULL_BANNER(): BannerAdSize {
-		return BannerAdSize.fromNative(GADAdSizeFullBanner);
+		return BannerAdSize.fromNative(TNSGA.createBanner(NSCGABannersSize.FullBanner));
 	}
 
 	static get LARGE_BANNER(): BannerAdSize {
-		return BannerAdSize.fromNative(GADAdSizeLargeBanner);
+		return BannerAdSize.fromNative(TNSGA.createBanner(NSCGABannersSize.LargeBanner));
 	}
 
 	static get LEADERBOARD(): BannerAdSize {
-		return BannerAdSize.fromNative(GADAdSizeLeaderboard);
+		return BannerAdSize.fromNative(TNSGA.createBanner(NSCGABannersSize.LeaderBoard));
 	}
 
 	static get MEDIUM_RECTANGLE(): BannerAdSize {
-		return BannerAdSize.fromNative(GADAdSizeMediumRectangle);
+		return BannerAdSize.fromNative(TNSGA.createBanner(NSCGABannersSize.MediumRectangle));
 	}
 
 	static createAnchoredAdaptiveBanner(width: number, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
@@ -409,15 +436,15 @@ export class BannerAdSize extends BannerAdSizeBase {
 	}
 
 	static get FLUID(): BannerAdSize {
-		return BannerAdSize.fromNative(GADAdSizeFluid);
+		return BannerAdSize.fromNative(TNSGA.createBanner(NSCGABannersSize.Fluid));
 	}
 
 	static get WIDE_SKYSCRAPER(): BannerAdSize {
-		return BannerAdSize.fromNative(GADAdSizeSkyscraper);
+		return BannerAdSize.fromNative(TNSGA.createBanner(NSCGABannersSize.WideSkyScraper));
 	}
 
 	static get INVALID(): BannerAdSize {
-		return BannerAdSize.fromNative(GADAdSizeInvalid);
+		return BannerAdSize.fromNative(TNSGA.createBanner(NSCGABannersSize.Invalid));
 	}
 
 	static get SEARCH(): BannerAdSize {
@@ -498,11 +525,7 @@ export class BannerAd extends BannerAdBase {
 	}
 }
 
-declare const FIRApp;
-
 export class Admob implements IAdmob {
-	#app: FirebaseApp;
-
 	constructor() {
 		if (defaultAdmob) {
 			return defaultAdmob;
@@ -529,6 +552,10 @@ export class Admob implements IAdmob {
 				resolve(data);
 			});
 		});
+	}
+
+	static getInstance(): Admob {
+		return new Admob();
 	}
 
 	#requestConfiguration: RequestConfiguration = {};
@@ -615,12 +642,8 @@ export class Admob implements IAdmob {
 		return this.requestConfiguration;
 	}
 
-	get app(): FirebaseApp {
-		if (!this.#app) {
-			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(FIRApp.defaultApp());
-		}
-		return this.#app;
+	get app() {
+		return global?.__defaultFirebaseApp;
 	}
 }
 
@@ -641,7 +664,7 @@ class GADFullScreenContentDelegateImpl extends NSObject implements GADFullScreen
 	}
 
 	adDidFailToPresentFullScreenContentWithError(ad: GADFullScreenPresentingAd, error: NSError): void {
-		this._owner?.get()?._onAdEvent?.(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(error), this._owner.get?.());
+		this._owner?.get()?._onAdEvent?.(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, AdmobError.fromNative(error), this._owner.get?.());
 	}
 
 	adDidPresentFullScreenContent(ad: GADFullScreenPresentingAd): void {
@@ -681,7 +704,7 @@ class GADBannerViewDelegateImpl extends NSObject implements GADBannerViewDelegat
 		this._owner?.get()?.notify?.({
 			eventName: AdEventType.FAILED_TO_LOAD_EVENT,
 			object: this._owner?.get(),
-			error: FirebaseError.fromNative(error),
+			error: AdmobError.fromNative(error),
 		});
 	}
 

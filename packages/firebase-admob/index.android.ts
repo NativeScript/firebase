@@ -1,6 +1,5 @@
 import { Application, Utils } from '@nativescript/core';
 import lazy from '@nativescript/core/utils/lazy';
-import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IAdmob, AdEventListener, RequestConfiguration, AdShowOptions, IInterstitialAd, RequestOptions, IRewardedAd, IRewardedInterstitialAd, IRewardedItem, ServerSideVerificationOptions, AdapterStatus } from '.';
 import { AdEventType, BannerAdBase, RewardedAdEventType, MaxAdContentRating, unitIdProperty, BannerAdSizeBase, sizeProperty } from './common';
 
@@ -9,11 +8,30 @@ export { MaxAdContentRating, AdEventType };
 export * from './adsconsent';
 export * from './nativead';
 
+export class AdmobError extends Error {
+	#native: java.lang.Exception;
+	static fromNative(native: java.lang.Exception, message?: string) {
+		const error = new AdmobError(message || native?.getMessage?.());
+		error.#native = native;
+		return error;
+	}
+
+	get native() {
+		return this.#native;
+	}
+
+	intoNative() {
+		if (!this.#native) {
+			return new java.lang.Exception(this.message);
+		}
+		return this.#native;
+	}
+}
+
 let defaultAdmob: Admob;
 
-const fb = firebase();
-if (!fb.admob) {
-	Object.defineProperty(fb, 'admob', {
+if (!global.__admob) {
+	Object.defineProperty(global, '__admob', {
 		value: () => {
 			if (!defaultAdmob) {
 				defaultAdmob = new Admob();
@@ -52,7 +70,7 @@ class AdListener extends com.google.android.gms.ads.AdListener {
 		this._owner?.get?.().notify({
 			eventName: BannerAd.onAdFailedToLoadEvent,
 			object: this._owner?.get?.(),
-			error: FirebaseError.fromNative(error),
+			error: AdmobError.fromNative(error as any),
 		});
 	}
 
@@ -179,7 +197,7 @@ export class InterstitialAd implements IInterstitialAd {
 							owner?._setLoaded(false);
 							break;
 						case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
-							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
+							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, AdmobError.fromNative(dataOrError), owner);
 							break;
 						case AdEventType.IMPRESSION:
 							owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
@@ -188,7 +206,7 @@ export class InterstitialAd implements IInterstitialAd {
 							owner?._onAdEvent(AdEventType.OPENED, null, owner);
 							break;
 						case AdEventType.FAILED_TO_LOAD_EVENT:
-							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
+							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(dataOrError), owner);
 							break;
 					}
 				},
@@ -270,7 +288,7 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 							owner?._setLoaded(false);
 							break;
 						case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
-							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
+							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, AdmobError.fromNative(dataOrError), owner);
 							break;
 						case AdEventType.IMPRESSION:
 							owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
@@ -279,7 +297,7 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 							owner?._onAdEvent(AdEventType.OPENED, null, owner);
 							break;
 						case AdEventType.FAILED_TO_LOAD_EVENT:
-							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
+							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(dataOrError), owner);
 							break;
 					}
 				},
@@ -386,7 +404,7 @@ export class RewardedAd implements IRewardedAd {
 							owner?._setLoaded(false);
 							break;
 						case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
-							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, FirebaseError.fromNative(dataOrError), owner);
+							owner?._onAdEvent(AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT, AdmobError.fromNative(dataOrError), owner);
 							break;
 						case AdEventType.IMPRESSION:
 							owner?._onAdEvent(AdEventType.IMPRESSION, null, owner);
@@ -395,7 +413,7 @@ export class RewardedAd implements IRewardedAd {
 							owner?._onAdEvent(AdEventType.OPENED, null, owner);
 							break;
 						case AdEventType.FAILED_TO_LOAD_EVENT:
-							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, FirebaseError.fromNative(dataOrError), owner);
+							owner?._onAdEvent(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(dataOrError), owner);
 							break;
 					}
 				},
@@ -627,8 +645,6 @@ export class BannerAd extends BannerAdBase {
 }
 
 export class Admob implements IAdmob {
-	#app: FirebaseApp;
-
 	constructor() {
 		if (defaultAdmob) {
 			return defaultAdmob;
@@ -651,6 +667,10 @@ export class Admob implements IAdmob {
 				})
 			);
 		});
+	}
+
+	static getInstance(): Admob {
+		return new Admob();
 	}
 
 	set requestConfiguration(requestConfiguration: RequestConfiguration) {
@@ -736,11 +756,7 @@ export class Admob implements IAdmob {
 		return this.requestConfiguration;
 	}
 
-	get app(): FirebaseApp {
-		if (!this.#app) {
-			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
-		}
-		return this.#app;
+	get app() {
+		return global?.__defaultFirebaseApp;
 	}
 }
