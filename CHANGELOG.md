@@ -1,3 +1,12 @@
+# [2.3.0](https://github.com/nativescript/firebase/compare/2.2.9...2.3.0) (2022-08-27)
+
+
+### Bug Fixes
+
+* admob independence , cloud-messaging notification emitting, database unsubscribing & initial dynamicLink ([#121](https://github.com/nativescript/firebase/issues/121)) ([9908b76](https://github.com/nativescript/firebase/commit/9908b76d319b25c4aa46752fc5c5daae321a66ac)), closes [#117](https://github.com/nativescript/firebase/issues/117) [#116](https://github.com/nativescript/firebase/issues/116) [#120](https://github.com/nativescript/firebase/issues/120)
+
+
+
 ## [2.2.9](https://github.com/NativeScript/firebase/compare/2.2.7...2.2.9) (2022-08-08)
 
 
