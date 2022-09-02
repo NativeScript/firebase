@@ -51,16 +51,18 @@ Application.on('launch', (args) => {
 	});
 });
 
-messaging
-	.requestPermission()
-	.then(() => {
-		console.log('requestPermission', 'done');
-		messaging.registerDeviceForRemoteMessages().catch((e) => {
-			console.error('registerDeviceForRemoteMessages', e);
+if (global.isIOS) {
+	messaging
+		.requestPermission()
+		.then(() => {
+			console.log('requestPermission', 'done');
+			messaging.registerDeviceForRemoteMessages().catch((e) => {
+				console.error('registerDeviceForRemoteMessages', e);
+			});
+		})
+		.catch((e) => {
+			console.error('requestPermission', e);
 		});
-	})
-	.catch((e) => {
-		console.error('requestPermission', e);
-	});
+}
 
 Application.run({ moduleName: 'app-root' });
