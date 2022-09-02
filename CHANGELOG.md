@@ -1,3 +1,12 @@
+## [2.3.1](https://github.com/nativescript/firebase/compare/2.3.0...2.3.1) (2022-09-02)
+
+
+### Bug Fixes
+
+* **messaging:** API 33 permission request ([39b3b89](https://github.com/nativescript/firebase/commit/39b3b89fdbc29941a598b64338e7a1d6a9ec4d80))
+
+
+
 # [2.3.0](https://github.com/nativescript/firebase/compare/2.2.9...2.3.0) (2022-08-27)
 
 
