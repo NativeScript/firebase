@@ -1,5 +1,5 @@
 import { IFirebaseOptions, FirebaseConfig } from '.';
-import { Application, knownFolders, Utils } from '@nativescript/core';
+import { AndroidActivityEventData, Application, fromObject, knownFolders, Utils } from '@nativescript/core';
 export * from './utils';
 declare const __non_webpack_require__;
 export class FirebaseError extends Error {
@@ -173,6 +173,7 @@ export class FirebaseApp {
 	}
 }
 
+let lastActivity;
 export class Firebase {
 	static #onResumeQueue = [];
 	static addToResumeQueue(callback: () => void) {
@@ -180,6 +181,21 @@ export class Firebase {
 			return;
 		}
 		Firebase.#onResumeQueue.push(callback);
+	}
+	static #activityResultContractsQueue = fromObject({});
+
+	static registerActivityResultContracts(callback: (args: AndroidActivityEventData & { dispose: boolean }) => void) {
+		if (typeof callback !== 'function') {
+			return;
+		}
+		Firebase.#activityResultContractsQueue.on('register', callback);
+	}
+
+	static unregisterActivityResultContracts(callback: (args: AndroidActivityEventData & { dispose: boolean }) => void) {
+		if (typeof callback !== 'function') {
+			return;
+		}
+		Firebase.#activityResultContractsQueue.off('register', callback);
 	}
 	static #appDidLaunch = false;
 	static #inForeground = false;
@@ -197,11 +213,44 @@ export class Firebase {
 			Firebase.#onResumeQueue.forEach((callback) => {
 				callback();
 			});
-			Firebase.#onResumeQueue.splice(0);
 		});
 
 		Application.android.on('activityPaused', (args) => {
 			Firebase.#inForeground = false;
+		});
+
+		Application.android.once('activityCreated', (args: any) => {
+			if (!lastActivity) {
+				lastActivity = args.activity;
+				Firebase.#activityResultContractsQueue.notify({
+					eventName: 'register',
+					activity: args.activity,
+					dispose: false,
+				});
+			}
+		});
+
+		Application.android.on('activityDestroyed', (args) => {
+			const activity = args.activity;
+			if (lastActivity && activity === lastActivity) {
+				Firebase.#activityResultContractsQueue.notify({
+					eventName: 'register',
+					activity: args.activity,
+					dispose: true,
+				});
+
+				lastActivity = undefined;
+				Application.android.once('activityCreated', (args: any) => {
+					if (!lastActivity) {
+						lastActivity = args.activity;
+						Firebase.#activityResultContractsQueue.notify({
+							eventName: 'register',
+							activity: args.activity,
+							dispose: false,
+						});
+					}
+				});
+			}
 		});
 		return firebaseInstance;
 	}

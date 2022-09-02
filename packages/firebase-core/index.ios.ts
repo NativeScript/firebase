@@ -268,6 +268,9 @@ export class Firebase {
 		}
 		Firebase.#onResumeQueue.push(callback);
 	}
+	static addToActivityCreatedQueue(callback: () => void) {
+		// noop
+	}
 	static #inForeground = false;
 	static #appDidLaunch = false;
 	static get inForeground() {

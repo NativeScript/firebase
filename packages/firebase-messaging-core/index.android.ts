@@ -52,6 +52,25 @@ const onMessageCallbacks: Set<(message: any) => void> = new Set();
 const onTokenCallbacks: Set<(token: any) => void> = new Set();
 const onNotificationTapCallbacks: Set<(message: any) => void> = new Set();
 
+let lastActivity;
+let requestPermissionLauncher: androidx.activity.result.ActivityResultLauncher<any>;
+let _resolve;
+
+function register(args: any) {
+	if (!lastActivity) {
+		lastActivity = args.activity;
+		requestPermissionLauncher = args.activity.registerForActivityResult(
+			new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
+			new androidx.activity.result.ActivityResultCallback({
+				onActivityResult(isGranted: boolean) {
+					_resolve?.(isGranted ? 0 : 1);
+					_resolve = undefined;
+				},
+			})
+		);
+	}
+}
+
 export class MessagingCore implements IMessagingCore {
 	#native: com.google.firebase.messaging.FirebaseMessaging;
 	#onMessageCallback?;
@@ -118,6 +137,17 @@ export class MessagingCore implements IMessagingCore {
 
 		Application.android.on('activityPaused', (args) => {
 			MessagingCore.#inForeground = false;
+		});
+
+		Application.android.once('activityCreated', register);
+
+		Application.android.on('activityDestroyed', (args) => {
+			const activity = args.activity;
+			if (lastActivity && activity === lastActivity) {
+				requestPermissionLauncher?.unregister?.();
+				lastActivity = undefined;
+				Application.android.once('activityCreated', register);
+			}
 		});
 
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
@@ -263,20 +293,13 @@ export class MessagingCore implements IMessagingCore {
 
 			return new Promise((resolve, reject) => {
 				const launch = (activity) => {
-					const requestPermissionLauncher = activity.registerForActivityResult(
-						new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
-						new androidx.activity.result.ActivityResultCallback({
-							onActivityResult(isGranted: boolean) {
-								resolve(isGranted ? 0 : 1);
-							},
-						})
-					);
-
+					_resolve = resolve;
 					requestPermissionLauncher.launch((android as any).Manifest.permission.POST_NOTIFICATIONS);
 				};
 
 				if (!activity) {
 					Application.android.once('activityCreated', (args: any) => {
+						register(args);
 						launch(args.activity);
 					});
 				} else {
