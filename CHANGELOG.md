@@ -1,3 +1,12 @@
+## [2.3.2](https://github.com/nativescript/firebase/compare/2.3.1...2.3.2) (2022-09-03)
+
+
+### Bug Fixes
+
+* **messaging:** use weakref ([4f687d1](https://github.com/nativescript/firebase/commit/4f687d17db65edffec62dbbe1f89a83f3c7b633e))
+
+
+
 ## [2.3.1](https://github.com/nativescript/firebase/compare/2.3.0...2.3.1) (2022-09-02)
 
 
