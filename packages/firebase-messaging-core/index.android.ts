@@ -71,6 +71,30 @@ function register(args: any) {
 	}
 }
 
+Application.android.on('activityResumed', (args) => {
+	MessagingCore._inForeground = true;
+	MessagingCore.appDidLaunch = true;
+	MessagingCore._onResumeQueue.forEach((callback) => {
+		callback();
+	});
+	MessagingCore._onResumeQueue.splice(0);
+});
+
+Application.android.on('activityPaused', (args) => {
+	MessagingCore._inForeground = false;
+});
+
+Application.android.once('activityCreated', register);
+
+Application.android.on('activityDestroyed', (args) => {
+	const activity = lastActivity?.get?.();
+	if (activity && args.activity === activity) {
+		requestPermissionLauncher?.unregister?.();
+		lastActivity = undefined;
+		Application.android.once('activityCreated', register);
+	}
+});
+
 export class MessagingCore implements IMessagingCore {
 	#native: com.google.firebase.messaging.FirebaseMessaging;
 	#onMessageCallback?;
@@ -109,13 +133,27 @@ export class MessagingCore implements IMessagingCore {
 		}
 		MessagingCore.#onResumeQueue.push(callback);
 	}
+
+	static get _onResumeQueue() {
+		return this.#onResumeQueue;
+	}
+
 	static #inForeground = false;
+	static set _inForeground(value) {
+		this.#inForeground = value;
+	}
+	static get _inForeground() {
+		return this.#inForeground;
+	}
 	static #appDidLaunch = false;
 	static get inForeground() {
 		return MessagingCore.#inForeground;
 	}
 	static get appDidLaunch() {
 		return MessagingCore.#appDidLaunch;
+	}
+	static set appDidLaunch(value) {
+		MessagingCore.#appDidLaunch = value;
 	}
 
 	constructor() {
@@ -125,30 +163,6 @@ export class MessagingCore implements IMessagingCore {
 		defaultInstance = this;
 
 		this.#native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
-
-		Application.android.on('activityResumed', (args) => {
-			MessagingCore.#inForeground = true;
-			MessagingCore.#appDidLaunch = true;
-			MessagingCore.#onResumeQueue.forEach((callback) => {
-				callback();
-			});
-			MessagingCore.#onResumeQueue.splice(0);
-		});
-
-		Application.android.on('activityPaused', (args) => {
-			MessagingCore.#inForeground = false;
-		});
-
-		Application.android.once('activityCreated', register);
-
-		Application.android.on('activityDestroyed', (args) => {
-			const activity = lastActivity?.get?.();
-			if (activity && args.activity === activity) {
-				requestPermissionLauncher?.unregister?.();
-				lastActivity = undefined;
-				Application.android.once('activityCreated', register);
-			}
-		});
 
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
 		ensureCallback();

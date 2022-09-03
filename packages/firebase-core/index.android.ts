@@ -173,7 +173,7 @@ export class FirebaseApp {
 	}
 }
 
-let lastActivity;
+let lastActivity: WeakRef<androidx.appcompat.app.AppCompatActivity>;
 export class Firebase {
 	static #onResumeQueue = [];
 	static addToResumeQueue(callback: () => void) {
@@ -221,7 +221,7 @@ export class Firebase {
 
 		Application.android.once('activityCreated', (args: any) => {
 			if (!lastActivity) {
-				lastActivity = args.activity;
+				lastActivity = new WeakRef(args.activity);
 				Firebase.#activityResultContractsQueue.notify({
 					eventName: 'register',
 					activity: args.activity,
@@ -231,8 +231,8 @@ export class Firebase {
 		});
 
 		Application.android.on('activityDestroyed', (args) => {
-			const activity = args.activity;
-			if (lastActivity && activity === lastActivity) {
+			const activity = lastActivity?.get?.();
+			if (activity && args.activity === activity) {
 				Firebase.#activityResultContractsQueue.notify({
 					eventName: 'register',
 					activity: args.activity,
@@ -242,7 +242,7 @@ export class Firebase {
 				lastActivity = undefined;
 				Application.android.once('activityCreated', (args: any) => {
 					if (!lastActivity) {
-						lastActivity = args.activity;
+						lastActivity = new WeakRef(args.activity);
 						Firebase.#activityResultContractsQueue.notify({
 							eventName: 'register',
 							activity: args.activity,
