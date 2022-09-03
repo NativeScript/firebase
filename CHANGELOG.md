@@ -1,3 +1,12 @@
+## [2.3.3](https://github.com/nativescript/firebase/compare/2.3.2...2.3.3) (2022-09-03)
+
+
+### Bug Fixes
+
+* **messaging:** handle late permissions request ([b95d56c](https://github.com/nativescript/firebase/commit/b95d56c9c60a31a51d3271f41691397ebd63d3fc))
+
+
+
 ## [2.3.2](https://github.com/nativescript/firebase/compare/2.3.1...2.3.2) (2022-09-03)
 
 
