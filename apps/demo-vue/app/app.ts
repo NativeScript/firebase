@@ -43,9 +43,9 @@ dynamicLinks.onLink((link) => {
 	console.log('onLink', link);
 });
 
-const messaging = firebase().messaging();
-
 Application.on('launch', (args) => {
+	const messaging = firebase().messaging();
+
 	messaging.onMessage((message) => {
 		console.log('Firebase onMessage', message);
 	});
@@ -59,37 +59,6 @@ Application.on('launch', (args) => {
 	});
 });
 
-if (global.isIOS) {
-	messaging
-		.requestPermission()
-		.then(() => {
-			console.log('requestPermission', 'done');
-			messaging.registerDeviceForRemoteMessages().catch((e) => {
-				console.error('registerDeviceForRemoteMessages', e);
-			});
-		})
-		.catch((e) => {
-			console.error('requestPermission', e);
-		});
-}
-
 new Vue({
 	render: (h) => h('frame', [h(Home)]),
-	mounted() {
-		firebase()
-			.messaging()
-			.requestPermission()
-			.then(() => {
-				console.log('requestPermission', 'done');
-				firebase()
-					.messaging()
-					.registerDeviceForRemoteMessages()
-					.catch((e) => {
-						console.error('registerDeviceForRemoteMessages', e);
-					});
-			})
-			.catch((e) => {
-				console.error('requestPermission', e);
-			});
-	},
 }).$start();
