@@ -52,13 +52,13 @@ const onMessageCallbacks: Set<(message: any) => void> = new Set();
 const onTokenCallbacks: Set<(token: any) => void> = new Set();
 const onNotificationTapCallbacks: Set<(message: any) => void> = new Set();
 
-let lastActivity;
+let lastActivity: WeakRef<androidx.appcompat.app.AppCompatActivity>;
 let requestPermissionLauncher: androidx.activity.result.ActivityResultLauncher<any>;
 let _resolve;
 
 function register(args: any) {
 	if (!lastActivity) {
-		lastActivity = args.activity;
+		lastActivity = new WeakRef(args.activity);
 		requestPermissionLauncher = args.activity.registerForActivityResult(
 			new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
 			new androidx.activity.result.ActivityResultCallback({
@@ -142,8 +142,8 @@ export class MessagingCore implements IMessagingCore {
 		Application.android.once('activityCreated', register);
 
 		Application.android.on('activityDestroyed', (args) => {
-			const activity = args.activity;
-			if (lastActivity && activity === lastActivity) {
+			const activity = lastActivity?.get?.();
+			if (activity && args.activity === activity) {
 				requestPermissionLauncher?.unregister?.();
 				lastActivity = undefined;
 				Application.android.once('activityCreated', register);
