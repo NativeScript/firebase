@@ -1,3 +1,12 @@
+## [2.3.4](https://github.com/nativescript/firebase/compare/2.3.3...2.3.4) (2022-09-04)
+
+
+### Bug Fixes
+
+* **messaging:** promise resolve ([0db80d4](https://github.com/nativescript/firebase/commit/0db80d4069257b9f809f0315e0beef39f6649b3e))
+
+
+
 ## [2.3.3](https://github.com/nativescript/firebase/compare/2.3.2...2.3.3) (2022-09-03)
 
 
