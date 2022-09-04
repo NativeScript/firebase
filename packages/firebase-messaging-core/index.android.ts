@@ -54,7 +54,7 @@ const onNotificationTapCallbacks: Set<(message: any) => void> = new Set();
 
 let lastActivity: WeakRef<androidx.appcompat.app.AppCompatActivity>;
 let requestPermissionLauncher: androidx.activity.result.ActivityResultLauncher<any>;
-let _resolve;
+let _permissionQueue: { resolve: Function; reject: Function }[] = [];
 
 function register(args: any) {
 	if (!lastActivity) {
@@ -63,8 +63,10 @@ function register(args: any) {
 			new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
 			new androidx.activity.result.ActivityResultCallback({
 				onActivityResult(isGranted: boolean) {
-					_resolve?.(isGranted ? 0 : 1);
-					_resolve = undefined;
+					_permissionQueue.forEach((callback) => {
+						callback.resolve(isGranted ? 0 : 1);
+					});
+					_permissionQueue.splice(0);
 				},
 			})
 		);
@@ -307,7 +309,10 @@ export class MessagingCore implements IMessagingCore {
 
 			return new Promise((resolve, reject) => {
 				const launch = (activity) => {
-					_resolve = resolve;
+					_permissionQueue.push({
+						resolve,
+						reject,
+					});
 					requestPermissionLauncher.launch((android as any).Manifest.permission.POST_NOTIFICATIONS);
 				};
 
