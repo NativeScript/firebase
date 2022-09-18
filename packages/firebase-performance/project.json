@@ -1,5 +1,5 @@
 {
-	"root": "packages/firebase-performance",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "packages/firebase-performance",
 	"targets": {

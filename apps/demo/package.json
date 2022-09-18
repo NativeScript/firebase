@@ -26,7 +26,7 @@
 		"@nativescript/firebase-messaging-core": "file:../../packages/firebase-messaging-core"
 	},
 	"devDependencies": {
-		"@nativescript/android": "~8.2.0",
-		"@nativescript/ios": "~8.2.3"
+		"@nativescript/android": "~8.3.0",
+		"@nativescript/ios": "~8.3.0"
 	}
 }

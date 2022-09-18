@@ -37,10 +37,10 @@
 			"@nativescript/firebase-in-app-messaging": ["packages/firebase-in-app-messaging/index.d.ts"],
 			"@nativescript/firebase-installations": ["packages/firebase-installations/index.d.ts"],
 			"@nativescript/firebase-messaging": ["packages/firebase-messaging/index.d.ts"],
+			"@nativescript/firebase-messaging-core": ["packages/firebase-messaging-core/index.d.ts"],
 			"@nativescript/firebase-performance": ["packages/firebase-performance/index.d.ts"],
 			"@nativescript/firebase-remote-config": ["packages/firebase-remote-config/index.d.ts"],
-			"@nativescript/firebase-storage": ["packages/firebase-storage/index.d.ts"],
-			"@nativescript/firebase-messaging-core": ["packages/firebase-messaging-core/index.d.ts"]
+			"@nativescript/firebase-storage": ["packages/firebase-storage/index.d.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

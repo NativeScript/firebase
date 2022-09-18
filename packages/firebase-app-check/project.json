@@ -1,5 +1,5 @@
 {
-	"root": "packages/firebase-app-check",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "packages/firebase-app-check",
 	"targets": {
