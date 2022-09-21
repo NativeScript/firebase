@@ -1,3 +1,12 @@
+# [2.4.0-alpha.0](https://github.com/nativescript/firebase/compare/2.3.4...2.4.0-alpha.0) (2022-09-21)
+
+
+### Features
+
+* upgrade dependencies ([6b44588](https://github.com/nativescript/firebase/commit/6b445886e35fa91f3f3875080f4a5f1d65675483)), closes [#131](https://github.com/nativescript/firebase/issues/131) [#130](https://github.com/nativescript/firebase/issues/130) [#129](https://github.com/nativescript/firebase/issues/129) [#127](https://github.com/nativescript/firebase/issues/127) [#123](https://github.com/nativescript/firebase/issues/123) [#51](https://github.com/nativescript/firebase/issues/51)
+
+
+
 ## [2.3.4](https://github.com/nativescript/firebase/compare/2.3.3...2.3.4) (2022-09-04)
 
 
