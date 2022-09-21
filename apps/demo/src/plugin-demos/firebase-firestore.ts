@@ -14,7 +14,35 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 	}
 
 	testIt(): void {
+		this.issue_51();
 		Promise.all([this.init(), this.invalid_field_path()]);
+	}
+
+	issue_51() {
+		const doc = firebase().firestore().collection('users').doc('0Myq8dlF1dQtC7tX4WlA');
+
+		doc.onSnapshot({
+			next(snapshot) {
+				console.log('onSnapshot', 'object');
+			},
+		});
+
+		doc.onSnapshot(
+			{ includeMetadataChanges: true },
+			{
+				next(snapshot) {
+					console.log('onSnapshot', 'options', '&', 'object');
+				},
+			}
+		);
+
+		doc.onSnapshot((doc) => {
+			console.log('onSnapshot', '&', 'function');
+		});
+
+		doc.onSnapshot({ includeMetadataChanges: true }, (doc) => {
+			console.log('onSnapshot', 'options', '&', 'function');
+		});
 	}
 
 	async init() {
