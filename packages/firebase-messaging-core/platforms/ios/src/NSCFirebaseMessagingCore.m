@@ -56,7 +56,7 @@ StringCallback OnTokenCallback = nil;
       [token appendFormat:@"%02.2hhX", data[i]];
     }
 
-    return token;
+    return [token copy];
 }
 @end
 

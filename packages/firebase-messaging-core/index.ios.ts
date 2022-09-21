@@ -42,8 +42,8 @@ function deserialize(data: any): any {
 }
 
 export class MessagingCore implements IMessagingCore {
-	#APNSToken;
-	#onMessage(message: any) {
+	_APNSToken;
+	_onMessage(message: any) {
 		if (onMessageCallbacks.size > 0) {
 			const msg = deserialize(message);
 			onMessageCallbacks.forEach((cb) => {
@@ -51,15 +51,15 @@ export class MessagingCore implements IMessagingCore {
 			});
 		}
 	}
-	#onToken(token: string) {
-		this.#APNSToken = token;
+	_onToken(token: string) {
+		this._APNSToken = token;
 		if (onTokenCallbacks.size > 0) {
 			onTokenCallbacks.forEach((cb) => {
 				cb(token);
 			});
 		}
 	}
-	#onNotificationTap(message: any) {
+	_onNotificationTap(message: any) {
 		if (onNotificationTapCallbacks.size > 0) {
 			const msg = deserialize(message);
 			onNotificationTapCallbacks.forEach((cb) => {
@@ -68,20 +68,20 @@ export class MessagingCore implements IMessagingCore {
 		}
 	}
 
-	static #onResumeQueue = [];
+	static _onResumeQueue = [];
 	static addToResumeQueue(callback: () => void) {
 		if (typeof callback !== 'function') {
 			return;
 		}
-		MessagingCore.#onResumeQueue.push(callback);
+		MessagingCore._onResumeQueue.push(callback);
 	}
-	static #inForeground = false;
-	static #appDidLaunch = false;
+	static _inForeground = false;
+	static _appDidLaunch = false;
 	static get inForeground() {
-		return MessagingCore.#inForeground;
+		return MessagingCore._inForeground;
 	}
 	static get appDidLaunch() {
-		return MessagingCore.#appDidLaunch;
+		return MessagingCore._appDidLaunch;
 	}
 
 	constructor() {
@@ -91,26 +91,26 @@ export class MessagingCore implements IMessagingCore {
 		defaultInstance = this;
 
 		Application.on('launch', (args) => {
-			MessagingCore.#onResumeQueue.forEach((callback) => {
+			MessagingCore._onResumeQueue.forEach((callback) => {
 				callback();
 			});
-			MessagingCore.#onResumeQueue.splice(0);
+			MessagingCore._onResumeQueue.splice(0);
 		});
 
 		Application.on('resume', (args) => {
-			MessagingCore.#inForeground = true;
-			MessagingCore.#appDidLaunch = true;
+			MessagingCore._inForeground = true;
+			MessagingCore._appDidLaunch = true;
 		});
 
 		Application.on('suspend', (args) => {
-			MessagingCore.#inForeground = false;
+			MessagingCore._inForeground = false;
 		});
 
-		NSCFirebaseMessagingCore.onMessageCallback = this.#onMessage.bind(this);
+		NSCFirebaseMessagingCore.onMessageCallback = this._onMessage.bind(this);
 
-		NSCFirebaseMessagingCore.onTokenCallback = this.#onToken.bind(this);
+		NSCFirebaseMessagingCore.onTokenCallback = this._onToken.bind(this);
 
-		NSCFirebaseMessagingCore.onNotificationTapCallback = this.#onNotificationTap.bind(this);
+		NSCFirebaseMessagingCore.onNotificationTapCallback = this._onNotificationTap.bind(this);
 	}
 
 	static getInstance() {
@@ -128,25 +128,13 @@ export class MessagingCore implements IMessagingCore {
 		NSCFirebaseMessagingCore.showNotificationsWhenInForeground = value;
 	}
 
-	get _onMessage() {
-		return this.#onMessage;
-	}
-
-	get _onNotificationTap() {
-		return this.#onNotificationTap;
-	}
-
-	get _onToken() {
-		return this.#onToken;
-	}
-
 	getCurrentToken(): Promise<string> {
 		return new Promise((resolve, reject) => {
 			if (!TNSFirebaseCore.isSimulator() && !UIApplication.sharedApplication.registeredForRemoteNotifications) {
 				reject(new Error('You must be registered for remote messages before calling getToken, see MessagingCore.getInstance().registerDeviceForRemoteMessages()'));
 				return;
 			}
-			if (!this.#APNSToken) {
+			if (!this._APNSToken) {
 				reject(new Error('No token found'));
 				return;
 			}
@@ -155,7 +143,7 @@ export class MessagingCore implements IMessagingCore {
 	}
 
 	getAPNSToken() {
-		return NSCFirebaseMessagingCore.APNSTokenToString(this.#APNSToken);
+		return this._APNSToken;
 	}
 
 	_hasPermission(resolve, reject) {

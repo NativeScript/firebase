@@ -23,19 +23,19 @@ Object.defineProperty(fb, 'storage', {
 });
 
 export class TaskSnapshot implements ITaskSnapshot {
-	#native: com.google.firebase.storage.FileDownloadTask.TaskSnapshot | com.google.firebase.storage.UploadTask.TaskSnapshot;
+	_native: com.google.firebase.storage.FileDownloadTask.TaskSnapshot | com.google.firebase.storage.UploadTask.TaskSnapshot;
 
 	static fromNative(value: com.google.firebase.storage.FileDownloadTask.TaskSnapshot | com.google.firebase.storage.UploadTask.TaskSnapshot) {
 		if (value instanceof com.google.firebase.storage.FileDownloadTask.TaskSnapshot || value instanceof com.google.firebase.storage.UploadTask.TaskSnapshot) {
 			const ss = new TaskSnapshot();
-			ss.#native = value;
+			ss._native = value;
 			return ss;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -77,19 +77,19 @@ export class TaskSnapshot implements ITaskSnapshot {
 }
 
 export class Task implements ITask {
-	#native: com.google.firebase.storage.FileDownloadTask | com.google.firebase.storage.UploadTask;
+	_native: com.google.firebase.storage.FileDownloadTask | com.google.firebase.storage.UploadTask;
 
 	static fromNative(value: com.google.firebase.storage.FileDownloadTask | com.google.firebase.storage.UploadTask) {
 		if (value instanceof com.google.firebase.storage.FileDownloadTask || value instanceof com.google.firebase.storage.UploadTask) {
 			const task = new Task();
-			task.#native = value;
+			task._native = value;
 			return task;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -162,19 +162,19 @@ export class Task implements ITask {
 }
 
 export class ListResult implements IListResult {
-	#native: com.google.firebase.storage.ListResult;
+	_native: com.google.firebase.storage.ListResult;
 
 	static fromNative(value: com.google.firebase.storage.ListResult) {
 		if (value instanceof com.google.firebase.storage.ListResult) {
 			const list = new ListResult();
-			list.#native = value;
+			list._native = value;
 			return list;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -207,28 +207,28 @@ export class ListResult implements IListResult {
 }
 
 export class Metadata implements IMetadata {
-	#native: com.google.firebase.storage.StorageMetadata;
-	#builder: com.google.firebase.storage.StorageMetadata.Builder;
+	_native: com.google.firebase.storage.StorageMetadata;
+	_builder: com.google.firebase.storage.StorageMetadata.Builder;
 
 	constructor() {
-		this.#builder = new com.google.firebase.storage.StorageMetadata.Builder();
+		this._builder = new com.google.firebase.storage.StorageMetadata.Builder();
 	}
 
 	static fromNative(value: com.google.firebase.storage.StorageMetadata) {
 		if (value instanceof com.google.firebase.storage.StorageMetadata) {
 			const meta = new Metadata();
-			meta.#native = value;
-			meta.#builder = null;
+			meta._native = value;
+			meta._builder = null;
 			return meta;
 		}
 		return null;
 	}
 
 	get native() {
-		if (this.#builder) {
-			this.#native = this.#builder.build();
+		if (this._builder) {
+			this._native = this._builder.build();
 		}
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -244,18 +244,18 @@ export class Metadata implements IMetadata {
 	}
 
 	private _createBuilder() {
-		if (this.#native) {
-			this.#builder = new com.google.firebase.storage.StorageMetadata.Builder(this.#native);
+		if (this._native) {
+			this._builder = new com.google.firebase.storage.StorageMetadata.Builder(this._native);
 		} else {
-			this.#builder = new com.google.firebase.storage.StorageMetadata.Builder();
+			this._builder = new com.google.firebase.storage.StorageMetadata.Builder();
 		}
 	}
 
 	set cacheControl(value) {
-		if (!this.#builder) {
+		if (!this._builder) {
 			this._createBuilder();
 		}
-		this.#builder.setCacheControl?.(value);
+		this._builder.setCacheControl?.(value);
 	}
 
 	get contentDisposition(): string {
@@ -263,10 +263,10 @@ export class Metadata implements IMetadata {
 	}
 
 	set contentDisposition(value) {
-		if (!this.#builder) {
+		if (!this._builder) {
 			this._createBuilder();
 		}
-		this.#builder.setContentDisposition?.(value);
+		this._builder.setContentDisposition?.(value);
 	}
 
 	get contentEncoding(): string {
@@ -274,10 +274,10 @@ export class Metadata implements IMetadata {
 	}
 
 	set contentEncoding(value) {
-		if (!this.#builder) {
+		if (!this._builder) {
 			this._createBuilder();
 		}
-		this.#builder.setContentEncoding?.(value);
+		this._builder.setContentEncoding?.(value);
 	}
 
 	get contentLanguage(): string {
@@ -285,10 +285,10 @@ export class Metadata implements IMetadata {
 	}
 
 	set contentLanguage(value) {
-		if (!this.#builder) {
+		if (!this._builder) {
 			this._createBuilder();
 		}
-		this.#builder.setContentLanguage?.(value);
+		this._builder.setContentLanguage?.(value);
 	}
 
 	get contentType(): string {
@@ -296,10 +296,10 @@ export class Metadata implements IMetadata {
 	}
 
 	set contentType(value) {
-		if (!this.#builder) {
+		if (!this._builder) {
 			this._createBuilder();
 		}
-		this.#builder.setContentType?.(value);
+		this._builder.setContentType?.(value);
 	}
 
 	get customMetadata(): { [key: string]: string } {
@@ -312,11 +312,11 @@ export class Metadata implements IMetadata {
 	}
 
 	set customMetadata(value) {
-		if (!this.#builder) {
+		if (!this._builder) {
 			this._createBuilder();
 		}
 		try {
-			org.nativescript.firebase.storage.FirebaseStorage.StorageMetadata.setCustomMetadata(this.#builder, JSON.stringify(value));
+			org.nativescript.firebase.storage.FirebaseStorage.StorageMetadata.setCustomMetadata(this._builder, JSON.stringify(value));
 		} catch (e) {}
 	}
 
@@ -362,19 +362,19 @@ export class Metadata implements IMetadata {
 }
 
 export class Reference implements IReference {
-	#native: com.google.firebase.storage.StorageReference;
+	_native: com.google.firebase.storage.StorageReference;
 
 	static fromNative(value: com.google.firebase.storage.StorageReference) {
 		if (value instanceof com.google.firebase.storage.StorageReference) {
 			const ref = new Reference();
-			ref.#native = value;
+			ref._native = value;
 			return ref;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -563,32 +563,32 @@ export class Reference implements IReference {
 }
 
 export class Storage implements IStorage {
-	#native: com.google.firebase.storage.FirebaseStorage;
-	#app: FirebaseApp;
+	_native: com.google.firebase.storage.FirebaseStorage;
+	_app: FirebaseApp;
 
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = com.google.firebase.storage.FirebaseStorage.getInstance(app.native);
+			this._native = com.google.firebase.storage.FirebaseStorage.getInstance(app.native);
 		} else {
 			if (defaultStorage) {
 				return defaultStorage;
 			}
 			defaultStorage = this;
-			this.#native = com.google.firebase.storage.FirebaseStorage.getInstance();
+			this._native = com.google.firebase.storage.FirebaseStorage.getInstance();
 		}
 	}
 
 	static fromNative(storage: com.google.firebase.storage.FirebaseStorage) {
 		if (storage instanceof com.google.firebase.storage.FirebaseStorage) {
 			const store = new Storage();
-			store.#native = storage;
+			store._native = storage;
 			return store;
 		}
 		return null;
 	}
 
 	useEmulator(host: string, port: number) {
-		this.native.useEmulator(host === 'localhost' ? '10.0.2.2' : host, port);
+		this.native.useEmulator(host === 'localhost' || host === '127.0.0.1' ? '10.0.2.2' : host, port);
 	}
 
 	ref(path?: string): Reference {
@@ -600,7 +600,7 @@ export class Storage implements IStorage {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -608,11 +608,11 @@ export class Storage implements IStorage {
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	get maxDownloadRetryTime(): number {

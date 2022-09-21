@@ -54,6 +54,12 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
             var message = parseNotification(response.notification)
             message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
             NSCFirebaseMessagingCore.onNotificationTapCallback?(message)
+        }else {
+            if((response.notification.request.trigger as? UNPushNotificationTrigger) != nil){
+                var message = remoteNotification
+                message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
+                NSCFirebaseMessagingCore.onNotificationTapCallback?(message)
+            }
         }
         
         if (NSCUNUserNotificationCenterDelegate.originalNotificationCenterDelegate != nil && NSCUNUserNotificationCenterDelegate.originalDelegateRespondsTo.didReceiveNotificationResponse) {
@@ -80,6 +86,16 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
                 message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
             }
             completionHandler(options)
+            return
+        }else {
+            if((notification.request.trigger as? UNPushNotificationTrigger) != nil){
+                
+                var message = notification.request.content.userInfo
+                message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
+                NSCFirebaseMessagingCore.onMessageCallback?(message)
+                completionHandler(options)
+                return
+            }
         }
         
         if (NSCUNUserNotificationCenterDelegate.originalNotificationCenterDelegate != nil && NSCUNUserNotificationCenterDelegate.originalDelegateRespondsTo.willPresentNotification) {

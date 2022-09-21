@@ -16,67 +16,67 @@ Object.defineProperty(fb, 'dynamicLinks', {
 });
 
 export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsParameters {
-	#builder: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters.Builder;
-	#native: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters;
+	_builder: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters.Builder;
+	_native: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters;
 
 	constructor() {
-		this.#builder = new com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters.Builder();
+		this._builder = new com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters.Builder();
 	}
 
 	static fromNative(link: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters) {
 		if (link instanceof com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters) {
 			const result = new DynamicLinkAnalyticsParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
 	}
 
 	get campaign(): undefined | string {
-		return this.#builder.getCampaign();
+		return this._builder.getCampaign();
 	}
 
 	set campaign(value) {
-		this.#builder.setCampaign(value);
+		this._builder.setCampaign(value);
 	}
 
 	get content(): undefined | string {
-		return this.#builder.getContent();
+		return this._builder.getContent();
 	}
 
 	set content(value) {
-		this.#builder.setContent(value);
+		this._builder.setContent(value);
 	}
 
 	get medium(): undefined | string {
-		return this.#builder.getMedium();
+		return this._builder.getMedium();
 	}
 
 	set medium(value) {
-		this.#builder.setMedium(value);
+		this._builder.setMedium(value);
 	}
 
 	get source(): undefined | string {
-		return this.#builder.getSource();
+		return this._builder.getSource();
 	}
 
 	set source(value) {
-		this.#builder.setSource(value);
+		this._builder.setSource(value);
 	}
 
 	get term(): undefined | string {
-		return this.#builder.getTerm();
+		return this._builder.getTerm();
 	}
 
 	set term(value) {
-		this.#builder.setTerm(value);
+		this._builder.setTerm(value);
 	}
 
 	get native() {
-		if (!this.#native) {
-			return this.#builder.build();
+		if (!this._native) {
+			return this._builder.build();
 		}
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -84,50 +84,50 @@ export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsPara
 }
 
 export class DynamicLinkAndroidParameters implements IDynamicLinkAndroidParameters {
-	#builder: com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters.Builder;
-	#native: com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters;
-	#packageName: string;
+	_builder: com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters.Builder;
+	_native: com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters;
+	_packageName: string;
 	constructor(packageName?: string) {
 		const name = packageName || (Application.android.foregroundActivity || Application.android.startActivity).getPackageName?.();
-		this.#packageName = name;
-		this.#builder = new com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters.Builder(name);
+		this._packageName = name;
+		this._builder = new com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters.Builder(name);
 	}
 
 	static fromNative(link: com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters) {
 		if (link instanceof com.google.firebase.dynamiclinks.DynamicLink.AndroidParameters) {
 			const result = new DynamicLinkAndroidParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
 	}
 	get fallbackUrl(): string {
-		return this.#builder.getFallbackUrl().toString();
+		return this._builder.getFallbackUrl().toString();
 	}
 
 	set fallbackUrl(value) {
 		try {
-			this.#builder.setFallbackUrl(android.net.Uri.parse(value));
+			this._builder.setFallbackUrl(android.net.Uri.parse(value));
 		} catch (error) {}
 	}
 
 	get minimumVersion() {
-		return this.#builder.getMinimumVersion();
+		return this._builder.getMinimumVersion();
 	}
 
 	set minimumVersion(value) {
-		this.#builder.setMinimumVersion(value);
+		this._builder.setMinimumVersion(value);
 	}
 
 	get packageName(): string {
-		return this.#packageName;
+		return this._packageName;
 	}
 
 	get native() {
-		if (!this.#native) {
-			return this.#builder.build();
+		if (!this._native) {
+			return this._builder.build();
 		}
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -135,82 +135,82 @@ export class DynamicLinkAndroidParameters implements IDynamicLinkAndroidParamete
 }
 
 export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
-	#builder: com.google.firebase.dynamiclinks.DynamicLink.IosParameters.Builder;
-	#native: com.google.firebase.dynamiclinks.DynamicLink.IosParameters;
-	#bundleId: string;
+	_builder: com.google.firebase.dynamiclinks.DynamicLink.IosParameters.Builder;
+	_native: com.google.firebase.dynamiclinks.DynamicLink.IosParameters;
+	_bundleId: string;
 	constructor(bundleId?: string) {
-		this.#bundleId = bundleId;
-		this.#native = new com.google.firebase.dynamiclinks.DynamicLink.IosParameters.Builder(bundleId);
+		this._bundleId = bundleId;
+		this._native = new com.google.firebase.dynamiclinks.DynamicLink.IosParameters.Builder(bundleId);
 	}
 
 	static fromNative(link: com.google.firebase.dynamiclinks.DynamicLink.IosParameters) {
 		if (link instanceof com.google.firebase.dynamiclinks.DynamicLink.IosParameters) {
 			const result = new DynamicLinkIOSParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
 	}
 
 	get appStoreId(): string {
-		return this.#builder?.getAppStoreId?.();
+		return this._builder?.getAppStoreId?.();
 	}
 
 	set appStoreId(value) {
-		this.#builder?.setAppStoreId?.(value);
+		this._builder?.setAppStoreId?.(value);
 	}
 
 	get bundleId(): string {
-		return this.#bundleId;
+		return this._bundleId;
 	}
 
 	get customScheme(): string {
-		return this.#builder?.getCustomScheme?.();
+		return this._builder?.getCustomScheme?.();
 	}
 
 	set customScheme(value) {
-		this.#builder?.setCustomScheme?.(value);
+		this._builder?.setCustomScheme?.(value);
 	}
 
-	#fallbackUrl: string;
+	_fallbackUrl: string;
 	get fallbackUrl(): string {
-		return this.#fallbackUrl;
+		return this._fallbackUrl;
 	}
 
 	set fallbackUrl(value) {
 		try {
-			this.#builder?.setFallbackUrl?.(android.net.Uri.parse(value));
-			this.#fallbackUrl = value;
+			this._builder?.setFallbackUrl?.(android.net.Uri.parse(value));
+			this._fallbackUrl = value;
 		} catch (error) {}
 	}
 
 	get iPadBundleId(): string {
-		return this.#builder?.getIpadBundleId?.();
+		return this._builder?.getIpadBundleId?.();
 	}
 
 	set iPadBundleId(value) {
-		this.#builder?.setIpadBundleId?.(value);
+		this._builder?.setIpadBundleId?.(value);
 	}
 
 	get iPadFallbackUrl(): string {
-		return this.#builder?.getIpadFallbackUrl?.().toString?.();
+		return this._builder?.getIpadFallbackUrl?.().toString?.();
 	}
 
 	set iPadFallbackUrl(value) {
 		try {
-			this.#builder?.setIpadFallbackUrl?.(android.net.Uri.parse(value));
+			this._builder?.setIpadFallbackUrl?.(android.net.Uri.parse(value));
 		} catch (error) {}
 	}
 
 	get minimumVersion(): string {
-		return this.#builder?.getMinimumVersion();
+		return this._builder?.getMinimumVersion();
 	}
 
 	get native() {
-		if (!this.#native) {
-			return this.#builder.build();
+		if (!this._native) {
+			return this._builder.build();
 		}
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -219,50 +219,50 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 }
 
 export class DynamicLinkITunesParameters implements IDynamicLinkITunesParameters {
-	#builder: com.google.firebase.dynamiclinks.DynamicLink.ItunesConnectAnalyticsParameters.Builder;
-	#native: com.google.firebase.dynamiclinks.DynamicLink.ItunesConnectAnalyticsParameters;
+	_builder: com.google.firebase.dynamiclinks.DynamicLink.ItunesConnectAnalyticsParameters.Builder;
+	_native: com.google.firebase.dynamiclinks.DynamicLink.ItunesConnectAnalyticsParameters;
 
 	constructor() {
-		this.#builder = new com.google.firebase.dynamiclinks.DynamicLink.ItunesConnectAnalyticsParameters.Builder();
+		this._builder = new com.google.firebase.dynamiclinks.DynamicLink.ItunesConnectAnalyticsParameters.Builder();
 	}
 
 	static fromNative(link: com.google.firebase.dynamiclinks.DynamicLink.ItunesConnectAnalyticsParameters) {
 		if (link instanceof com.google.firebase.dynamiclinks.DynamicLink.ItunesConnectAnalyticsParameters) {
 			const result = new DynamicLinkITunesParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
 	}
 	get affiliateToken(): string {
-		return this.#builder?.getAffiliateToken?.();
+		return this._builder?.getAffiliateToken?.();
 	}
 
 	set affiliateToken(value) {
-		this.#builder?.setAffiliateToken?.(value);
+		this._builder?.setAffiliateToken?.(value);
 	}
 
 	get campaignToken(): string {
-		return this.#builder?.getCampaignToken?.();
+		return this._builder?.getCampaignToken?.();
 	}
 
 	set campaignToken(value) {
-		this.#builder?.setCampaignToken?.(value);
+		this._builder?.setCampaignToken?.(value);
 	}
 
 	get providerToken(): string {
-		return this.#builder?.getProviderToken?.();
+		return this._builder?.getProviderToken?.();
 	}
 
 	set providerToken(value) {
-		this.#builder.setProviderToken?.(value);
+		this._builder.setProviderToken?.(value);
 	}
 
 	get native() {
-		if (!this.#native) {
-			return this.#builder.build();
+		if (!this._native) {
+			return this._builder.build();
 		}
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -271,33 +271,33 @@ export class DynamicLinkITunesParameters implements IDynamicLinkITunesParameters
 }
 
 export class DynamicLinkNavigationParameters implements IDynamicLinkNavigationParameters {
-	#builder: com.google.firebase.dynamiclinks.DynamicLink.NavigationInfoParameters.Builder;
-	#native: com.google.firebase.dynamiclinks.DynamicLink.NavigationInfoParameters;
+	_builder: com.google.firebase.dynamiclinks.DynamicLink.NavigationInfoParameters.Builder;
+	_native: com.google.firebase.dynamiclinks.DynamicLink.NavigationInfoParameters;
 	constructor() {
-		this.#builder = new com.google.firebase.dynamiclinks.DynamicLink.NavigationInfoParameters.Builder();
+		this._builder = new com.google.firebase.dynamiclinks.DynamicLink.NavigationInfoParameters.Builder();
 	}
 
 	static fromNative(link: com.google.firebase.dynamiclinks.DynamicLink.NavigationInfoParameters) {
 		if (link instanceof com.google.firebase.dynamiclinks.DynamicLink.NavigationInfoParameters) {
 			const result = new DynamicLinkNavigationParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
 	}
 	get forcedRedirectEnabled(): boolean {
-		return this.#builder?.getForcedRedirectEnabled?.();
+		return this._builder?.getForcedRedirectEnabled?.();
 	}
 
 	set forcedRedirectEnabled(value) {
-		this.#builder?.setForcedRedirectEnabled?.(value);
+		this._builder?.setForcedRedirectEnabled?.(value);
 	}
 
 	get native() {
-		if (!this.#native) {
-			return this.#builder.build();
+		if (!this._native) {
+			return this._builder.build();
 		}
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -306,47 +306,47 @@ export class DynamicLinkNavigationParameters implements IDynamicLinkNavigationPa
 }
 
 export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters {
-	#builder: com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters.Builder;
-	#native: com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters;
+	_builder: com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters.Builder;
+	_native: com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters;
 	static fromNative(link: FIRDynamicLinkSocialMetaTagParameters) {
 		if (link instanceof FIRDynamicLinkSocialMetaTagParameters) {
 			const result = new DynamicLinkSocialParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
 	}
 	get descriptionText(): string {
-		return this.#builder?.getDescription?.();
+		return this._builder?.getDescription?.();
 	}
 
 	set descriptionText(value) {
-		this.#builder?.getDescription?.();
+		this._builder?.getDescription?.();
 	}
 
 	get imageUrl(): string {
-		return this.#builder?.getImageUrl?.()?.toString?.();
+		return this._builder?.getImageUrl?.()?.toString?.();
 	}
 
 	set imageUrl(value) {
 		try {
-			this.#builder?.setImageUrl?.(android.net.Uri.parse(value));
+			this._builder?.setImageUrl?.(android.net.Uri.parse(value));
 		} catch (error) {}
 	}
 
 	get title(): string {
-		return this.#builder?.getTitle?.();
+		return this._builder?.getTitle?.();
 	}
 
 	set title(value) {
-		this.#builder?.setTitle(value);
+		this._builder?.setTitle(value);
 	}
 
 	get native() {
-		if (!this.#native) {
-			return this.#builder.build();
+		if (!this._native) {
+			return this._builder.build();
 		}
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -355,16 +355,14 @@ export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters
 }
 
 export class DynamicLinkParameters implements IDynamicLinkParameters {
-	#native: com.google.firebase.dynamiclinks.DynamicLink.Builder;
-	#shortLinkType: ShortLinkType;
-	get _shortLinkType() {
-		return this.#shortLinkType;
-	}
+	_native: com.google.firebase.dynamiclinks.DynamicLink.Builder;
+	_shortLinkType: ShortLinkType;
+
 	static fromNative(link: com.google.firebase.dynamiclinks.DynamicLink.Builder, shortLinkType = undefined) {
 		if (link instanceof com.google.firebase.dynamiclinks.DynamicLink.Builder) {
 			const result = new DynamicLinkParameters();
-			result.#native = link;
-			result.#shortLinkType = shortLinkType;
+			result._native = link;
+			result._shortLinkType = shortLinkType;
 			return result;
 		}
 		return null;
@@ -380,7 +378,7 @@ export class DynamicLinkParameters implements IDynamicLinkParameters {
 	social: DynamicLinkSocialParameters;
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	_build() {
@@ -411,11 +409,11 @@ export class DynamicLinkParameters implements IDynamicLinkParameters {
 }
 
 export class DynamicLink implements IDynamicLink {
-	#native: com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+	_native: com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 	static fromNative(link: com.google.firebase.dynamiclinks.PendingDynamicLinkData) {
 		if (link instanceof com.google.firebase.dynamiclinks.PendingDynamicLinkData) {
 			const result = new DynamicLink();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
@@ -432,7 +430,7 @@ export class DynamicLink implements IDynamicLink {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -448,19 +446,19 @@ export class DynamicLink implements IDynamicLink {
 }
 
 export class DynamicLinks implements IDynamicLinks {
-	#native: com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
-	#app: FirebaseApp;
+	_native: com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+	_app: FirebaseApp;
 	static _onLink: (link: DynamicLink) => void;
-	static #didInit = false;
-	static #callback: org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>;
+	static _didInit = false;
+	static _callback: org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>;
 	constructor() {
 		if (defaultDynamicLinks) {
 			return defaultDynamicLinks;
 		}
 		defaultDynamicLinks = this;
 
-		if (!DynamicLinks.#didInit) {
-			DynamicLinks.#callback = new org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>({
+		if (!DynamicLinks._didInit) {
+			DynamicLinks._callback = new org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>({
 				onSuccess(param0) {
 					if (typeof DynamicLinks._onLink === 'function') {
 						DynamicLinks._onLink(DynamicLink.fromNative(param0));
@@ -472,9 +470,9 @@ export class DynamicLinks implements IDynamicLinks {
 			});
 
 			Application.android.on(AndroidApplication.activityNewIntentEvent, (data: AndroidActivityNewIntentEventData) => {
-				org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.onNewIntent(com.google.firebase.dynamiclinks.FirebaseDynamicLinks.getInstance(), data.intent, DynamicLinks.#callback);
+				org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.onNewIntent(com.google.firebase.dynamiclinks.FirebaseDynamicLinks.getInstance(), data.intent, DynamicLinks._callback);
 			});
-			DynamicLinks.#didInit = true;
+			DynamicLinks._didInit = true;
 		}
 	}
 
@@ -536,20 +534,20 @@ export class DynamicLinks implements IDynamicLinks {
 	}
 
 	get native() {
-		if (!this.#native) {
-			this.#native = com.google.firebase.dynamiclinks.FirebaseDynamicLinks.getInstance();
+		if (!this._native) {
+			this._native = com.google.firebase.dynamiclinks.FirebaseDynamicLinks.getInstance();
 		}
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
+			this._app = FirebaseApp.fromNative(com.google.firebase.FirebaseApp.getInstance());
 		}
-		return this.#app;
+		return this._app;
 	}
 }

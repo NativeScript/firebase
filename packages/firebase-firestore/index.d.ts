@@ -75,6 +75,14 @@ export interface IGeoPoint {
 export interface ITimestamp {
 	nanoseconds: number;
 	seconds: number;
+
+	isEqual(ts: ITimestamp): boolean;
+
+	toDate(): Date;
+
+	toMillis(): number;
+
+	valueOf(): string;
 }
 
 export interface IDocumentChange<T extends DocumentData = DocumentData> {
@@ -443,6 +451,18 @@ export class Timestamp implements ITimestamp {
 	readonly seconds: number;
 
 	static fromDate(date: Date): Timestamp;
+
+	static fromMillis(milliseconds: number): Timestamp;
+
+	static now(): Timestamp;
+
+	isEqual(ts: Timestamp): boolean;
+
+	toDate(): Date;
+
+	toMillis(): number;
+
+	valueOf(): string;
 
 	readonly android: any;
 	readonly ios: any;

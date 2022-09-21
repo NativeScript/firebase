@@ -214,26 +214,26 @@ function createDictionary(field: any, value?: any, moreFieldsAndValues?: any) {
 }
 
 export class Transaction implements ITransaction {
-	#native: com.google.firebase.firestore.Transaction;
+	_native: com.google.firebase.firestore.Transaction;
 
 	static fromNative(transaction: com.google.firebase.firestore.Transaction) {
 		if (transaction instanceof com.google.firebase.firestore.Transaction) {
 			const tran = new Transaction();
-			tran.#native = transaction;
+			tran._native = transaction;
 			return tran;
 		}
 		return null;
 	}
 
 	delete<T extends DocumentData = DocumentData>(documentRef: DocumentReference): Transaction {
-		return Transaction.fromNative(this.#native.delete(documentRef.native));
+		return Transaction.fromNative(this._native.delete(documentRef.native));
 	}
 
 	get<T extends DocumentData = DocumentData>(documentRef: DocumentReference<T>): Promise<DocumentSnapshot<T>> {
 		// TODO check error returned
 		return new Promise((resolve, reject) => {
 			try {
-				resolve(DocumentSnapshot.fromNative(this.#native.get(documentRef.native)));
+				resolve(DocumentSnapshot.fromNative(this._native.get(documentRef.native)));
 			} catch (e) {
 				reject(e);
 			}
@@ -284,17 +284,17 @@ export class Transaction implements ITransaction {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 }
 
 export class SnapshotMetadata implements ISnapshotMetadata {
-	#native: com.google.firebase.firestore.SnapshotMetadata;
+	_native: com.google.firebase.firestore.SnapshotMetadata;
 
 	static fromNative(metadata: com.google.firebase.firestore.SnapshotMetadata) {
 		if (metadata instanceof com.google.firebase.firestore.SnapshotMetadata) {
 			const meta = new SnapshotMetadata();
-			meta.#native = metadata;
+			meta._native = metadata;
 			return meta;
 		}
 		return null;
@@ -316,7 +316,7 @@ export class SnapshotMetadata implements ISnapshotMetadata {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -325,12 +325,12 @@ export class SnapshotMetadata implements ISnapshotMetadata {
 }
 
 export class DocumentSnapshot<T extends DocumentData = DocumentData> implements IDocumentSnapshot<T> {
-	#native: com.google.firebase.firestore.DocumentSnapshot;
+	_native: com.google.firebase.firestore.DocumentSnapshot;
 
 	static fromNative(snapshot: com.google.firebase.firestore.DocumentSnapshot) {
 		if (snapshot instanceof com.google.firebase.firestore.DocumentSnapshot) {
 			const ss = new DocumentSnapshot();
-			ss.#native = snapshot;
+			ss._native = snapshot;
 			return ss;
 		}
 		return null;
@@ -375,7 +375,7 @@ export class DocumentSnapshot<T extends DocumentData = DocumentData> implements 
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -384,12 +384,12 @@ export class DocumentSnapshot<T extends DocumentData = DocumentData> implements 
 }
 
 export class DocumentChange implements IDocumentChange {
-	#native: com.google.firebase.firestore.DocumentChange;
+	_native: com.google.firebase.firestore.DocumentChange;
 
 	static fromNative(change: com.google.firebase.firestore.DocumentChange): DocumentChange {
 		if (change instanceof com.google.firebase.firestore.DocumentChange) {
 			const documentChange = new DocumentChange();
-			documentChange.#native = change;
+			documentChange._native = change;
 			return documentChange;
 		}
 		return null;
@@ -428,7 +428,7 @@ export class DocumentChange implements IDocumentChange {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -437,12 +437,12 @@ export class DocumentChange implements IDocumentChange {
 }
 
 export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
-	#native: com.google.firebase.firestore.Query;
+	_native: com.google.firebase.firestore.Query;
 
 	static fromNative(query: com.google.firebase.firestore.Query): Query {
 		if (query instanceof com.google.firebase.firestore.Query) {
 			const nativeQuery = new Query();
-			nativeQuery.#native = query;
+			nativeQuery._native = query;
 			return nativeQuery;
 		}
 		return null;
@@ -511,75 +511,61 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 	onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
 	onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): any {
-		const argsCount = arguments.length;
 		let listener;
-		if (argsCount === 1 && typeof options === 'object') {
-			listener = this.native.addSnapshotListener(
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (error) {
-							options?.error?.(FirebaseError.fromNative(error));
-						} else {
-							options?.complete?.();
-							options?.next?.(QuerySnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
-		}
-		if (argsCount === 1 && typeof options === 'function') {
-			listener = this.native.addSnapshotListener(
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (!error) {
-							options?.(QuerySnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
-		} else if (argsCount === 2) {
-			listener = this.native.addSnapshotListener(
-				com.google.firebase.firestore.MetadataChanges.INCLUDE,
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (error) {
-							onNext?.error?.(FirebaseError.fromNative(error));
-						} else {
-							onNext?.complete?.();
-							onNext?.next?.(QuerySnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
-		} else if (argsCount === 3) {
-			listener = this.native.addSnapshotListener(
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (error) {
-							onNext?.(FirebaseError.fromNative(error));
-						} else {
-							onError?.();
-							options?.(QuerySnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
-		} else if (argsCount === 4) {
-			listener = this.native.addSnapshotListener(
-				com.google.firebase.firestore.MetadataChanges.INCLUDE,
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (error) {
-							onError?.(FirebaseError.fromNative(error));
-						} else {
-							onCompletion?.();
-							onNext?.(QuerySnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
+		let includeMetadataChanges = com.google.firebase.firestore.MetadataChanges.EXCLUDE;
+		const argsCount = arguments.length;
+		if (typeof arguments[0] === 'object') {
+			if (typeof options?.includeMetadataChanges === 'boolean') {
+				includeMetadataChanges = com.google.firebase.firestore.MetadataChanges.INCLUDE;
+			}
 		}
 
+		listener = this.native.addSnapshotListener(
+			includeMetadataChanges,
+			new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
+				onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
+					if (argsCount > 1) {
+						if (typeof options === 'object') {
+							if (typeof onNext === 'object') {
+								if (error) {
+									onNext?.error?.(FirebaseError.fromNative(error));
+								} else {
+									onNext?.complete?.();
+									onNext?.next?.(QuerySnapshot.fromNative(ss));
+								}
+							} else {
+								if (error) {
+									onError?.(FirebaseError.fromNative(error));
+								} else {
+									onCompletion?.();
+									onNext?.(QuerySnapshot.fromNative(ss));
+								}
+							}
+						} else {
+							if (error) {
+								onError?.(FirebaseError.fromNative(error));
+							} else {
+								onCompletion?.();
+								onNext?.(QuerySnapshot.fromNative(ss));
+							}
+						}
+					} else {
+						if (typeof arguments[1] === 'function') {
+							if (!error) {
+								onNext?.(QuerySnapshot.fromNative(ss));
+							}
+						} else {
+							if (error) {
+								options?.error?.(FirebaseError.fromNative(error));
+							} else {
+								options?.complete?.();
+								options?.next?.(QuerySnapshot.fromNative(ss));
+							}
+						}
+					}
+				},
+			})
+		);
 		return () => listener?.remove?.();
 	}
 
@@ -692,7 +678,7 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -701,19 +687,19 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 }
 
 export class QueryDocumentSnapshot<T extends DocumentData = DocumentData> extends DocumentSnapshot<T> implements IQueryDocumentSnapshot<T> {
-	#native: com.google.firebase.firestore.DocumentSnapshot;
+	_native: com.google.firebase.firestore.DocumentSnapshot;
 
 	static fromNative(snapshot: com.google.firebase.firestore.DocumentSnapshot) {
 		if (snapshot instanceof com.google.firebase.firestore.DocumentSnapshot) {
 			const ss = new QueryDocumentSnapshot();
-			ss.#native = snapshot;
+			ss._native = snapshot;
 			return ss;
 		}
 		return null;
 	}
 
 	data() {
-		return deserializeField(this.#native.getData());
+		return deserializeField(this._native.getData());
 	}
 
 	get<fieldType extends DocumentFieldType>(fieldPath: string | number | FieldPath): fieldType {
@@ -725,7 +711,7 @@ export class QueryDocumentSnapshot<T extends DocumentData = DocumentData> extend
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -734,12 +720,12 @@ export class QueryDocumentSnapshot<T extends DocumentData = DocumentData> extend
 }
 
 export class QuerySnapshot implements IQuerySnapshot {
-	#native: com.google.firebase.firestore.QuerySnapshot;
+	_native: com.google.firebase.firestore.QuerySnapshot;
 
 	static fromNative(snapshot: com.google.firebase.firestore.QuerySnapshot) {
 		if (snapshot instanceof com.google.firebase.firestore.QuerySnapshot) {
 			const ss = new QuerySnapshot();
-			ss.#native = snapshot;
+			ss._native = snapshot;
 			return ss;
 		}
 		return null;
@@ -808,7 +794,7 @@ export class QuerySnapshot implements IQuerySnapshot {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -817,12 +803,12 @@ export class QuerySnapshot implements IQuerySnapshot {
 }
 
 export class CollectionReference<T extends DocumentData = DocumentData> extends Query<T> implements ICollectionReference<T> {
-	#native: com.google.firebase.firestore.CollectionReference;
+	_native: com.google.firebase.firestore.CollectionReference;
 
 	static fromNative(collection: com.google.firebase.firestore.CollectionReference) {
 		if (collection instanceof com.google.firebase.firestore.CollectionReference) {
 			const nativeCollection = new CollectionReference();
-			nativeCollection.#native = collection;
+			nativeCollection._native = collection;
 			return nativeCollection;
 		}
 		return null;
@@ -870,7 +856,7 @@ export class CollectionReference<T extends DocumentData = DocumentData> extends 
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -879,12 +865,12 @@ export class CollectionReference<T extends DocumentData = DocumentData> extends 
 }
 
 export class DocumentReference<T extends DocumentData = DocumentData> implements IDocumentReference<T> {
-	#native: com.google.firebase.firestore.DocumentReference;
+	_native: com.google.firebase.firestore.DocumentReference;
 
 	static fromNative(document: com.google.firebase.firestore.DocumentReference) {
 		if (document instanceof com.google.firebase.firestore.DocumentReference) {
 			const doc = new DocumentReference();
-			doc.#native = document;
+			doc._native = document;
 			return doc;
 		}
 		return null;
@@ -962,62 +948,60 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
 	onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any) {
 		let listener;
+		let includeMetadataChanges = com.google.firebase.firestore.MetadataChanges.EXCLUDE;
 		const argsCount = arguments.length;
-		if (argsCount === 1 && typeof options === 'object') {
-			listener = this.native.addSnapshotListener(
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (error) {
-							options?.error?.(FirebaseError.fromNative(error));
-						} else {
-							options?.complete?.();
-							options?.next?.(DocumentSnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
-		} else if (argsCount === 2) {
-			listener = this.native.addSnapshotListener(
-				com.google.firebase.firestore.MetadataChanges.INCLUDE,
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (error) {
-							onNext?.error?.(FirebaseError.fromNative(error));
-						} else {
-							onNext?.complete?.();
-							onNext?.next?.(DocumentSnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
-		} else if (argsCount === 3) {
-			listener = this.native.addSnapshotListener(
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (error) {
-							onNext?.(FirebaseError.fromNative(error));
-						} else {
-							onError?.();
-							options?.(DocumentSnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
-		} else if (argsCount === 4) {
-			listener = this.native.addSnapshotListener(
-				com.google.firebase.firestore.MetadataChanges.INCLUDE,
-				new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
-					onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-						if (error) {
-							onError?.(FirebaseError.fromNative(error));
-						} else {
-							onCompletion?.();
-							onNext?.(DocumentSnapshot.fromNative(ss));
-						}
-					},
-				})
-			);
+		if (typeof arguments[0] === 'object') {
+			if (typeof options?.includeMetadataChanges === 'boolean') {
+				includeMetadataChanges = com.google.firebase.firestore.MetadataChanges.INCLUDE;
+			}
 		}
+
+		listener = this.native.addSnapshotListener(
+			includeMetadataChanges,
+			new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
+				onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
+					if (argsCount > 1) {
+						if (typeof options === 'object') {
+							if (typeof onNext === 'object') {
+								if (error) {
+									onNext?.error?.(FirebaseError.fromNative(error));
+								} else {
+									onNext?.complete?.();
+									onNext?.next?.(DocumentSnapshot.fromNative(ss));
+								}
+							} else {
+								if (error) {
+									onError?.(FirebaseError.fromNative(error));
+								} else {
+									onCompletion?.();
+									onNext?.(DocumentSnapshot.fromNative(ss));
+								}
+							}
+						} else {
+							if (error) {
+								onError?.(FirebaseError.fromNative(error));
+							} else {
+								onCompletion?.();
+								onNext?.(DocumentSnapshot.fromNative(ss));
+							}
+						}
+					} else {
+						if (typeof arguments[1] === 'function') {
+							if (!error) {
+								onNext?.(DocumentSnapshot.fromNative(ss));
+							}
+						} else {
+							if (error) {
+								options?.error?.(FirebaseError.fromNative(error));
+							} else {
+								options?.complete?.();
+								options?.next?.(DocumentSnapshot.fromNative(ss));
+							}
+						}
+					}
+				},
+			})
+		);
 
 		return () => listener?.remove?.();
 	}
@@ -1152,7 +1136,7 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -1161,25 +1145,25 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 }
 
 export class FieldPath implements IFieldPath {
-	#native: com.google.firebase.firestore.FieldPath;
+	_native: com.google.firebase.firestore.FieldPath;
 
 	constructor(fieldNames: string[], native = false) {
 		if (!native) {
-			this.#native = com.google.firebase.firestore.FieldPath.of(fieldNames);
+			this._native = com.google.firebase.firestore.FieldPath.of(fieldNames);
 		}
 	}
 
 	static fromNative(field: com.google.firebase.firestore.FieldPath) {
 		if (field instanceof com.google.firebase.firestore.FieldPath) {
 			const path = new FieldPath([], true);
-			path.#native = field;
+			path._native = field;
 			return path;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -1198,12 +1182,12 @@ export class FieldPath implements IFieldPath {
 }
 
 export class FieldValue implements IFieldValue {
-	#native: com.google.firebase.firestore.FieldValue;
+	_native: com.google.firebase.firestore.FieldValue;
 
 	static fromNative(field: com.google.firebase.firestore.FieldValue) {
 		if (field instanceof com.google.firebase.firestore.FieldValue) {
 			const value = new FieldValue();
-			value.#native = field;
+			value._native = field;
 			return value;
 		}
 		return null;
@@ -1230,7 +1214,7 @@ export class FieldValue implements IFieldValue {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -1239,18 +1223,18 @@ export class FieldValue implements IFieldValue {
 }
 
 export class GeoPoint implements IGeoPoint {
-	#native: com.google.firebase.firestore.GeoPoint;
+	_native: com.google.firebase.firestore.GeoPoint;
 
 	constructor(latitude: number, longitude: number, native: boolean = false) {
 		if (!native) {
-			this.#native = new com.google.firebase.firestore.GeoPoint(latitude, longitude);
+			this._native = new com.google.firebase.firestore.GeoPoint(latitude, longitude);
 		}
 	}
 
 	static fromNative(point: com.google.firebase.firestore.GeoPoint) {
 		if (point instanceof com.google.firebase.firestore.GeoPoint) {
 			const geo = new GeoPoint(0, 0, true);
-			geo.#native = point;
+			geo._native = point;
 			return geo;
 		}
 		return null;
@@ -1265,7 +1249,7 @@ export class GeoPoint implements IGeoPoint {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -1281,40 +1265,68 @@ export class GeoPoint implements IGeoPoint {
 }
 
 export class Timestamp implements ITimestamp {
-	#native: com.google.firebase.Timestamp;
+	_native: com.google.firebase.Timestamp;
 
 	constructor(seconds: number, nanoseconds: number, native = false) {
 		if (!native) {
-			this.#native = new com.google.firebase.Timestamp(seconds, nanoseconds);
+			this._native = new com.google.firebase.Timestamp(seconds, nanoseconds);
 		}
 	}
 
 	static fromNative(timestamp: com.google.firebase.Timestamp) {
 		if (timestamp instanceof com.google.firebase.Timestamp) {
 			const ts = new Timestamp(0, 0, true);
-			ts.#native = timestamp;
+			ts._native = timestamp;
 			return ts;
 		}
 		return null;
 	}
 
-	static #dateFormat: java.text.SimpleDateFormat;
+	static _dateFormat: java.text.SimpleDateFormat;
 
 	static fromDate(date: Date) {
 		if (date instanceof Date) {
 			const ts = new Timestamp(0, 0, true);
 
-			if (!this.#dateFormat) {
+			if (!this._dateFormat) {
 				const dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 				const tz = java.util.TimeZone.getTimeZone('UTC');
 				dateFormat.setTimeZone(tz);
-				this.#dateFormat = dateFormat;
+				this._dateFormat = dateFormat;
 			}
 
-			ts.#native = new com.google.firebase.Timestamp(this.#dateFormat.parse(date.toISOString()));
+			ts._native = new com.google.firebase.Timestamp(this._dateFormat.parse(date.toISOString()));
 			return ts;
 		}
 		return null;
+	}
+
+	static fromMillis(milliseconds: number) {
+		const ts = new Timestamp(0, 0, true);
+		ts._native = new com.google.firebase.Timestamp(milliseconds / 1000, 0);
+		return ts;
+	}
+
+	static now() {
+		const ts = new Timestamp(0, 0, true);
+		ts._native = com.google.firebase.Timestamp.now();
+		return ts;
+	}
+
+	isEqual(ts: Timestamp): boolean {
+		return this.native.compareTo(ts.native) === 0;
+	}
+
+	toDate() {
+		return new Date(this._native.toDate().getTime());
+	}
+
+	toMillis() {
+		return this.native.getSeconds() * 1000;
+	}
+
+	valueOf() {
+		return this.toDate().valueOf().toString();
 	}
 
 	get nanoseconds(): number {
@@ -1326,7 +1338,7 @@ export class Timestamp implements ITimestamp {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -1342,12 +1354,12 @@ export class Timestamp implements ITimestamp {
 }
 
 export class WriteBatch implements IWriteBatch {
-	#native: com.google.firebase.firestore.WriteBatch;
+	_native: com.google.firebase.firestore.WriteBatch;
 
 	static fromNative(batch: com.google.firebase.firestore.WriteBatch) {
 		if (batch instanceof com.google.firebase.firestore.WriteBatch) {
 			const b = new WriteBatch();
-			b.#native = batch;
+			b._native = batch;
 			return b;
 		}
 		return null;
@@ -1398,7 +1410,7 @@ export class WriteBatch implements IWriteBatch {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -1425,16 +1437,16 @@ export class WriteBatch implements IWriteBatch {
 }
 
 export class Settings implements ISettings {
-	#builder: com.google.firebase.firestore.FirebaseFirestoreSettings.Builder;
+	_builder: com.google.firebase.firestore.FirebaseFirestoreSettings.Builder;
 
 	constructor() {
-		this.#builder = new com.google.firebase.firestore.FirebaseFirestoreSettings.Builder();
+		this._builder = new com.google.firebase.firestore.FirebaseFirestoreSettings.Builder();
 	}
 
 	static fromNative(ffs: com.google.firebase.firestore.FirebaseFirestoreSettings) {
 		if (ffs instanceof com.google.firebase.firestore.FirebaseFirestoreSettings) {
 			const settings = new Settings();
-			settings.#builder = new com.google.firebase.firestore.FirebaseFirestoreSettings.Builder(ffs);
+			settings._builder = new com.google.firebase.firestore.FirebaseFirestoreSettings.Builder(ffs);
 			return settings;
 		}
 		return null;
@@ -1445,33 +1457,33 @@ export class Settings implements ISettings {
 	}
 
 	set cacheSizeBytes(value) {
-		this.#builder.setCacheSizeBytes(value);
+		this._builder.setCacheSizeBytes(value);
 	}
 
 	get host(): string {
-		return this.#builder.getHost();
+		return this._builder.getHost();
 	}
 
 	set host(value) {
-		this.#builder.setHost(value);
+		this._builder.setHost(value);
 	}
 
 	ignoreUndefinedProperties: boolean;
 
 	get persistence(): boolean {
-		return this.#builder.isPersistenceEnabled();
+		return this._builder.isPersistenceEnabled();
 	}
 
 	set persistence(value) {
-		this.#builder.setPersistenceEnabled(value);
+		this._builder.setPersistenceEnabled(value);
 	}
 
 	get ssl(): boolean {
-		return this.#builder.isSslEnabled();
+		return this._builder.isSslEnabled();
 	}
 
 	set ssl(value) {
-		this.#builder.setSslEnabled(value);
+		this._builder.setSslEnabled(value);
 	}
 
 	toJSON() {
@@ -1489,17 +1501,17 @@ export class Settings implements ISettings {
 	}
 
 	get native() {
-		return this.#builder.build();
+		return this._builder.build();
 	}
 }
 
 export class Bytes implements IBytes {
-	#native: com.google.firebase.firestore.Blob;
+	_native: com.google.firebase.firestore.Blob;
 
 	static fromNative(data: com.google.firebase.firestore.Blob) {
 		if (data instanceof com.google.firebase.firestore.Blob) {
 			const blob = new Bytes();
-			blob.#native = data;
+			blob._native = data;
 			return blob;
 		}
 		return null;
@@ -1514,7 +1526,7 @@ export class Bytes implements IBytes {
 			const data = new java.lang.String(b64).getBytes('UTF-8');
 			const encoded = android.util.Base64.encode(data, android.util.Base64.NO_WRAP);
 			const bytes = new Bytes();
-			bytes.#native = com.google.firebase.firestore.Blob.fromBytes(encoded);
+			bytes._native = com.google.firebase.firestore.Blob.fromBytes(encoded);
 			return bytes;
 		}
 		return null;
@@ -1526,34 +1538,34 @@ export class Bytes implements IBytes {
 		}
 
 		const bytes = new Bytes();
-		bytes.#native = com.google.firebase.firestore.Blob.fromBytes(Array.from(array));
+		bytes._native = com.google.firebase.firestore.Blob.fromBytes(Array.from(array));
 		return bytes;
 	}
 
-	#base64: string;
+	_base64: string;
 	toBase64(): string {
-		if (!this.#base64) {
+		if (!this._base64) {
 			const data = this.native.toBytes();
-			this.#base64 = android.util.Base64.encodeToString(data, android.util.Base64.NO_WRAP);
+			this._base64 = android.util.Base64.encodeToString(data, android.util.Base64.NO_WRAP);
 		}
 
-		return this.#base64;
+		return this._base64;
 	}
 
-	#native_buffer;
-	#buffer;
+	_native_buffer;
+	_buffer;
 	toUint8Array(): Uint8Array {
-		if (!this.#native_buffer) {
-			this.#native_buffer = java.nio.ByteBuffer.wrap(this.native.toBytes());
+		if (!this._native_buffer) {
+			this._native_buffer = java.nio.ByteBuffer.wrap(this.native.toBytes());
 		}
-		if (!this.#buffer) {
-			this.#buffer = (<any>ArrayBuffer).from(this.#native_buffer);
+		if (!this._buffer) {
+			this._buffer = (<any>ArrayBuffer).from(this._native_buffer);
 		}
-		return new Uint8Array(this.#buffer);
+		return new Uint8Array(this._buffer);
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -1562,29 +1574,29 @@ export class Bytes implements IBytes {
 }
 
 export class Firestore implements IFirestore {
-	#native: com.google.firebase.firestore.FirebaseFirestore;
-	#app: FirebaseApp;
+	_native: com.google.firebase.firestore.FirebaseFirestore;
+	_app: FirebaseApp;
 
 	constructor(app?: FirebaseApp) {
 		if (app) {
-			this.#native = com.google.firebase.firestore.FirebaseFirestore.getInstance(app.native);
+			this._native = com.google.firebase.firestore.FirebaseFirestore.getInstance(app.native);
 		} else {
 			if (defaultFirestore) {
 				return defaultFirestore;
 			}
 			defaultFirestore = this;
-			this.#native = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+			this._native = com.google.firebase.firestore.FirebaseFirestore.getInstance();
 		}
 	}
 
 	useEmulator(host: string, port: number) {
-		this.native.useEmulator(host === 'localhost' ? '10.0.2.2' : host, port);
+		this.native.useEmulator(host === 'localhost' || host === '127.0.0.1' ? '10.0.2.2' : host, port);
 	}
 
 	static fromNative(store: com.google.firebase.firestore.FirebaseFirestore) {
 		if (store instanceof com.google.firebase.firestore.FirebaseFirestore) {
 			const firestore = new Firestore();
-			firestore.#native = store;
+			firestore._native = store;
 			return firestore;
 		}
 		return null;
@@ -1684,7 +1696,7 @@ export class Firestore implements IFirestore {
 	}
 
 	get settings() {
-		return Settings.fromNative(this.native?.getFirestoreSettings());
+		return Settings.fromNative(this.native?.getFirestoreSettings?.());
 	}
 
 	set settings(value) {
@@ -1726,7 +1738,7 @@ export class Firestore implements IFirestore {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -1734,10 +1746,10 @@ export class Firestore implements IFirestore {
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.getApp());
+			this._app = FirebaseApp.fromNative(this.native.getApp());
 		}
-		return this.#app;
+		return this._app;
 	}
 }

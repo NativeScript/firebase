@@ -18,19 +18,19 @@ Object.defineProperty(fb, 'appCheck', {
 });
 
 export class AppCheckToken implements IAppCheckToken {
-	#native: FIRAppCheckToken;
+	_native: FIRAppCheckToken;
 
 	static fromNative(token: FIRAppCheckToken) {
 		if (token instanceof FIRAppCheckToken) {
 			const t = new AppCheckToken();
-			t.#native = token;
+			t._native = token;
 			return t;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -47,20 +47,20 @@ export class AppCheckToken implements IAppCheckToken {
 
 let provider;
 export class AppCheck implements IAppCheck {
-	#native: FIRAppCheck;
-	#nativeApp;
-	#app: FirebaseApp;
+	_native: FIRAppCheck;
+	_nativeApp;
+	_app: FirebaseApp;
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = FIRAppCheck.appCheckWithApp(app.native);
-			this.#nativeApp = app.native;
+			this._native = FIRAppCheck.appCheckWithApp(app.native);
+			this._nativeApp = app.native;
 		} else {
 			if (defaultAppCheck) {
 				return defaultAppCheck;
 			}
 			defaultAppCheck = this;
-			this.#native = FIRAppCheck.appCheck();
-			this.#nativeApp = FIRApp.defaultApp();
+			this._native = FIRAppCheck.appCheck();
+			this._nativeApp = FIRApp.defaultApp();
 		}
 	}
 
@@ -90,16 +90,16 @@ export class AppCheck implements IAppCheck {
 		this.native.isTokenAutoRefreshEnabled = enabled;
 	}
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
 	}
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.#nativeApp);
+			this._app = FirebaseApp.fromNative(this._nativeApp);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

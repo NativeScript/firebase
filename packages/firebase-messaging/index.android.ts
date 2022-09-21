@@ -19,21 +19,21 @@ Object.defineProperty(fb, 'messaging', {
 });
 
 export class Messaging implements IMessaging {
-	#native: com.google.firebase.messaging.FirebaseMessaging;
-	#app: FirebaseApp;
+	_native: com.google.firebase.messaging.FirebaseMessaging;
+	_app: FirebaseApp;
 
-	#onMessage?: (message: RemoteMessage) => void;
-	#onNotificationTap?: (message: RemoteMessage) => void;
-	#onToken?: (token: string) => void;
+	_onMessage?: (message: RemoteMessage) => void;
+	_onNotificationTap?: (message: RemoteMessage) => void;
+	_onToken?: (token: string) => void;
 
 	showNotificationsWhenInForeground: boolean;
-	#instance: MessagingCore;
+	_instance: MessagingCore;
 	constructor() {
 		if (defaultMessaging) {
 			return defaultMessaging;
 		}
 		defaultMessaging = this;
-		this.#instance = MessagingCore.getInstance();
+		this._instance = MessagingCore.getInstance();
 	}
 
 	getToken(): Promise<string> {
@@ -57,43 +57,43 @@ export class Messaging implements IMessaging {
 	}
 
 	hasPermission(): Promise<AuthorizationStatus> {
-		return this.#instance.hasPermission() as any;
+		return this._instance.hasPermission() as any;
 	}
 
 	onMessage(listener: (message: RemoteMessage) => any) {
-		if (!listener && this.#onMessage) {
-			this.#instance.removeOnMessage(this.#onMessage);
+		if (!listener && this._onMessage) {
+			this._instance.removeOnMessage(this._onMessage);
 		} else {
-			this.#instance.addOnMessage(listener);
+			this._instance.addOnMessage(listener);
 		}
 
-		this.#onMessage = listener;
+		this._onMessage = listener;
 	}
 
 	onNotificationTap(listener: (message: RemoteMessage) => any) {
-		if (!listener && this.#onNotificationTap) {
-			this.#instance.removeOnNotificationTap(this.#onNotificationTap);
+		if (!listener && this._onNotificationTap) {
+			this._instance.removeOnNotificationTap(this._onNotificationTap);
 		} else {
-			this.#instance.addOnNotificationTap(listener);
+			this._instance.addOnNotificationTap(listener);
 		}
 
-		this.#onNotificationTap = listener;
+		this._onNotificationTap = listener;
 	}
 
 	onToken(listener: (token: string) => any) {
-		if (!listener && this.#onToken) {
-			this.#instance.removeOnToken(this.#onToken);
+		if (!listener && this._onToken) {
+			this._instance.removeOnToken(this._onToken);
 		} else {
-			this.#instance.addOnToken(listener);
+			this._instance.addOnToken(listener);
 		}
 
-		this.#onToken = listener;
+		this._onToken = listener;
 	}
 	registerDeviceForRemoteMessages(): Promise<void> {
 		return Promise.resolve();
 	}
 	requestPermission(permissions?: any): Promise<AuthorizationStatus> {
-		return this.#instance.requestPermission(permissions) as any;
+		return this._instance.requestPermission(permissions) as any;
 	}
 	subscribeToTopic(topic: string): Promise<void> {
 		return new Promise((resolve, reject) => {
@@ -156,18 +156,18 @@ export class Messaging implements IMessaging {
 		this.native?.setAutoInitEnabled?.(value);
 	}
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(FIRApp.defaultApp());
+			this._app = FirebaseApp.fromNative(FIRApp.defaultApp());
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	get native() {
-		if (!this.#native) {
-			this.#native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
+		if (!this._native) {
+			this._native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
 		}
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;

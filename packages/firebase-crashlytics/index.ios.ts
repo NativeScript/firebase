@@ -16,27 +16,27 @@ Object.defineProperty(fb, 'crashlytics', {
 
 declare const TNSFirebaseCrashlytics;
 export class Crashlytics implements ICrashlytics {
-	#native: FIRCrashlytics;
+	_native: FIRCrashlytics;
 	constructor() {
 		if (defaultCrashlytics) {
 			return defaultCrashlytics;
 		}
 		defaultCrashlytics = this;
-		this.#native = FIRCrashlytics.crashlytics();
+		this._native = FIRCrashlytics.crashlytics();
 	}
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
 	}
-	#app: FirebaseApp;
+	_app: FirebaseApp;
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	get isCrashlyticsCollectionEnabled(): boolean {

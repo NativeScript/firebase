@@ -71,19 +71,19 @@ function serializeItems(data) {
 }
 
 export class OnDisconnect implements IOnDisconnect {
-	#native: FIRDatabaseReference;
+	_native: FIRDatabaseReference;
 
 	static fromNative(disconnect: FIRDatabaseReference) {
 		if (disconnect instanceof FIRDatabaseReference) {
 			const d = new OnDisconnect();
-			d.#native = disconnect;
+			d._native = disconnect;
 			return d;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -186,19 +186,19 @@ function toFIRDataEventType(event: EventType): FIRDataEventType {
 }
 
 export class Query implements IQuery {
-	#native: FIRDatabaseQuery;
+	_native: FIRDatabaseQuery;
 
 	static fromNative(query: FIRDatabaseQuery) {
 		if (query instanceof FIRDatabaseQuery) {
 			const q = new Query();
-			q.#native = query;
+			q._native = query;
 			return q;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -237,18 +237,18 @@ export class Query implements IQuery {
 		return Query.fromNative(this.native.queryLimitedToLast(limit));
 	}
 
-	#handles: Map<(a: DataSnapshot, b: string) => void, number> = new Map();
+	_handles: Map<(a: DataSnapshot, b: string) => void, number> = new Map();
 
 	off(eventType?: EventType, callback?: (a: DataSnapshot, b: string) => void, context?: Record<string, any>): void {
 		const handle = callback?.['__fbHandle'];
 		const event = callback?.['__fbEventType'];
 		if (typeof handle === 'number' && event === eventType) {
-			if (this.#handles.has(callback)) {
+			if (this._handles.has(callback)) {
 				this.native.removeObserverWithHandle(handle);
 				callback['__fbHandle'] = undefined;
 				callback['__fbEventType'] = undefined;
 				callback['__fbContext'] = undefined;
-				this.#handles.delete(callback);
+				this._handles.delete(callback);
 			}
 		}
 	}
@@ -270,7 +270,7 @@ export class Query implements IQuery {
 		callback['__fbEventType'] = eventType;
 		callback['__fbContext'] = context;
 
-		this.#handles.set(callback, handle);
+		this._handles.set(callback, handle);
 
 		return callback;
 	}
@@ -325,20 +325,20 @@ export class Query implements IQuery {
 }
 
 export class ServerValue {
-	#native: any;
+	_native: any;
 	static timeStamp() {
 		const value = new ServerValue();
-		value.#native = FIRServerValue.timestamp();
+		value._native = FIRServerValue.timestamp();
 		return value;
 	}
 	static increment(count: number) {
 		const value = new ServerValue();
-		value.#native = FIRServerValue.increment(count);
+		value._native = FIRServerValue.increment(count);
 		return value;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -347,12 +347,12 @@ export class ServerValue {
 }
 
 export class Reference extends Query implements IReference {
-	#native: FIRDatabaseReference;
+	_native: any;
 
 	static fromNative(ref: any) {
 		if (ref instanceof FIRDatabaseReference) {
 			const reference = new Reference();
-			reference.#native = ref;
+			reference._native = ref;
 			return reference;
 		}
 		return null;
@@ -375,7 +375,7 @@ export class Reference extends Query implements IReference {
 	}
 
 	get native() {
-		return this.#native as any;
+		return this._native as any;
 	}
 
 	get ios() {
@@ -531,19 +531,19 @@ export class ThenableReference extends Reference implements IThenableReference {
 }
 
 export class DataSnapshot implements IDataSnapshot {
-	#native: FIRDataSnapshot;
+	_native: FIRDataSnapshot;
 
 	static fromNative(snapshot: FIRDataSnapshot) {
 		if (snapshot instanceof FIRDataSnapshot) {
 			const ss = new DataSnapshot();
-			ss.#native = snapshot;
+			ss._native = snapshot;
 			return ss;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -614,18 +614,18 @@ export class DataSnapshot implements IDataSnapshot {
 }
 
 export class Database implements IDatabase {
-	#native: FIRDatabase;
-	#app: FirebaseApp;
+	_native: FIRDatabase;
+	_app: FirebaseApp;
 
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = FIRDatabase.databaseForApp(app.native);
+			this._native = FIRDatabase.databaseForApp(app.native);
 		} else {
 			if (defaultDatabase) {
 				return defaultDatabase;
 			}
 			defaultDatabase = this;
-			this.#native = FIRDatabase.database();
+			this._native = FIRDatabase.database();
 		}
 	}
 
@@ -670,7 +670,7 @@ export class Database implements IDatabase {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -678,10 +678,10 @@ export class Database implements IDatabase {
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

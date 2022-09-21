@@ -37,17 +37,17 @@ function toHttpMethod(method: HttpMethod): FIRHTTPMethod {
 	}
 }
 export class HttpMetric implements IHttpMetric {
-	#native: FIRHTTPMetric;
+	_native: FIRHTTPMetric;
 	static fromUrlMethod(url: string, method: HttpMethod) {
 		if (url && method) {
 			const result = new HttpMetric();
-			result.#native = FIRHTTPMetric.alloc().initWithURLHTTPMethod(NSURL.URLWithString(url), toHttpMethod(method));
+			result._native = FIRHTTPMetric.alloc().initWithURLHTTPMethod(NSURL.URLWithString(url), toHttpMethod(method));
 			return result;
 		}
 		return null;
 	}
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -86,17 +86,17 @@ export class HttpMetric implements IHttpMetric {
 }
 
 export class Trace implements ITrace {
-	#native: FIRTrace;
+	_native: FIRTrace;
 	static fromNative(trace: FIRTrace) {
 		if (trace instanceof FIRTrace) {
 			const result = new Trace();
-			result.#native = trace;
+			result._native = trace;
 			return result;
 		}
 		return null;
 	}
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -132,15 +132,15 @@ export class Trace implements ITrace {
 }
 
 export class Performance implements IPerformance {
-	#native: FIRPerformance;
-	#app: FirebaseApp;
+	_native: FIRPerformance;
+	_app: FirebaseApp;
 
-	constructor(){
+	constructor() {
 		if (defaultPerformance) {
 			return defaultPerformance;
 		}
 		defaultPerformance = this;
-		this.#native = FIRPerformance.sharedInstance();
+		this._native = FIRPerformance.sharedInstance();
 	}
 
 	get isPerformanceCollectionEnabled(): boolean {
@@ -149,7 +149,7 @@ export class Performance implements IPerformance {
 
 	set isPerformanceCollectionEnabled(value) {
 		this.native.dataCollectionEnabled = value;
-        this.native.instrumentationEnabled = value;
+		this.native.instrumentationEnabled = value;
 	}
 
 	newHttpMetric(url: string, httpMethod: HttpMethod): HttpMetric {
@@ -166,17 +166,17 @@ export class Performance implements IPerformance {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

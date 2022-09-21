@@ -172,26 +172,26 @@ function createDictionary(field: any, value?: any, moreFieldsAndValues?: any) {
 }
 
 export class Transaction implements ITransaction {
-	#native: FIRTransaction;
+	_native: FIRTransaction;
 
 	static fromNative(transaction: FIRTransaction) {
 		if (transaction instanceof FIRTransaction) {
 			const tran = new Transaction();
-			tran.#native = transaction;
+			tran._native = transaction;
 			return tran;
 		}
 		return null;
 	}
 
 	delete<T extends DocumentData = DocumentData>(documentRef: DocumentReference): Transaction {
-		return Transaction.fromNative(this.#native.deleteDocument(documentRef.native));
+		return Transaction.fromNative(this._native.deleteDocument(documentRef.native));
 	}
 
 	get<T extends DocumentData = DocumentData>(documentRef: DocumentReference<T>): Promise<DocumentSnapshot<T>> {
 		// TODO check error returned
 		return new Promise((resolve, reject) => {
 			try {
-				resolve(DocumentSnapshot.fromNative(this.#native.getDocumentError(documentRef.native)));
+				resolve(DocumentSnapshot.fromNative(this._native.getDocumentError(documentRef.native)));
 			} catch (e) {
 				reject(e);
 			}
@@ -203,7 +203,7 @@ export class Transaction implements ITransaction {
 	update(documentRef: any, field: any, value?: any, moreFieldsAndValues?: any): Transaction {
 		const data = createDictionary(field, value, moreFieldsAndValues);
 
-		return Transaction.fromNative(this.#native.updateDataForDocument(data as any, documentRef?.native));
+		return Transaction.fromNative(this._native.updateDataForDocument(data as any, documentRef?.native));
 	}
 
 	set<T extends DocumentData = DocumentData>(documentRef: DocumentReference<T>, data: T, options?: SetOptions): Transaction {
@@ -235,17 +235,17 @@ export class Transaction implements ITransaction {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 }
 
 export class SnapshotMetadata implements ISnapshotMetadata {
-	#native: FIRSnapshotMetadata;
+	_native: FIRSnapshotMetadata;
 
 	static fromNative(metadata: FIRSnapshotMetadata) {
 		if (metadata instanceof FIRSnapshotMetadata) {
 			const meta = new SnapshotMetadata();
-			meta.#native = metadata;
+			meta._native = metadata;
 			return meta;
 		}
 		return null;
@@ -267,7 +267,7 @@ export class SnapshotMetadata implements ISnapshotMetadata {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -276,12 +276,12 @@ export class SnapshotMetadata implements ISnapshotMetadata {
 }
 
 export class DocumentSnapshot<T extends DocumentData = DocumentData> implements IDocumentSnapshot<T> {
-	#native: FIRDocumentSnapshot;
+	_native: FIRDocumentSnapshot;
 
 	static fromNative(snapshot: FIRDocumentSnapshot) {
 		if (snapshot instanceof FIRDocumentSnapshot) {
 			const ss = new DocumentSnapshot();
-			ss.#native = snapshot;
+			ss._native = snapshot;
 			return ss;
 		}
 		return null;
@@ -326,7 +326,7 @@ export class DocumentSnapshot<T extends DocumentData = DocumentData> implements 
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -335,12 +335,12 @@ export class DocumentSnapshot<T extends DocumentData = DocumentData> implements 
 }
 
 export class DocumentChange implements IDocumentChange {
-	#native: FIRDocumentChange;
+	_native: FIRDocumentChange;
 
 	static fromNative(change: FIRDocumentChange): DocumentChange {
 		if (change instanceof FIRDocumentChange) {
 			const documentChange = new DocumentChange();
-			documentChange.#native = change;
+			documentChange._native = change;
 			return documentChange;
 		}
 		return null;
@@ -379,7 +379,7 @@ export class DocumentChange implements IDocumentChange {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -388,12 +388,12 @@ export class DocumentChange implements IDocumentChange {
 }
 
 export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
-	#native: FIRQuery;
+	_native: FIRQuery;
 
 	static fromNative(query: FIRQuery): Query {
 		if (query instanceof FIRQuery) {
 			const nativeQuery = new Query();
-			nativeQuery.#native = query;
+			nativeQuery._native = query;
 			return nativeQuery;
 		}
 		return null;
@@ -458,51 +458,55 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
 	onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): any {
 		let listener;
+		let includeMetadataChanges = false;
+		let hasOptions = false;
 		const argsCount = arguments.length;
-		if (argsCount === 1 && typeof options === 'object') {
-			listener = this.native.addSnapshotListener((ss, error) => {
-				if (error) {
-					options?.error?.(FirebaseError.fromNative(error));
-				} else {
-					options?.complete?.();
-					options?.next?.(QuerySnapshot.fromNative(ss));
-				}
-			});
+		if (typeof arguments[0] === 'object') {
+			includeMetadataChanges = options.includeMetadataChanges;
+			hasOptions = true;
 		}
-		if (argsCount === 1 && typeof options === 'function') {
-			listener = this.native.addSnapshotListener((ss, error) => {
-				if (!error) {
-					options?.(QuerySnapshot.fromNative(ss));
-				}
-			});
-		} else if (argsCount === 2) {
-			listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
-				if (error) {
-					onNext?.error?.(FirebaseError.fromNative(error));
+
+		listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(includeMetadataChanges, (ss, error) => {
+			if (argsCount > 1) {
+				if (typeof options === 'object') {
+					if (typeof onNext === 'object') {
+						if (error) {
+							onNext?.error?.(FirebaseError.fromNative(error));
+						} else {
+							onNext?.complete?.();
+							onNext?.next?.(QuerySnapshot.fromNative(ss));
+						}
+					} else {
+						if (error) {
+							onError?.(FirebaseError.fromNative(error));
+						} else {
+							onCompletion?.();
+							onNext?.(QuerySnapshot.fromNative(ss));
+						}
+					}
 				} else {
-					onNext?.complete?.();
-					onNext?.next?.(QuerySnapshot.fromNative(ss));
+					if (error) {
+						onError?.(FirebaseError.fromNative(error));
+					} else {
+						onCompletion?.();
+						onNext?.(QuerySnapshot.fromNative(ss));
+					}
 				}
-			});
-		} else if (argsCount === 3) {
-			listener = this.native.addSnapshotListener((ss, error) => {
-				if (error) {
-					onNext?.(FirebaseError.fromNative(error));
+			} else {
+				if (typeof arguments[1] === 'function') {
+					if (!error) {
+						onNext?.(QuerySnapshot.fromNative(ss));
+					}
 				} else {
-					onError?.();
-					options?.(QuerySnapshot.fromNative(ss));
+					if (error) {
+						options?.error?.(FirebaseError.fromNative(error));
+					} else {
+						options?.complete?.();
+						options?.next?.(QuerySnapshot.fromNative(ss));
+					}
 				}
-			});
-		} else if (argsCount === 4) {
-			listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
-				if (error) {
-					onError?.(FirebaseError.fromNative(error));
-				} else {
-					onCompletion?.();
-					onNext?.(QuerySnapshot.fromNative(ss));
-				}
-			});
-		}
+			}
+		});
 
 		return () => listener?.remove?.();
 	}
@@ -616,7 +620,7 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -625,19 +629,19 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 }
 
 export class QueryDocumentSnapshot<T extends DocumentData = DocumentData> extends DocumentSnapshot<T> implements IQueryDocumentSnapshot<T> {
-	#native: FIRQueryDocumentSnapshot;
+	_native: FIRQueryDocumentSnapshot;
 
 	static fromNative(snapshot: FIRQueryDocumentSnapshot) {
 		if (snapshot instanceof FIRQueryDocumentSnapshot) {
 			const ss = new QueryDocumentSnapshot();
-			ss.#native = snapshot;
+			ss._native = snapshot;
 			return ss;
 		}
 		return null;
 	}
 
 	data() {
-		return deserializeField(this.#native.data());
+		return deserializeField(this._native.data());
 	}
 
 	get<fieldType extends DocumentFieldType>(fieldPath: string | number | FieldPath): fieldType {
@@ -649,7 +653,7 @@ export class QueryDocumentSnapshot<T extends DocumentData = DocumentData> extend
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -658,12 +662,12 @@ export class QueryDocumentSnapshot<T extends DocumentData = DocumentData> extend
 }
 
 export class QuerySnapshot implements IQuerySnapshot {
-	#native: FIRQuerySnapshot;
+	_native: FIRQuerySnapshot;
 
 	static fromNative(snapshot: FIRQuerySnapshot) {
 		if (snapshot instanceof FIRQuerySnapshot) {
 			const ss = new QuerySnapshot();
-			ss.#native = snapshot;
+			ss._native = snapshot;
 			return ss;
 		}
 		return null;
@@ -731,7 +735,7 @@ export class QuerySnapshot implements IQuerySnapshot {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -740,12 +744,12 @@ export class QuerySnapshot implements IQuerySnapshot {
 }
 
 export class CollectionReference<T extends DocumentData = DocumentData> extends Query<T> implements ICollectionReference<T> {
-	#native: FIRCollectionReference;
+	_native: FIRCollectionReference;
 
 	static fromNative(collection: FIRCollectionReference) {
 		if (collection instanceof FIRCollectionReference) {
 			const nativeCollection = new CollectionReference<DocumentData>();
-			nativeCollection.#native = collection;
+			nativeCollection._native = collection;
 			return nativeCollection;
 		}
 		return null;
@@ -788,7 +792,7 @@ export class CollectionReference<T extends DocumentData = DocumentData> extends 
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -797,12 +801,12 @@ export class CollectionReference<T extends DocumentData = DocumentData> extends 
 }
 
 export class DocumentReference<T extends DocumentData = DocumentData> implements IDocumentReference<T> {
-	#native: FIRDocumentReference;
+	_native: FIRDocumentReference;
 
 	static fromNative(document: FIRDocumentReference) {
 		if (document instanceof FIRDocumentReference) {
 			const doc = new DocumentReference();
-			doc.#native = document;
+			doc._native = document;
 			return doc;
 		}
 		return null;
@@ -869,45 +873,55 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 	onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
 	onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any) {
-		const argsCount = arguments.length;
 		let listener;
-		if (argsCount === 1 && typeof options === 'object') {
-			listener = this.native.addSnapshotListener((ss, error) => {
-				if (error) {
-					options?.error?.(FirebaseError.fromNative(error));
-				} else {
-					options?.complete?.();
-					options?.next?.(DocumentSnapshot.fromNative(ss));
-				}
-			});
-		} else if (argsCount === 2) {
-			listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
-				if (error) {
-					onNext?.error?.(FirebaseError.fromNative(error));
-				} else {
-					onNext?.complete?.();
-					onNext?.next?.(DocumentSnapshot.fromNative(ss));
-				}
-			});
-		} else if (argsCount === 3) {
-			listener = this.native.addSnapshotListener((ss, error) => {
-				if (error) {
-					onNext?.(FirebaseError.fromNative(error));
-				} else {
-					onError?.();
-					options?.(DocumentSnapshot.fromNative(ss));
-				}
-			});
-		} else if (argsCount === 4) {
-			listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(options.includeMetadataChanges, (ss, error) => {
-				if (error) {
-					onError?.(FirebaseError.fromNative(error));
-				} else {
-					onCompletion?.();
-					onNext?.(DocumentSnapshot.fromNative(ss));
-				}
-			});
+		let includeMetadataChanges = false;
+		const argsCount = arguments.length;
+		if (typeof arguments[0] === 'object') {
+			if (typeof options?.includeMetadataChanges === 'boolean') {
+				includeMetadataChanges = options.includeMetadataChanges;
+			}
 		}
+		listener = this.native.addSnapshotListenerWithIncludeMetadataChangesListener(includeMetadataChanges, (ss, error) => {
+			if (argsCount > 1) {
+				if (typeof options === 'object') {
+					if (typeof onNext === 'object') {
+						if (error) {
+							onNext?.error?.(FirebaseError.fromNative(error));
+						} else {
+							onNext?.complete?.();
+							onNext?.next?.(DocumentSnapshot.fromNative(ss));
+						}
+					} else {
+						if (error) {
+							onError?.(FirebaseError.fromNative(error));
+						} else {
+							onCompletion?.();
+							onNext?.(DocumentSnapshot.fromNative(ss));
+						}
+					}
+				} else {
+					if (error) {
+						onError?.(FirebaseError.fromNative(error));
+					} else {
+						onCompletion?.();
+						onNext?.(DocumentSnapshot.fromNative(ss));
+					}
+				}
+			} else {
+				if (typeof arguments[1] === 'function') {
+					if (!error) {
+						onNext?.(DocumentSnapshot.fromNative(ss));
+					}
+				} else {
+					if (error) {
+						options?.error?.(FirebaseError.fromNative(error));
+					} else {
+						options?.complete?.();
+						options?.next?.(DocumentSnapshot.fromNative(ss));
+					}
+				}
+			}
+		});
 
 		return () => listener?.remove?.();
 	}
@@ -965,7 +979,7 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 	update(field: any, value?: any, moreFieldsAndValues?: any): Promise<void> {
 		return new Promise((resolve, reject) => {
 			const data = createDictionary(field, value, moreFieldsAndValues);
-			this.#native.updateDataCompletion(data as any, (error) => {
+			this._native.updateDataCompletion(data as any, (error) => {
 				if (error) {
 					reject(FirebaseError.fromNative(error));
 				} else {
@@ -984,7 +998,7 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -993,25 +1007,25 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 }
 
 export class FieldPath implements IFieldPath {
-	#native: FIRFieldPath;
+	_native: FIRFieldPath;
 
 	constructor(fieldNames: string[], native = false) {
 		if (!native) {
-			this.#native = FIRFieldPath.alloc().initWithFields(fieldNames);
+			this._native = FIRFieldPath.alloc().initWithFields(fieldNames);
 		}
 	}
 
 	static fromNative(field: FIRFieldPath) {
 		if (field instanceof FIRFieldPath) {
 			const path = new FieldPath([], true);
-			path.#native = field;
+			path._native = field;
 			return path;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -1030,12 +1044,12 @@ export class FieldPath implements IFieldPath {
 }
 
 export class FieldValue implements IFieldValue {
-	#native: FIRFieldValue;
+	_native: FIRFieldValue;
 
 	static fromNative(field: FIRFieldValue) {
 		if (field instanceof FIRFieldValue) {
 			const value = new FieldValue();
-			value.#native = field;
+			value._native = field;
 			return value;
 		}
 		return null;
@@ -1066,7 +1080,7 @@ export class FieldValue implements IFieldValue {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -1075,18 +1089,18 @@ export class FieldValue implements IFieldValue {
 }
 
 export class GeoPoint implements IGeoPoint {
-	#native: FIRGeoPoint;
+	_native: FIRGeoPoint;
 
 	constructor(latitude: number, longitude: number, native: boolean = false) {
 		if (!native) {
-			this.#native = FIRGeoPoint.alloc().initWithLatitudeLongitude(latitude, longitude);
+			this._native = FIRGeoPoint.alloc().initWithLatitudeLongitude(latitude, longitude);
 		}
 	}
 
 	static fromNative(point: FIRGeoPoint) {
 		if (point instanceof FIRGeoPoint) {
 			const geo = new GeoPoint(0, 0, true);
-			geo.#native = point;
+			geo._native = point;
 			return geo;
 		}
 		return null;
@@ -1101,7 +1115,7 @@ export class GeoPoint implements IGeoPoint {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -1117,18 +1131,18 @@ export class GeoPoint implements IGeoPoint {
 }
 
 export class Timestamp implements ITimestamp {
-	#native: FIRTimestamp;
+	_native: FIRTimestamp;
 
 	constructor(seconds: number, nanoseconds: number, native = false) {
 		if (!native) {
-			this.#native = FIRTimestamp.alloc().initWithSecondsNanoseconds(seconds, nanoseconds);
+			this._native = FIRTimestamp.timestampWithSecondsNanoseconds(seconds, nanoseconds);
 		}
 	}
 
 	static fromNative(timestamp: FIRTimestamp) {
 		if (timestamp instanceof FIRTimestamp) {
 			const ts = new Timestamp(0, 0, true);
-			ts.#native = timestamp;
+			ts._native = timestamp;
 			return ts;
 		}
 		return null;
@@ -1137,10 +1151,22 @@ export class Timestamp implements ITimestamp {
 	static fromDate(date: Date) {
 		if (date instanceof Date) {
 			const ts = new Timestamp(0, 0, true);
-			ts.#native = FIRTimestamp.timestampWithDate(date);
+			ts._native = FIRTimestamp.timestampWithDate(date);
 			return ts;
 		}
 		return null;
+	}
+
+	static fromMillis(milliseconds: number) {
+		const ts = new Timestamp(0, 0, true);
+		ts._native = FIRTimestamp.timestampWithSecondsNanoseconds(milliseconds / 1000, 0);
+		return ts;
+	}
+
+	static now() {
+		const ts = new Timestamp(0, 0, true);
+		ts._native = FIRTimestamp.timestamp();
+		return ts;
 	}
 
 	get nanoseconds(): number {
@@ -1151,8 +1177,24 @@ export class Timestamp implements ITimestamp {
 		return this.native.seconds;
 	}
 
+	isEqual(ts: Timestamp): boolean {
+		return this.native.compare(ts.native) === NSComparisonResult.OrderedSame;
+	}
+
+	toDate() {
+		return this.native.dateValue();
+	}
+
+	toMillis() {
+		return this.native.seconds * 1000;
+	}
+
+	valueOf() {
+		return this.native.dateValue().valueOf().toString();
+	}
+
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -1168,12 +1210,12 @@ export class Timestamp implements ITimestamp {
 }
 
 export class WriteBatch implements IWriteBatch {
-	#native: FIRWriteBatch;
+	_native: FIRWriteBatch;
 
 	static fromNative(batch: FIRWriteBatch) {
 		if (batch instanceof FIRWriteBatch) {
 			const b = new WriteBatch();
-			b.#native = batch;
+			b._native = batch;
 			return b;
 		}
 		return null;
@@ -1227,11 +1269,11 @@ export class WriteBatch implements IWriteBatch {
 	update<T extends DocumentData = DocumentData, K extends keyof T = string>(documentRef: DocumentReference<T>, field: K | FieldPath, value: FieldValue | T[K], moreFieldAndValues: any[]): WriteBatch;
 	update(documentRef: any, field: any, value?: any, moreFieldsAndValues?: any): WriteBatch {
 		const data = createDictionary(field, value, moreFieldsAndValues);
-		return WriteBatch.fromNative(this.#native.updateDataForDocument(data as any, documentRef?.native));
+		return WriteBatch.fromNative(this._native.updateDataForDocument(data as any, documentRef?.native));
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -1240,12 +1282,12 @@ export class WriteBatch implements IWriteBatch {
 }
 
 export class Settings implements ISettings {
-	#native: FIRFirestoreSettings;
+	_native: FIRFirestoreSettings;
 
 	static fromNative(ffs: FIRFirestoreSettings) {
 		if (ffs instanceof FIRFirestoreSettings) {
 			const settings = new Settings();
-			settings.#native = ffs;
+			settings._native = ffs;
 			return settings;
 		}
 		return null;
@@ -1300,17 +1342,17 @@ export class Settings implements ISettings {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 }
 
 export class Bytes implements IBytes {
-	#native: NSData;
+	_native: NSData;
 
 	static fromNative(data: NSData) {
 		if (data instanceof NSData) {
 			const nsData = new Bytes();
-			nsData.#native = data;
+			nsData._native = data;
 			return nsData;
 		}
 		return null;
@@ -1323,7 +1365,7 @@ export class Bytes implements IBytes {
 				b64 = base64.split(',')[1];
 			}
 			const bytes = new Bytes();
-			bytes.#native = NSData.alloc().initWithBase64EncodedStringOptions(b64, 0);
+			bytes._native = NSData.alloc().initWithBase64EncodedStringOptions(b64, 0);
 			return bytes;
 		}
 		return null;
@@ -1335,7 +1377,7 @@ export class Bytes implements IBytes {
 		}
 
 		const nsData = new Bytes();
-		nsData.#native = NSData.dataWithData(array as any);
+		nsData._native = NSData.dataWithData(array as any);
 		return nsData;
 	}
 
@@ -1344,11 +1386,11 @@ export class Bytes implements IBytes {
 	}
 
 	toUint8Array(): Uint8Array {
-		return new Uint8Array(interop.bufferFromData(NSData.dataWithData(this.#native)));
+		return new Uint8Array(interop.bufferFromData(NSData.dataWithData(this._native)));
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -1357,25 +1399,25 @@ export class Bytes implements IBytes {
 }
 
 export class Firestore implements IFirestore {
-	#native: FIRFirestore;
-	#app: FirebaseApp;
+	_native: FIRFirestore;
+	_app: FirebaseApp;
 
 	constructor(app?: FirebaseApp) {
 		if (app) {
-			this.#native = FIRFirestore.firestoreForApp(app.native);
+			this._native = FIRFirestore.firestoreForApp(app.native);
 		} else {
 			if (defaultFirestore) {
 				return defaultFirestore;
 			}
 			defaultFirestore = this;
-			this.#native = FIRFirestore.firestore();
+			this._native = FIRFirestore.firestore();
 		}
 	}
 
 	static fromNative(store: FIRFirestore) {
 		if (store instanceof FIRFirestore) {
 			const firestore = new Firestore();
-			firestore.#native = store;
+			firestore._native = store;
 			return firestore;
 		}
 		return null;
@@ -1500,7 +1542,7 @@ export class Firestore implements IFirestore {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -1508,10 +1550,10 @@ export class Firestore implements IFirestore {
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

@@ -23,19 +23,19 @@ Object.defineProperty(fb, 'auth', {
 });
 
 export class UserMetadata implements IUserMetadata {
-	#native: com.google.firebase.auth.FirebaseUserMetadata;
+	_native: com.google.firebase.auth.FirebaseUserMetadata;
 
 	static fromNative(metadata: com.google.firebase.auth.FirebaseUserMetadata) {
 		if (metadata instanceof com.google.firebase.auth.FirebaseUserMetadata) {
 			const meta = new UserMetadata();
-			meta.#native = metadata;
+			meta._native = metadata;
 			return meta;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -65,19 +65,19 @@ export class UserMetadata implements IUserMetadata {
 }
 
 export class UserInfo implements IUserInfo {
-	#native: com.google.firebase.auth.UserInfo;
+	_native: com.google.firebase.auth.UserInfo;
 
 	static fromNative(info: com.google.firebase.auth.UserInfo) {
 		if (info) {
 			const nativeInfo = new UserInfo();
-			nativeInfo.#native = info;
+			nativeInfo._native = info;
 			return nativeInfo;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -125,9 +125,9 @@ export class UserInfo implements IUserInfo {
 }
 
 export class User implements IUser {
-	#native: com.google.firebase.auth.FirebaseUser;
+	_native: com.google.firebase.auth.FirebaseUser;
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -137,7 +137,7 @@ export class User implements IUser {
 	static fromNative(user: com.google.firebase.auth.FirebaseUser) {
 		if (user instanceof com.google.firebase.auth.FirebaseUser) {
 			const usr = new User();
-			usr.#native = user;
+			usr._native = user;
 			return usr;
 		}
 		return null;
@@ -516,56 +516,56 @@ export class User implements IUser {
 }
 
 export class AuthSettings implements IAuthSettings {
-	#native: com.google.firebase.auth.FirebaseAuthSettings;
+	_native: com.google.firebase.auth.FirebaseAuthSettings;
 
 	static fromNative(settings: com.google.firebase.auth.FirebaseAuthSettings) {
 		if (settings instanceof com.google.firebase.auth.FirebaseAuthSettings) {
 			const nativeSettings = new AuthSettings();
-			nativeSettings.#native = settings;
+			nativeSettings._native = settings;
 			return nativeSettings;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
 		return this.native;
 	}
 
-	#appVerificationDisabledForTesting = false;
+	_appVerificationDisabledForTesting = false;
 	set appVerificationDisabledForTesting(value) {
 		if (this.native) {
 			this.native.setAppVerificationDisabledForTesting(value);
-			this.#appVerificationDisabledForTesting = value;
+			this._appVerificationDisabledForTesting = value;
 		}
 	}
 
 	get appVerificationDisabledForTesting() {
-		return this.#appVerificationDisabledForTesting;
+		return this._appVerificationDisabledForTesting;
 	}
 }
 
 enum ActionCodeResult {
-	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult#public-static-final-int-password_reset
+	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult_public-static-final-int-password_reset
 	PasswordReset = 0,
-	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult#public-static-final-int-verify_email
+	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult_public-static-final-int-verify_email
 	VerifyEmail = 1,
-	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult#public-static-final-int-recover_email
+	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult_public-static-final-int-recover_email
 	RecoverEmail = 2,
 
-	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult#public-static-final-int-error
+	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult_public-static-final-int-error
 	Error = 3,
 
-	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult#public-static-final-int-sign_in_with_email_link
+	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult_public-static-final-int-sign_in_with_email_link
 	EmailLink = 4,
 
-	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult#public-static-final-int-verify_before_change_email
+	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult_public-static-final-int-verify_before_change_email
 	VerifyAndChangeEmail = 5,
 
-	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult#public-static-final-int-revert_second_factor_addition
+	// https://firebase.google.com/docs/reference/android/com/google/firebase/auth/ActionCodeResult_public-static-final-int-revert_second_factor_addition
 	RevertSecondFactorAddition = 6,
 }
 
@@ -611,14 +611,14 @@ function toUserCredential(authData: com.google.firebase.auth.AuthResult): IUserC
 }
 
 export class ActionCodeSettings implements IActionCodeSettings {
-	#native: com.google.firebase.auth.ActionCodeSettings.Builder;
+	_native: com.google.firebase.auth.ActionCodeSettings.Builder;
 
 	constructor() {
-		this.#native = new com.google.firebase.auth.ActionCodeSettings.Builder();
+		this._native = new com.google.firebase.auth.ActionCodeSettings.Builder();
 	}
 
 	get native() {
-		return this.#native
+		return this._native
 			.setUrl(this.url || '')
 			.setIOSBundleId(this.iOSBundleId || '')
 			.setHandleCodeInApp(this.handleCodeInApp || false)
@@ -717,10 +717,10 @@ function ensureClass() {
 }
 
 export class PhoneAuthProvider {
-	#native: com.google.firebase.auth.PhoneAuthOptions.Builder;
+	_native: com.google.firebase.auth.PhoneAuthOptions.Builder;
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -731,12 +731,12 @@ export class PhoneAuthProvider {
 		const provider = new PhoneAuthProvider();
 		const timeout = java.lang.Long.valueOf(60);
 		if (auth) {
-			provider.#native = com.google.firebase.auth.PhoneAuthOptions.newBuilder(auth.native).setTimeout(timeout as any, java.util.concurrent.TimeUnit.SECONDS);
+			provider._native = com.google.firebase.auth.PhoneAuthOptions.newBuilder(auth.native).setTimeout(timeout as any, java.util.concurrent.TimeUnit.SECONDS);
 		} else {
-			provider.#native = com.google.firebase.auth.PhoneAuthOptions.newBuilder().setTimeout(timeout, java.util.concurrent.TimeUnit.SECONDS);
+			provider._native = com.google.firebase.auth.PhoneAuthOptions.newBuilder().setTimeout(timeout, java.util.concurrent.TimeUnit.SECONDS);
 		}
 
-		provider.#native.setActivity(Application.android.foregroundActivity || Application.android.startActivity);
+		provider._native.setActivity(Application.android.foregroundActivity || Application.android.startActivity);
 
 		return provider;
 	}
@@ -747,7 +747,7 @@ export class PhoneAuthProvider {
 
 	verifyPhoneNumber(phoneNumber: string): Promise<string> {
 		return new Promise((resolve, reject) => {
-			if (!this.#native) {
+			if (!this._native) {
 				reject();
 			} else {
 				ensureClass();
@@ -816,46 +816,42 @@ export class OAuthCredential extends AuthCredential implements IOAuthCredential 
 }
 
 export class OAuthProvider implements IOAuthProvider {
-	#providerId: string;
-	#customProvider: boolean;
-	#builder: com.google.firebase.auth.OAuthProvider.Builder;
+	_providerId: string;
+	_customProvider: boolean;
+	_builder: com.google.firebase.auth.OAuthProvider.Builder;
 	constructor(providerId: string) {
-		this.#providerId = providerId;
-		this.#customProvider = false;
+		this._providerId = providerId;
+		this._customProvider = false;
 	}
 
 	get _isCustomProvider() {
-		return this.#customProvider;
-	}
-
-	get _builder() {
-		return this.#builder;
+		return this._customProvider;
 	}
 
 	addCustomParameter(key: string, value: string) {
-		if (!this.#builder) {
-			this.#builder = com.google.firebase.auth.OAuthProvider.newBuilder(this.#providerId);
-			this.#customProvider = true;
+		if (!this._builder) {
+			this._builder = com.google.firebase.auth.OAuthProvider.newBuilder(this._providerId);
+			this._customProvider = true;
 		}
-		this.#builder.addCustomParameter(key, value);
+		this._builder.addCustomParameter(key, value);
 	}
 
 	setScopes(scopes: string[]) {
-		if (!this.#builder) {
-			this.#builder = com.google.firebase.auth.OAuthProvider.newBuilder(this.#providerId);
-			this.#customProvider = true;
+		if (!this._builder) {
+			this._builder = com.google.firebase.auth.OAuthProvider.newBuilder(this._providerId);
+			this._customProvider = true;
 		}
 		if (Array.isArray(scopes)) {
 			const array = new java.util.ArrayList<string>();
 			scopes.forEach((item) => {
 				array.add(item);
 			});
-			this.#builder.setScopes(array);
+			this._builder.setScopes(array);
 		}
 	}
 
 	credential(optionsOrIdToken: OAuthCredentialOptions | string | null, accessToken?: string) {
-		const builder = com.google.firebase.auth.OAuthProvider.newCredentialBuilder(this.#providerId);
+		const builder = com.google.firebase.auth.OAuthProvider.newCredentialBuilder(this._providerId);
 		if (!optionsOrIdToken && accessToken) {
 			builder.setAccessToken(accessToken);
 		} else if (optionsOrIdToken) {
@@ -903,19 +899,19 @@ export class PhoneAuthCredential extends AuthCredential implements IPhoneAuthCre
 }
 
 export class AuthTokenResult implements IAuthTokenResult {
-	#native: com.google.firebase.auth.GetTokenResult;
+	_native: com.google.firebase.auth.GetTokenResult;
 
 	static fromNative(tokenResult: com.google.firebase.auth.GetTokenResult) {
 		if (tokenResult instanceof com.google.firebase.auth.GetTokenResult) {
 			const result = new AuthTokenResult();
-			result.#native = tokenResult;
+			result._native = tokenResult;
 			return result;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -962,22 +958,22 @@ export class AuthTokenResult implements IAuthTokenResult {
 const NSFirebaseAuth = lazy(() => org.nativescript.firebaseauth.FirebaseAuth);
 
 export class Auth implements IAuth {
-	#native: com.google.firebase.auth.FirebaseAuth;
+	_native: com.google.firebase.auth.FirebaseAuth;
 
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = com.google.firebase.auth.FirebaseAuth.getInstance(app.native);
+			this._native = com.google.firebase.auth.FirebaseAuth.getInstance(app.native);
 		} else {
 			if (defaultAuth) {
 				return defaultAuth;
 			}
 			defaultAuth = this;
-			this.#native = com.google.firebase.auth.FirebaseAuth.getInstance();
+			this._native = com.google.firebase.auth.FirebaseAuth.getInstance();
 		}
 	}
 
 	useEmulator(host: string, port: number) {
-		this.native.useEmulator(host === 'localhost' ? '10.0.2.2' : host, port);
+		this.native.useEmulator(host === 'localhost' || host === '127.0.0.1' ? '10.0.2.2' : host, port);
 	}
 
 	fetchSignInMethodsForEmail(email: string): Promise<string[]> {
@@ -1012,7 +1008,7 @@ export class Auth implements IAuth {
 		return this.native.isSignInWithEmailLink(emailLink);
 	}
 
-	#authStateChangeListeners = new Map();
+	_authStateChangeListeners = new Map();
 
 	addAuthStateChangeListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
@@ -1022,21 +1018,21 @@ export class Auth implements IAuth {
 				},
 			});
 			this.native.addAuthStateListener(nativeListener);
-			this.#authStateChangeListeners.set(listener, nativeListener);
+			this._authStateChangeListeners.set(listener, nativeListener);
 		}
 	}
 
 	removeAuthStateChangeListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
-			const nativeListener = this.#authStateChangeListeners.get(listener);
+			const nativeListener = this._authStateChangeListeners.get(listener);
 			if (nativeListener) {
 				this.native.removeAuthStateListener(nativeListener);
-				this.#authStateChangeListeners.delete(nativeListener);
+				this._authStateChangeListeners.delete(nativeListener);
 			}
 		}
 	}
 
-	#idTokenChangeListeners = new Map();
+	_idTokenChangeListeners = new Map();
 
 	addIdTokenChangeListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
@@ -1047,16 +1043,16 @@ export class Auth implements IAuth {
 			});
 
 			this.native.addIdTokenListener(nativeListener);
-			this.#idTokenChangeListeners.set(listener, nativeListener);
+			this._idTokenChangeListeners.set(listener, nativeListener);
 		}
 	}
 
 	removeIdTokenChangListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
-			const nativeListener = this.#authStateChangeListeners.get(listener);
+			const nativeListener = this._authStateChangeListeners.get(listener);
 			if (nativeListener) {
 				this.native.removeIdTokenListener(nativeListener);
-				this.#authStateChangeListeners.delete(nativeListener);
+				this._authStateChangeListeners.delete(nativeListener);
 			}
 		}
 	}
@@ -1403,20 +1399,20 @@ export class Auth implements IAuth {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
 		return this.native;
 	}
 
-	#app: FirebaseApp;
+	_app: FirebaseApp;
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.getApp());
+			this._app = FirebaseApp.fromNative(this.native.getApp());
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	get currentUser(): User {
@@ -1433,12 +1429,12 @@ export class Auth implements IAuth {
 		}
 	}
 
-	#settings: AuthSettings;
+	_settings: AuthSettings;
 	get settings(): AuthSettings {
-		if (!this.#settings) {
-			this.#settings = AuthSettings.fromNative(this.native.getFirebaseAuthSettings());
+		if (!this._settings) {
+			this._settings = AuthSettings.fromNative(this.native.getFirebaseAuthSettings());
 		}
-		return this.#settings;
+		return this._settings;
 	}
 
 	get tenantId(): string {

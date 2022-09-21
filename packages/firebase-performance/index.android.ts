@@ -15,19 +15,19 @@ Object.defineProperty(fb, 'performance', {
 });
 
 export class HttpMetric implements IHttpMetric {
-	#native: com.google.firebase.perf.metrics.HttpMetric;
+	_native: com.google.firebase.perf.metrics.HttpMetric;
 
 	static fromNative(metric: com.google.firebase.perf.metrics.HttpMetric) {
 		if (metric instanceof com.google.firebase.perf.metrics.HttpMetric) {
 			const result = new HttpMetric();
-			result.#native = metric;
+			result._native = metric;
 			return result;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -66,17 +66,17 @@ export class HttpMetric implements IHttpMetric {
 }
 
 export class Trace implements ITrace {
-	#native: com.google.firebase.perf.metrics.Trace;
+	_native: com.google.firebase.perf.metrics.Trace;
 	static fromNative(trace: com.google.firebase.perf.metrics.Trace) {
 		if (trace instanceof com.google.firebase.perf.metrics.Trace) {
 			const result = new Trace();
-			result.#native = trace;
+			result._native = trace;
 			return result;
 		}
 		return null;
 	}
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -112,15 +112,15 @@ export class Trace implements ITrace {
 }
 
 export class Performance implements IPerformance {
-	#native: com.google.firebase.perf.FirebasePerformance;
-	#app: FirebaseApp;
+	_native: com.google.firebase.perf.FirebasePerformance;
+	_app: FirebaseApp;
 
 	constructor() {
 		if (defaultPerformance) {
 			return defaultPerformance;
 		}
 		defaultPerformance = this;
-		this.#native = com.google.firebase.perf.FirebasePerformance.getInstance();
+		this._native = com.google.firebase.perf.FirebasePerformance.getInstance();
 	}
 
 	get isPerformanceCollectionEnabled(): boolean {
@@ -145,17 +145,17 @@ export class Performance implements IPerformance {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

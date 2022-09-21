@@ -9,19 +9,19 @@ export * from './adsconsent';
 export * from './nativead';
 
 export class AdmobError extends Error {
-	#native: NSError;
+	_native: NSError;
 	static fromNative(native: NSError, message?: string) {
 		const error = new AdmobError(message || native?.localizedDescription);
-		error.#native = native;
+		error._native = native;
 		return error;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	intoNative() {
-		if (!this.#native) {
+		if (!this._native) {
 			const exception = NSException.exceptionWithNameReasonUserInfo(NSGenericException, this.message, null);
 			const info = {};
 			info['ExceptionName'] = exception.name;
@@ -32,7 +32,7 @@ export class AdmobError extends Error {
 			const error = NSError.alloc().initWithDomainCodeUserInfo('NativeScript', 1000, info as any);
 			return error;
 		}
-		return this.#native;
+		return this._native;
 	}
 }
 
@@ -51,23 +51,23 @@ if (!global.__admob) {
 }
 
 export class AdRequest {
-	#native: GADRequest;
+	_native: GADRequest;
 
 	static fromNative(request: GADRequest) {
 		if (request instanceof GADRequest) {
 			const ret = new AdRequest();
-			ret.#native = request;
+			ret._native = request;
 			return ret;
 		}
 		return null;
 	}
 
 	get contentUrl(): string {
-		return this.#native.contentURL;
+		return this._native.contentURL;
 	}
 
 	get keywords(): string[] {
-		const kw = this.#native.keywords;
+		const kw = this._native.keywords;
 		const count = kw.count;
 		const ret = [];
 		for (let i = 0; i < count; i++) {
@@ -77,7 +77,7 @@ export class AdRequest {
 	}
 
 	get neighboringContentUrls(): string[] {
-		const urls = this.#native.keywords;
+		const urls = this._native.keywords;
 		const count = urls.count;
 		const ret = [];
 		for (let i = 0; i < count; i++) {
@@ -92,7 +92,7 @@ export class AdRequest {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -101,33 +101,33 @@ export class AdRequest {
 }
 
 export class InterstitialAd implements IInterstitialAd {
-	#native: GADInterstitialAd;
-	#adUnitId: string;
-	#requestOptions?: RequestOptions;
-	#delegate: GADFullScreenContentDelegateImpl;
-	#loaded = false;
-	#nativeRequest: GADRequest;
+	_native: GADInterstitialAd;
+	_adUnitId: string;
+	_requestOptions?: RequestOptions;
+	_delegate: GADFullScreenContentDelegateImpl;
+	_loaded = false;
+	_nativeRequest: GADRequest;
 
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): InterstitialAd {
 		const ad = new InterstitialAd();
-		ad.#adUnitId = adUnitId;
-		ad.#requestOptions = requestOptions;
-		ad.#delegate = GADFullScreenContentDelegateImpl.initWithOwner(new WeakRef(ad));
+		ad._adUnitId = adUnitId;
+		ad._requestOptions = requestOptions;
+		ad._delegate = GADFullScreenContentDelegateImpl.initWithOwner(new WeakRef(ad));
 		return ad;
 	}
 
 	get adUnitId(): string {
-		return this.#adUnitId;
+		return this._adUnitId;
 	}
 
 	get loaded(): boolean {
-		return this.#loaded;
+		return this._loaded;
 	}
 
 	load(): void {
 		const ref = new WeakRef<InterstitialAd>(this);
-		const request = toSerializeRequestOptions(this.#requestOptions);
-		GADInterstitialAd.loadWithAdUnitIDRequestCompletionHandler(this.#adUnitId, request, (ad, error) => {
+		const request = toSerializeRequestOptions(this._requestOptions);
+		GADInterstitialAd.loadWithAdUnitIDRequestCompletionHandler(this._adUnitId, request, (ad, error) => {
 			if (error) {
 				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(error));
 			} else {
@@ -137,19 +137,15 @@ export class InterstitialAd implements IInterstitialAd {
 				ref.get()?._onAdEvent?.(AdEventType.LOADED);
 			}
 		});
-		this.#nativeRequest = request;
-	}
-
-	get _delegate() {
-		return this.#delegate;
+		this._nativeRequest = request;
 	}
 
 	_setNative(value) {
-		this.#native = value;
+		this._native = value;
 	}
 
 	_setLoaded(value) {
-		this.#loaded = value;
+		this._loaded = value;
 	}
 
 	_onAdEvent: AdEventListener;
@@ -159,42 +155,42 @@ export class InterstitialAd implements IInterstitialAd {
 	}
 
 	show(showOptions?: AdShowOptions) {
-		this.#native.presentFromRootViewController(topViewController());
+		this._native.presentFromRootViewController(topViewController());
 	}
 
 	get request() {
-		return AdRequest.fromNative(this.#nativeRequest);
+		return AdRequest.fromNative(this._nativeRequest);
 	}
 }
 
 export class RewardedInterstitialAd implements IRewardedInterstitialAd {
-	#native: GADRewardedInterstitialAd;
-	#adUnitId: string;
-	#requestOptions?: RequestOptions;
-	#loaded = false;
-	#delegate: GADFullScreenContentDelegateImpl;
-	#nativeRequest: GADRequest;
+	_native: GADRewardedInterstitialAd;
+	_adUnitId: string;
+	_requestOptions?: RequestOptions;
+	_loaded = false;
+	_delegate: GADFullScreenContentDelegateImpl;
+	_nativeRequest: GADRequest;
 
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedInterstitialAd {
 		const ad = new RewardedInterstitialAd();
-		ad.#adUnitId = adUnitId;
-		ad.#requestOptions = requestOptions;
-		ad.#delegate = GADFullScreenContentDelegateImpl.initWithOwner(new WeakRef(ad));
+		ad._adUnitId = adUnitId;
+		ad._requestOptions = requestOptions;
+		ad._delegate = GADFullScreenContentDelegateImpl.initWithOwner(new WeakRef(ad));
 		return ad;
 	}
 
 	get adUnitId(): string {
-		return this.#adUnitId;
+		return this._adUnitId;
 	}
 
 	get loaded(): boolean {
-		return this.#loaded;
+		return this._loaded;
 	}
 
 	load(): void {
 		const ref = new WeakRef(this);
-		const request = toSerializeRequestOptions(this.#requestOptions);
-		GADRewardedInterstitialAd.loadWithAdUnitIDRequestCompletionHandler(this.#adUnitId, request, (ad, error) => {
+		const request = toSerializeRequestOptions(this._requestOptions);
+		GADRewardedInterstitialAd.loadWithAdUnitIDRequestCompletionHandler(this._adUnitId, request, (ad, error) => {
 			if (error) {
 				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(error));
 			} else {
@@ -204,19 +200,15 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 				ref.get()?._onAdEvent?.(AdEventType.LOADED);
 			}
 		});
-		this.#nativeRequest = request;
-	}
-
-	get _delegate() {
-		return this.#delegate;
+		this._nativeRequest = request;
 	}
 
 	_setNative(value) {
-		this.#native = value;
+		this._native = value;
 	}
 
 	_setLoaded(value) {
-		this.#loaded = value;
+		this._loaded = value;
 	}
 
 	_onAdEvent: AdEventListener;
@@ -245,7 +237,7 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -253,37 +245,37 @@ export class RewardedInterstitialAd implements IRewardedInterstitialAd {
 	}
 
 	get request() {
-		return AdRequest.fromNative(this.#nativeRequest);
+		return AdRequest.fromNative(this._nativeRequest);
 	}
 }
 
 export class RewardedAd implements IRewardedAd {
-	#native: GADRewardedAd;
-	#adUnitId: string;
-	#requestOptions?: RequestOptions;
-	#delegate: GADFullScreenContentDelegateImpl;
-	#loaded = false;
-	#nativeRequest: GADRequest;
+	_native: GADRewardedAd;
+	_adUnitId: string;
+	_requestOptions?: RequestOptions;
+	_delegate: GADFullScreenContentDelegateImpl;
+	_loaded = false;
+	_nativeRequest: GADRequest;
 	get loaded() {
-		return this.#loaded;
+		return this._loaded;
 	}
 
 	static createForAdRequest(adUnitId: string, requestOptions?: RequestOptions): RewardedAd {
 		const reward = new RewardedAd();
-		reward.#adUnitId = adUnitId;
-		reward.#requestOptions = requestOptions;
-		reward.#delegate = GADFullScreenContentDelegateImpl.initWithOwner(new WeakRef(reward));
+		reward._adUnitId = adUnitId;
+		reward._requestOptions = requestOptions;
+		reward._delegate = GADFullScreenContentDelegateImpl.initWithOwner(new WeakRef(reward));
 		return reward;
 	}
 
 	get adUnitId(): string {
-		return this.#adUnitId;
+		return this._adUnitId;
 	}
 
 	load(): void {
-		const request = toSerializeRequestOptions(this.#requestOptions);
+		const request = toSerializeRequestOptions(this._requestOptions);
 		const ref = new WeakRef(this);
-		GADRewardedAd.loadWithAdUnitIDRequestCompletionHandler(this.#adUnitId, request, (ad, error) => {
+		GADRewardedAd.loadWithAdUnitIDRequestCompletionHandler(this._adUnitId, request, (ad, error) => {
 			if (error) {
 				ref.get()?._onAdEvent?.(AdEventType.FAILED_TO_LOAD_EVENT, AdmobError.fromNative(error));
 			} else {
@@ -293,19 +285,15 @@ export class RewardedAd implements IRewardedAd {
 				ref.get()?._onAdEvent?.(AdEventType.LOADED);
 			}
 		});
-		this.#nativeRequest = request;
-	}
-
-	get _delegate() {
-		return this.#delegate;
+		this._nativeRequest = request;
 	}
 
 	_setNative(value) {
-		this.#native = value;
+		this._native = value;
 	}
 
 	_setLoaded(value) {
-		this.#loaded = value;
+		this._loaded = value;
 	}
 
 	_onAdEvent: AdEventListener;
@@ -334,7 +322,7 @@ export class RewardedAd implements IRewardedAd {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -342,17 +330,17 @@ export class RewardedAd implements IRewardedAd {
 	}
 
 	get request() {
-		return AdRequest.fromNative(this.#nativeRequest);
+		return AdRequest.fromNative(this._nativeRequest);
 	}
 }
 
 export class RewardedItem implements IRewardedItem {
-	#native: GADAdReward;
+	_native: GADAdReward;
 
 	static fromNative(reward: GADAdReward) {
 		if (reward instanceof GADAdReward) {
 			const item = new RewardedItem();
-			item.#native = reward;
+			item._native = reward;
 			return item;
 		}
 		return null;
@@ -367,7 +355,7 @@ export class RewardedItem implements IRewardedItem {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -376,16 +364,16 @@ export class RewardedItem implements IRewardedItem {
 }
 
 export class BannerAdSize extends BannerAdSizeBase {
-	#native: GADAdSize;
+	_native: GADAdSize;
 
 	constructor(width: number, height: number, native?) {
 		super();
 		if (typeof width === 'number' && typeof height === 'number') {
-			this.#native = GADAdSizeFromCGSize(CGSizeMake(width, height));
+			this._native = GADAdSizeFromCGSize(CGSizeMake(width, height));
 		} else if (arguments[2] instanceof GADAdSize) {
-			this.#native = arguments[2];
+			this._native = arguments[2];
 		} else {
-			this.#native = GADAdSizeInvalid;
+			this._native = GADAdSizeInvalid;
 		}
 	}
 
@@ -453,7 +441,7 @@ export class BannerAdSize extends BannerAdSizeBase {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -462,52 +450,52 @@ export class BannerAdSize extends BannerAdSizeBase {
 }
 
 export class BannerAd extends BannerAdBase {
-	#isLoading = false;
+	_isLoading = false;
 
 	_setIsLoading(value) {
-		this.#isLoading = value;
+		this._isLoading = value;
 	}
 
 	isLoading(): boolean {
-		return this.#isLoading;
+		return this._isLoading;
 	}
 
-	#native: GADBannerView;
-	#delegate: GADBannerViewDelegateImpl;
+	_native: GADBannerView;
+	_delegate: GADBannerViewDelegateImpl;
 
-	#nativeRequest: GADRequest;
+	_nativeRequest: GADRequest;
 
 	createNativeView() {
-		this.#native = GADBannerView.new();
-		this.#delegate = GADBannerViewDelegateImpl.initWithOwner(new WeakRef(this));
-		return this.#native;
+		this._native = GADBannerView.new();
+		this._delegate = GADBannerViewDelegateImpl.initWithOwner(new WeakRef(this));
+		return this._native;
 	}
 
 	initNativeView() {
-		this.#native.delegate = this.#delegate;
+		this._native.delegate = this._delegate;
 	}
 
 	onLoaded() {
 		super.onLoaded();
-		this.#native.rootViewController = topViewController();
+		this._native.rootViewController = topViewController();
 	}
 
 	load(options: RequestOptions = {}) {
-		this.#isLoading = true;
+		this._isLoading = true;
 		const request = toSerializeRequestOptions(options);
-		this.#native?.loadRequest?.(request);
-		this.#nativeRequest = request;
+		this._native?.loadRequest?.(request);
+		this._nativeRequest = request;
 	}
 
 	[sizeProperty.setNative](value) {
-		if (this.#native) {
-			this.#native.adSize = value?.native;
+		if (this._native) {
+			this._native.adSize = value?.native;
 		}
 	}
 
 	[unitIdProperty.setNative](value) {
-		if (this.#native) {
-			this.#native.adUnitID = value;
+		if (this._native) {
+			this._native.adUnitID = value;
 		}
 	}
 
@@ -521,7 +509,7 @@ export class BannerAd extends BannerAdBase {
 	}
 
 	get request() {
-		return AdRequest.fromNative(this.#nativeRequest);
+		return AdRequest.fromNative(this._nativeRequest);
 	}
 }
 
@@ -558,7 +546,7 @@ export class Admob implements IAdmob {
 		return new Admob();
 	}
 
-	#requestConfiguration: RequestConfiguration = {};
+	_requestConfiguration: RequestConfiguration = {};
 
 	set requestConfiguration(requestConfiguration: RequestConfiguration) {
 		switch (requestConfiguration?.maxAdContentRating) {
@@ -577,12 +565,12 @@ export class Admob implements IAdmob {
 		}
 
 		if (typeof requestConfiguration?.tagForChildDirectedTreatment === 'boolean') {
-			this.#requestConfiguration.tagForChildDirectedTreatment = requestConfiguration.tagForChildDirectedTreatment;
+			this._requestConfiguration.tagForChildDirectedTreatment = requestConfiguration.tagForChildDirectedTreatment;
 			GADMobileAds.sharedInstance().requestConfiguration.tagForChildDirectedTreatment(requestConfiguration.tagForChildDirectedTreatment);
 		}
 
 		if (typeof requestConfiguration?.tagForUnderAgeOfConsent === 'boolean') {
-			this.#requestConfiguration.tagForUnderAgeOfConsent = requestConfiguration.tagForUnderAgeOfConsent;
+			this._requestConfiguration.tagForUnderAgeOfConsent = requestConfiguration.tagForUnderAgeOfConsent;
 			GADMobileAds.sharedInstance().requestConfiguration.tagForUnderAgeOfConsent(requestConfiguration.tagForUnderAgeOfConsent);
 		}
 
@@ -600,7 +588,7 @@ export class Admob implements IAdmob {
 	}
 
 	get requestConfiguration(): RequestConfiguration {
-		const ret: RequestConfiguration = Object.assign({}, ...(this.#requestConfiguration as any));
+		const ret: RequestConfiguration = Object.assign({}, ...(this._requestConfiguration as any));
 
 		const config = GADMobileAds.sharedInstance().requestConfiguration;
 

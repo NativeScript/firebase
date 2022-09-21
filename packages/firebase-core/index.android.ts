@@ -3,116 +3,116 @@ import { AndroidActivityEventData, Application, fromObject, knownFolders, Utils 
 export * from './utils';
 declare const __non_webpack_require__;
 export class FirebaseError extends Error {
-	#native: java.lang.Exception;
+	_native: java.lang.Exception;
 	static fromNative(native: java.lang.Exception, message?: string) {
 		const error = new FirebaseError(message || native?.getMessage?.());
-		error.#native = native;
+		error._native = native;
 		return error;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	intoNative() {
-		if (!this.#native) {
+		if (!this._native) {
 			return new java.lang.Exception(this.message);
 		}
-		return this.#native;
+		return this._native;
 	}
 }
 
 export class FirebaseOptions implements IFirebaseOptions {
-	#nativeApp: com.google.firebase.FirebaseApp;
+	_nativeApp: com.google.firebase.FirebaseApp;
 	static fromNative(native: com.google.firebase.FirebaseApp) {
 		if (native instanceof com.google.firebase.FirebaseApp) {
 			const opts = new FirebaseOptions();
-			opts.#nativeApp = native;
+			opts._nativeApp = native;
 			return opts;
 		}
 		return null;
 	}
 
 	get native() {
-		if (!this.#nativeApp) {
+		if (!this._nativeApp) {
 			return null;
 		}
-		return this.#nativeApp.getOptions();
+		return this._nativeApp.getOptions();
 	}
 
-	#apiKey: string;
+	_apiKey: string;
 	set apiKey(value) {
-		this.#apiKey = value;
+		this._apiKey = value;
 	}
 
 	get apiKey(): string {
-		if (this.#apiKey) {
-			return this.#apiKey;
+		if (this._apiKey) {
+			return this._apiKey;
 		}
 		return this.native?.getApiKey?.();
 	}
 
-	#gcmSenderId: string;
+	_gcmSenderId: string;
 	set gcmSenderId(value) {
-		this.#gcmSenderId = value;
+		this._gcmSenderId = value;
 	}
 	get gcmSenderId(): string {
-		if (this.#gcmSenderId) {
-			return this.#gcmSenderId;
+		if (this._gcmSenderId) {
+			return this._gcmSenderId;
 		}
 		return this.native?.getGcmSenderId?.();
 	}
 
-	#databaseURL: string;
+	_databaseURL: string;
 	get databaseURL(): string {
-		if (this.#databaseURL) {
-			return this.#databaseURL;
+		if (this._databaseURL) {
+			return this._databaseURL;
 		}
 		return this.native?.getDatabaseUrl?.();
 	}
 
-	#googleAppId: string;
+	_googleAppId: string;
 	set googleAppId(value) {
-		this.#googleAppId = value;
+		this._googleAppId = value;
 	}
 	get googleAppId(): string {
-		if (this.#googleAppId) {
-			return this.#googleAppId;
+		if (this._googleAppId) {
+			return this._googleAppId;
 		}
 		return this.native?.getApplicationId?.();
 	}
 
-	#projectId: string;
+	_projectId: string;
 	set projectId(value) {
-		this.#projectId = value;
+		this._projectId = value;
 	}
 
 	get projectId(): string {
-		if (this.#projectId) {
-			return this.#projectId;
+		if (this._projectId) {
+			return this._projectId;
 		}
 		return this.native?.getProjectId?.();
 	}
 
-	#storageBucket: string;
+	_storageBucket: string;
 	set storageBucket(value) {
-		this.#storageBucket = value;
+		this._storageBucket = value;
 	}
 	get storageBucket(): string {
-		if (this.#storageBucket) {
-			return this.#storageBucket;
+		if (this._storageBucket) {
+			return this._storageBucket;
 		}
 		return this.native?.getStorageBucket?.();
 	}
 
-	#trackingId: string;
+	_trackingId: string;
 
 	set trackingId(value) {
 		this.trackingId = value;
 	}
 	get trackingId(): string {
-		if (this.#trackingId) {
-			return this.#trackingId;
+		if (this._trackingId) {
+			return this._trackingId;
 		}
 		return this.native?.getGaTrackingId?.();
 	}
@@ -123,20 +123,20 @@ let defaultApp: FirebaseApp;
 const firebaseApps = new Map<string, FirebaseApp>();
 
 export class FirebaseApp {
-	#native: com.google.firebase.FirebaseApp;
-	#options: FirebaseOptions;
+	_native: com.google.firebase.FirebaseApp;
+	_options: FirebaseOptions;
 
 	static fromNative(app: com.google.firebase.FirebaseApp) {
 		if (app instanceof com.google.firebase.FirebaseApp) {
 			const fb = new FirebaseApp();
-			fb.#native = app;
+			fb._native = app;
 			return fb;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -146,8 +146,8 @@ export class FirebaseApp {
 	}
 
 	get options() {
-		if (!this.#options) {
-			return FirebaseOptions.fromNative(this.#native);
+		if (!this._options) {
+			return FirebaseOptions.fromNative(this._native);
 		}
 	}
 
@@ -166,7 +166,7 @@ export class FirebaseApp {
 		for (let i = 0; i < count; i++) {
 			const nativeApp = nativeApps.get(i);
 			const app = new FirebaseApp();
-			app.#native = nativeApp;
+			app._native = nativeApp;
 			apps.push(app);
 		}
 		return apps;
@@ -175,32 +175,32 @@ export class FirebaseApp {
 
 let lastActivity: WeakRef<androidx.appcompat.app.AppCompatActivity>;
 export class Firebase {
-	static #onResumeQueue = [];
+	static _onResumeQueue = [];
 	static addToResumeQueue(callback: () => void) {
 		if (typeof callback !== 'function') {
 			return;
 		}
-		Firebase.#onResumeQueue.push(callback);
+		Firebase._onResumeQueue.push(callback);
 	}
-	static #activityResultContractsQueue = fromObject({});
+	static _activityResultContractsQueue = fromObject({});
 
 	static registerActivityResultContracts(callback: (args: AndroidActivityEventData & { dispose: boolean }) => void) {
 		if (typeof callback !== 'function') {
 			return;
 		}
-		Firebase.#activityResultContractsQueue.on('register', callback);
+		Firebase._activityResultContractsQueue.on('register', callback);
 	}
 
 	static unregisterActivityResultContracts(callback: (args: AndroidActivityEventData & { dispose: boolean }) => void) {
 		if (typeof callback !== 'function') {
 			return;
 		}
-		Firebase.#activityResultContractsQueue.off('register', callback);
+		Firebase._activityResultContractsQueue.off('register', callback);
 	}
-	static #appDidLaunch = false;
-	static #inForeground = false;
+	static _appDidLaunch = false;
+	static _inForeground = false;
 	static get inForeground() {
-		return Firebase.#inForeground;
+		return Firebase._inForeground;
 	}
 	constructor() {
 		if (firebaseInstance) {
@@ -208,21 +208,21 @@ export class Firebase {
 		}
 		firebaseInstance = this;
 		Application.android.on('activityResumed', (args) => {
-			Firebase.#inForeground = true;
-			Firebase.#appDidLaunch = true;
-			Firebase.#onResumeQueue.forEach((callback) => {
+			Firebase._inForeground = true;
+			Firebase._appDidLaunch = true;
+			Firebase._onResumeQueue.forEach((callback) => {
 				callback();
 			});
 		});
 
 		Application.android.on('activityPaused', (args) => {
-			Firebase.#inForeground = false;
+			Firebase._inForeground = false;
 		});
 
 		Application.android.once('activityCreated', (args: any) => {
 			if (!lastActivity) {
 				lastActivity = new WeakRef(args.activity);
-				Firebase.#activityResultContractsQueue.notify({
+				Firebase._activityResultContractsQueue.notify({
 					eventName: 'register',
 					activity: args.activity,
 					dispose: false,
@@ -233,7 +233,7 @@ export class Firebase {
 		Application.android.on('activityDestroyed', (args) => {
 			const activity = lastActivity?.get?.();
 			if (activity && args.activity === activity) {
-				Firebase.#activityResultContractsQueue.notify({
+				Firebase._activityResultContractsQueue.notify({
 					eventName: 'register',
 					activity: args.activity,
 					dispose: true,
@@ -243,7 +243,7 @@ export class Firebase {
 				Application.android.once('activityCreated', (args: any) => {
 					if (!lastActivity) {
 						lastActivity = new WeakRef(args.activity);
-						Firebase.#activityResultContractsQueue.notify({
+						Firebase._activityResultContractsQueue.notify({
 							eventName: 'register',
 							activity: args.activity,
 							dispose: false,

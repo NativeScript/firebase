@@ -24,19 +24,19 @@ Object.defineProperty(fb, 'storage', {
 });
 
 export class TaskSnapshot implements ITaskSnapshot {
-	#native: FIRStorageTaskSnapshot;
+	_native: FIRStorageTaskSnapshot;
 
 	static fromNative(value: FIRStorageTaskSnapshot) {
 		if (value instanceof FIRStorageTaskSnapshot) {
 			const ss = new TaskSnapshot();
-			ss.#native = value;
+			ss._native = value;
 			return ss;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -88,19 +88,19 @@ export class TaskSnapshot implements ITaskSnapshot {
 }
 
 export class Task implements ITask {
-	#native: FIRStorageUploadTask | FIRStorageDownloadTask;
+	_native: FIRStorageUploadTask | FIRStorageDownloadTask;
 
 	static fromNative(value: FIRStorageUploadTask | FIRStorageDownloadTask) {
 		if (value instanceof FIRStorageUploadTask || value instanceof FIRStorageDownloadTask) {
 			const task = new Task();
-			task.#native = value;
+			task._native = value;
 			return task;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -195,19 +195,19 @@ export class Task implements ITask {
 }
 
 export class ListResult implements IListResult {
-	#native: FIRStorageListResult;
+	_native: FIRStorageListResult;
 
 	static fromNative(value: FIRStorageListResult) {
 		if (value instanceof FIRStorageListResult) {
 			const list = new ListResult();
-			list.#native = value;
+			list._native = value;
 			return list;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -240,23 +240,23 @@ export class ListResult implements IListResult {
 }
 
 export class Metadata implements IMetadata {
-	#native: FIRStorageMetadata;
+	_native: FIRStorageMetadata;
 
 	constructor() {
-		this.#native = FIRStorageMetadata.new();
+		this._native = FIRStorageMetadata.new();
 	}
 
 	static fromNative(value: FIRStorageMetadata) {
 		if (value instanceof FIRStorageMetadata) {
 			const meta = new Metadata();
-			meta.#native = value;
+			meta._native = value;
 			return meta;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -349,19 +349,19 @@ export class Metadata implements IMetadata {
 }
 
 export class Reference implements IReference {
-	#native: FIRStorageReference;
+	_native: FIRStorageReference;
 
 	static fromNative(value: FIRStorageReference) {
 		if (value instanceof FIRStorageReference) {
 			const ref = new Reference();
-			ref.#native = value;
+			ref._native = value;
 			return ref;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -558,25 +558,25 @@ export class Reference implements IReference {
 }
 
 export class Storage implements IStorage {
-	#native: FIRStorage;
-	#app: FirebaseApp;
+	_native: FIRStorage;
+	_app: FirebaseApp;
 
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = FIRStorage.storageForApp(app.native);
+			this._native = FIRStorage.storageForApp(app.native);
 		} else {
 			if (defaultStorage) {
 				return defaultStorage;
 			}
 			defaultStorage = this;
-			this.#native = FIRStorage.storage();
+			this._native = FIRStorage.storage();
 		}
 	}
 
 	static fromNative(storage: FIRStorage) {
 		if (storage instanceof FIRStorage) {
 			const store = new Storage();
-			store.#native = storage;
+			store._native = storage;
 			return store;
 		}
 		return null;
@@ -595,7 +595,7 @@ export class Storage implements IStorage {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -603,11 +603,11 @@ export class Storage implements IStorage {
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	get maxDownloadRetryTime(): number {

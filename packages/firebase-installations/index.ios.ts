@@ -16,17 +16,17 @@ Object.defineProperty(fb, 'installations', {
 	writable: false,
 });
 export class Installations implements IInstallations {
-	#native: FIRInstallations;
-	#app: FirebaseApp;
+	_native: FIRInstallations;
+	_app: FirebaseApp;
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = FIRInstallations.installationsWithApp(app.native);
+			this._native = FIRInstallations.installationsWithApp(app.native);
 		} else {
 			if (defaultInstallations) {
 				return defaultInstallations;
 			}
 			defaultInstallations = this;
-			this.#native = FIRInstallations.installations();
+			this._native = FIRInstallations.installations();
 		}
 	}
 	delete(): Promise<void> {
@@ -64,17 +64,17 @@ export class Installations implements IInstallations {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

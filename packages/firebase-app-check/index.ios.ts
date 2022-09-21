@@ -19,19 +19,19 @@ Object.defineProperty(fb, 'appCheck', {
 });
 
 export class AppCheckToken implements IAppCheckToken {
-	#native: FIRAppCheckToken;
+	_native: FIRAppCheckToken;
 
 	static fromNative(token: FIRAppCheckToken) {
 		if (token instanceof FIRAppCheckToken) {
 			const t = new AppCheckToken();
-			t.#native = token;
+			t._native = token;
 			return t;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -63,16 +63,16 @@ class FIRAppCheckProviderFactoryImpl extends NSObject implements FIRAppCheckProv
 @ObjCClass(FIRAppCheckProvider)
 @NativeClass
 class FIRAppCheckProviderImpl extends NSObject implements FIRAppCheckProvider {
-	#owner: WeakRef<AppCheckProvider>;
-	#queue;
+	_owner: WeakRef<AppCheckProvider>;
+	_queue;
 	static initWithOwner(owner: WeakRef<AppCheckProvider>) {
 		const provider = <FIRAppCheckProviderImpl>FIRAppCheckProviderImpl.new();
-		provider.#owner = owner;
-		provider.#queue = dispatch_queue_create('FIRAppCheckProviderImpl', null);
+		provider._owner = owner;
+		provider._queue = dispatch_queue_create('FIRAppCheckProviderImpl', null);
 		return provider;
 	}
 	getTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void {
-		dispatch_async(this.#queue, () => {
+		dispatch_async(this._queue, () => {
 			const callback = (token: { token: string; expirationDate: Date }, error: FirebaseError) => {
 				if (token) {
 					handler(FIRAppCheckToken.alloc().initWithTokenExpirationDate(token.token, token.expirationDate), null);
@@ -80,7 +80,7 @@ class FIRAppCheckProviderImpl extends NSObject implements FIRAppCheckProvider {
 					handler(null, (error as any).intoNative());
 				}
 			};
-			this.#owner.get?.().getToken?.(callback);
+			this._owner.get?.().getToken?.(callback);
 		});
 	}
 }
@@ -88,33 +88,33 @@ class FIRAppCheckProviderImpl extends NSObject implements FIRAppCheckProvider {
 @ObjCClass(FIRAppCheckProviderFactory)
 @NativeClass
 class FIRAppCheckProviderFactoryCustomImpl extends NSObject implements FIRAppCheckProviderFactory {
-	#owner: WeakRef<AppCheckProviderFactory>;
+	_owner: WeakRef<AppCheckProviderFactory>;
 	static initWithOwner(owner: WeakRef<AppCheckProviderFactory>) {
 		const provider = <FIRAppCheckProviderFactoryCustomImpl>FIRAppCheckProviderFactoryCustomImpl.new();
-		provider.#owner = owner;
+		provider._owner = owner;
 		return provider;
 	}
 	createProviderWithApp(app: any): FIRAppCheckProvider {
-		return this.#owner.get?.()?.createProvider?.((<any>FirebaseApp).fromNative(app))?.native || null;
+		return this._owner.get?.()?.createProvider?.((<any>FirebaseApp).fromNative(app))?.native || null;
 	}
 }
 
 export abstract class AppCheckProviderFactory {
-	#native: FIRAppCheckProviderFactoryCustomImpl;
+	_native: FIRAppCheckProviderFactoryCustomImpl;
 	constructor() {
-		this.#native = FIRAppCheckProviderFactoryCustomImpl.initWithOwner(new WeakRef(this));
+		this._native = FIRAppCheckProviderFactoryCustomImpl.initWithOwner(new WeakRef(this));
 	}
 	abstract createProvider(app: FirebaseApp): AppCheckProvider;
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 }
 
 export abstract class AppCheckProvider {
-	#native: FIRAppCheckProviderImpl;
+	_native: FIRAppCheckProviderImpl;
 	constructor() {
-		this.#native = FIRAppCheckProviderImpl.initWithOwner(new WeakRef(this));
+		this._native = FIRAppCheckProviderImpl.initWithOwner(new WeakRef(this));
 	}
 	abstract getToken(
 		done: (
@@ -126,28 +126,28 @@ export abstract class AppCheckProvider {
 		) => void
 	);
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 }
 
 let provider;
 let customProvider: AppCheckProviderFactory;
 export class AppCheck implements IAppCheck {
-	#native: FIRAppCheck;
-	#nativeApp;
-	#app: FirebaseApp;
+	_native: FIRAppCheck;
+	_nativeApp;
+	_app: FirebaseApp;
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = FIRAppCheck.appCheckWithApp(app.native);
-			this.#nativeApp = app.native;
+			this._native = FIRAppCheck.appCheckWithApp(app.native);
+			this._nativeApp = app.native;
 		} else {
 			if (defaultAppCheck) {
 				return defaultAppCheck;
 			}
 			defaultAppCheck = this;
 			const app = FIRApp.defaultApp();
-			this.#native = FIRAppCheck.appCheckWithApp(app);
-			this.#nativeApp = app;
+			this._native = FIRAppCheck.appCheckWithApp(app);
+			this._nativeApp = app;
 		}
 	}
 
@@ -186,16 +186,16 @@ export class AppCheck implements IAppCheck {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
 	}
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.#nativeApp);
+			this._app = FirebaseApp.fromNative(this._nativeApp);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

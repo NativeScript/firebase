@@ -5,16 +5,16 @@ import { AdsConsentBase, AdsConsentDebugGeography, AdsConsentStatus } from './co
 export { AdsConsentStatus, AdsConsentDebugGeography };
 
 export class AdsConsent extends AdsConsentBase {
-	static #geography: AdsConsentDebugGeography;
-	static #deviceIds: string[];
-	static #tagForUnderAgeOfConsent: boolean;
-	static #consentForm: com.google.android.ump.ConsentForm;
-	static #consentInfo: com.google.android.ump.ConsentInformation;
+	static _geography: AdsConsentDebugGeography;
+	static _deviceIds: string[];
+	static _tagForUnderAgeOfConsent: boolean;
+	static _consentForm: com.google.android.ump.ConsentForm;
+	static _consentInfo: com.google.android.ump.ConsentInformation;
 	static reset() {
 		org.nativescript.firebase.admob.FirebaseAdmob.AdConsent.reset(Utils.android.getApplicationContext());
 	}
 	static addTestDevices(deviceIds: string[]) {
-		this.#deviceIds = deviceIds;
+		this._deviceIds = deviceIds;
 	}
 	static getStatus(): AdsConsentStatus {
 		return org.nativescript.firebase.admob.FirebaseAdmob.AdConsent.getStatus(Utils.android.getApplicationContext()) as any;
@@ -22,16 +22,16 @@ export class AdsConsent extends AdsConsentBase {
 	static requestInfoUpdate(): Promise<void> {
 		return new Promise((resolve, reject) => {
 			const info = {};
-			if (this.#geography) {
-				info['geography'] = this.#geography;
+			if (this._geography) {
+				info['geography'] = this._geography;
 			}
 
-			if (this.#deviceIds) {
-				info['deviceIds'] = this.#deviceIds;
+			if (this._deviceIds) {
+				info['deviceIds'] = this._deviceIds;
 			}
 
-			if (typeof this.#tagForUnderAgeOfConsent === 'boolean') {
-				info['tagForUnderAgeOfConsent'] = this.#tagForUnderAgeOfConsent;
+			if (typeof this._tagForUnderAgeOfConsent === 'boolean') {
+				info['tagForUnderAgeOfConsent'] = this._tagForUnderAgeOfConsent;
 			}
 
 			org.nativescript.firebase.admob.FirebaseAdmob.AdConsent.requestInfoUpdate(
@@ -49,24 +49,24 @@ export class AdsConsent extends AdsConsentBase {
 		});
 	}
 	static setDebugGeography(geography: AdsConsentDebugGeography) {
-		this.#geography = geography;
+		this._geography = geography;
 	}
 	static setTagForUnderAgeOfConsent(tag: boolean) {
-		this.#tagForUnderAgeOfConsent = tag;
+		this._tagForUnderAgeOfConsent = tag;
 	}
 
 	static isConsentFormAvailable() {
-		if (!this.#consentInfo) {
-			this.#consentInfo = com.google.android.ump.UserMessagingPlatform.getConsentInformation(Utils.android.getApplicationContext());
+		if (!this._consentInfo) {
+			this._consentInfo = com.google.android.ump.UserMessagingPlatform.getConsentInformation(Utils.android.getApplicationContext());
 		}
-		return this.#consentInfo.isConsentFormAvailable();
+		return this._consentInfo.isConsentFormAvailable();
 	}
 
 	static showForm(): Promise<void> {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.admob.FirebaseAdmob.AdConsent.show(
 				Application.android.foregroundActivity || Application.android.startActivity,
-				this.#consentForm,
+				this._consentForm,
 				new org.nativescript.firebase.admob.FirebaseAdmob.Callback<java.lang.Void>({
 					onSuccess(val) {
 						resolve();
@@ -85,7 +85,7 @@ export class AdsConsent extends AdsConsentBase {
 				Utils.android.getApplicationContext(),
 				new org.nativescript.firebase.admob.FirebaseAdmob.Callback<com.google.android.ump.ConsentForm>({
 					onSuccess(form) {
-						AdsConsent.#consentForm = form;
+						AdsConsent._consentForm = form;
 						resolve();
 					},
 					onError(error) {

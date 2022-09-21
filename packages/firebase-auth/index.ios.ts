@@ -1,8 +1,7 @@
-import { Application } from '@nativescript/core';
 import { FirebaseApp, firebase, deserialize, FirebaseError } from '@nativescript/firebase-core';
 import { ActionCodeInfoOperation } from './common';
 
-import { ActionCodeInfo, IUserCredential, IActionCodeSettings, IAuth, IAuthCredential, IAuthSettings, IAuthTokenResult, IOAuthCredential, IPhoneAuthCredential, IUser, IUserInfo, IUserMetadata, OAuthCredentialOptions, UserCredential, UserProfileChangeRequest, IOAuthProvider } from '.';
+import { ActionCodeInfo, IUserCredential, IActionCodeSettings, IAuth, IAuthCredential, IAuthSettings, IAuthTokenResult, IOAuthCredential, IPhoneAuthCredential, IUser, IUserInfo, IUserMetadata, OAuthCredentialOptions, UserProfileChangeRequest, IOAuthProvider } from '.';
 
 export { ActionCodeInfoOperation };
 
@@ -25,19 +24,19 @@ if (!fb.hasOwnProperty('auth')) {
 }
 
 export class UserMetadata implements IUserMetadata {
-	#native: FIRUserMetadata;
+	_native: FIRUserMetadata;
 
 	static fromNative(metadata: FIRUserMetadata) {
 		if (metadata instanceof FIRUserMetadata) {
 			const meta = new UserMetadata();
-			meta.#native = metadata;
+			meta._native = metadata;
 			return meta;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -61,19 +60,19 @@ export class UserMetadata implements IUserMetadata {
 }
 
 export class UserInfo implements IUserInfo {
-	#native: FIRUserInfo;
+	_native: FIRUserInfo;
 
 	static fromNative(info: FIRUserInfo) {
 		if (info) {
 			const nativeInfo = new UserInfo();
-			nativeInfo.#native = info;
+			nativeInfo._native = info;
 			return nativeInfo;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -117,9 +116,9 @@ export class UserInfo implements IUserInfo {
 }
 
 export class User implements IUser {
-	#native: FIRUser;
+	_native: FIRUser;
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -129,7 +128,7 @@ export class User implements IUser {
 	static fromNative(user: FIRUser) {
 		if (user instanceof FIRUser) {
 			const usr = new User();
-			usr.#native = user;
+			usr._native = user;
 			return usr;
 		}
 		return null;
@@ -479,19 +478,19 @@ export class User implements IUser {
 }
 
 export class AuthSettings implements IAuthSettings {
-	#native: FIRAuthSettings;
+	_native: FIRAuthSettings;
 
 	static fromNative(settings: FIRAuthSettings) {
 		if (settings instanceof FIRAuthSettings) {
 			const nativeSettings = new AuthSettings();
-			nativeSettings.#native = settings;
+			nativeSettings._native = settings;
 			return nativeSettings;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -548,12 +547,12 @@ function toUserCredential(authData: FIRAuthDataResult): IUserCredential {
 }
 
 export class ActionCodeSettings implements IActionCodeSettings {
-	#native: FIRActionCodeSettings;
+	_native: FIRActionCodeSettings;
 
 	static fromNative(settings: FIRActionCodeSettings) {
 		if (settings instanceof FIRActionCodeSettings) {
 			const nativeSettings = new ActionCodeSettings();
-			nativeSettings.#native = settings;
+			nativeSettings._native = settings;
 			return nativeSettings;
 		}
 		return null;
@@ -610,7 +609,7 @@ export class ActionCodeSettings implements IActionCodeSettings {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -669,10 +668,10 @@ export class EmailAuthProvider {
 }
 
 export class PhoneAuthProvider {
-	#native: FIRPhoneAuthProvider;
+	_native: FIRPhoneAuthProvider;
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -682,20 +681,20 @@ export class PhoneAuthProvider {
 	static provider(auth?: Auth) {
 		const provider = new PhoneAuthProvider();
 		if (auth) {
-			provider.#native = FIRPhoneAuthProvider.providerWithAuth(auth.native);
+			provider._native = FIRPhoneAuthProvider.providerWithAuth(auth.native);
 		} else {
-			provider.#native = FIRPhoneAuthProvider.provider();
+			provider._native = FIRPhoneAuthProvider.provider();
 		}
 		return provider;
 	}
 
 	credential(verificationId: string, verificationCode: string) {
-		return AuthCredential.fromNative(this.#native.credentialWithVerificationIDVerificationCode(verificationId, verificationCode));
+		return AuthCredential.fromNative(this._native.credentialWithVerificationIDVerificationCode(verificationId, verificationCode));
 	}
 
 	verifyPhoneNumber(phoneNumber: string): Promise<string> {
 		return new Promise((resolve, reject) => {
-			if (!this.#native) {
+			if (!this._native) {
 				reject();
 			} else {
 				this.native.verifyPhoneNumberUIDelegateCompletion(phoneNumber, null, (verificationId, error) => {
@@ -769,46 +768,46 @@ export class OAuthCredential extends AuthCredential implements IOAuthCredential 
 }
 
 export class OAuthProvider implements IOAuthProvider {
-	#providerId: string;
-	#customParameters: { [key: string]: string };
-	#scopes: string[];
+	_providerId: string;
+	_customParameters: { [key: string]: string };
+	_scopes: string[];
 	constructor(providerId: string) {
-		this.#providerId = providerId;
-		this.#customParameters = {};
-		this.#scopes = [];
+		this._providerId = providerId;
+		this._customParameters = {};
+		this._scopes = [];
 	}
 
 	get _builder() {
-		const builder = FIROAuthProvider.providerWithProviderID(this.#providerId);
-		builder.customParameters = this.#customParameters as any;
-		builder.scopes = this.#scopes as any;
+		const builder = FIROAuthProvider.providerWithProviderID(this._providerId);
+		builder.customParameters = this._customParameters as any;
+		builder.scopes = this._scopes as any;
 		return builder;
 	}
 
 	addCustomParameter(key: string, value: string) {
-		this.#customParameters[key] = value;
+		this._customParameters[key] = value;
 	}
 
 	setScopes(scopes: string[]) {
 		if (Array.isArray(scopes)) {
-			this.#scopes = scopes;
+			this._scopes = scopes;
 		}
 	}
 
 	credential(optionsOrIdToken: OAuthCredentialOptions | string | null, accessToken?: string) {
 		let provider;
 		if (!optionsOrIdToken && accessToken) {
-			provider = FIROAuthProvider.credentialWithProviderIDAccessToken(this.#providerId, accessToken);
+			provider = FIROAuthProvider.credentialWithProviderIDAccessToken(this._providerId, accessToken);
 		} else if (optionsOrIdToken) {
 			if (typeof optionsOrIdToken === 'string') {
-				provider = FIROAuthProvider.credentialWithProviderIDAccessToken(this.#providerId, optionsOrIdToken);
+				provider = FIROAuthProvider.credentialWithProviderIDAccessToken(this._providerId, optionsOrIdToken);
 			} else if (typeof optionsOrIdToken === 'object') {
 				if (optionsOrIdToken.idToken && !optionsOrIdToken.rawNonce) {
-					provider = FIROAuthProvider.credentialWithProviderIDIDTokenAccessToken(this.#providerId, optionsOrIdToken.idToken, optionsOrIdToken.accessToken);
+					provider = FIROAuthProvider.credentialWithProviderIDIDTokenAccessToken(this._providerId, optionsOrIdToken.idToken, optionsOrIdToken.accessToken);
 				} else if (optionsOrIdToken.idToken && optionsOrIdToken.rawNonce) {
-					provider = FIROAuthProvider.credentialWithProviderIDIDTokenRawNonce(this.#providerId, optionsOrIdToken.idToken, optionsOrIdToken.rawNonce);
+					provider = FIROAuthProvider.credentialWithProviderIDIDTokenRawNonce(this._providerId, optionsOrIdToken.idToken, optionsOrIdToken.rawNonce);
 				} else {
-					provider = FIROAuthProvider.credentialWithProviderIDIDTokenRawNonceAccessToken(this.#providerId, optionsOrIdToken.idToken, optionsOrIdToken.rawNonce, optionsOrIdToken.accessToken);
+					provider = FIROAuthProvider.credentialWithProviderIDIDTokenRawNonceAccessToken(this._providerId, optionsOrIdToken.idToken, optionsOrIdToken.rawNonce, optionsOrIdToken.accessToken);
 				}
 			}
 		}
@@ -844,19 +843,19 @@ export class PhoneAuthCredential extends AuthCredential implements IPhoneAuthCre
 }
 
 export class AuthTokenResult implements IAuthTokenResult {
-	#native: FIRAuthTokenResult;
+	_native: FIRAuthTokenResult;
 
 	static fromNative(tokenResult: FIRAuthTokenResult) {
 		if (tokenResult instanceof FIRAuthTokenResult) {
 			const result = new AuthTokenResult();
-			result.#native = tokenResult;
+			result._native = tokenResult;
 			return result;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -889,9 +888,9 @@ export class AuthTokenResult implements IAuthTokenResult {
 }
 
 export class Auth implements IAuth {
-	#native: FIRAuth;
+	_native: FIRAuth;
 	constructor(app?: FirebaseApp) {
-		this.#app = app;
+		this._app = app;
 	}
 
 	useEmulator(host: string, port: number) {
@@ -908,9 +907,12 @@ export class Auth implements IAuth {
 					reject(FirebaseError.fromNative(error));
 				} else {
 					const arr = [];
-					emails.enumerateObjectsUsingBlock((email) => {
-						arr.push(email);
-					});
+					if (emails) {
+						const size = emails.count;
+						for (let i = 0; i < size; i++) {
+							arr.push(emails.objectAtIndex(i));
+						}
+					}
 					resolve(arr);
 				}
 			});
@@ -921,44 +923,44 @@ export class Auth implements IAuth {
 		return this.native.isSignInWithEmailLink(emailLink);
 	}
 
-	#authStateChangeListeners = new Map();
+	_authStateChangeListeners = new Map();
 
 	addAuthStateChangeListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
 			const id = this.native.addAuthStateDidChangeListener((auth, user) => {
 				listener(User.fromNative(user));
 			});
-			this.#authStateChangeListeners.set(listener, id);
+			this._authStateChangeListeners.set(listener, id);
 		}
 	}
 
 	removeAuthStateChangeListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
-			const id = this.#authStateChangeListeners.get(listener);
+			const id = this._authStateChangeListeners.get(listener);
 			if (id) {
 				this.native.removeAuthStateDidChangeListener(id);
-				this.#authStateChangeListeners.delete(id);
+				this._authStateChangeListeners.delete(id);
 			}
 		}
 	}
 
-	#idTokenChangeListeners = new Map();
+	_idTokenChangeListeners = new Map();
 
 	addIdTokenChangeListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
 			const id = this.native.addIDTokenDidChangeListener((auth, user) => {
 				listener(User.fromNative(user));
 			});
-			this.#idTokenChangeListeners.set(listener, id);
+			this._idTokenChangeListeners.set(listener, id);
 		}
 	}
 
 	removeIdTokenChangListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
-			const id = this.#authStateChangeListeners.get(listener);
+			const id = this._authStateChangeListeners.get(listener);
 			if (id) {
 				this.native.removeIDTokenDidChangeListener(id);
-				this.#authStateChangeListeners.delete(id);
+				this._authStateChangeListeners.delete(id);
 			}
 		}
 	}
@@ -1240,27 +1242,27 @@ export class Auth implements IAuth {
 	}
 
 	get native() {
-		if (!this.#native) {
-			if (this.#app?.native) {
-				this.#native = FIRAuth.authWithApp(this.#app.native);
+		if (!this._native) {
+			if (this._app?.native) {
+				this._native = FIRAuth.authWithApp(this._app.native);
 			} else {
-				this.#native = FIRAuth.auth();
+				this._native = FIRAuth.auth();
 			}
 		}
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
 		return this.native;
 	}
 
-	#app: FirebaseApp;
+	_app: FirebaseApp;
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	get currentUser(): User {
@@ -1277,12 +1279,12 @@ export class Auth implements IAuth {
 		}
 	}
 
-	#settings: AuthSettings;
+	_settings: AuthSettings;
 	get settings(): AuthSettings {
-		if (!this.#settings) {
-			this.#settings = AuthSettings.fromNative(this.native.settings);
+		if (!this._settings) {
+			this._settings = AuthSettings.fromNative(this.native.settings);
 		}
-		return this.#settings;
+		return this._settings;
 	}
 
 	get tenantId(): string {

@@ -98,9 +98,9 @@ Application.android.on('activityDestroyed', (args) => {
 });
 
 export class MessagingCore implements IMessagingCore {
-	#native: com.google.firebase.messaging.FirebaseMessaging;
-	#onMessageCallback?;
-	#onMessage(message: any) {
+	_native: com.google.firebase.messaging.FirebaseMessaging;
+	_onMessageCallback?;
+	_onMessage(message: any) {
 		if (onMessageCallbacks.size > 0) {
 			onMessageCallbacks.forEach((cb) => {
 				cb(message);
@@ -108,8 +108,8 @@ export class MessagingCore implements IMessagingCore {
 		}
 	}
 
-	#onNotificationTapCallback?;
-	#onNotificationTap(message: any) {
+	_onNotificationTapCallback?;
+	_onNotificationTap(message: any) {
 		if (onNotificationTapCallbacks.size > 0) {
 			onNotificationTapCallbacks.forEach((cb) => {
 				cb(message);
@@ -117,8 +117,8 @@ export class MessagingCore implements IMessagingCore {
 		}
 	}
 
-	#onTokenCallback?;
-	#onToken(token: string) {
+	_onTokenCallback?;
+	_onToken(token: string) {
 		if (onTokenCallbacks.size > 0) {
 			onTokenCallbacks.forEach((cb) => {
 				cb(token);
@@ -128,34 +128,24 @@ export class MessagingCore implements IMessagingCore {
 
 	showNotificationsWhenInForeground: boolean;
 
-	static #onResumeQueue = [];
+	static _onResumeQueue = [];
 	static addToResumeQueue(callback: () => void) {
 		if (typeof callback !== 'function') {
 			return;
 		}
-		MessagingCore.#onResumeQueue.push(callback);
+		MessagingCore._onResumeQueue.push(callback);
 	}
 
-	static get _onResumeQueue() {
-		return this.#onResumeQueue;
-	}
-
-	static #inForeground = false;
-	static set _inForeground(value) {
-		this.#inForeground = value;
-	}
-	static get _inForeground() {
-		return this.#inForeground;
-	}
-	static #appDidLaunch = false;
+	static _inForeground = false;
+	static _appDidLaunch = false;
 	static get inForeground() {
-		return MessagingCore.#inForeground;
+		return MessagingCore._inForeground;
 	}
 	static get appDidLaunch() {
-		return MessagingCore.#appDidLaunch;
+		return MessagingCore._appDidLaunch;
 	}
 	static set appDidLaunch(value) {
-		MessagingCore.#appDidLaunch = value;
+		MessagingCore._appDidLaunch = value;
 	}
 
 	constructor() {
@@ -164,34 +154,34 @@ export class MessagingCore implements IMessagingCore {
 		}
 		defaultInstance = this;
 
-		this.#native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
+		this._native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
 
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
 		ensureCallback();
 
 		// Setup onmessage handling
 
-		this.#onMessageCallback = new Callback();
-		this.#onMessageCallback._propName = '_onMessage';
+		this._onMessageCallback = new Callback();
+		this._onMessageCallback._propName = '_onMessage';
 
-		this.#onMessageCallback._owner = new WeakRef(this);
+		this._onMessageCallback._owner = new WeakRef(this);
 
-		org.nativescript.firebase.messaging.FirebaseMessaging.setOnMessageListener(this.#onMessageCallback);
+		org.nativescript.firebase.messaging.FirebaseMessaging.setOnMessageListener(this._onMessageCallback);
 
 		// Setup tap notification handling
 
-		this.#onNotificationTapCallback = new Callback();
-		this.#onNotificationTapCallback._propName = '_onNotificationTap';
+		this._onNotificationTapCallback = new Callback();
+		this._onNotificationTapCallback._propName = '_onNotificationTap';
 
-		this.#onNotificationTapCallback._owner = new WeakRef(this);
+		this._onNotificationTapCallback._owner = new WeakRef(this);
 
-		org.nativescript.firebase.messaging.FirebaseMessaging.setOnMessageTapListener(this.#onNotificationTapCallback);
+		org.nativescript.firebase.messaging.FirebaseMessaging.setOnMessageTapListener(this._onNotificationTapCallback);
 
-		this.#onTokenCallback = new Callback();
-		this.#onTokenCallback._propName = '_onToken';
-		this.#onTokenCallback._owner = new WeakRef(this);
+		this._onTokenCallback = new Callback();
+		this._onTokenCallback._propName = '_onToken';
+		this._onTokenCallback._owner = new WeakRef(this);
 
-		org.nativescript.firebase.messaging.FirebaseMessaging.setOnTokenListener(this.#onTokenCallback);
+		org.nativescript.firebase.messaging.FirebaseMessaging.setOnTokenListener(this._onTokenCallback);
 
 		Application.android.on(AndroidApplication.activityNewIntentEvent, this._newIntentCallback.bind(this));
 	}
@@ -207,34 +197,10 @@ export class MessagingCore implements IMessagingCore {
 		org.nativescript.firebase.messaging.FirebaseMessaging.handleActivityIntent(args.intent);
 	}
 
-	get _onMessage() {
-		return this.#onMessage;
-	}
-
-	get _onMessageCallback() {
-		return this.#onMessageCallback;
-	}
-
-	get _onNotificationTap() {
-		return this.#onNotificationTap;
-	}
-
-	get _onNotificationTapCallback() {
-		return this.#onNotificationTapCallback;
-	}
-
-	get _onToken() {
-		return this.#onToken;
-	}
-
-	get _onTokenCallback() {
-		return this.#onTokenCallback;
-	}
-
 	getCurrentToken(): Promise<string> {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.messaging.FirebaseMessaging.getToken(
-				this.#native,
+				this._native,
 				new org.nativescript.firebase.messaging.FirebaseMessaging.Callback<string>({
 					onSuccess(result) {
 						resolve(result);
@@ -308,7 +274,8 @@ export class MessagingCore implements IMessagingCore {
 			const activity: androidx.appcompat.app.AppCompatActivity = Application.android.foregroundActivity || Application.android.startActivity;
 
 			return new Promise((resolve, reject) => {
-				const launch = (activity) => {
+				// TODO
+				/*const launch = (activity) => {
 					_permissionQueue.push({
 						resolve,
 						reject,
@@ -323,6 +290,30 @@ export class MessagingCore implements IMessagingCore {
 					});
 				} else {
 					launch(activity);
+				}
+				*/
+
+				const requestPermission = (activity: androidx.appcompat.app.AppCompatActivity) => {
+					Application.android.on('activityRequestPermissions', (event) => {
+						if (event.requestCode === 1001) {
+							if (event.grantResults[0] === android.content.pm.PackageManager.PERMISSION_GRANTED) {
+								resolve(0);
+							} else {
+								reject(1);
+							}
+						}
+					});
+					const perms = Array.create('java.lang.String', 1);
+					perms[0] = (android as any).Manifest.permission.POST_NOTIFICATIONS;
+					activity.requestPermissions(perms, 1001);
+				};
+
+				if (!activity) {
+					Application.android.once('activityCreated', (args: any) => {
+						requestPermission(args.activity);
+					});
+				} else {
+					requestPermission(activity);
 				}
 			});
 		}

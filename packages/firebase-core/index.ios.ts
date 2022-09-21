@@ -3,19 +3,19 @@ import { FirebaseConfig, IFirebaseOptions } from '.';
 export * from './utils';
 
 export class FirebaseError extends Error {
-	#native: NSError;
+	_native: NSError;
 	static fromNative(native: NSError, message?: string) {
 		const error = new FirebaseError(message || native?.localizedDescription);
-		error.#native = native;
+		error._native = native;
 		return error;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	intoNative() {
-		if (!this.#native) {
+		if (!this._native) {
 			const exception = NSException.exceptionWithNameReasonUserInfo(NSGenericException, this.message, null);
 			const info = {};
 			info['ExceptionName'] = exception.name;
@@ -26,17 +26,17 @@ export class FirebaseError extends Error {
 			const error = NSError.alloc().initWithDomainCodeUserInfo('NativeScript', 1000, info as any);
 			return error;
 		}
-		return this.#native;
+		return this._native;
 	}
 }
 
 export class FirebaseOptions implements IFirebaseOptions {
-	#nativeApp: FIRApp;
+	_nativeApp: FIRApp;
 
 	static fromNative(native: FIRApp) {
 		if (native instanceof FIRApp) {
 			const opts = new FirebaseOptions();
-			opts.#nativeApp = native;
+			opts._nativeApp = native;
 			return opts;
 		}
 		return null;
@@ -45,143 +45,143 @@ export class FirebaseOptions implements IFirebaseOptions {
 		return this.native;
 	}
 	get native() {
-		return this.#nativeApp?.options;
+		return this._nativeApp?.options;
 	}
 
 	get name(): string {
-		return this.#nativeApp?.name;
+		return this._nativeApp?.name;
 	}
 
-	#apiKey: string;
+	_apiKey: string;
 	set apiKey(value) {
-		this.#apiKey = value;
+		this._apiKey = value;
 	}
 
 	get apiKey(): string {
-		if (this.#apiKey) {
-			return this.#apiKey;
+		if (this._apiKey) {
+			return this._apiKey;
 		}
 		return this.native?.APIKey;
 	}
 
-	#gcmSenderId: string;
+	_gcmSenderId: string;
 	set gcmSenderId(value) {
-		this.#gcmSenderId = value;
+		this._gcmSenderId = value;
 	}
 	get gcmSenderId(): string {
-		if (this.#gcmSenderId) {
-			return this.#gcmSenderId;
+		if (this._gcmSenderId) {
+			return this._gcmSenderId;
 		}
 		return this.native?.GCMSenderID;
 	}
 
-	#androidClientId: string;
+	_androidClientId: string;
 	set androidClientId(value) {
-		this.#androidClientId = value;
+		this._androidClientId = value;
 	}
 	get androidClientId(): string {
-		if (this.#androidClientId) {
-			return this.#androidClientId;
+		if (this._androidClientId) {
+			return this._androidClientId;
 		}
 		return this.native?.androidClientID;
 	}
 
-	#appGroupId: string;
+	_appGroupId: string;
 	set appGroupId(value) {
-		this.#appGroupId = value;
+		this._appGroupId = value;
 	}
 
 	get appGroupId(): string {
-		if (this.#appGroupId) {
-			return this.#appGroupId;
+		if (this._appGroupId) {
+			return this._appGroupId;
 		}
 		return this.native?.appGroupID;
 	}
 
-	#bundleId: string;
+	_bundleId: string;
 	set bundleId(value) {
-		this.#bundleId = value;
+		this._bundleId = value;
 	}
 	get bundleId(): string {
-		if (this.#bundleId) {
-			return this.#bundleId;
+		if (this._bundleId) {
+			return this._bundleId;
 		}
 		return this.native?.bundleID;
 	}
 
-	#clientId: string;
+	_clientId: string;
 	set clientId(value) {
-		this.#clientId = value;
+		this._clientId = value;
 	}
 	get clientId(): string {
-		if (this.#clientId) {
-			return this.#clientId;
+		if (this._clientId) {
+			return this._clientId;
 		}
 		return this.native?.clientID;
 	}
 
-	#databaseURL: string;
+	_databaseURL: string;
 	set databaseURL(value) {
-		this.#databaseURL = value;
+		this._databaseURL = value;
 	}
 	get databaseURL(): string {
-		if (this.#databaseURL) {
-			return this.#databaseURL;
+		if (this._databaseURL) {
+			return this._databaseURL;
 		}
 		return this.native?.databaseURL;
 	}
 
-	#deepLinkURLScheme: string;
+	_deepLinkURLScheme: string;
 	set deepLinkURLScheme(value) {
-		this.#deepLinkURLScheme = value;
+		this._deepLinkURLScheme = value;
 	}
 	get deepLinkURLScheme(): string {
-		if (this.#deepLinkURLScheme) {
-			return this.#deepLinkURLScheme;
+		if (this._deepLinkURLScheme) {
+			return this._deepLinkURLScheme;
 		}
 		return this.native?.deepLinkURLScheme;
 	}
 
-	#googleAppId: string;
+	_googleAppId: string;
 	set googleAppId(value) {
-		this.#googleAppId = value;
+		this._googleAppId = value;
 	}
 	get googleAppId(): string {
-		if (this.#googleAppId) {
-			return this.#googleAppId;
+		if (this._googleAppId) {
+			return this._googleAppId;
 		}
 		return this.native?.googleAppID;
 	}
 
-	#projectId: string;
+	_projectId: string;
 	set projectId(value) {
-		this.#projectId = value;
+		this._projectId = value;
 	}
 	get projectId(): string {
-		if (this.#projectId) {
-			return this.#projectId;
+		if (this._projectId) {
+			return this._projectId;
 		}
 		return this.native?.projectID;
 	}
 
-	#storageBucket: string;
+	_storageBucket: string;
 	set storageBucket(value) {
-		this.#storageBucket = value;
+		this._storageBucket = value;
 	}
 	get storageBucket(): string {
-		if (this.#storageBucket) {
-			return this.#storageBucket;
+		if (this._storageBucket) {
+			return this._storageBucket;
 		}
 		return this.native?.storageBucket;
 	}
 
-	#trackingId: string;
+	_trackingId: string;
 	set trackingId(value) {
-		this.#trackingId = value;
+		this._trackingId = value;
 	}
 	get trackingId(): string {
-		if (this.#trackingId) {
-			return this.#trackingId;
+		if (this._trackingId) {
+			return this._trackingId;
 		}
 		return this.native?.trackingID;
 	}
@@ -192,20 +192,20 @@ let defaultApp: FirebaseApp;
 const firebaseApps = new Map<string, FirebaseApp>();
 
 export class FirebaseApp {
-	#native: FIRApp;
-	#options: FirebaseOptions;
+	_native: FIRApp;
+	_options: FirebaseOptions;
 
 	static fromNative(app: FIRApp) {
 		if (app instanceof FIRApp) {
 			const fb = new FirebaseApp();
-			fb.#native = app;
+			fb._native = app;
 			return fb;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -215,10 +215,10 @@ export class FirebaseApp {
 	}
 
 	get options() {
-		if (!this.#options) {
-			this.#options = FirebaseOptions.fromNative(this.#native);
+		if (!this._options) {
+			this._options = FirebaseOptions.fromNative(this._native);
 		}
-		return this.#options;
+		return this._options;
 	}
 
 	delete() {
@@ -242,7 +242,7 @@ export class FirebaseApp {
 			const key = keys.objectAtIndex(i);
 			const nativeApp = FIRApp.allApps.objectForKey(key);
 			const app = new FirebaseApp();
-			app.#native = nativeApp;
+			app._native = nativeApp;
 			apps.push(app);
 		}
 		return apps;
@@ -261,20 +261,20 @@ const launchCallback = () => {
 TNSFirebaseCore.setOnAppFinishLaunchingCallback(launchCallback);
 
 export class Firebase {
-	static #onResumeQueue = [];
+	static _onResumeQueue = [];
 	static addToResumeQueue(callback: () => void) {
 		if (typeof callback !== 'function') {
 			return;
 		}
-		Firebase.#onResumeQueue.push(callback);
+		Firebase._onResumeQueue.push(callback);
 	}
 	static addToActivityCreatedQueue(callback: () => void) {
 		// noop
 	}
-	static #inForeground = false;
-	static #appDidLaunch = false;
+	static _inForeground = false;
+	static _appDidLaunch = false;
 	static get inForeground() {
-		return Firebase.#inForeground;
+		return Firebase._inForeground;
 	}
 	constructor() {
 		if (firebaseInstance) {
@@ -283,19 +283,19 @@ export class Firebase {
 		firebaseInstance = this;
 
 		Application.on('launch', (args) => {
-			Firebase.#onResumeQueue.forEach((callback) => {
+			Firebase._onResumeQueue.forEach((callback) => {
 				callback();
 			});
-			Firebase.#onResumeQueue.splice(0);
+			Firebase._onResumeQueue.splice(0);
 		});
 
 		Application.on('resume', (args) => {
-			Firebase.#inForeground = true;
-			Firebase.#appDidLaunch = true;
+			Firebase._inForeground = true;
+			Firebase._appDidLaunch = true;
 		});
 
 		Application.on('suspend', (args) => {
-			Firebase.#inForeground = false;
+			Firebase._inForeground = false;
 		});
 		return firebaseInstance;
 	}

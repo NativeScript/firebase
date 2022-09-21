@@ -3,7 +3,6 @@ import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/f
 import lazy from '@nativescript/core/utils/lazy';
 import { Utils } from '@nativescript/core';
 
-
 let defaultRemoteConfig: RemoteConfig;
 
 const fb = firebase();
@@ -33,18 +32,18 @@ const FetchStatusThrottled = lazy(() => com.google.firebase.remoteconfig.Firebas
 const NSRemoteConfig = lazy(() => org.nativescript.firebase.remote_config.FirebaseRemoteConfig);
 
 export class ConfigValue implements IConfigValue {
-	#native: com.google.firebase.remoteconfig.FirebaseRemoteConfigValue;
+	_native: com.google.firebase.remoteconfig.FirebaseRemoteConfigValue;
 	static fromNative(value: com.google.firebase.remoteconfig.FirebaseRemoteConfigValue) {
 		if (value instanceof com.google.firebase.remoteconfig.FirebaseRemoteConfigValue) {
 			const val = new ConfigValue();
-			val.#native = value;
+			val._native = value;
 			return val;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -75,85 +74,85 @@ export class ConfigValue implements IConfigValue {
 }
 
 export class ConfigSettings implements IConfigSettings {
-	#native: com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-	#builder: com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings.Builder;
+	_native: com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+	_builder: com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings.Builder;
 	constructor() {
-		this.#builder = new com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings.Builder();
+		this._builder = new com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings.Builder();
 	}
 	static fromNative(config: com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings) {
 		if (config instanceof com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings) {
 			const val = new ConfigSettings();
-			val.#builder = null;
-			val.#native = config;
+			val._builder = null;
+			val._native = config;
 			return val;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
 	}
 
 	get fetchTimeMillis(): number {
-		if (this.#builder) {
-			return this.#builder.getFetchTimeoutInSeconds() ?? 0 * 1000;
+		if (this._builder) {
+			return this._builder.getFetchTimeoutInSeconds() ?? 0 * 1000;
 		}
 		return this.native.getFetchTimeoutInSeconds?.() ?? 0 * 1000;
 	}
 
 	set fetchTimeMillis(value) {
-		if (!this.#builder) {
-			this.#builder = this.native.toBuilder();
+		if (!this._builder) {
+			this._builder = this.native.toBuilder();
 		}
 
-		this.#builder.setFetchTimeoutInSeconds(value / 1000);
+		this._builder.setFetchTimeoutInSeconds(value / 1000);
 	}
 
 	get minimumFetchIntervalMillis(): number {
-		if (this.#builder) {
-			return this.#builder.getMinimumFetchIntervalInSeconds() * 1000;
+		if (this._builder) {
+			return this._builder.getMinimumFetchIntervalInSeconds() * 1000;
 		}
 		return this.native.getMinimumFetchIntervalInSeconds() * 1000;
 	}
 
 	set minimumFetchIntervalMillis(value) {
-		if (!this.#builder) {
-			this.#builder = this.native.toBuilder();
+		if (!this._builder) {
+			this._builder = this.native.toBuilder();
 		}
-		this.#builder.setMinimumFetchIntervalInSeconds(value / 1000);
+		this._builder.setMinimumFetchIntervalInSeconds(value / 1000);
 	}
 }
 export class RemoteConfig implements IRemoteConfig {
-	#native: com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-	#app: FirebaseApp;
+	_native: com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+	_app: FirebaseApp;
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance(app.native);
+			this._native = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance(app.native);
 		} else {
-			if(defaultRemoteConfig){
+			if (defaultRemoteConfig) {
 				return defaultRemoteConfig;
 			}
 			defaultRemoteConfig = this;
-			this.#native = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance();
+			this._native = com.google.firebase.remoteconfig.FirebaseRemoteConfig.getInstance();
 		}
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	get fetchTimeMillis(): number {

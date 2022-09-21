@@ -5,15 +5,15 @@ import { AdsConsentBase, AdsConsentDebugGeography, AdsConsentStatus } from './co
 export { AdsConsentStatus, AdsConsentDebugGeography };
 
 export class AdsConsent extends AdsConsentBase {
-	static #geography: AdsConsentDebugGeography;
-	static #deviceIds: string[];
-	static #tagForUnderAgeOfConsent: boolean;
-	static #consentForm: UMPConsentForm;
+	static _geography: AdsConsentDebugGeography;
+	static _deviceIds: string[];
+	static _tagForUnderAgeOfConsent: boolean;
+	static _consentForm: UMPConsentForm;
 	static reset() {
 		UMPConsentInformation.sharedInstance.reset();
 	}
 	static addTestDevices(deviceIds: string[]) {
-		this.#deviceIds = deviceIds;
+		this._deviceIds = deviceIds;
 	}
 	static getStatus(): AdsConsentStatus {
 		switch (UMPConsentInformation.sharedInstance.consentStatus) {
@@ -30,7 +30,7 @@ export class AdsConsent extends AdsConsentBase {
 	static requestInfoUpdate(): Promise<void> {
 		return new Promise((resolve, reject) => {
 			const request = UMPRequestParameters.new();
-			switch (this.#geography) {
+			switch (this._geography) {
 				case AdsConsentDebugGeography.DISABLED:
 					request.debugSettings.geography = UMPDebugGeography.Disabled;
 					break;
@@ -42,10 +42,10 @@ export class AdsConsent extends AdsConsentBase {
 					break;
 			}
 
-			if (Array.isArray(this.#deviceIds)) {
-				request.debugSettings.testDeviceIdentifiers = this.#deviceIds.map((item) => {
+			if (Array.isArray(this._deviceIds)) {
+				request.debugSettings.testDeviceIdentifiers = this._deviceIds.map((item) => {
 					if (item === 'EMULATOR') {
-						if(typeof GADSimulatorID){
+						if (typeof GADSimulatorID) {
 							return GADSimulatorID;
 						}
 						return '';
@@ -54,8 +54,8 @@ export class AdsConsent extends AdsConsentBase {
 				}) as any;
 			}
 
-			if (typeof this.#tagForUnderAgeOfConsent === 'boolean') {
-				request.tagForUnderAgeOfConsent = this.#tagForUnderAgeOfConsent;
+			if (typeof this._tagForUnderAgeOfConsent === 'boolean') {
+				request.tagForUnderAgeOfConsent = this._tagForUnderAgeOfConsent;
 			}
 
 			UMPConsentInformation.sharedInstance.requestConsentInfoUpdateWithParametersCompletionHandler(request, (error) => {
@@ -68,10 +68,10 @@ export class AdsConsent extends AdsConsentBase {
 		});
 	}
 	static setDebugGeography(geography: AdsConsentDebugGeography) {
-		this.#geography = geography;
+		this._geography = geography;
 	}
 	static setTagForUnderAgeOfConsent(tag: boolean) {
-		this.#tagForUnderAgeOfConsent = tag;
+		this._tagForUnderAgeOfConsent = tag;
 	}
 
 	static isConsentFormAvailable() {
@@ -85,7 +85,7 @@ export class AdsConsent extends AdsConsentBase {
 
 	static showForm(): Promise<void> {
 		return new Promise((resolve, reject) => {
-			this.#consentForm.presentFromViewControllerCompletionHandler(topViewController(), (error) => {
+			this._consentForm.presentFromViewControllerCompletionHandler(topViewController(), (error) => {
 				if (error) {
 					reject(FirebaseError.fromNative(error));
 				} else {
@@ -100,7 +100,7 @@ export class AdsConsent extends AdsConsentBase {
 				if (error) {
 					reject(FirebaseError.fromNative(error));
 				} else {
-					AdsConsent.#consentForm = form;
+					AdsConsent._consentForm = form;
 					resolve();
 				}
 			});

@@ -20,19 +20,19 @@ Object.defineProperty(fb, 'appCheck', {
 const NSAppCheck = lazy(() => org.nativescript.firebase.app_check.FirebaseAppCheck);
 
 export class AppCheckToken implements IAppCheckToken {
-	#native: com.google.firebase.appcheck.AppCheckToken;
+	_native: com.google.firebase.appcheck.AppCheckToken;
 
 	static fromNative(token: com.google.firebase.appcheck.AppCheckToken) {
 		if (token instanceof com.google.firebase.appcheck.AppCheckToken) {
 			const t = new AppCheckToken();
-			t.#native = token;
+			t._native = token;
 			return t;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -48,10 +48,10 @@ export class AppCheckToken implements IAppCheckToken {
 }
 
 export abstract class AppCheckProviderFactory {
-	#native: com.google.firebase.appcheck.AppCheckProviderFactory;
+	_native: com.google.firebase.appcheck.AppCheckProviderFactory;
 	constructor() {
 		const ref = new WeakRef(this);
-		this.#native = new com.google.firebase.appcheck.AppCheckProviderFactory({
+		this._native = new com.google.firebase.appcheck.AppCheckProviderFactory({
 			create(app) {
 				return ref.get?.()?.createProvider?.((<any>FirebaseApp).fromNative(app))?.native || null;
 			},
@@ -60,16 +60,16 @@ export abstract class AppCheckProviderFactory {
 	abstract createProvider(app: FirebaseApp): AppCheckProvider;
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 }
 
 export abstract class AppCheckProvider {
-	#native;
-	#callback;
+	_native;
+	_callback;
 	constructor() {
 		const ref = new WeakRef(this);
-		this.#callback = new (<any>org).nativescript.firebase.app_check.FirebaseAppCheck.CustomAppCheckProvider.Callback({
+		this._callback = new (<any>org).nativescript.firebase.app_check.FirebaseAppCheck.CustomAppCheckProvider.Callback({
 			getToken() {
 				let result;
 				const callback = (token: { token: string; expirationDate: Date }, error: FirebaseError) => {
@@ -84,7 +84,7 @@ export abstract class AppCheckProvider {
 				return result;
 			},
 		});
-		this.#native = (<any>org).nativescript.firebase.app_check.FirebaseAppCheck.CustomAppCheckProvider(this.#callback);
+		this._native = (<any>org).nativescript.firebase.app_check.FirebaseAppCheck.CustomAppCheckProvider(this._callback);
 	}
 	abstract getToken(
 		done: (
@@ -96,25 +96,25 @@ export abstract class AppCheckProvider {
 		) => void
 	);
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 }
 
 let customProvider: AppCheckProviderFactory;
 export class AppCheck implements IAppCheck {
-	#native: com.google.firebase.appcheck.FirebaseAppCheck;
-	#nativeApp;
+	_native: com.google.firebase.appcheck.FirebaseAppCheck;
+	_nativeApp;
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#nativeApp = app.native;
-			this.#native = com.google.firebase.appcheck.FirebaseAppCheck.getInstance(app.native);
+			this._nativeApp = app.native;
+			this._native = com.google.firebase.appcheck.FirebaseAppCheck.getInstance(app.native);
 		} else {
 			if (defaultAppCheck) {
 				return defaultAppCheck;
 			}
 			defaultAppCheck = this;
-			this.#nativeApp = (<any>com).google.firebase.FirebaseApp.getInstance();
-			this.#native = com.google.firebase.appcheck.FirebaseAppCheck.getInstance();
+			this._nativeApp = (<any>com).google.firebase.FirebaseApp.getInstance();
+			this._native = com.google.firebase.appcheck.FirebaseAppCheck.getInstance();
 		}
 	}
 	static setProviderFactory(custom?: AppCheckProviderFactory) {
@@ -155,17 +155,17 @@ export class AppCheck implements IAppCheck {
 		this.native.setTokenAutoRefreshEnabled(enabled);
 	}
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
 	}
-	#app: FirebaseApp;
+	_app: FirebaseApp;
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.#nativeApp);
+			this._app = FirebaseApp.fromNative(this._nativeApp);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

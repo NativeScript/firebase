@@ -15,14 +15,14 @@ Object.defineProperty(fb, 'inAppMessaging', {
 });
 
 export class InAppMessaging implements IInAppMessaging {
-	#native: FIRInAppMessaging;
-	#app: FirebaseApp;
+	_native: FIRInAppMessaging;
+	_app: FirebaseApp;
 	constructor() {
 		if (defaultInAppMessaging) {
 			return defaultInAppMessaging;
 		}
 		defaultInAppMessaging = this;
-		this.#native = FIRInAppMessaging.inAppMessaging();
+		this._native = FIRInAppMessaging.inAppMessaging();
 	}
 
 	get isAutomaticDataCollectionEnabled(): boolean {
@@ -46,17 +46,17 @@ export class InAppMessaging implements IInAppMessaging {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 }

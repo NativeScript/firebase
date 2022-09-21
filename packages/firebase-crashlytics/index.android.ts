@@ -17,7 +17,7 @@ Object.defineProperty(fb, 'crashlytics', {
 });
 
 export class Crashlytics implements ICrashlytics {
-	#native: com.google.firebase.crashlytics.FirebaseCrashlytics;
+	_native: com.google.firebase.crashlytics.FirebaseCrashlytics;
 	constructor() {
 		if (defaultCrashlytics) {
 			return defaultCrashlytics;
@@ -25,21 +25,21 @@ export class Crashlytics implements ICrashlytics {
 		defaultCrashlytics = this;
 	}
 	get native() {
-		if (!this.#native) {
-			this.#native = com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance();
+		if (!this._native) {
+			this._native = com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance();
 		}
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
 	}
-	#app: FirebaseApp;
+	_app: FirebaseApp;
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	checkForUnsentReports(): Promise<boolean> {

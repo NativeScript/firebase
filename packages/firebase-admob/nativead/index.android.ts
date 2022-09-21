@@ -11,163 +11,163 @@ const NATIVE_AD_LOADED_EVENT = 'adNativeAdLoaded';
 const AD_MANAGER_AD_VIEW_LOADED_EVENT = 'adManagerAdViewLoaded';
 
 export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
-	#native: com.google.android.gms.ads.nativead.NativeAdView;
-	#child: View;
+	_native: com.google.android.gms.ads.nativead.NativeAdView;
+	_child: View;
 	createNativeView() {
-		this.#native = new com.google.android.gms.ads.nativead.NativeAdView(this._context);
-		return this.#native;
+		this._native = new com.google.android.gms.ads.nativead.NativeAdView(this._context);
+		return this._native;
 	}
 
 	_addChildFromBuilder(name: string, value: any): void {
-		if (value instanceof View && !value.parent && !this.#child) {
+		if (value instanceof View && !value.parent && !this._child) {
 			this._addView(value);
-			this.#child = value;
+			this._child = value;
 		}
 	}
 
 	public eachChildView(callback: (child: View) => boolean): void {
-		callback(this.#child);
+		callback(this._child);
 	}
 
 	onLoaded() {
 		super.onLoaded();
-		if (this.#child && (<any>this.#native).indexOfChild(this.#child.nativeView) === -1) {
-			(<any>this.#native).addView(this.#child.nativeView);
+		if (this._child && (<any>this._native).indexOfChild(this._child.nativeView) === -1) {
+			(<any>this._native).addView(this._child.nativeView);
 		}
 	}
 
-	#adChoicesView: View;
+	_adChoicesView: View;
 	get adChoicesView(): View {
-		return this.#adChoicesView;
+		return this._adChoicesView;
 	}
 
 	set adChoicesView(value) {
-		this.#adChoicesView = value;
-		this.#native.setAdChoicesView(value?.nativeView);
+		this._adChoicesView = value;
+		this._native.setAdChoicesView(value?.nativeView);
 	}
 
-	#advertiserView: View;
+	_advertiserView: View;
 	get advertiserView(): View {
-		return this.#advertiserView;
+		return this._advertiserView;
 	}
 
 	set advertiserView(value) {
-		this.#advertiserView = value;
-		this.#native.setAdvertiserView(value?.nativeView);
+		this._advertiserView = value;
+		this._native.setAdvertiserView(value?.nativeView);
 	}
 
-	#bodyView: View;
+	_bodyView: View;
 	get bodyView(): View {
-		return this.#bodyView;
+		return this._bodyView;
 	}
 
 	set bodyView(value) {
-		this.#bodyView = value;
-		this.#native.setBodyView(value?.nativeView);
+		this._bodyView = value;
+		this._native.setBodyView(value?.nativeView);
 	}
 
-	#callToActionView: View;
+	_callToActionView: View;
 	get callToActionView(): View {
-		return this.#callToActionView;
+		return this._callToActionView;
 	}
 
 	set callToActionView(value) {
-		this.#callToActionView = value;
-		this.#native.setCallToActionView(value?.nativeView);
+		this._callToActionView = value;
+		this._native.setCallToActionView(value?.nativeView);
 	}
 
-	#headlineView: View;
+	_headlineView: View;
 	get headlineView(): View {
-		return this.#headlineView;
+		return this._headlineView;
 	}
 
 	set headlineView(value) {
-		this.#headlineView = value;
-		this.#native.setHeadlineView(value?.nativeView);
+		this._headlineView = value;
+		this._native.setHeadlineView(value?.nativeView);
 	}
 
-	#iconView: View;
+	_iconView: View;
 	get iconView(): View {
-		return this.#iconView;
+		return this._iconView;
 	}
 
 	set iconView(value) {
-		this.#iconView = value;
-		this.#native.setIconView(value?.nativeView);
+		this._iconView = value;
+		this._native.setIconView(value?.nativeView);
 	}
 
-	#imageView: View;
+	_imageView: View;
 	get imageView(): View {
-		return this.#imageView;
+		return this._imageView;
 	}
 
 	set imageView(value) {
 		this.imageView = value;
-		this.#native.setImageView(value?.nativeView);
+		this._native.setImageView(value?.nativeView);
 	}
 
-	#mediaView: MediaView;
+	_mediaView: MediaView;
 	get mediaView(): MediaView {
-		return this.#mediaView;
+		return this._mediaView;
 	}
 
 	set mediaView(value) {
-		this.#native.setMediaView(value?.native);
-		this.#mediaView = value;
+		this._native.setMediaView(value?.native);
+		this._mediaView = value;
 	}
 
-	#nativeAd: NativeAd;
+	_nativeAd: NativeAd;
 	get nativeAd(): NativeAd {
-		return this.#nativeAd;
+		return this._nativeAd;
 	}
 
 	set nativeAd(value) {
-		this.#native.setNativeAd(value?.native || null);
-		this.#nativeAd = value;
+		this._native.setNativeAd(value?.native || null);
+		this._nativeAd = value;
 	}
 
-	#priceView: View;
+	_priceView: View;
 	get priceView(): View {
-		return this.#priceView;
+		return this._priceView;
 	}
 
 	set priceView(value) {
-		this.#priceView = value;
-		this.#native.setPriceView(value?.nativeView);
+		this._priceView = value;
+		this._native.setPriceView(value?.nativeView);
 	}
 
-	#starRatingView: View;
+	_starRatingView: View;
 	get starRatingView(): View {
-		return this.#starRatingView;
+		return this._starRatingView;
 	}
 
 	set starRatingView(value) {
-		this.#starRatingView = value;
-		this.#native.setStarRatingView(value?.nativeView);
+		this._starRatingView = value;
+		this._native.setStarRatingView(value?.nativeView);
 	}
 
-	#storeView: View;
+	_storeView: View;
 	get storeView(): View {
-		return this.#storeView;
+		return this._storeView;
 	}
 
 	set storeView(value) {
-		this.#priceView = value;
-		this.#native.setStoreView(value?.nativeView);
+		this._priceView = value;
+		this._native.setStoreView(value?.nativeView);
 	}
 }
 
 export class NativeAdLoader implements INativeAdLoader {
-	#adUnitId: string;
-	#nativeAdOptions?: NativeAdOptions;
-	#requestOptions?: RequestOptions;
-	#listener: NativeAdEventListener;
-	#native: com.google.android.gms.ads.AdLoader;
+	_adUnitId: string;
+	_nativeAdOptions?: NativeAdOptions;
+	_requestOptions?: RequestOptions;
+	_listener: NativeAdEventListener;
+	_native: com.google.android.gms.ads.AdLoader;
 
 	constructor(adUnitId: string, requestOptions: RequestOptions = {}, nativeAdOptions: NativeAdOptions = {}) {
-		this.#adUnitId = adUnitId;
-		this.#requestOptions = requestOptions;
-		this.#nativeAdOptions = nativeAdOptions;
+		this._adUnitId = adUnitId;
+		this._requestOptions = requestOptions;
+		this._nativeAdOptions = nativeAdOptions;
 	}
 	isLoading(): boolean {
 		return this.native?.isLoading?.() ?? false;
@@ -178,10 +178,10 @@ export class NativeAdLoader implements INativeAdLoader {
 	load(): void;
 	load(arg?: any): void {
 		const ref = new WeakRef(this);
-		this.#native = org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.createLoader(
+		this._native = org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.createLoader(
 			Application.android.foregroundActivity || Application.android.startActivity,
-			this.#adUnitId,
-			JSON.stringify(this.#nativeAdOptions || {}),
+			this._adUnitId,
+			JSON.stringify(this._nativeAdOptions || {}),
 			new org.nativescript.firebase.admob.FirebaseAdmob.AdLoaderCallback({
 				onEvent(event: string, param1: any): void {
 					const owner = ref.get();
@@ -218,27 +218,23 @@ export class NativeAdLoader implements INativeAdLoader {
 		);
 		if (arg) {
 			if (typeof arg === 'number') {
-				org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.load(this.#native, JSON.stringify(this.#requestOptions), arg);
+				org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.load(this._native, JSON.stringify(this._requestOptions), arg);
 			}
 
 			if (typeof arg === 'object') {
-				org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.load(this.#native, JSON.stringify(arg), true);
+				org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.load(this._native, JSON.stringify(arg), true);
 			}
 		} else {
-			org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.load(this.#native, JSON.stringify(this.#requestOptions), false);
+			org.nativescript.firebase.admob.FirebaseAdmob.NativeAd.load(this._native, JSON.stringify(this._requestOptions), false);
 		}
 	}
 
-	get _listener() {
-		return this.#listener;
-	}
-
 	onAdEvent(listener: NativeAdEventListener) {
-		this.#listener = listener;
+		this._listener = listener;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -247,29 +243,25 @@ export class NativeAdLoader implements INativeAdLoader {
 }
 
 export class NativeAd implements INativeAd {
-	#adUnitId: string;
-	#native: com.google.android.gms.ads.nativead.NativeAd;
-	#listener: AdEventListener;
+	_adUnitId: string;
+	_native: com.google.android.gms.ads.nativead.NativeAd;
+	_listener: AdEventListener;
 
 	static fromNative(nativeAd: com.google.android.gms.ads.nativead.NativeAd) {
 		if (nativeAd instanceof com.google.android.gms.ads.nativead.NativeAd) {
 			const ad = new NativeAd();
-			ad.#native = nativeAd;
+			ad._native = nativeAd;
 			return ad;
 		}
 		return null;
 	}
 
 	get adUnitId(): string {
-		return this.#adUnitId;
-	}
-
-	get _listener() {
-		return this.#listener;
+		return this._adUnitId;
 	}
 
 	onAdEvent(listener: AdEventListener) {
-		this.#listener = listener;
+		this._listener = listener;
 	}
 
 	destroy(): void {
@@ -277,7 +269,7 @@ export class NativeAd implements INativeAd {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -319,32 +311,32 @@ export class NativeAd implements INativeAd {
 		this.native?.recordCustomClickGesture?.();
 	}
 
-	#unconfirmedClickListener?: UnconfirmedClickListener;
-	#unconfirmedClickListenerNative?: com.google.android.gms.ads.nativead.NativeAd.UnconfirmedClickListener;
+	_unconfirmedClickListener?: UnconfirmedClickListener;
+	_unconfirmedClickListenerNative?: com.google.android.gms.ads.nativead.NativeAd.UnconfirmedClickListener;
 	setUnconfirmedClickListener(listener?: UnconfirmedClickListener): void {
-		if (this.#unconfirmedClickListener) {
+		if (this._unconfirmedClickListener) {
 			this.native.setUnconfirmedClickListener(null);
-			this.#unconfirmedClickListener = null;
+			this._unconfirmedClickListener = null;
 		}
 
 		if (listener) {
 			const ref = new WeakRef(this);
-			this.#unconfirmedClickListenerNative = new com.google.android.gms.ads.nativead.NativeAd.UnconfirmedClickListener({
+			this._unconfirmedClickListenerNative = new com.google.android.gms.ads.nativead.NativeAd.UnconfirmedClickListener({
 				onUnconfirmedClickReceived(param0: string): void {
 					const owner = ref.get();
 					if (owner) {
-						owner.#unconfirmedClickListener?.unconfirmedClickReceived?.(param0);
+						owner._unconfirmedClickListener?.unconfirmedClickReceived?.(param0);
 					}
 				},
 				onUnconfirmedClickCancelled(): void {
 					const owner = ref.get();
 					if (owner) {
-						owner.#unconfirmedClickListener?.unconfirmedClickCancelled?.();
+						owner._unconfirmedClickListener?.unconfirmedClickCancelled?.();
 					}
 				},
 			});
-			this.#unconfirmedClickListener = listener;
-			this.native?.setUnconfirmedClickListener(this.#unconfirmedClickListenerNative);
+			this._unconfirmedClickListener = listener;
+			this.native?.setUnconfirmedClickListener(this._unconfirmedClickListenerNative);
 		}
 	}
 
@@ -385,12 +377,12 @@ export class NativeAd implements INativeAd {
 }
 
 export class MediaContent implements IMediaContent {
-	#native: com.google.android.gms.ads.MediaContent;
+	_native: com.google.android.gms.ads.MediaContent;
 
 	static fromNative(content: com.google.android.gms.ads.MediaContent): MediaContent {
 		if (content instanceof com.google.android.gms.ads.MediaContent) {
 			const mediaContent = new MediaContent();
-			mediaContent.#native = content;
+			mediaContent._native = content;
 			return mediaContent;
 		}
 		return null;
@@ -420,7 +412,7 @@ export class MediaContent implements IMediaContent {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -473,14 +465,14 @@ function ensureVideoLifecycleCallbacks() {
 }
 
 export class VideoController implements IVideoController {
-	#native: com.google.android.gms.ads.VideoController;
+	_native: com.google.android.gms.ads.VideoController;
 	_status: VideoStatus = VideoStatus.Unstarted;
 
 	static fromNative(controller: com.google.android.gms.ads.VideoController) {
 		if (controller instanceof com.google.android.gms.ads.VideoController) {
 			ensureVideoLifecycleCallbacks();
 			const ctrl = new VideoController();
-			ctrl.#native = controller;
+			ctrl._native = controller;
 			controller.setVideoLifecycleCallbacks(new VideoLifecycleCallbacks(new WeakRef(this)));
 			return ctrl;
 		}
@@ -515,7 +507,7 @@ export class VideoController implements IVideoController {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -524,20 +516,20 @@ export class VideoController implements IVideoController {
 }
 
 export class MediaView extends MediaViewBase {
-	#contentView: com.google.android.gms.ads.nativead.MediaView;
+	_contentView: com.google.android.gms.ads.nativead.MediaView;
 	createNativeView() {
-		this.#contentView = new com.google.android.gms.ads.nativead.MediaView(this._context);
-		return this.#contentView;
+		this._contentView = new com.google.android.gms.ads.nativead.MediaView(this._context);
+		return this._contentView;
 	}
 
 	[mediaContentProperty.setNative](content) {
-		if (this.#contentView) {
-			this.#contentView?.setMediaContent(content?.native || null);
+		if (this._contentView) {
+			this._contentView?.setMediaContent(content?.native || null);
 		}
 	}
 
 	[stretchProperty.setNative](value) {
-		if (!this.#contentView) {
+		if (!this._contentView) {
 			return;
 		}
 		switch (value) {
@@ -558,16 +550,16 @@ export class MediaView extends MediaViewBase {
 	}
 
 	get native() {
-		return this.#contentView;
+		return this._contentView;
 	}
 }
 
 export class NativeAdImage implements INativeAdImage {
-	#native: com.google.android.gms.ads.nativead.NativeAd.Image;
+	_native: com.google.android.gms.ads.nativead.NativeAd.Image;
 	static fromNative(image: com.google.android.gms.ads.nativead.NativeAd.Image) {
 		if (image instanceof com.google.android.gms.ads.nativead.NativeAd.Image) {
 			const nativeAdImage = new NativeAdImage();
-			nativeAdImage.#native = image;
+			nativeAdImage._native = image;
 			return nativeAdImage;
 		}
 		return null;
@@ -586,7 +578,7 @@ export class NativeAdImage implements INativeAdImage {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -595,11 +587,11 @@ export class NativeAdImage implements INativeAdImage {
 }
 
 export class MuteThisAdReason implements IMuteThisAdReason {
-	#native: com.google.android.gms.ads.MuteThisAdReason;
+	_native: com.google.android.gms.ads.MuteThisAdReason;
 	static fromNative(reason: com.google.android.gms.ads.MuteThisAdReason) {
 		if (reason instanceof com.google.android.gms.ads.MuteThisAdReason) {
 			const muteThisAdReason = new MuteThisAdReason();
-			muteThisAdReason.#native = reason;
+			muteThisAdReason._native = reason;
 			return muteThisAdReason;
 		}
 		return null;
@@ -609,7 +601,7 @@ export class MuteThisAdReason implements IMuteThisAdReason {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {

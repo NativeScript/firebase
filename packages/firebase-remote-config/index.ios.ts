@@ -19,18 +19,18 @@ Object.defineProperty(fb, 'remoteConfig', {
 });
 
 export class ConfigValue implements IConfigValue {
-	#native: FIRRemoteConfigValue;
+	_native: FIRRemoteConfigValue;
 	static fromNative(value: FIRRemoteConfigValue) {
 		if (value instanceof FIRRemoteConfigValue) {
 			const val = new ConfigValue();
-			val.#native = value;
+			val._native = value;
 			return val;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -60,18 +60,18 @@ export class ConfigValue implements IConfigValue {
 }
 
 export class ConfigSettings implements IConfigSettings {
-	#native: FIRRemoteConfigSettings;
+	_native: FIRRemoteConfigSettings;
 	static fromNative(config: FIRRemoteConfigSettings) {
 		if (config instanceof FIRRemoteConfigSettings) {
 			const val = new ConfigSettings();
-			val.#native = config;
+			val._native = config;
 			return val;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -94,33 +94,33 @@ export class ConfigSettings implements IConfigSettings {
 	}
 }
 export class RemoteConfig implements IRemoteConfig {
-	#native: FIRRemoteConfig;
-	#app: FirebaseApp;
+	_native: FIRRemoteConfig;
+	_app: FirebaseApp;
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = FIRRemoteConfig.remoteConfigWithApp(app.native);
+			this._native = FIRRemoteConfig.remoteConfigWithApp(app.native);
 		} else {
 			if (defaultRemoteConfig) {
 				return defaultRemoteConfig;
 			}
 			defaultRemoteConfig = this;
-			this.#native = FIRRemoteConfig.remoteConfig();
+			this._native = FIRRemoteConfig.remoteConfig();
 		}
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 
 	get fetchTimeMillis(): number {

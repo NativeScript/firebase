@@ -133,19 +133,19 @@ function toHttpsError(error: NSError) {
 }
 
 export class Functions implements IFunctions {
-	#native: FIRFunctions;
-	#app: FirebaseApp;
+	_native: FIRFunctions;
+	_app: FirebaseApp;
 
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
 			if (defaultRegionOrCustomDomain) {
-				this.#native = isRegion(defaultRegionOrCustomDomain) // Check whether a Region has been set
-					? FIRFunctions.functionsForAppRegion(app.native, defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforapp:region:
+				this._native = isRegion(defaultRegionOrCustomDomain) // Check whether a Region has been set
+					? FIRFunctions.functionsForAppRegion(app.native, defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions_+functionsforapp:region:
 					: isCustomDomain(defaultRegionOrCustomDomain) // Check whether using a Custom Domain has been set
-					? FIRFunctions.functionsForAppCustomDomain(app.native, defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforapp:customdomain:
-					: FIRFunctions.functionsForApp(app.native); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforapp:
+					? FIRFunctions.functionsForAppCustomDomain(app.native, defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions_+functionsforapp:customdomain:
+					: FIRFunctions.functionsForApp(app.native); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions_+functionsforapp:
 			} else {
-				this.#native = FIRFunctions.functionsForApp(app.native); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforapp:
+				this._native = FIRFunctions.functionsForApp(app.native); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions_+functionsforapp:
 			}
 		} else {
 			if (defaultFunctions) {
@@ -153,13 +153,13 @@ export class Functions implements IFunctions {
 			}
 			defaultFunctions = this;
 			if (defaultRegionOrCustomDomain) {
-				this.#native = isRegion(defaultRegionOrCustomDomain) // Check whether a Region has been set
-					? FIRFunctions.functionsForRegion(defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforregion:
+				this._native = isRegion(defaultRegionOrCustomDomain) // Check whether a Region has been set
+					? FIRFunctions.functionsForRegion(defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions_+functionsforregion:
 					: isCustomDomain(defaultRegionOrCustomDomain) // Check whether using a Custom Domain has been set
-					? FIRFunctions.functionsForCustomDomain(defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functionsforcustomdomain:
-					: FIRFunctions.functions(); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functions
+					? FIRFunctions.functionsForCustomDomain(defaultRegionOrCustomDomain) // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions_+functionsforcustomdomain:
+					: FIRFunctions.functions(); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions_+functions
 			} else {
-				this.#native = FIRFunctions.functions(); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions#+functions
+				this._native = FIRFunctions.functions(); // @see https://firebase.google.com/docs/reference/ios/firebasefunctions/api/reference/Classes/FIRFunctions_+functions
 			}
 		}
 	}
@@ -197,7 +197,7 @@ export class Functions implements IFunctions {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -205,11 +205,11 @@ export class Functions implements IFunctions {
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.app);
+			this._app = FirebaseApp.fromNative(this.native.app);
 		}
-		return this.#app;
+		return this._app;
 	}
 }
 /**

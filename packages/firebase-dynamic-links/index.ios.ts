@@ -17,16 +17,16 @@ Object.defineProperty(fb, 'dynamicLinks', {
 declare const FIRApp, TNSFirebaseDynamicLinksAppDelegate;
 
 export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsParameters {
-	#native: FIRDynamicLinkGoogleAnalyticsParameters;
+	_native: FIRDynamicLinkGoogleAnalyticsParameters;
 
 	constructor() {
-		this.#native = FIRDynamicLinkGoogleAnalyticsParameters.parameters();
+		this._native = FIRDynamicLinkGoogleAnalyticsParameters.parameters();
 	}
 
 	static fromNative(link: FIRDynamicLinkGoogleAnalyticsParameters) {
 		if (link instanceof FIRDynamicLinkGoogleAnalyticsParameters) {
 			const result = new DynamicLinkAnalyticsParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
@@ -73,7 +73,7 @@ export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsPara
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -81,16 +81,16 @@ export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsPara
 }
 
 export class DynamicLinkAndroidParameters implements IDynamicLinkAndroidParameters {
-	#native: FIRDynamicLinkAndroidParameters;
+	_native: FIRDynamicLinkAndroidParameters;
 
 	constructor(packageName?: string) {
-		this.#native = FIRDynamicLinkAndroidParameters.parametersWithPackageName(packageName);
+		this._native = FIRDynamicLinkAndroidParameters.parametersWithPackageName(packageName);
 	}
 
 	static fromNative(link: FIRDynamicLinkAndroidParameters) {
 		if (link instanceof FIRDynamicLinkAndroidParameters) {
 			const result = new DynamicLinkAndroidParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
@@ -116,7 +116,7 @@ export class DynamicLinkAndroidParameters implements IDynamicLinkAndroidParamete
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -124,15 +124,15 @@ export class DynamicLinkAndroidParameters implements IDynamicLinkAndroidParamete
 }
 
 export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
-	#native: FIRDynamicLinkIOSParameters;
+	_native: FIRDynamicLinkIOSParameters;
 	constructor(bundleId?: string) {
 		const id = bundleId || NSBundle.mainBundle.bundleIdentifier;
-		this.#native = FIRDynamicLinkIOSParameters.parametersWithBundleID(id);
+		this._native = FIRDynamicLinkIOSParameters.parametersWithBundleID(id);
 	}
 	static fromNative(link: FIRDynamicLinkIOSParameters) {
 		if (link instanceof FIRDynamicLinkIOSParameters) {
 			const result = new DynamicLinkIOSParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
@@ -186,7 +186,7 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -194,14 +194,14 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 }
 
 export class DynamicLinkITunesParameters implements IDynamicLinkITunesParameters {
-	#native: FIRDynamicLinkItunesConnectAnalyticsParameters;
+	_native: FIRDynamicLinkItunesConnectAnalyticsParameters;
 	constructor() {
-		this.#native = FIRDynamicLinkItunesConnectAnalyticsParameters.parameters();
+		this._native = FIRDynamicLinkItunesConnectAnalyticsParameters.parameters();
 	}
 	static fromNative(link: FIRDynamicLinkItunesConnectAnalyticsParameters) {
 		if (link instanceof FIRDynamicLinkItunesConnectAnalyticsParameters) {
 			const result = new DynamicLinkITunesParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
@@ -231,7 +231,7 @@ export class DynamicLinkITunesParameters implements IDynamicLinkITunesParameters
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -239,14 +239,14 @@ export class DynamicLinkITunesParameters implements IDynamicLinkITunesParameters
 }
 
 export class DynamicLinkNavigationParameters implements IDynamicLinkNavigationParameters {
-	#native: FIRDynamicLinkNavigationInfoParameters;
+	_native: FIRDynamicLinkNavigationInfoParameters;
 	constructor() {
-		this.#native = FIRDynamicLinkNavigationInfoParameters.parameters();
+		this._native = FIRDynamicLinkNavigationInfoParameters.parameters();
 	}
 	static fromNative(link: FIRDynamicLinkNavigationInfoParameters) {
 		if (link instanceof FIRDynamicLinkNavigationInfoParameters) {
 			const result = new DynamicLinkNavigationParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
@@ -260,7 +260,7 @@ export class DynamicLinkNavigationParameters implements IDynamicLinkNavigationPa
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -268,14 +268,14 @@ export class DynamicLinkNavigationParameters implements IDynamicLinkNavigationPa
 }
 
 export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters {
-	#native: FIRDynamicLinkSocialMetaTagParameters;
+	_native: FIRDynamicLinkSocialMetaTagParameters;
 	constructor() {
-		this.#native = FIRDynamicLinkSocialMetaTagParameters.parameters();
+		this._native = FIRDynamicLinkSocialMetaTagParameters.parameters();
 	}
 	static fromNative(link: FIRDynamicLinkSocialMetaTagParameters) {
 		if (link instanceof FIRDynamicLinkSocialMetaTagParameters) {
 			const result = new DynamicLinkSocialParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
@@ -305,7 +305,7 @@ export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -313,61 +313,61 @@ export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters
 }
 
 export class DynamicLinkParameters implements IDynamicLinkParameters {
-	#native: FIRDynamicLinkComponents;
+	_native: FIRDynamicLinkComponents;
 
 	static fromNative(link: FIRDynamicLinkComponents) {
 		if (link instanceof FIRDynamicLinkComponents) {
 			const result = new DynamicLinkParameters();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
 	}
 
-	#analytics: DynamicLinkAnalyticsParameters;
+	_analytics: DynamicLinkAnalyticsParameters;
 	get analytics(): DynamicLinkAnalyticsParameters {
-		if (this.#analytics) {
-			return this.#analytics;
+		if (this._analytics) {
+			return this._analytics;
 		}
 		return DynamicLinkAnalyticsParameters.fromNative(this.native.analyticsParameters);
 	}
 
 	set analytics(value) {
-		this.#analytics = value;
+		this._analytics = value;
 		this.native.analyticsParameters = value?.native;
 	}
 
-	#android: DynamicLinkAndroidParameters;
+	_android: DynamicLinkAndroidParameters;
 	get android(): DynamicLinkAndroidParameters {
-		if (this.#android) {
-			return this.#android;
+		if (this._android) {
+			return this._android;
 		}
 		return DynamicLinkAndroidParameters.fromNative(this.native.androidParameters);
 	}
 
 	set android(value) {
-		this.#android = value;
+		this._android = value;
 		this.native.androidParameters = value?.native;
 	}
 	get domainUriPrefix(): string {
 		return this.native.domain;
 	}
-	#ios: DynamicLinkIOSParameters;
+	_ios: DynamicLinkIOSParameters;
 	get ios(): DynamicLinkIOSParameters {
-		if (this.#ios) {
-			return this.#ios;
+		if (this._ios) {
+			return this._ios;
 		}
 		return DynamicLinkIOSParameters.fromNative(this.native.iOSParameters);
 	}
 	set ios(value) {
-		this.#ios = value;
+		this._ios = value;
 		this.native.iOSParameters = value?.native;
 	}
 
-	#itunes: DynamicLinkITunesParameters;
+	_itunes: DynamicLinkITunesParameters;
 	get itunes(): DynamicLinkITunesParameters {
-		if (this.#itunes) {
-			return this.#itunes;
+		if (this._itunes) {
+			return this._itunes;
 		}
 		return DynamicLinkITunesParameters.fromNative(this.native.iTunesConnectParameters);
 	}
@@ -376,38 +376,38 @@ export class DynamicLinkParameters implements IDynamicLinkParameters {
 		return this.native.link?.absoluteString;
 	}
 
-	#navigation: DynamicLinkNavigationParameters;
+	_navigation: DynamicLinkNavigationParameters;
 	get navigation(): DynamicLinkNavigationParameters {
-		if (this.#navigation) {
-			return this.#navigation;
+		if (this._navigation) {
+			return this._navigation;
 		}
 		return DynamicLinkNavigationParameters.fromNative(this.native.navigationInfoParameters);
 	}
 
 	set navigation(value) {
-		this.#navigation = value;
+		this._navigation = value;
 		this.native.navigationInfoParameters = value?.native;
 	}
 
-	#social: DynamicLinkSocialParameters;
+	_social: DynamicLinkSocialParameters;
 	get social(): DynamicLinkSocialParameters {
-		if (this.#social) {
-			return this.#social;
+		if (this._social) {
+			return this._social;
 		}
 		return DynamicLinkSocialParameters.fromNative(this.native.socialMetaTagParameters);
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 }
 
 export class DynamicLink implements IDynamicLink {
-	#native: FIRDynamicLink;
+	_native: FIRDynamicLink;
 	static fromNative(link: FIRDynamicLink) {
 		if (link instanceof FIRDynamicLink) {
 			const result = new DynamicLink();
-			result.#native = link;
+			result._native = link;
 			return result;
 		}
 		return null;
@@ -424,7 +424,7 @@ export class DynamicLink implements IDynamicLink {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get ios() {
 		return this.native;
@@ -440,9 +440,9 @@ export class DynamicLink implements IDynamicLink {
 }
 
 export class DynamicLinks implements IDynamicLinks {
-	#native: FIRDynamicLinks;
-	#app: FirebaseApp;
-	static #onLink: (link: DynamicLink) => void;
+	_native: FIRDynamicLinks;
+	_app: FirebaseApp;
+	static _onLink: (link: DynamicLink) => void;
 	constructor() {
 		if (defaultDynamicLinks) {
 			return defaultDynamicLinks;
@@ -478,7 +478,7 @@ export class DynamicLinks implements IDynamicLinks {
 	}
 
 	onLink(listener: (link: DynamicLink) => void) {
-		DynamicLinks.#onLink = listener;
+		DynamicLinks._onLink = listener;
 		if (listener) {
 			TNSFirebaseDynamicLinksAppDelegate.onLinkCallback = (link) => {
 				listener(DynamicLink.fromNative(link));
@@ -507,10 +507,10 @@ export class DynamicLinks implements IDynamicLinks {
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(FIRApp.defaultApp());
+			this._app = FirebaseApp.fromNative(FIRApp.defaultApp());
 		}
-		return this.#app;
+		return this._app;
 	}
 }

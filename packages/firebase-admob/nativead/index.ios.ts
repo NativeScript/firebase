@@ -10,27 +10,27 @@ export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio, NativeA
 declare const AdLoaderAdType;
 
 export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
-	#native: GADNativeAdView;
-	#child: View;
+	_native: GADNativeAdView;
+	_child: View;
 	createNativeView() {
-		this.#native = GADNativeAdView.new();
-		return this.#native;
+		this._native = GADNativeAdView.new();
+		return this._native;
 	}
 
 	_addChildFromBuilder(name: string, value: any): void {
 		if (value instanceof View) {
-			this.#child = value;
+			this._child = value;
 		}
 	}
 
 	public eachChildView(callback: (child: View) => boolean): void {
-		if (this.#child) {
-			callback(this.#child);
+		if (this._child) {
+			callback(this._child);
 		}
 	}
 
 	public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void {
-		const result = View.measureChild(this, this.#child, widthMeasureSpec, heightMeasureSpec);
+		const result = View.measureChild(this, this._child, widthMeasureSpec, heightMeasureSpec);
 
 		const width = Utils.layout.getMeasureSpecSize(widthMeasureSpec);
 		const widthMode = Utils.layout.getMeasureSpecMode(widthMeasureSpec);
@@ -48,150 +48,150 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 	}
 
 	public onLayout(left: number, top: number, right: number, bottom: number): void {
-		View.layoutChild(this, this.#child, 0, 0, right - left, bottom - top);
+		View.layoutChild(this, this._child, 0, 0, right - left, bottom - top);
 	}
 
 	onLoaded() {
 		super.onLoaded();
-		if (this.#child) {
-			this._addView(this.#child);
-			this.#native.addSubview(this.#child.nativeView);
+		if (this._child) {
+			this._addView(this._child);
+			this._native.addSubview(this._child.nativeView);
 		}
 	}
 
-	#adChoicesView: View;
+	_adChoicesView: View;
 	get adChoicesView(): View {
-		return this.#adChoicesView;
+		return this._adChoicesView;
 	}
 
 	set adChoicesView(value) {
-		this.#adChoicesView = value;
-		this.#native.adChoicesView = value?.nativeView;
+		this._adChoicesView = value;
+		this._native.adChoicesView = value?.nativeView;
 	}
 
-	#advertiserView: View;
+	_advertiserView: View;
 	get advertiserView(): View {
-		return this.#advertiserView;
+		return this._advertiserView;
 	}
 
 	set advertiserView(value) {
-		this.#advertiserView = value;
-		this.#native.advertiserView = value?.nativeView;
+		this._advertiserView = value;
+		this._native.advertiserView = value?.nativeView;
 	}
 
-	#bodyView: View;
+	_bodyView: View;
 	get bodyView(): View {
-		return this.#bodyView;
+		return this._bodyView;
 	}
 
 	set bodyView(value) {
-		this.#bodyView = value;
-		this.#native.bodyView = value?.nativeView;
+		this._bodyView = value;
+		this._native.bodyView = value?.nativeView;
 	}
 
-	#callToActionView: View;
+	_callToActionView: View;
 	get callToActionView(): View {
-		return this.#callToActionView;
+		return this._callToActionView;
 	}
 
 	set callToActionView(value) {
-		this.#callToActionView = value;
-		this.#native.callToActionView = value?.nativeView;
+		this._callToActionView = value;
+		this._native.callToActionView = value?.nativeView;
 	}
 
-	#headlineView: View;
+	_headlineView: View;
 	get headlineView(): View {
-		return this.#headlineView;
+		return this._headlineView;
 	}
 
 	set headlineView(value) {
-		this.#headlineView = value;
-		this.#native.headlineView = value?.nativeView;
+		this._headlineView = value;
+		this._native.headlineView = value?.nativeView;
 	}
 
-	#iconView: View;
+	_iconView: View;
 	get iconView(): View {
-		return this.#iconView;
+		return this._iconView;
 	}
 
 	set iconView(value) {
-		this.#iconView = value;
-		this.#native.iconView = value?.nativeView;
+		this._iconView = value;
+		this._native.iconView = value?.nativeView;
 	}
 
-	#imageView: View;
+	_imageView: View;
 	get imageView(): View {
-		return this.#imageView;
+		return this._imageView;
 	}
 
 	set imageView(value) {
 		this.imageView = value;
-		this.#native.imageView = value?.nativeView;
+		this._native.imageView = value?.nativeView;
 	}
 
-	#mediaView: MediaView;
+	_mediaView: MediaView;
 	get mediaView(): MediaView {
-		return this.#mediaView;
+		return this._mediaView;
 	}
 
 	set mediaView(value) {
-		this.#native.mediaView = value?.native;
-		this.#mediaView = value;
+		this._native.mediaView = value?.native;
+		this._mediaView = value;
 	}
 
-	#nativeAd: NativeAd;
+	_nativeAd: NativeAd;
 	get nativeAd(): NativeAd {
-		return this.#nativeAd;
+		return this._nativeAd;
 	}
 
 	set nativeAd(value) {
-		this.#native.nativeAd = value?.native;
-		this.#nativeAd = value;
+		this._native.nativeAd = value?.native;
+		this._nativeAd = value;
 	}
 
-	#priceView: View;
+	_priceView: View;
 	get priceView(): View {
-		return this.#priceView;
+		return this._priceView;
 	}
 
 	set priceView(value) {
-		this.#priceView = value;
-		this.#native.priceView = value?.nativeView;
+		this._priceView = value;
+		this._native.priceView = value?.nativeView;
 	}
 
-	#starRatingView: View;
+	_starRatingView: View;
 	get starRatingView(): View {
-		return this.#starRatingView;
+		return this._starRatingView;
 	}
 
 	set starRatingView(value) {
-		this.#starRatingView = value;
-		this.#native.starRatingView = value?.nativeView;
+		this._starRatingView = value;
+		this._native.starRatingView = value?.nativeView;
 	}
 
-	#storeView: View;
+	_storeView: View;
 	get storeView(): View {
-		return this.#storeView;
+		return this._storeView;
 	}
 
 	set storeView(value) {
-		this.#priceView = value;
-		this.#native.storeView = value?.nativeView;
+		this._priceView = value;
+		this._native.storeView = value?.nativeView;
 	}
 }
 
 export class NativeAdLoader implements INativeAdLoader {
-	#adUnitId: string;
-	#nativeAdOptions?: NativeAdOptions;
-	#requestOptions?: RequestOptions;
-	#listener: NativeAdEventListener;
-	#native: GADAdLoader;
-	#delegate: GADAdLoaderDelegateImpl;
+	_adUnitId: string;
+	_nativeAdOptions?: NativeAdOptions;
+	_requestOptions?: RequestOptions;
+	_listener: NativeAdEventListener;
+	_native: GADAdLoader;
+	_delegate: GADAdLoaderDelegateImpl;
 	constructor(adUnitId: string, requestOptions: RequestOptions = {}, nativeAdOptions: NativeAdOptions = {}) {
-		this.#adUnitId = adUnitId;
-		this.#requestOptions = requestOptions;
-		this.#nativeAdOptions = nativeAdOptions;
-		this.#delegate = GADAdLoaderDelegateImpl.initWithOwner(new WeakRef(this));
+		this._adUnitId = adUnitId;
+		this._requestOptions = requestOptions;
+		this._nativeAdOptions = nativeAdOptions;
+		this._delegate = GADAdLoaderDelegateImpl.initWithOwner(new WeakRef(this));
 	}
 	isLoading(): boolean {
 		return this.native?.loading ?? false;
@@ -202,8 +202,8 @@ export class NativeAdLoader implements INativeAdLoader {
 	load(): void;
 	load(arg?: any): void {
 		const options: GADAdLoaderOptions[] = [];
-		if (this.#nativeAdOptions) {
-			const managerOptions = this.#nativeAdOptions?.adManagerAdViewOptions;
+		if (this._nativeAdOptions) {
+			const managerOptions = this._nativeAdOptions?.adManagerAdViewOptions;
 			if (managerOptions) {
 				if (typeof managerOptions.manualImpressionsEnabled === 'boolean') {
 					const opt = GAMBannerViewOptions.new();
@@ -212,7 +212,7 @@ export class NativeAdLoader implements INativeAdLoader {
 				}
 			}
 
-			const nativeAdOptions = this.#nativeAdOptions?.nativeAdOptions;
+			const nativeAdOptions = this._nativeAdOptions?.nativeAdOptions;
 			if (nativeAdOptions?.adChoicesPlacement) {
 				const placement = GADNativeAdViewAdOptions.new();
 				switch (nativeAdOptions.adChoicesPlacement) {
@@ -292,32 +292,28 @@ export class NativeAdLoader implements INativeAdLoader {
 			options.push(numberOfAds);
 		}
 
-		this.#native = GADAdLoader.alloc().initWithAdUnitIDRootViewControllerAdTypesOptions(this.#adUnitId, topViewController(), [TNSGA.AdLoaderAdTypeToString(AdLoaderAdType.Native)], options);
-		this.#native.delegate = this.#delegate;
+		this._native = GADAdLoader.alloc().initWithAdUnitIDRootViewControllerAdTypesOptions(this._adUnitId, topViewController(), [TNSGA.AdLoaderAdTypeToString(AdLoaderAdType.Native)], options);
+		this._native.delegate = this._delegate;
 
 		if (arg) {
 			if (typeof arg === 'number') {
-				this.#native.loadRequest(toSerializeRequestOptions(this.#requestOptions));
+				this._native.loadRequest(toSerializeRequestOptions(this._requestOptions));
 			}
 
 			if (typeof arg === 'object') {
-				this.#native.loadRequest(toSerializeManagerRequestOptions(arg));
+				this._native.loadRequest(toSerializeManagerRequestOptions(arg));
 			}
 		} else {
-			this.#native.loadRequest(toSerializeRequestOptions(this.#requestOptions));
+			this._native.loadRequest(toSerializeRequestOptions(this._requestOptions));
 		}
 	}
 
-	get _listener() {
-		return this.#listener;
-	}
-
 	onAdEvent(listener: NativeAdEventListener) {
-		this.#listener = listener;
+		this._listener = listener;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -326,37 +322,33 @@ export class NativeAdLoader implements INativeAdLoader {
 }
 
 export class NativeAd implements INativeAd {
-	#adUnitId: string;
-	#native?: GADNativeAd;
-	#listener: AdEventListener;
-	#delegate: GADNativeAdDelegateImpl;
+	_adUnitId: string;
+	_native?: GADNativeAd;
+	_listener: AdEventListener;
+	_delegate: GADNativeAdDelegateImpl;
 	static fromNative(nativeAd: GADNativeAd) {
 		if (nativeAd instanceof GADNativeAd) {
 			const ad = new NativeAd();
-			ad.#native = nativeAd;
-			ad.#delegate = GADNativeAdDelegateImpl.initWithOwner(new WeakRef(ad));
-			nativeAd.delegate = ad.#delegate;
+			ad._native = nativeAd;
+			ad._delegate = GADNativeAdDelegateImpl.initWithOwner(new WeakRef(ad));
+			nativeAd.delegate = ad._delegate;
 			return ad;
 		}
 		return null;
 	}
 
-	get _listener() {
-		return this.#listener;
-	}
-
 	get adUnitId(): string {
-		return this.#adUnitId;
+		return this._adUnitId;
 	}
 
 	onAdEvent(listener: AdEventListener) {
-		this.#listener = listener;
+		this._listener = listener;
 	}
 
 	destroy(): void {}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -398,23 +390,20 @@ export class NativeAd implements INativeAd {
 		this.native?.recordCustomClickGesture?.();
 	}
 
-	#unconfirmedClickListener?: UnconfirmedClickListener;
-	get _unconfirmedClickListener() {
-		return this.#unconfirmedClickListener;
-	}
-	#unconfirmedClickDelegate?: GADNativeAdUnconfirmedClickDelegateImpl;
+	_unconfirmedClickListener?: UnconfirmedClickListener;
+	_unconfirmedClickDelegate?: GADNativeAdUnconfirmedClickDelegateImpl;
 	setUnconfirmedClickListener(listener?: UnconfirmedClickListener): void {
 		this.native.unconfirmedClickDelegate;
-		if (this.#unconfirmedClickListener) {
+		if (this._unconfirmedClickListener) {
 			this.native.unconfirmedClickDelegate = null;
-			this.#unconfirmedClickListener = null;
+			this._unconfirmedClickListener = null;
 		}
 
 		if (listener) {
-			this.#unconfirmedClickDelegate = GADNativeAdUnconfirmedClickDelegateImpl.initWithOwner(new WeakRef(this));
-			this.#unconfirmedClickListener = listener;
+			this._unconfirmedClickDelegate = GADNativeAdUnconfirmedClickDelegateImpl.initWithOwner(new WeakRef(this));
+			this._unconfirmedClickListener = listener;
 			if (this.native) {
-				this.native.unconfirmedClickDelegate = this.#unconfirmedClickDelegate;
+				this.native.unconfirmedClickDelegate = this._unconfirmedClickDelegate;
 			}
 		}
 	}
@@ -457,12 +446,12 @@ export class NativeAd implements INativeAd {
 }
 
 export class MediaContent implements IMediaContent {
-	#native: GADMediaContent;
+	_native: GADMediaContent;
 
 	static fromNative(content: GADMediaContent): MediaContent {
 		if (content instanceof GADMediaContent) {
 			const mediaContent = new MediaContent();
-			mediaContent.#native = content;
+			mediaContent._native = content;
 			return mediaContent;
 		}
 		return null;
@@ -492,7 +481,7 @@ export class MediaContent implements IMediaContent {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -502,15 +491,15 @@ export class MediaContent implements IMediaContent {
 
 export class VideoController implements IVideoController {
 	_status = VideoStatus.Unstarted;
-	#native: GADVideoController;
-	#delegate: GADVideoControllerDelegateImpl;
+	_native: GADVideoController;
+	_delegate: GADVideoControllerDelegateImpl;
 	_isMute: boolean = false;
 	static fromNative(controller: GADVideoController) {
 		if (controller instanceof GADVideoController) {
 			const ctrl = new VideoController();
-			ctrl.#native = controller;
-			ctrl.#delegate = GADVideoControllerDelegateImpl.initWithOwner(new WeakRef(ctrl));
-			ctrl.#native.delegate = ctrl.#delegate;
+			ctrl._native = controller;
+			ctrl._delegate = GADVideoControllerDelegateImpl.initWithOwner(new WeakRef(ctrl));
+			ctrl._native.delegate = ctrl._delegate;
 			return ctrl;
 		}
 		return null;
@@ -544,7 +533,7 @@ export class VideoController implements IVideoController {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get aniosdroid() {
@@ -553,11 +542,11 @@ export class VideoController implements IVideoController {
 }
 
 export class MediaView extends MediaViewBase {
-	#contentView: GADMediaView;
+	_contentView: GADMediaView;
 	createNativeView() {
-		this.#contentView = GADMediaView.new();
-		this.#contentView.contentMode = UIViewContentMode.ScaleAspectFit;
-		return this.#contentView;
+		this._contentView = GADMediaView.new();
+		this._contentView.contentMode = UIViewContentMode.ScaleAspectFit;
+		return this._contentView;
 	}
 
 	public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number) {
@@ -570,43 +559,43 @@ export class MediaView extends MediaViewBase {
 	}
 
 	[mediaContentProperty.setNative](content) {
-		if (this.#contentView) {
-			this.#contentView.mediaContent = content?.native || null;
+		if (this._contentView) {
+			this._contentView.mediaContent = content?.native || null;
 		}
 	}
 
 	[stretchProperty.setNative](value) {
-		if (!this.#contentView) {
+		if (!this._contentView) {
 			return;
 		}
 		switch (value) {
 			case 'aspectFit':
-				this.#contentView.contentMode = UIViewContentMode.ScaleAspectFit;
+				this._contentView.contentMode = UIViewContentMode.ScaleAspectFit;
 				break;
 			case 'aspectFill':
-				this.#contentView.contentMode = UIViewContentMode.ScaleAspectFill;
+				this._contentView.contentMode = UIViewContentMode.ScaleAspectFill;
 				break;
 			case 'fill':
-				this.#contentView.contentMode = UIViewContentMode.ScaleToFill;
+				this._contentView.contentMode = UIViewContentMode.ScaleToFill;
 				break;
 			case 'none':
 			default:
-				this.#contentView.contentMode = UIViewContentMode.TopLeft;
+				this._contentView.contentMode = UIViewContentMode.TopLeft;
 				break;
 		}
 	}
 
 	get native() {
-		return this.#contentView;
+		return this._contentView;
 	}
 }
 
 export class NativeAdImage implements INativeAdImage {
-	#native: GADNativeAdImage;
+	_native: GADNativeAdImage;
 	static fromNative(image: GADNativeAdImage) {
 		if (image instanceof GADNativeAdImage) {
 			const img = new NativeAdImage();
-			img.#native = image;
+			img._native = image;
 			return img;
 		}
 		return null;
@@ -625,7 +614,7 @@ export class NativeAdImage implements INativeAdImage {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {
@@ -634,11 +623,11 @@ export class NativeAdImage implements INativeAdImage {
 }
 
 export class MuteThisAdReason implements IMuteThisAdReason {
-	#native: GADMuteThisAdReason;
+	_native: GADMuteThisAdReason;
 	static fromNative(reason: GADMuteThisAdReason) {
 		if (reason instanceof GADMuteThisAdReason) {
 			const muteThisAdReason = new MuteThisAdReason();
-			muteThisAdReason.#native = reason;
+			muteThisAdReason._native = reason;
 			return muteThisAdReason;
 		}
 		return null;
@@ -648,7 +637,7 @@ export class MuteThisAdReason implements IMuteThisAdReason {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get ios() {

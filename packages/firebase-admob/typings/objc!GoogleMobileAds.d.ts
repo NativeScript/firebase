@@ -109,6 +109,14 @@ declare class GADAdNetworkResponseInfo extends NSObject {
 
 	readonly adNetworkClassName: string;
 
+	readonly adSourceID: string;
+
+	readonly adSourceInstanceID: string;
+
+	readonly adSourceInstanceName: string;
+
+	readonly adSourceName: string;
+
 	readonly adUnitMapping: NSDictionary<string, any>;
 
 	readonly dictionaryRepresentation: NSDictionary<string, any>;
@@ -1379,6 +1387,8 @@ declare class GADMediationRewardedAdConfiguration extends GADMediationAdConfigur
 interface GADMediationRewardedAdEventDelegate extends GADMediationAdEventDelegate {
 	didEndVideo(): void;
 
+	didRewardUser(): void;
+
 	didRewardUserWithReward(reward: GADAdReward): void;
 
 	didStartVideo(): void;
@@ -1421,6 +1431,8 @@ declare class GADMobileAds extends NSObject {
 	isSDKVersionAtLeastMajorMinorPatch(major: number, minor: number, patch: number): boolean;
 
 	presentAdInspectorFromViewControllerCompletionHandler(viewController: UIViewController, completionHandler: (p1: NSError) => void): void;
+
+	registerWebView(webView: WKWebView): void;
 
 	startWithCompletionHandler(completionHandler: (p1: GADInitializationStatus) => void): void;
 }
@@ -1755,6 +1767,10 @@ declare class GADResponseInfo extends NSObject {
 	readonly adNetworkInfoArray: NSArray<GADAdNetworkResponseInfo>;
 
 	readonly dictionaryRepresentation: NSDictionary<string, any>;
+
+	readonly extrasDictionary: NSDictionary<string, any>;
+
+	readonly loadedAdNetworkResponseInfo: GADAdNetworkResponseInfo;
 
 	readonly responseIdentifier: string;
 }

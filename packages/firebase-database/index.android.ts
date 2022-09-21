@@ -28,18 +28,18 @@ function serializeItems(data, wrapPrimitives = false) {
 }
 
 export class OnDisconnect implements IOnDisconnect {
-	#native: com.google.firebase.database.OnDisconnect;
+	_native: com.google.firebase.database.OnDisconnect;
 	static fromNative(disconnect: com.google.firebase.database.OnDisconnect) {
 		if (disconnect instanceof com.google.firebase.database.OnDisconnect) {
 			const d = new OnDisconnect();
-			d.#native = disconnect;
+			d._native = disconnect;
 			return d;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -144,18 +144,18 @@ export class OnDisconnect implements IOnDisconnect {
 }
 
 export class Query implements IQuery {
-	#native: com.google.firebase.database.Query;
+	_native: com.google.firebase.database.Query;
 	static fromNative(query: com.google.firebase.database.Query) {
 		if (query instanceof com.google.firebase.database.Query) {
 			const q = new Query();
-			q.#native = query;
+			q._native = query;
 			return q;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -192,17 +192,17 @@ export class Query implements IQuery {
 		const handle = callback?.['__fbHandle'];
 		const event = callback?.['__fbEventType'];
 		if (handle && event === eventType) {
-			if (this.#handles.has(callback)) {
+			if (this._handles.has(callback)) {
 				this.native.removeEventListener(handle as any);
 				callback['__fbHandle'] = undefined;
 				callback['__fbEventType'] = undefined;
 				callback['__fbContext'] = undefined;
-				this.#handles.delete(callback);
+				this._handles.delete(callback);
 			}
 		}
 	}
 
-	#handles: Map<(a: DataSnapshot, b: string) => void, com.google.firebase.database.ValueEventListener | com.google.firebase.database.ChildEventListener> = new Map();
+	_handles: Map<(a: DataSnapshot, b: string) => void, com.google.firebase.database.ValueEventListener | com.google.firebase.database.ChildEventListener> = new Map();
 
 	on(eventType: EventType, callback: (data: DataSnapshot, previousChildKey: string) => void, cancelCallbackOrContext?: (a: FirebaseError) => void | Record<string, any>, context?: Record<string, any>): (a: DataSnapshot, b: string) => void {
 		let handle;
@@ -253,7 +253,7 @@ export class Query implements IQuery {
 		callback['__fbEventType'] = eventType;
 		callback['__fbContext'] = context;
 
-		this.#handles.set(callback, handle);
+		this._handles.set(callback, handle);
 
 		return callback;
 	}
@@ -345,20 +345,20 @@ export class Query implements IQuery {
 }
 
 export class ServerValue {
-	#native: any;
+	_native: any;
 	static timeStamp() {
 		const value = new ServerValue();
-		value.#native = com.google.firebase.database.ServerValue.TIMESTAMP;
+		value._native = com.google.firebase.database.ServerValue.TIMESTAMP;
 		return value;
 	}
 	static increment(count: number) {
 		const value = new ServerValue();
-		value.#native = com.google.firebase.database.ServerValue.increment(count);
+		value._native = com.google.firebase.database.ServerValue.increment(count);
 		return value;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 
 	get android() {
@@ -367,11 +367,11 @@ export class ServerValue {
 }
 
 export class Reference extends Query implements IReference {
-	#native: com.google.firebase.database.DatabaseReference;
+	_native: com.google.firebase.database.DatabaseReference;
 	static fromNative(ref: com.google.firebase.database.DatabaseReference) {
 		if (ref instanceof com.google.firebase.database.DatabaseReference) {
 			const reference = new Reference();
-			reference.#native = ref;
+			reference._native = ref;
 			return reference;
 		}
 		return null;
@@ -391,7 +391,7 @@ export class Reference extends Query implements IReference {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -564,18 +564,18 @@ export class ThenableReference extends Reference implements IThenableReference {
 }
 
 export class DataSnapshot implements IDataSnapshot {
-	#native: com.google.firebase.database.DataSnapshot;
+	_native: com.google.firebase.database.DataSnapshot;
 	static fromNative(snapshot: com.google.firebase.database.DataSnapshot) {
 		if (snapshot instanceof com.google.firebase.database.DataSnapshot) {
 			const ss = new DataSnapshot();
-			ss.#native = snapshot;
+			ss._native = snapshot;
 			return ss;
 		}
 		return null;
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
@@ -632,43 +632,43 @@ export class DataSnapshot implements IDataSnapshot {
 }
 
 export class Database implements IDatabase {
-	#native: com.google.firebase.database.FirebaseDatabase;
-	#app: FirebaseApp;
+	_native: com.google.firebase.database.FirebaseDatabase;
+	_app: FirebaseApp;
 	constructor(app?: FirebaseApp) {
 		if (app?.native) {
-			this.#native = com.google.firebase.database.FirebaseDatabase.getInstance(app.native);
+			this._native = com.google.firebase.database.FirebaseDatabase.getInstance(app.native);
 		} else {
 			if (defaultDatabase) {
 				return defaultDatabase;
 			}
 			defaultDatabase = this;
-			this.#native = com.google.firebase.database.FirebaseDatabase.getInstance();
+			this._native = com.google.firebase.database.FirebaseDatabase.getInstance();
 		}
 	}
 
 	useEmulator(host: string, port: number) {
-		this.native.useEmulator(host === 'localhost' ? '10.0.2.2' : host, port);
+		this.native.useEmulator(host === 'localhost' || host === '127.0.0.1' ? '10.0.2.2' : host, port);
 	}
 
-	#persistenceCacheSizeBytes = 10 * 1024 * 1024;
+	_persistenceCacheSizeBytes = 10 * 1024 * 1024;
 	get persistenceCacheSizeBytes(): number {
-		return this.#persistenceCacheSizeBytes;
+		return this._persistenceCacheSizeBytes;
 	}
 
 	set persistenceCacheSizeBytes(bytes) {
 		try {
 			this.native.setPersistenceCacheSizeBytes(bytes);
-			this.#persistenceCacheSizeBytes = bytes;
+			this._persistenceCacheSizeBytes = bytes;
 		} catch (e) {}
 	}
-	#persistenceEnabled: boolean = false;
+	_persistenceEnabled: boolean = false;
 	get persistenceEnabled(): boolean {
-		return this.#persistenceEnabled;
+		return this._persistenceEnabled;
 	}
 	set persistenceEnabled(value) {
 		try {
 			this.native.setPersistenceEnabled(value);
-			this.#persistenceEnabled = value;
+			this._persistenceEnabled = value;
 		} catch (e) {}
 	}
 
@@ -693,17 +693,17 @@ export class Database implements IDatabase {
 	}
 
 	get native() {
-		return this.#native;
+		return this._native;
 	}
 	get android() {
 		return this.native;
 	}
 
 	get app(): FirebaseApp {
-		if (!this.#app) {
+		if (!this._app) {
 			// @ts-ignore
-			this.#app = FirebaseApp.fromNative(this.native.getApp());
+			this._app = FirebaseApp.fromNative(this.native.getApp());
 		}
-		return this.#app;
+		return this._app;
 	}
 }
