@@ -21,7 +21,7 @@ iOS prevents messages containing notification (or 'alert') payloads from being d
 This module provides a requestPermission method which triggers a native permission dialog requesting the user's permission:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase, AuthorizationStatus } from '@nativescript/firebase-core';
 import '@nativescript/firebase-messaging'; // only needs to be imported 1x
 
 async function requestUserPermission() {
@@ -32,7 +32,7 @@ async function requestUserPermission() {
 				alert: true,
 			},
 		});
-	const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+	const enabled = authStatus === AuthorizationStatus.AUTHORIZED || authStatus === AuthorizationStatus.PROVISIONAL;
 
 	if (enabled) {
 		console.log('Authorization status:', authStatus);
