@@ -416,9 +416,7 @@ export class Firebase {
 			};
 
 			if (!UIApplication.sharedApplication) {
-				launchQueue.push(() => {
-					initApp();
-				});
+				launchQueue.push(initApp());
 			} else {
 				initApp();
 			}
