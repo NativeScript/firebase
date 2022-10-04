@@ -68,8 +68,9 @@ export const topViewController = (): UIViewController | undefined => {
 };
 
 const rootViewController = (): UIViewController | undefined => {
-	const keyWindow = UIApplication.sharedApplication.keyWindow;
-	return keyWindow != null ? keyWindow.rootViewController : undefined;
+	const app = UIApplication.sharedApplication;
+  const window = app.keyWindow || (app.windows.count > 0 && app.windows[0]);
+  return window != null ? window.rootViewController : undefined;
 };
 
 const findTopViewController = (root: UIViewController): UIViewController | undefined => {
