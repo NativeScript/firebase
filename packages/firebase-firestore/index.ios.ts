@@ -203,7 +203,7 @@ export class Transaction implements ITransaction {
 	update(documentRef: any, field: any, value?: any, moreFieldsAndValues?: any): Transaction {
 		const data = createDictionary(field, value, moreFieldsAndValues);
 
-		return Transaction.fromNative(this._native.updateDataForDocument(data as any, documentRef?.native));
+		return Transaction.fromNative(this._native.updateDataForDocument(serializeItems(data), documentRef?.native));
 	}
 
 	set<T extends DocumentData = DocumentData>(documentRef: DocumentReference<T>, data: T, options?: SetOptions): Transaction {
@@ -979,7 +979,7 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 	update(field: any, value?: any, moreFieldsAndValues?: any): Promise<void> {
 		return new Promise((resolve, reject) => {
 			const data = createDictionary(field, value, moreFieldsAndValues);
-			this._native.updateDataCompletion(data as any, (error) => {
+			this._native.updateDataCompletion(serializeItems(data), (error) => {
 				if (error) {
 					reject(FirebaseError.fromNative(error));
 				} else {
@@ -1269,7 +1269,7 @@ export class WriteBatch implements IWriteBatch {
 	update<T extends DocumentData = DocumentData, K extends keyof T = string>(documentRef: DocumentReference<T>, field: K | FieldPath, value: FieldValue | T[K], moreFieldAndValues: any[]): WriteBatch;
 	update(documentRef: any, field: any, value?: any, moreFieldsAndValues?: any): WriteBatch {
 		const data = createDictionary(field, value, moreFieldsAndValues);
-		return WriteBatch.fromNative(this._native.updateDataForDocument(data as any, documentRef?.native));
+		return WriteBatch.fromNative(this._native.updateDataForDocument(serializeItems(data), documentRef?.native));
 	}
 
 	get native() {
