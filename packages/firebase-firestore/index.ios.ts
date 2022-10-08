@@ -140,31 +140,19 @@ function serializeItems(value) {
 	return value;
 }
 
-function createDictionary(field: any, value?: any, moreFieldsAndValues?: any) {
-	const data = {};
-	if (data && !value && !moreFieldsAndValues) {
-		Object.entries(field).forEach((item) => {
-			const key = <any>item[0];
-			const value = <any>item[1];
-			if (key instanceof FieldPath) {
-				data[key.native as any] = value?.native || value;
+function createDictionary(dataOrField: any, fieldPathValue?: any, moreFieldsAndValues?: any) {
+	// TODO: Correctly handle FieldPaths used as keys or passed in the dataOrField and
+	// moreFieldsAndValues params e.g. new FieldPath(['test', '123']) will currently result in an
+	// object like { "<FIRFieldPath: 0x283f94640>": "value" }
+	const data = {}
+	const assignKeyValue = (key, val) => data[key instanceof FieldPath ? key.native : key] = serializeItems(val);
+	if (!fieldPathValue && !moreFieldsAndValues) {
+		Object.entries(dataOrField).forEach((item) => assignKeyValue(item[0], item[1]));
 			} else {
-				data[key] = value?.native || value;
-			}
-		});
-	} else {
-		if (field instanceof FieldPath) {
-			data[field.native as any] = value?.native || value;
-		} else {
-			data[field] = value?.native || value;
-		}
-
+		assignKeyValue(dataOrField, fieldPathValue);
 		if (Array.isArray(moreFieldsAndValues)) {
-			for (let i = 0; i < moreFieldsAndValues.length; i += 2) {
-				const key = moreFieldsAndValues[i];
-				const value = moreFieldsAndValues[i + 1];
-				data[key?.native || key] = value?.native || value;
-			}
+			Object.entries(Object.fromEntries(moreFieldsAndValues))
+				.forEach(([key, value]) => assignKeyValue(key, value));
 		}
 	}
 
@@ -202,8 +190,7 @@ export class Transaction implements ITransaction {
 	update<T extends DocumentData = DocumentData, K extends keyof T = string>(documentRef: DocumentReference<T>, field: K | FieldPath, value: T[K], moreFieldsAndValues: any[]): Transaction;
 	update(documentRef: any, field: any, value?: any, moreFieldsAndValues?: any): Transaction {
 		const data = createDictionary(field, value, moreFieldsAndValues);
-
-		return Transaction.fromNative(this._native.updateDataForDocument(serializeItems(data), documentRef?.native));
+		return Transaction.fromNative(this._native.updateDataForDocument(data as any, documentRef?.native));
 	}
 
 	set<T extends DocumentData = DocumentData>(documentRef: DocumentReference<T>, data: T, options?: SetOptions): Transaction {
@@ -979,7 +966,7 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 	update(field: any, value?: any, moreFieldsAndValues?: any): Promise<void> {
 		return new Promise((resolve, reject) => {
 			const data = createDictionary(field, value, moreFieldsAndValues);
-			this._native.updateDataCompletion(serializeItems(data), (error) => {
+			this._native.updateDataCompletion(data as any, (error) => {
 				if (error) {
 					reject(FirebaseError.fromNative(error));
 				} else {
@@ -1269,7 +1256,7 @@ export class WriteBatch implements IWriteBatch {
 	update<T extends DocumentData = DocumentData, K extends keyof T = string>(documentRef: DocumentReference<T>, field: K | FieldPath, value: FieldValue | T[K], moreFieldAndValues: any[]): WriteBatch;
 	update(documentRef: any, field: any, value?: any, moreFieldsAndValues?: any): WriteBatch {
 		const data = createDictionary(field, value, moreFieldsAndValues);
-		return WriteBatch.fromNative(this._native.updateDataForDocument(serializeItems(data), documentRef?.native));
+		return WriteBatch.fromNative(this._native.updateDataForDocument(data as any, documentRef?.native));
 	}
 
 	get native() {
