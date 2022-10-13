@@ -3,9 +3,7 @@ import { FirebaseError } from '@nativescript/firebase-core';
 import { ManagerRequestOptions, RequestOptions, AdEventListener } from '..';
 import { AdEventType } from '../common';
 import { NativeAdEventListener, NativeAdViewBase, MediaViewBase, mediaContentProperty, stretchProperty } from './common';
-import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, NativeAdOptions, UnconfirmedClickListener, VideoStatus, AdChoicesPlacement, MediaAspectRatio, INativeAdLoader, NativeAdEventType } from '.';
-
-export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio, NativeAdEventType };
+import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, NativeAdOptions, UnconfirmedClickListener, VideoStatus, INativeAdLoader, NativeAdEventType } from '.';
 
 const NATIVE_AD_LOADED_EVENT = 'adNativeAdLoaded';
 const AD_MANAGER_AD_VIEW_LOADED_EVENT = 'adManagerAdViewLoaded';

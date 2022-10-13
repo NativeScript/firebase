@@ -6,7 +6,6 @@ import { ManagerRequestOptions, RequestOptions, AdEventListener } from '..';
 import { NativeAdEventListener, NativeAdViewBase, MediaViewBase, mediaContentProperty, stretchProperty } from './common';
 import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, NativeAdOptions, UnconfirmedClickListener, VideoStatus, AdChoicesPlacement, MediaAspectRatio, INativeAdLoader, NativeAdEventType } from '.';
 
-export { VideoStatus, AdEventType, AdChoicesPlacement, MediaAspectRatio, NativeAdEventType };
 declare const AdLoaderAdType;
 
 export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {

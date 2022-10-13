@@ -1,6 +1,6 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseFirestore } from '@demo/shared';
-import { Firestore, GeoPoint, Timestamp } from '@nativescript/firebase-firestore';
+import { FieldPath, FieldValue, Firestore, GeoPoint, Timestamp } from '@nativescript/firebase-firestore';
 import { firebase } from '@nativescript/firebase-core';
 
 export function navigatingTo(args: EventData) {
@@ -14,8 +14,9 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 	}
 
 	testIt(): void {
-		this.issue_51();
-		Promise.all([this.init(), this.invalid_field_path()]);
+		this.issue_139();
+		//this.issue_51();
+		//Promise.all([this.init(), this.invalid_field_path(), this.issue_139(), this.field_path()]);
 	}
 
 	issue_51() {
@@ -124,5 +125,29 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 		} catch (error) {
 			console.log('error', error);
 		}
+	}
+
+	async issue_139() {
+		const data = {
+			a: {
+				b: FieldValue.serverTimestamp(),
+			},
+		};
+
+		data[new FieldPath(['test', '123']) as any] = 'thing';
+		firebase()
+			.firestore()
+			.doc('test/1234')
+			.update(data)
+			.then((done) => {
+				console.log('done', 'issue 139');
+			})
+			.catch((e) => {
+				console.error('done', 'issue 139', e);
+			});
+	}
+
+	async field_path() {
+		const fp = new FieldPath(['test', '123']);
 	}
 }
