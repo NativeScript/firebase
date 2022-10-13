@@ -1,3 +1,15 @@
+# [2.4.0](https://github.com/nativescript/firebase/compare/2.4.0-alpha.0...2.4.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* **admob:** import ([9c77fa2](https://github.com/nativescript/firebase/commit/9c77fa2bf3462724500ed3bc0630c4a8bf1999cd)), closes [#140](https://github.com/nativescript/firebase/issues/140)
+* **analytics:** hook multiple writes ([0e00cdc](https://github.com/nativescript/firebase/commit/0e00cdc82917a988c385d526bae6f03c62db50dc))
+* **firestore:** fieldPath as key ([c4ae70f](https://github.com/nativescript/firebase/commit/c4ae70ffa51543b96fc50ea380d944c3abd0f364))
+* **firestore:** iOS nested FieldValues not serialized in update() ([#139](https://github.com/nativescript/firebase/issues/139)) ([7f6da0b](https://github.com/nativescript/firebase/commit/7f6da0b2a215293e7e308a5eb213358a2f25076a))
+
+
+
 # [2.4.0-alpha.0](https://github.com/nativescript/firebase/compare/2.3.4...2.4.0-alpha.0) (2022-09-21)
 
 
