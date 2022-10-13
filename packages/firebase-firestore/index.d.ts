@@ -61,9 +61,7 @@ export interface ICollectionReference<T extends DocumentData = DocumentData> {
 	doc(documentPath?: undefined | string): IDocumentReference<T>;
 }
 
-export interface IFieldPath {
-	documentId(): IFieldPath;
-}
+export interface IFieldPath {}
 
 export interface IFieldValue {}
 
@@ -406,9 +404,10 @@ export declare class DocumentReference<T extends DocumentData = DocumentData> im
 }
 
 export declare class FieldPath implements IFieldPath {
+	constructor(fieldNames: string[]);
 	constructor(...fieldNames: string[]);
 
-	documentId(): FieldPath;
+	static documentId(): FieldPath;
 
 	readonly android: any;
 	readonly ios: any;

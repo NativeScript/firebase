@@ -1170,14 +1170,12 @@ export class FieldPath implements IFieldPath {
 		return this.native;
 	}
 
-	documentId(): FieldPath {
+	static documentId(): FieldPath {
 		return FieldPath.fromNative(com.google.firebase.firestore.FieldPath.documentId());
 	}
 
-	toJSON() {
-		return {
-			documentId: this.documentId,
-		};
+	toString() {
+		return this.native.toString().replace(/([`])/g, '');
 	}
 }
 

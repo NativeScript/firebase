@@ -8,7 +8,11 @@ const main_queue = dispatch_get_current_queue();
 
 import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 
+import '@nativescript/core';
+
 let defaultFirestore: Firestore;
+
+declare var FieldPathExt;
 
 const fb = firebase();
 Object.defineProperty(fb, 'firestore', {
@@ -141,18 +145,25 @@ function serializeItems(value) {
 }
 
 function createDictionary(dataOrField: any, fieldPathValue?: any, moreFieldsAndValues?: any) {
-	// TODO: Correctly handle FieldPaths used as keys or passed in the dataOrField and
-	// moreFieldsAndValues params e.g. new FieldPath(['test', '123']) will currently result in an
-	// object like { "<FIRFieldPath: 0x283f94640>": "value" }
-	const data = {}
-	const assignKeyValue = (key, val) => data[key instanceof FieldPath ? key.native : key] = serializeItems(val);
+	const data = NSMutableDictionary.alloc().init();
+
+	const assignKeyValue = (key, val) => {
+		// check the map for weak object
+		if (typeof key === 'string' && key.includes('FIRFieldPath')) {
+			const ref = fp_refs.get(key)?.get?.();
+			if (ref) {
+				data.setObjectForKey(serializeItems(val), ref);
+				return;
+			}
+		}
+		data.setObjectForKey(serializeItems(val), key instanceof FieldPath ? key.native : key);
+	};
 	if (!fieldPathValue && !moreFieldsAndValues) {
 		Object.entries(dataOrField).forEach((item) => assignKeyValue(item[0], item[1]));
-			} else {
+	} else {
 		assignKeyValue(dataOrField, fieldPathValue);
 		if (Array.isArray(moreFieldsAndValues)) {
-			Object.entries(Object.fromEntries(moreFieldsAndValues))
-				.forEach(([key, value]) => assignKeyValue(key, value));
+			Object.entries(Object.fromEntries(moreFieldsAndValues)).forEach(([key, value]) => assignKeyValue(key, value));
 		}
 	}
 
@@ -993,19 +1004,27 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 	}
 }
 
+const fp_refs = new Map<string, WeakRef<FIRFieldPath>>();
+
 export class FieldPath implements IFieldPath {
 	_native: FIRFieldPath;
 
 	constructor(fieldNames: string[], native = false) {
 		if (!native) {
 			this._native = FIRFieldPath.alloc().initWithFields(fieldNames);
+			this._addToMap();
 		}
+	}
+
+	private _addToMap() {
+		fp_refs.set(this.native.description, new WeakRef(this._native));
 	}
 
 	static fromNative(field: FIRFieldPath) {
 		if (field instanceof FIRFieldPath) {
 			const path = new FieldPath([], true);
 			path._native = field;
+			path._addToMap();
 			return path;
 		}
 		return null;
@@ -1019,14 +1038,12 @@ export class FieldPath implements IFieldPath {
 		return this.native;
 	}
 
-	documentId(): FieldPath {
+	static documentId(): FieldPath {
 		return FieldPath.fromNative(FIRFieldPath.documentID());
 	}
 
-	toJSON() {
-		return {
-			documentId: this.documentId,
-		};
+	toString() {
+		return this.native.description;
 	}
 }
 
