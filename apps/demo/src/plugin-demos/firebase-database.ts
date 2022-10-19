@@ -23,6 +23,7 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 		this.children();
 		this.setData();
 		this.issue113();
+		this.issue141();
 	}
 
 	issue105() {
@@ -53,6 +54,23 @@ export class DemoModel extends DemoSharedFirebaseDatabase {
 			.catch((e) => {
 				console.log('error', e);
 			});
+	}
+
+	issue141() {
+		let on = true;
+		const ref = this.database.ref('/issues/141');
+		const cb = (data, key) => {
+			if (!on) {
+				throw new Error('issue 141 Listener: failed to unsubscribe');
+			}
+			console.log('issue141', data.val(), 'previous', key);
+			ref.off('value', cb);
+			on = false;
+
+			ref.set({ name: 'Osei Fortune' });
+		};
+		ref.on('value', cb);
+		ref.set({ name: 'Osei' });
 	}
 
 	setData() {
