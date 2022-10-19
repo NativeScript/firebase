@@ -1,7 +1,9 @@
 import { Firebase, FirebaseApp } from '@nativescript/firebase-core';
 import { IDataSnapshot, IDatabase, IOnDisconnect, EventType, IQuery, IReference, IThenableReference, TransactionResult } from './common';
 
-declare class OnDisconnect implements IOnDisconnect {
+export { EventType };
+
+export declare class OnDisconnect implements IOnDisconnect {
 	readonly native: any;
 	readonly android: any;
 	readonly ios: any;
@@ -17,7 +19,7 @@ declare class OnDisconnect implements IOnDisconnect {
 	update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void): Promise<void>;
 }
 
-declare class Query implements IQuery {
+export declare class Query implements IQuery {
 	readonly native: any;
 	readonly android: any;
 	readonly ios: any;
@@ -51,16 +53,16 @@ declare class Query implements IQuery {
 	startAt(value: string | number | boolean, key?: string): Query;
 }
 
-declare class ServerValue {
+export declare class ServerValue {
 	readonly native: any;
 	readonly android: any;
 	readonly ios: any;
-	
+
 	static timeStamp(): ServerValue;
 	static increment(count: number): ServerValue;
 }
 
-declare class Reference extends Query implements IReference {
+export declare class Reference extends Query implements IReference {
 	readonly native: any;
 	readonly android: any;
 	readonly ios: any;
@@ -89,7 +91,7 @@ declare class Reference extends Query implements IReference {
 	update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void): Promise<void>;
 }
 
-declare class DataSnapshot implements IDataSnapshot {
+export declare class DataSnapshot implements IDataSnapshot {
 	readonly native: any;
 	readonly android: any;
 	readonly ios: any;
@@ -116,7 +118,7 @@ declare class DataSnapshot implements IDataSnapshot {
 	val();
 }
 
-declare class Database implements IDatabase {
+export declare class Database implements IDatabase {
 	readonly native: any;
 	readonly android: any;
 	readonly ios: any;
