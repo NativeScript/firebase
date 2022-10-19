@@ -3,10 +3,12 @@ import { FirebaseError } from '@nativescript/firebase-core';
 import { topViewController, toSerializeManagerRequestOptions, toSerializeRequestOptions } from '../utils';
 import { AdEventType } from '../common';
 import { ManagerRequestOptions, RequestOptions, AdEventListener } from '..';
-import { NativeAdEventListener, NativeAdViewBase, MediaViewBase, mediaContentProperty, stretchProperty } from './common';
-import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, NativeAdOptions, UnconfirmedClickListener, VideoStatus, AdChoicesPlacement, MediaAspectRatio, INativeAdLoader, NativeAdEventType } from '.';
+import { NativeAdEventListener, NativeAdViewBase, MediaViewBase, mediaContentProperty, stretchProperty, MediaAspectRatio, AdChoicesPlacement, VideoStatus, NativeAdEventType } from './common';
+import { IMediaContent, IMuteThisAdReason, INativeAd, INativeAdImage, IVideoController, NativeAdOptions, UnconfirmedClickListener, INativeAdLoader } from '.';
 
 declare const AdLoaderAdType;
+
+export { AdChoicesPlacement, AdEventType, VideoStatus, MediaAspectRatio, NativeAdEventType };
 
 export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilder {
 	_native: GADNativeAdView;
