@@ -476,10 +476,13 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 						}
 					} else {
 						if (error) {
-							onError?.(FirebaseError.fromNative(error));
+							// onNext -> onError
+							onNext?.(FirebaseError.fromNative(error));
 						} else {
-							onCompletion?.();
-							onNext?.(QuerySnapshot.fromNative(ss));
+							// onError -> onCompletion
+							onError?.();
+							// options -> onNext
+							options?.(QuerySnapshot.fromNative(ss));
 						}
 					}
 				} else {
