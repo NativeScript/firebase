@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-auth",
-	"version": "2.4.1",
+	"version": "2.4.2",
 	"description": "NativeScript Firebase - Auth",
 	"main": "index",
 	"typings": "index.d.ts",
