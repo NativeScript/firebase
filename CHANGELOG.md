@@ -1,3 +1,14 @@
+## [2.4.1](https://github.com/nativescript/firebase/compare/2.4.0...2.4.1) (2022-10-19)
+
+
+### Bug Fixes
+
+* **admob:** export correct enums ([161af8a](https://github.com/nativescript/firebase/commit/161af8afd1e7417c7eaf9864e45eec5deef06a75))
+* **database:** export ([24614e3](https://github.com/nativescript/firebase/commit/24614e3c396280aa4f2eaed9cbc48258fb548227))
+* **firestore:** onSnapshot handling ([ba384c2](https://github.com/nativescript/firebase/commit/ba384c21ff6384e9db365ed5c21281b1da9ec5ff))
+
+
+
 # [2.4.0](https://github.com/nativescript/firebase/compare/2.4.0-alpha.0...2.4.0) (2022-10-13)
 
 
