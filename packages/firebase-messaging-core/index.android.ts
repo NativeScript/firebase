@@ -296,7 +296,7 @@ export class MessagingCore implements IMessagingCore {
 				const requestPermission = (activity: androidx.appcompat.app.AppCompatActivity) => {
 					Application.android.on('activityRequestPermissions', (event) => {
 						if (event.requestCode === 1001) {
-							if (event.grantResults[0] === android.content.pm.PackageManager.PERMISSION_GRANTED) {
+							if (event.grantResults && event.grantResults.length > 0 && event.grantResults[0] === android.content.pm.PackageManager.PERMISSION_GRANTED) {
 								resolve(0);
 							} else {
 								reject(1);
