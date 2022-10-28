@@ -537,16 +537,18 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 								if (error) {
 									onError?.(FirebaseError.fromNative(error));
 								} else {
+									// onError -> onCompletion
 									onCompletion?.();
+									// options -> onNext
 									onNext?.(QuerySnapshot.fromNative(ss));
 								}
 							}
 						} else {
 							if (error) {
-								// onNext -> onError
+								//onError -> onNext
 								onNext?.(FirebaseError.fromNative(error));
 							} else {
-								// onError -> onCompletion
+								// onCompletion ->
 								onError?.();
 								// options -> onNext
 								options?.(QuerySnapshot.fromNative(ss));
@@ -554,8 +556,9 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 						}
 					} else {
 						if (typeof arguments[1] === 'function') {
+							// onNext -> options
 							if (!error) {
-								onNext?.(QuerySnapshot.fromNative(ss));
+								options?.(QuerySnapshot.fromNative(ss));
 							}
 						} else {
 							if (error) {
@@ -976,22 +979,28 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 								if (error) {
 									onError?.(FirebaseError.fromNative(error));
 								} else {
+									// onError -> onCompletion
 									onCompletion?.();
+									// options -> onNext
 									onNext?.(DocumentSnapshot.fromNative(ss));
 								}
 							}
 						} else {
 							if (error) {
-								onError?.(FirebaseError.fromNative(error));
+								//onError -> onNext
+								onNext?.(FirebaseError.fromNative(error));
 							} else {
-								onCompletion?.();
-								onNext?.(DocumentSnapshot.fromNative(ss));
+								// onCompletion ->
+								onError?.();
+								// options -> onNext
+								options?.(DocumentSnapshot.fromNative(ss));
 							}
 						}
 					} else {
 						if (typeof arguments[1] === 'function') {
+							// onNext -> options
 							if (!error) {
-								onNext?.(DocumentSnapshot.fromNative(ss));
+								options?.(DocumentSnapshot.fromNative(ss));
 							}
 						} else {
 							if (error) {
