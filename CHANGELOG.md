@@ -1,3 +1,12 @@
+## [2.4.3](https://github.com/nativescript/firebase/compare/2.4.2...2.4.3) (2022-10-28)
+
+
+### Bug Fixes
+
+* **messaging-core:** check permission results size ([14b99c8](https://github.com/nativescript/firebase/commit/14b99c84083849b7f454b35de6f03b776a106c57)), closes [#144](https://github.com/nativescript/firebase/issues/144)
+
+
+
 ## [2.4.2](https://github.com/nativescript/firebase/compare/2.4.1...2.4.2) (2022-10-28)
 
 
