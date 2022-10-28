@@ -1,9 +1,9 @@
-import { ContainerView, CoreTypes, CSSType, Property, View } from '@nativescript/core';
+import { ContainerView, ContentView, CoreTypes, CSSType, Property, View } from '@nativescript/core';
 import { AdEventType } from '../common';
 import { IMediaContent, INativeAd } from '.';
 
 @CSSType('NativeAdView')
-export abstract class NativeAdViewBase extends ContainerView {
+export abstract class NativeAdViewBase extends ContentView {
 	abstract adChoicesView: View;
 
 	abstract advertiserView: View;

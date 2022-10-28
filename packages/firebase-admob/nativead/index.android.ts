@@ -19,21 +19,7 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 	}
 
 	_addChildFromBuilder(name: string, value: any): void {
-		if (value instanceof View && !value.parent && !this._child) {
-			this._addView(value);
-			this._child = value;
-		}
-	}
-
-	public eachChildView(callback: (child: View) => boolean): void {
-		callback(this._child);
-	}
-
-	onLoaded() {
-		super.onLoaded();
-		if (this._child && (<any>this._native).indexOfChild(this._child.nativeView) === -1) {
-			(<any>this._native).addView(this._child.nativeView);
-		}
+		this.content = value;
 	}
 
 	_adChoicesView: View;
@@ -296,6 +282,10 @@ export class NativeAd implements INativeAd {
 		return MediaContent.fromNative(this.native?.getMediaContent?.());
 	}
 
+	get customMuteThisAdAvailable() {
+		return this.native?.isCustomMuteThisAdEnabled?.();
+	}
+
 	isCustomClickGestureEnabled(): boolean {
 		return this.native?.isCustomClickGestureEnabled?.();
 	}
@@ -363,6 +353,13 @@ export class NativeAd implements INativeAd {
 		}
 		return result;
 	}
+
+	muteThisAdWithReason(reason: MuteThisAdReason) {
+		if (reason?.native) {
+			this.native?.muteThisAd?.(reason.native);
+		}
+	}
+
 	get images() {
 		const result = [];
 		const images = this.native?.getImages?.();

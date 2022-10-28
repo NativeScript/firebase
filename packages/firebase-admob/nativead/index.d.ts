@@ -155,7 +155,10 @@ export declare class NativeAd implements INativeAd {
 
 	readonly mediaContent: MediaContent;
 
+	readonly customMuteThisAdAvailable: boolean;
+
 	isCustomClickGestureEnabled(): boolean;
+
 	enableCustomClickGesture(): void;
 
 	readonly advertiser: string;
@@ -171,6 +174,8 @@ export declare class NativeAd implements INativeAd {
 	readonly starRating: number;
 
 	readonly muteThisAdReasons: MuteThisAdReason[];
+
+	muteThisAdWithReason(reason: MuteThisAdReason);
 
 	readonly images: NativeAdImage[];
 }

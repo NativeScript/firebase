@@ -19,46 +19,14 @@ export class NativeAdView extends NativeAdViewBase implements AddChildFromBuilde
 	}
 
 	_addChildFromBuilder(name: string, value: any): void {
-		if (value instanceof View) {
-			this._child = value;
-		}
+		this.content = value;
 	}
 
-	public eachChildView(callback: (child: View) => boolean): void {
-		if (this._child) {
-			callback(this._child);
-		}
-	}
-
-	public onMeasure(widthMeasureSpec: number, heightMeasureSpec: number): void {
-		const result = View.measureChild(this, this._child, widthMeasureSpec, heightMeasureSpec);
-
-		const width = Utils.layout.getMeasureSpecSize(widthMeasureSpec);
-		const widthMode = Utils.layout.getMeasureSpecMode(widthMeasureSpec);
-
-		const height = Utils.layout.getMeasureSpecSize(heightMeasureSpec);
-		const heightMode = Utils.layout.getMeasureSpecMode(heightMeasureSpec);
-
-		const measureWidth = Math.max(result.measuredWidth, this.effectiveMinWidth);
-		const measureHeight = Math.max(result.measuredHeight, this.effectiveMinHeight);
-
-		const widthAndState = View.resolveSizeAndState(measureWidth, width, widthMode, 0);
-		const heightAndState = View.resolveSizeAndState(measureHeight, height, heightMode, 0);
-
-		this.setMeasuredDimension(widthAndState, heightAndState);
-	}
-
-	public onLayout(left: number, top: number, right: number, bottom: number): void {
-		View.layoutChild(this, this._child, 0, 0, right - left, bottom - top);
-	}
-
-	onLoaded() {
-		super.onLoaded();
-		if (this._child) {
-			this._addView(this._child);
-			this._native.addSubview(this._child.nativeView);
-		}
-	}
+	// public eachChildView(callback: (child: View) => boolean): void {
+	// 	if (this._child) {
+	// 		callback(this._child);
+	// 	}
+	// }
 
 	_adChoicesView: View;
 	get adChoicesView(): View {
@@ -376,6 +344,9 @@ export class NativeAd implements INativeAd {
 		return MediaContent.fromNative(this.native?.mediaContent);
 	}
 
+	get customMuteThisAdAvailable() {
+		return this.native.customMuteThisAdAvailable;
+	}
 	isCustomClickGestureEnabled(): boolean {
 		return this.native?.customClickGestureEnabled;
 	}
@@ -431,6 +402,12 @@ export class NativeAd implements INativeAd {
 			}
 		}
 		return result;
+	}
+
+	muteThisAdWithReason(reason: MuteThisAdReason) {
+		if (reason?.native) {
+			this.native?.muteThisAdWithReason?.(reason.native);
+		}
 	}
 
 	get images() {
