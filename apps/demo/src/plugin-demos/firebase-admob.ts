@@ -44,7 +44,7 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 		const view = event.object;
 		const loader = new NativeAdLoader('ca-app-pub-3940256099942544/3986624511', null, {
 			nativeAdOptions: {
-				adChoicesPlacement: AdChoicesPlacement.TOP_RIGHT,
+				adChoicesPlacement: AdChoicesPlacement.BOTTOM_LEFT,
 			},
 		});
 		loader.onAdEvent((event, error, data) => {
@@ -58,7 +58,6 @@ export class DemoModel extends DemoSharedFirebaseAdmob {
 				const bv = view.getViewById('bodyView');
 				bv.text = ad.body;
 				const iv = view.getViewById('iconView');
-				console.log(ad.icon);
 				iv.src = ad.icon.image;
 				view.nativeAd = ad;
 				console.log('nativead loaded');

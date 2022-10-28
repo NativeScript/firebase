@@ -5,14 +5,17 @@ xmlns:ui="@nativescript/firebase-admob"
         <ActionBar title="firebase-admob" icon="" class="action-bar">
         </ActionBar>
     </Page.actionBar>
-    <StackLayout class="p-20">
+    <StackLayout class="p-x-20">
        <ui:BannerAd height="100" width="100" unitId="{{bannerAdUnit}}" layoutChanged="{{bannerLoaded}}"/>
-       <!-- <ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}" layoutChanged="{{nativeAdLayoutChanged}}">
-        <GridLayout rows="auto,auto,auto,auto" height="300" width="300">
-       <Label id="headLineView" text="First"/>
-       <ui:MediaView row="1" id="mediaView" height="100%"/>
-       <Label row="2" id="bodyView"/>
-       <Image id="iconView" row="3"/>
+       <!-- <ui:NativeAdView height="500" loaded="{{nativeAdLoaded}}" layoutChanged="{{nativeAdLayoutChanged}}">
+        <GridLayout iosOverflowSafeAreaEnabled="false" rows="auto,auto,auto,auto,auto" columns="auto,auto" height="300" width="100%">
+        <GridLayout>
+        <Label id="attr" text="Ad" backgroundColor="orange" color="white" fontSize="15" fontWeight="600" padding="2"/>
+        </GridLayout>
+       <Label id="headLineView" text="First" row="1" colSpan="2"/>
+       <ui:MediaView row="2" id="mediaView" height="100%" colSpan="2"/>
+       <Label row="3" id="bodyView" colSpan="2"/>
+       <Image id="iconView" row="4" colSpan="2"/>
       </GridLayout>
        </ui:NativeAdView> -->
     </StackLayout>

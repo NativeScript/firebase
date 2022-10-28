@@ -15,12 +15,14 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 
 	testIt(): void {
 		this.issue_139();
-		//this.issue_51();
+		this.issue_51();
 		//Promise.all([this.init(), this.invalid_field_path(), this.issue_139(), this.field_path()]);
 	}
 
 	issue_51() {
 		const doc = firebase().firestore().collection('users').doc('0Myq8dlF1dQtC7tX4WlA');
+
+		const users = firebase().firestore().collection('users');
 
 		doc.onSnapshot({
 			next(snapshot) {
@@ -43,6 +45,29 @@ export class DemoModel extends DemoSharedFirebaseFirestore {
 
 		doc.onSnapshot({ includeMetadataChanges: true }, (doc) => {
 			console.log('onSnapshot', 'options', '&', 'function');
+		});
+
+		users.onSnapshot({
+			next(snapshot) {
+				console.log('users', 'onSnapshot', 'object');
+			},
+		});
+
+		users.onSnapshot(
+			{ includeMetadataChanges: true },
+			{
+				next(snapshot) {
+					console.log('users', 'onSnapshot', 'options', '&', 'object');
+				},
+			}
+		);
+
+		users.onSnapshot((doc) => {
+			console.log('users', 'onSnapshot', '&', 'function');
+		});
+
+		users.onSnapshot({ includeMetadataChanges: true }, (doc) => {
+			console.log('users', 'onSnapshot', 'options', '&', 'function');
 		});
 	}
 
