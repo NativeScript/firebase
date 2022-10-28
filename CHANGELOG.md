@@ -1,3 +1,14 @@
+## [2.4.2](https://github.com/nativescript/firebase/compare/2.4.1...2.4.2) (2022-10-28)
+
+
+### Bug Fixes
+
+* **admob:** use content-view ([ab32015](https://github.com/nativescript/firebase/commit/ab320151c630ed9b913e52a297795ae54c25ee2c))
+* **auth:** languageCode ([95122cb](https://github.com/nativescript/firebase/commit/95122cbf16812d58d28b62b0012233077f236cf7))
+* **firestore:** onSnapshot handling ([c74f67a](https://github.com/nativescript/firebase/commit/c74f67a90e68fd69fbc823016ad9c6305bbc687f))
+
+
+
 ## [2.4.1](https://github.com/nativescript/firebase/compare/2.4.0...2.4.1) (2022-10-19)
 
 
