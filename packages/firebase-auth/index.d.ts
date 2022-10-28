@@ -123,7 +123,7 @@ export interface IOAuthProvider {
 export interface IAuth {
 	readonly app: FirebaseApp;
 	readonly currentUser: IUser;
-	readonly languageCode: string;
+	languageCode: string;
 	readonly settings: IAuthSettings;
 	readonly tenantId: string;
 
@@ -313,7 +313,7 @@ export declare class AuthTokenResult implements IAuthTokenResult {
 export declare class Auth implements IAuth {
 	readonly app: FirebaseApp;
 	readonly currentUser: User | null;
-	readonly languageCode: string;
+	languageCode: string;
 	readonly settings: AuthSettings;
 	readonly tenantId: string;
 
