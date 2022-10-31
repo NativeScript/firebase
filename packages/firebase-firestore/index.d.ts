@@ -49,6 +49,8 @@ export interface IQuery<T extends DocumentData = DocumentData> {
 	startAt(fieldValues: IFieldValue[]): IQuery<T>;
 
 	where(fieldPath: keyof T | IFieldPath, opStr: WhereFilterOp, value: any): IQuery<T>;
+
+	isEqual(other: any): boolean;
 }
 
 export interface ICollectionReference<T extends DocumentData = DocumentData> {
@@ -321,6 +323,8 @@ export declare class Query<T extends DocumentData = DocumentData> implements IQu
 	startAt(fieldValues: FieldValue[]): Query;
 
 	where(fieldPath: FieldPath | keyof DocumentData, opStr: WhereFilterOp, value: any): Query;
+
+	isEqual(other: any): boolean;
 
 	readonly android: any;
 	readonly ios: any;

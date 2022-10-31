@@ -683,6 +683,10 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 		return Query.fromNative(query);
 	}
 
+	isEqual(other: Query): boolean {
+		return this.native.equals(other?.native);
+	}
+
 	get native() {
 		return this._native;
 	}
