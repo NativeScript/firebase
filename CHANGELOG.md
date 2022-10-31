@@ -1,3 +1,13 @@
+## [2.4.4](https://github.com/nativescript/firebase/compare/2.4.3...2.4.4) (2022-10-31)
+
+
+### Bug Fixes
+
+* **auth:** ios providerData properties undefined ([#145](https://github.com/nativescript/firebase/issues/145)) ([0836a95](https://github.com/nativescript/firebase/commit/0836a95b220ef3c66fb691cbc603d481f5d7c1bf))
+* **messaging:** readme file rename instructions do not work ([#146](https://github.com/nativescript/firebase/issues/146)) ([162e9d8](https://github.com/nativescript/firebase/commit/162e9d877901566398fb99e208ea695b0f3b1491))
+
+
+
 ## [2.4.3](https://github.com/nativescript/firebase/compare/2.4.2...2.4.3) (2022-10-28)
 
 
