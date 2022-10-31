@@ -1,4 +1,4 @@
-import { GetOptions, DocumentChangeType } from './common';
+import { GetOptions, DocumentChangeType, parseOnSnapshotArgs, OnSnapshotParameters } from './common';
 
 export { GetOptions, DocumentChangeType };
 
@@ -506,68 +506,23 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 		return Query.fromNative(this.native.limitToLast(limitToLast));
 	}
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void });
-	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void });
-	onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
-	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
-	onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any): any {
-		let listener;
-		let includeMetadataChanges = com.google.firebase.firestore.MetadataChanges.EXCLUDE;
-		const argsCount = arguments.length;
-		if (typeof arguments[0] === 'object') {
-			if (typeof options?.includeMetadataChanges === 'boolean') {
-				includeMetadataChanges = com.google.firebase.firestore.MetadataChanges.INCLUDE;
-			}
-		}
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void; }): () => void;
+	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void; }): () => void;
+	onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
+	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
+	onSnapshot(...args: OnSnapshotParameters<QuerySnapshot>): () => void {
+		const { includeMetadataChanges, ...handlers } = parseOnSnapshotArgs(args);
 
-		listener = this.native.addSnapshotListener(
-			includeMetadataChanges,
+		const listener = this.native.addSnapshotListener(
+			includeMetadataChanges
+				? com.google.firebase.firestore.MetadataChanges.INCLUDE
+				: com.google.firebase.firestore.MetadataChanges.EXCLUDE,
 			new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
-				onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-					if (argsCount > 1) {
-						if (typeof options === 'object') {
-							if (typeof onNext === 'object') {
-								if (error) {
-									onNext?.error?.(FirebaseError.fromNative(error));
-								} else {
-									onNext?.complete?.();
-									onNext?.next?.(QuerySnapshot.fromNative(ss));
-								}
-							} else {
-								if (error) {
-									onError?.(FirebaseError.fromNative(error));
-								} else {
-									// onError -> onCompletion
-									onCompletion?.();
-									// options -> onNext
-									onNext?.(QuerySnapshot.fromNative(ss));
-								}
-							}
-						} else {
-							if (error) {
-								//onError -> onNext
-								onNext?.(FirebaseError.fromNative(error));
-							} else {
-								// onCompletion ->
-								onError?.();
-								// options -> onNext
-								options?.(QuerySnapshot.fromNative(ss));
-							}
-						}
+				onEvent(querySnapshot, error: com.google.firebase.firestore.FirebaseFirestoreException) {
+					if (error) {
+						handlers.error?.(FirebaseError.fromNative(error));
 					} else {
-						if (typeof arguments[1] === 'function') {
-							// onNext -> options
-							if (!error) {
-								options?.(QuerySnapshot.fromNative(ss));
-							}
-						} else {
-							if (error) {
-								options?.error?.(FirebaseError.fromNative(error));
-							} else {
-								options?.complete?.();
-								options?.next?.(QuerySnapshot.fromNative(ss));
-							}
-						}
+						handlers.next?.(QuerySnapshot.fromNative(querySnapshot));
 					}
 				},
 			})
@@ -948,68 +903,23 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 		});
 	}
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void });
-	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void });
-	onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
-	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
-	onSnapshot(options: any, onNext?: any, onError?: any, onCompletion?: any) {
-		let listener;
-		let includeMetadataChanges = com.google.firebase.firestore.MetadataChanges.EXCLUDE;
-		const argsCount = arguments.length;
-		if (typeof arguments[0] === 'object') {
-			if (typeof options?.includeMetadataChanges === 'boolean') {
-				includeMetadataChanges = com.google.firebase.firestore.MetadataChanges.INCLUDE;
-			}
-		}
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void; }): () => void;
+	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void; }): () => void;
+	onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
+	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
+	onSnapshot(...args: OnSnapshotParameters<DocumentSnapshot<T>>): () => void {
+		const { includeMetadataChanges, ...handlers } = parseOnSnapshotArgs(args);
 
-		listener = this.native.addSnapshotListener(
-			includeMetadataChanges,
+		const listener = this.native.addSnapshotListener(
+			includeMetadataChanges
+				? com.google.firebase.firestore.MetadataChanges.INCLUDE
+				: com.google.firebase.firestore.MetadataChanges.EXCLUDE,
 			new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
-				onEvent(ss, error: com.google.firebase.firestore.FirebaseFirestoreException) {
-					if (argsCount > 1) {
-						if (typeof options === 'object') {
-							if (typeof onNext === 'object') {
-								if (error) {
-									onNext?.error?.(FirebaseError.fromNative(error));
-								} else {
-									onNext?.complete?.();
-									onNext?.next?.(DocumentSnapshot.fromNative(ss));
-								}
-							} else {
-								if (error) {
-									onError?.(FirebaseError.fromNative(error));
-								} else {
-									// onError -> onCompletion
-									onCompletion?.();
-									// options -> onNext
-									onNext?.(DocumentSnapshot.fromNative(ss));
-								}
-							}
-						} else {
-							if (error) {
-								//onError -> onNext
-								onNext?.(FirebaseError.fromNative(error));
-							} else {
-								// onCompletion ->
-								onError?.();
-								// options -> onNext
-								options?.(DocumentSnapshot.fromNative(ss));
-							}
-						}
+				onEvent(docSnapshot, error: com.google.firebase.firestore.FirebaseFirestoreException) {
+					if (error) {
+						handlers.error?.(FirebaseError.fromNative(error));
 					} else {
-						if (typeof arguments[1] === 'function') {
-							// onNext -> options
-							if (!error) {
-								options?.(DocumentSnapshot.fromNative(ss));
-							}
-						} else {
-							if (error) {
-								options?.error?.(FirebaseError.fromNative(error));
-							} else {
-								options?.complete?.();
-								options?.next?.(DocumentSnapshot.fromNative(ss));
-							}
-						}
+						handlers.next?.(DocumentSnapshot.fromNative(docSnapshot));
 					}
 				},
 			})

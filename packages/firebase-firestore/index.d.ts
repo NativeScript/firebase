@@ -23,7 +23,8 @@ export interface IQuery<T extends DocumentData = DocumentData> {
 
 	limitToLast(limitToLast: number): IQuery<T>;
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: IQuerySnapshot<T>) => void });
+	/** NOTE: Although an onCompletion callback can be provided, it will never be called because the snapshot stream is never-ending. */
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: IQuerySnapshot<T>) => void }): () => void;
 
 	onSnapshot(
 		options: SnapshotListenOptions,
@@ -32,11 +33,11 @@ export interface IQuery<T extends DocumentData = DocumentData> {
 			error?: (error: Error) => void;
 			next?: (snapshot: IQuerySnapshot<T>) => void;
 		}
-	);
+	): () => void;
 
-	onSnapshot(onNext: (snapshot: IQuerySnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
+	onSnapshot(onNext: (snapshot: IQuerySnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 
-	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: IQuerySnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
+	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: IQuerySnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 
 	orderBy(fieldPath: keyof T | IFieldPath, directionStr?: 'asc' | 'desc'): IQuery<T>;
 
@@ -106,7 +107,8 @@ export interface IDocumentReference<T extends DocumentData = DocumentData> {
 
 	get(options?: GetOptions): Promise<IDocumentSnapshot<T>>;
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: IDocumentSnapshot<T>) => void });
+	/** NOTE: Although an onCompletion callback can be provided, it will never be called because the snapshot stream is never-ending. */
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: IDocumentSnapshot<T>) => void }): () => void;
 
 	onSnapshot(
 		options: SnapshotListenOptions,
@@ -115,11 +117,11 @@ export interface IDocumentReference<T extends DocumentData = DocumentData> {
 			error?: (error: Error) => void;
 			next?: (snapshot: IDocumentSnapshot<T>) => void;
 		}
-	);
+	): () => void;
 
-	onSnapshot(onNext: (snapshot: IDocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
+	onSnapshot(onNext: (snapshot: IDocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 
-	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: IDocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
+	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: IDocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 
 	set(data: T, options?: SetOptions): Promise<void>;
 
@@ -307,10 +309,10 @@ export declare class Query<T extends DocumentData = DocumentData> implements IQu
 
 	limitToLast(limitToLast: number): Query;
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void });
-	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void });
-	onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
-	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void);
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void }): () => void;
+	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void }): () => void;
+	onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
+	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 
 	orderBy(fieldPath: keyof DocumentData | FieldPath, directionStr: 'asc' | 'desc' = 'asc'): Query;
 
@@ -388,10 +390,10 @@ export declare class DocumentReference<T extends DocumentData = DocumentData> im
 
 	get(options?: GetOptions): Promise<DocumentSnapshot<T>>;
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void });
-	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void });
-	onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
-	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void);
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
+	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
+	onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
+	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 
 	set(data: T, options?: SetOptions): Promise<void>;
 
