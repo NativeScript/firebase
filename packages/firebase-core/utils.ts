@@ -37,13 +37,13 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 				}
 
 				if (Array.isArray(data)) {
-					return NSArray.arrayWithArray(data.map((el) => serialize(el, wrapPrimitives)).filter((el) => el !== null && el !== NSNull.new()));
+					return NSArray.arrayWithArray(data.map((el) => serialize(el, wrapPrimitives)).filter((el) => el !== null));
 				}
 
 				const node = Object.fromEntries(
 					Object.entries(data)
 						.map(([key, value]) => [key, serialize(value, wrapPrimitives)])
-						.filter(([key, value]) => value !== null && value !== NSNull.new())
+						.filter(([, value]) => value !== null)
 				);
 
 				return NSDictionary.dictionaryWithDictionary(node);
