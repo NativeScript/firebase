@@ -508,8 +508,8 @@ Open /platforms/ios/yourproject.**xcworkspace** (!) and go to your project's tar
 
 #### Copy the entitlements file
 
-The previous step created a the file`platforms/ios/YourAppName/(Resources/)YourAppName.entitlements`.
-Copy that file to `app/App_Resources/iOS/` (if it doesn't exist yet, otherwise merge its contents),
+The previous step created a the file `platforms/ios/YourAppName/(Resources/)YourAppName.entitlements`.
+Move and rename that file to `app/App_Resources/iOS/app.entitlements` (if it doesn't exist yet, otherwise merge its contents),
 so it's not removed when you remove and re-add the iOS platform. The relevant content for background push in that file is:
 
 ```xml
