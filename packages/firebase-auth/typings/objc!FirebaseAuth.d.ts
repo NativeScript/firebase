@@ -829,7 +829,7 @@ declare class FIRUser extends NSObject implements FIRUserInfo {
 	updatePhoneNumberCredentialCompletion(phoneNumberCredential: FIRPhoneAuthCredential, completion: (p1: NSError) => void): void;
 }
 
-interface FIRUserInfo extends NSObjectProtocol {
+interface FIRUserInfo extends NSObject {
 
 	displayName: string;
 

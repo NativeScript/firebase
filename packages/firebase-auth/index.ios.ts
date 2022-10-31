@@ -80,27 +80,27 @@ export class UserInfo implements IUserInfo {
 	}
 
 	get uid(): string {
-		return this.native?.uid;
+		return this.native?.valueForKey("uid");
 	}
 
 	get displayName(): string {
-		return this.native?.displayName;
+		return this.native?.valueForKey("displayName");
 	}
 
 	get email(): string {
-		return this.native?.email;
+		return this.native?.valueForKey("email");
 	}
 
 	get phoneNumber(): string {
-		return this.native?.phoneNumber;
+		return this.native?.valueForKey("phoneNumber");
 	}
 
 	get photoURL(): string {
-		return this.native?.photoURL?.absoluteString;
+		return this.native?.valueForKey("photoURL")?.absoluteString;
 	}
 
 	get providerId(): string {
-		return this.native?.providerID;
+		return this.native?.valueForKey("providerID");
 	}
 
 	toJSON() {
