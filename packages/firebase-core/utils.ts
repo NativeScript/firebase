@@ -37,14 +37,15 @@ export function serialize(data: any, wrapPrimitives: boolean = false): any {
 				}
 
 				if (Array.isArray(data)) {
-					return NSArray.arrayWithArray((<any>data).map(serialize));
+					return NSArray.arrayWithArray(data.map((el) => serialize(el, wrapPrimitives)).filter((el) => el !== null));
 				}
 
-				let node = {} as any;
-				Object.keys(data).forEach(function (key) {
-					let value = data[key];
-					node[key] = serialize(value, wrapPrimitives);
-				});
+				const node = Object.fromEntries(
+					Object.entries(data)
+						.map(([key, value]) => [key, serialize(value, wrapPrimitives)])
+						.filter(([, value]) => value !== null)
+				);
+
 				return NSDictionary.dictionaryWithDictionary(node);
 			}
 
