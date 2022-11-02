@@ -1118,11 +1118,11 @@ export class FieldValue implements IFieldValue {
 	}
 
 	static arrayRemove(elements: any[]): FieldValue {
-		return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.arrayRemove(elements.map((element) => element?.native || element)));
+		return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.arrayRemove(elements.map((element) => element?.native || serializeItems(element))));
 	}
 
 	static arrayUnion(elements: any[]): FieldValue {
-		return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.arrayUnion(elements.map((element) => element?.native || element)));
+		return FieldValue.fromNative(com.google.firebase.firestore.FieldValue.arrayUnion(elements.map((element) => element?.native || serializeItems(element))));
 	}
 
 	static delete(): FieldValue {
