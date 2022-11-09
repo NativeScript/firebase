@@ -58,18 +58,23 @@ let _permissionQueue: { resolve: Function; reject: Function }[] = [];
 
 function register(args: any) {
 	if (!lastActivity) {
-		lastActivity = new WeakRef(args.activity);
-		requestPermissionLauncher = args.activity.registerForActivityResult(
-			new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
-			new androidx.activity.result.ActivityResultCallback({
-				onActivityResult(isGranted: boolean) {
-					_permissionQueue.forEach((callback) => {
-						callback.resolve(isGranted ? 0 : 1);
-					});
-					_permissionQueue.splice(0);
-				},
-			})
-		);
+    // Some activities do not implement activity result API
+    if (args.activity.registerForActivityResult) {
+      lastActivity = new WeakRef(args.activity);
+      requestPermissionLauncher = args.activity.registerForActivityResult(
+        new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
+        new androidx.activity.result.ActivityResultCallback({
+          onActivityResult(isGranted: boolean) {
+            _permissionQueue.forEach((callback) => {
+              callback.resolve(isGranted ? 0 : 1);
+            });
+            _permissionQueue.splice(0);
+          },
+        })
+      );
+    } else {
+      Application.android.once('activityCreated', register);
+    }
 	}
 }
 
