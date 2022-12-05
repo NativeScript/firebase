@@ -16,6 +16,8 @@ Object.defineProperty(fb, 'dynamicLinks', {
 
 declare const FIRApp, TNSFirebaseDynamicLinksAppDelegate;
 
+export { ShortLinkType } from './common';
+
 export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsParameters {
 	_native: FIRDynamicLinkGoogleAnalyticsParameters;
 
