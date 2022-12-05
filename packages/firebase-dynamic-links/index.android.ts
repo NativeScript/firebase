@@ -142,7 +142,7 @@ export class DynamicLinkIOSParameters implements IDynamicLinkIOSParameters {
 	_bundleId: string;
 	constructor(bundleId?: string) {
 		this._bundleId = bundleId;
-		this._native = new com.google.firebase.dynamiclinks.DynamicLink.IosParameters.Builder(bundleId);
+		this._builder = new com.google.firebase.dynamiclinks.DynamicLink.IosParameters.Builder(bundleId);
 	}
 
 	static fromNative(link: com.google.firebase.dynamiclinks.DynamicLink.IosParameters) {
