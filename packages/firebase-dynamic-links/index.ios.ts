@@ -474,9 +474,21 @@ export class DynamicLinks implements IDynamicLinks {
 	}
 
 	buildLink(link: DynamicLinkParameters): Promise<string> {
-		return new Promise((resolve, reject) => {
-			resolve(link.native.url.absoluteString);
-		});
+		if (link.native.options) {
+			// short link
+			return new Promise((resolve, reject) => {
+				link.native.shortenWithCompletion((url, warnings, error) => {
+					if (error) {
+						reject(FirebaseError.fromNative(error));
+					} else {
+						resolve(url.absoluteString);
+					}
+				});
+			});
+		} else {
+			// long link
+			return Promise.resolve(link.native.url.absoluteString);
+		}
 	}
 
 	onLink(listener: (link: DynamicLink) => void) {
