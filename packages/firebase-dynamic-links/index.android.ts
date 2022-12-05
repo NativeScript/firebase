@@ -491,7 +491,7 @@ export class DynamicLinks implements IDynamicLinks {
 					})
 				);
 			} else {
-				resolve(link.native.buildDynamicLink().getUri().toString());
+				resolve(link._build().buildDynamicLink().getUri().toString());
 			}
 		});
 	}
