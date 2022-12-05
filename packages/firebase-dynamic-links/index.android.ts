@@ -15,6 +15,8 @@ Object.defineProperty(fb, 'dynamicLinks', {
 	writable: false,
 });
 
+export { ShortLinkType } from './common';
+
 export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsParameters {
 	_builder: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters.Builder;
 	_native: com.google.firebase.dynamiclinks.DynamicLink.GoogleAnalyticsParameters;

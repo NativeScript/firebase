@@ -1,8 +1,6 @@
 import { FirebaseApp } from '@nativescript/firebase-core';
 import { ShortLinkType, IDynamicLink } from './common';
 
-export { ShortLinkType };
-
 export class DynamicLinkAnalyticsParameters implements IDynamicLinkAnalyticsParameters {
 	readonly native;
 	readonly ios;
