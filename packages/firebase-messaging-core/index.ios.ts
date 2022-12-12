@@ -49,6 +49,8 @@ export class MessagingCore implements IMessagingCore {
 			onMessageCallbacks.forEach((cb) => {
 				cb(msg);
 			});
+		} else {
+			MessagingCore._messageQueues._onMessage.push(message);
 		}
 	}
 	_onToken(token: string) {
@@ -57,6 +59,8 @@ export class MessagingCore implements IMessagingCore {
 			onTokenCallbacks.forEach((cb) => {
 				cb(token);
 			});
+		} else {
+			MessagingCore._messageQueues._onToken.push(token);
 		}
 	}
 	_onNotificationTap(message: any) {
@@ -65,10 +69,17 @@ export class MessagingCore implements IMessagingCore {
 			onNotificationTapCallbacks.forEach((cb) => {
 				cb(msg);
 			});
+		} else {
+			MessagingCore._messageQueues._onNotificationTap.push(message);
 		}
 	}
 
 	static _onResumeQueue = [];
+	static _messageQueues = {
+		_onMessage: [],
+		_onNotificationTap: [],
+		_onToken: [],
+	};
 	static addToResumeQueue(callback: () => void) {
 		if (typeof callback !== 'function') {
 			return;
@@ -183,6 +194,7 @@ export class MessagingCore implements IMessagingCore {
 	addOnMessage(listener: (message: any) => any) {
 		if (typeof listener === 'function') {
 			onMessageCallbacks.add(listener);
+			this._triggerPendingCallbacks('_onMessage');
 		}
 	}
 
@@ -196,6 +208,7 @@ export class MessagingCore implements IMessagingCore {
 	addOnToken(listener: (token: string) => any) {
 		if (typeof listener === 'function') {
 			onTokenCallbacks.add(listener);
+			this._triggerPendingCallbacks('_onToken');
 		}
 	}
 
@@ -209,6 +222,7 @@ export class MessagingCore implements IMessagingCore {
 	addOnNotificationTap(listener: (message: any) => any) {
 		if (typeof listener === 'function') {
 			onNotificationTapCallbacks.add(listener);
+			this._triggerPendingCallbacks('_onNotificationTap');
 		}
 	}
 
@@ -313,6 +327,15 @@ export class MessagingCore implements IMessagingCore {
 	}
 	get isDeviceRegisteredForRemoteMessages(): boolean {
 		return UIApplication.sharedApplication.registeredForRemoteNotifications;
+	}
+	private _triggerPendingCallbacks(type: keyof typeof MessagingCore._messageQueues) {
+		const queue = MessagingCore._messageQueues[type];
+		if (queue.length > 0) {
+			MessagingCore._messageQueues[type] = [];
+			queue.forEach((message) => {
+				this[type](message);
+			});
+		}
 	}
 }
 

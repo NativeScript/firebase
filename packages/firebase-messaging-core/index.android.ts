@@ -347,10 +347,10 @@ export class MessagingCore implements IMessagingCore {
 	private _triggerPendingCallbacks(type: keyof typeof MessagingCore._messageQueues) {
 		const queue = MessagingCore._messageQueues[type];
 		if (queue.length > 0) {
+			MessagingCore._messageQueues[type] = [];
 			queue.forEach((message) => {
 				this[type](message);
 			});
-			MessagingCore._messageQueues[type] = [];
 		}
 	}
 }
