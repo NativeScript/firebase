@@ -18,6 +18,9 @@ export class MainViewModel extends Observable {
 			name: 'firebase-database',
 		},
 		{
+			name: 'firebase-dynamic-links',
+		},
+		{
 			name: 'firebase-firestore',
 		},
 		{
