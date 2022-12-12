@@ -506,17 +506,15 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 		return Query.fromNative(this.native.limitToLast(limitToLast));
 	}
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void; }): () => void;
-	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void; }): () => void;
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void }): () => void;
+	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void }): () => void;
 	onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(...args: OnSnapshotParameters<QuerySnapshot>): () => void {
 		const { includeMetadataChanges, ...handlers } = parseOnSnapshotArgs(args);
 
 		const listener = this.native.addSnapshotListener(
-			includeMetadataChanges
-				? com.google.firebase.firestore.MetadataChanges.INCLUDE
-				: com.google.firebase.firestore.MetadataChanges.EXCLUDE,
+			includeMetadataChanges ? com.google.firebase.firestore.MetadataChanges.INCLUDE : com.google.firebase.firestore.MetadataChanges.EXCLUDE,
 			new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.QuerySnapshot>({
 				onEvent(querySnapshot, error: com.google.firebase.firestore.FirebaseFirestoreException) {
 					if (error) {
@@ -907,17 +905,15 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 		});
 	}
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void; }): () => void;
-	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void; }): () => void;
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
+	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
 	onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(...args: OnSnapshotParameters<DocumentSnapshot<T>>): () => void {
 		const { includeMetadataChanges, ...handlers } = parseOnSnapshotArgs(args);
 
 		const listener = this.native.addSnapshotListener(
-			includeMetadataChanges
-				? com.google.firebase.firestore.MetadataChanges.INCLUDE
-				: com.google.firebase.firestore.MetadataChanges.EXCLUDE,
+			includeMetadataChanges ? com.google.firebase.firestore.MetadataChanges.INCLUDE : com.google.firebase.firestore.MetadataChanges.EXCLUDE,
 			new com.google.firebase.firestore.EventListener<com.google.firebase.firestore.DocumentSnapshot>({
 				onEvent(docSnapshot, error: com.google.firebase.firestore.FirebaseFirestoreException) {
 					if (error) {
@@ -1362,18 +1358,26 @@ export class WriteBatch implements IWriteBatch {
 
 export class Settings implements ISettings {
 	_builder: com.google.firebase.firestore.FirebaseFirestoreSettings.Builder;
+	_firestore: com.google.firebase.firestore.FirebaseFirestore;
 
 	constructor() {
 		this._builder = new com.google.firebase.firestore.FirebaseFirestoreSettings.Builder();
 	}
 
-	static fromNative(ffs: com.google.firebase.firestore.FirebaseFirestoreSettings) {
+	static fromNative(ffs: com.google.firebase.firestore.FirebaseFirestoreSettings, firestore = undefined) {
 		if (ffs instanceof com.google.firebase.firestore.FirebaseFirestoreSettings) {
 			const settings = new Settings();
+			settings._firestore = firestore ?? undefined;
 			settings._builder = new com.google.firebase.firestore.FirebaseFirestoreSettings.Builder(ffs);
 			return settings;
 		}
 		return null;
+	}
+
+	_updateStoreSettings() {
+		if (this._firestore !== undefined) {
+			this._firestore.setFirestoreSettings(this.native);
+		}
 	}
 
 	get cacheSizeBytes(): number {
@@ -1382,6 +1386,7 @@ export class Settings implements ISettings {
 
 	set cacheSizeBytes(value) {
 		this._builder.setCacheSizeBytes(value);
+		this._updateStoreSettings();
 	}
 
 	get host(): string {
@@ -1390,6 +1395,7 @@ export class Settings implements ISettings {
 
 	set host(value) {
 		this._builder.setHost(value);
+		this._updateStoreSettings();
 	}
 
 	ignoreUndefinedProperties: boolean;
@@ -1400,6 +1406,7 @@ export class Settings implements ISettings {
 
 	set persistence(value) {
 		this._builder.setPersistenceEnabled(value);
+		this._updateStoreSettings();
 	}
 
 	get ssl(): boolean {
@@ -1408,6 +1415,7 @@ export class Settings implements ISettings {
 
 	set ssl(value) {
 		this._builder.setSslEnabled(value);
+		this._updateStoreSettings();
 	}
 
 	toJSON() {
@@ -1620,7 +1628,7 @@ export class Firestore implements IFirestore {
 	}
 
 	get settings() {
-		return Settings.fromNative(this.native?.getFirestoreSettings?.());
+		return Settings.fromNative(this.native?.getFirestoreSettings?.(), this.native);
 	}
 
 	set settings(value) {

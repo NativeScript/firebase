@@ -450,8 +450,8 @@ export class Query<T extends DocumentData = DocumentData> implements IQuery<T> {
 		return Query.fromNative(this.native.queryLimitedToLast(limitToLast));
 	}
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void; }): () => void;
-	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void; }): () => void;
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void }): () => void;
+	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: QuerySnapshot) => void }): () => void;
 	onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(...args: OnSnapshotParameters<QuerySnapshot>): () => void {
@@ -829,8 +829,8 @@ export class DocumentReference<T extends DocumentData = DocumentData> implements
 		});
 	}
 
-	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void; }): () => void;
-	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void; }): () => void;
+	onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
+	onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
 	onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(...args: OnSnapshotParameters<DocumentSnapshot<T>>): () => void {
@@ -1210,14 +1210,22 @@ export class WriteBatch implements IWriteBatch {
 
 export class Settings implements ISettings {
 	_native: FIRFirestoreSettings;
+	_firestore: FIRFirestore;
 
-	static fromNative(ffs: FIRFirestoreSettings) {
+	static fromNative(ffs: FIRFirestoreSettings, firestore = undefined) {
 		if (ffs instanceof FIRFirestoreSettings) {
 			const settings = new Settings();
 			settings._native = ffs;
+			settings._firestore = firestore ?? undefined;
 			return settings;
 		}
 		return null;
+	}
+
+	_updateStoreSettings() {
+		if (this._firestore !== undefined) {
+			this._firestore.settings = this.native;
+		}
 	}
 
 	get cacheSizeBytes(): number {
@@ -1226,6 +1234,7 @@ export class Settings implements ISettings {
 
 	set cacheSizeBytes(value) {
 		this.native.cacheSizeBytes = value;
+		this._updateStoreSettings();
 	}
 
 	get host(): string {
@@ -1234,6 +1243,7 @@ export class Settings implements ISettings {
 
 	set host(value) {
 		this.native.host = value;
+		this._updateStoreSettings();
 	}
 
 	ignoreUndefinedProperties: boolean;
@@ -1244,6 +1254,7 @@ export class Settings implements ISettings {
 
 	set persistence(value) {
 		this.native.persistenceEnabled = value;
+		this._updateStoreSettings();
 	}
 
 	get ssl(): boolean {
@@ -1252,6 +1263,7 @@ export class Settings implements ISettings {
 
 	set ssl(value) {
 		this.native.sslEnabled = value;
+		this._updateStoreSettings();
 	}
 
 	toJSON() {
@@ -1435,7 +1447,7 @@ export class Firestore implements IFirestore {
 	}
 
 	get settings() {
-		return Settings.fromNative(this.native?.settings);
+		return Settings.fromNative(this.native?.settings, this.native);
 	}
 
 	set settings(value) {
