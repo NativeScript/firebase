@@ -373,8 +373,17 @@ export class DynamicLinkParameters implements IDynamicLinkParameters {
 		return DynamicLinkITunesParameters.fromNative(this.native.iTunesConnectParameters);
 	}
 
+	set itunes(value) {
+		this._itunes = value;
+		this.native.iTunesConnectParameters = value?.native;
+	}
+
 	get link(): string {
 		return this.native.link?.absoluteString;
+	}
+
+	set link(value) {
+		this.native.link = NSURL.URLWithString(value);
 	}
 
 	_navigation: DynamicLinkNavigationParameters;
@@ -396,6 +405,11 @@ export class DynamicLinkParameters implements IDynamicLinkParameters {
 			return this._social;
 		}
 		return DynamicLinkSocialParameters.fromNative(this.native.socialMetaTagParameters);
+	}
+
+	set social(value) {
+		this._social = value;
+		this.native.socialMetaTagParameters = value?.native;
 	}
 
 	get native() {
