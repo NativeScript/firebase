@@ -310,8 +310,8 @@ export class DynamicLinkNavigationParameters implements IDynamicLinkNavigationPa
 export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters {
 	_builder: com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters.Builder;
 	_native: com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters;
-	static fromNative(link: FIRDynamicLinkSocialMetaTagParameters) {
-		if (link instanceof FIRDynamicLinkSocialMetaTagParameters) {
+	static fromNative(link: com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters) {
+		if (link instanceof com.google.firebase.dynamiclinks.DynamicLink.SocialMetaTagParameters) {
 			const result = new DynamicLinkSocialParameters();
 			result._native = link;
 			return result;
