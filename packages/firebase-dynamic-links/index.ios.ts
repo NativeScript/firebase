@@ -1,4 +1,3 @@
-import { Application } from '@nativescript/core';
 import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, ShortLinkType } from './common';
 
