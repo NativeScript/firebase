@@ -19,28 +19,25 @@ function ensureCallback() {
 		public onError(error: any): void {}
 
 		public onSuccess(message: string): void {
-			const exec = () => {
-				const callback = this._owner?.get?.()?.[this._propName];
-				if (typeof callback === 'function') {
-					if (this._propName === '_onToken') {
-						callback(message);
-					} else if (this._propName === '_onNotificationTap' || this._propName === '_onMessage') {
-						try {
-							setTimeout(() => {
-								callback(JSON.parse(message));
-							});
-						} catch (e) {}
-					} else {
-						try {
+			const callback = this._owner?.get?.()?.[this._propName];
+			if (typeof callback === 'function') {
+				if (this._propName === '_onToken') {
+					callback(message);
+				} else if (this._propName === '_onNotificationTap' || this._propName === '_onMessage') {
+					try {
+						setTimeout(() => {
 							callback(JSON.parse(message));
-						} catch (e) {}
+						});
+					} catch (e) {
+						// ignore
+					}
+				} else {
+					try {
+						callback(JSON.parse(message));
+					} catch (e) {
+						// ignore
 					}
 				}
-			};
-			if (!MessagingCore.inForeground || !MessagingCore.appDidLaunch) {
-				MessagingCore.addToResumeQueue(exec);
-			} else {
-				exec();
 			}
 		}
 	}
@@ -58,23 +55,23 @@ let _permissionQueue: { resolve: Function; reject: Function }[] = [];
 
 function register(args: any) {
 	if (!lastActivity) {
-    // Some activities do not implement activity result API
-    if (args.activity.registerForActivityResult) {
-      lastActivity = new WeakRef(args.activity);
-      requestPermissionLauncher = args.activity.registerForActivityResult(
-        new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
-        new androidx.activity.result.ActivityResultCallback({
-          onActivityResult(isGranted: boolean) {
-            _permissionQueue.forEach((callback) => {
-              callback.resolve(isGranted ? 0 : 1);
-            });
-            _permissionQueue.splice(0);
-          },
-        })
-      );
-    } else {
-      Application.android.once('activityCreated', register);
-    }
+		// Some activities do not implement activity result API
+		if (args.activity.registerForActivityResult) {
+			lastActivity = new WeakRef(args.activity);
+			requestPermissionLauncher = args.activity.registerForActivityResult(
+				new androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
+				new androidx.activity.result.ActivityResultCallback({
+					onActivityResult(isGranted: boolean) {
+						_permissionQueue.forEach((callback) => {
+							callback.resolve(isGranted ? 0 : 1);
+						});
+						_permissionQueue.splice(0);
+					},
+				})
+			);
+		} else {
+			Application.android.once('activityCreated', register);
+		}
 	}
 }
 
@@ -110,6 +107,8 @@ export class MessagingCore implements IMessagingCore {
 			onMessageCallbacks.forEach((cb) => {
 				cb(message);
 			});
+		} else {
+			MessagingCore._messageQueues._onMessage.push(message);
 		}
 	}
 
@@ -119,6 +118,8 @@ export class MessagingCore implements IMessagingCore {
 			onNotificationTapCallbacks.forEach((cb) => {
 				cb(message);
 			});
+		} else {
+			MessagingCore._messageQueues._onNotificationTap.push(message);
 		}
 	}
 
@@ -128,12 +129,19 @@ export class MessagingCore implements IMessagingCore {
 			onTokenCallbacks.forEach((cb) => {
 				cb(token);
 			});
+		} else {
+			MessagingCore._messageQueues._onToken.push(token);
 		}
 	}
 
 	showNotificationsWhenInForeground: boolean;
 
 	static _onResumeQueue = [];
+	static _messageQueues = {
+		_onMessage: [],
+		_onNotificationTap: [],
+		_onToken: [],
+	};
 	static addToResumeQueue(callback: () => void) {
 		if (typeof callback !== 'function') {
 			return;
@@ -235,6 +243,7 @@ export class MessagingCore implements IMessagingCore {
 	addOnMessage(listener: (message: any) => any) {
 		if (typeof listener === 'function') {
 			onMessageCallbacks.add(listener);
+			this._triggerPendingCallbacks('_onMessage');
 		}
 	}
 
@@ -248,6 +257,7 @@ export class MessagingCore implements IMessagingCore {
 	addOnToken(listener: (token: string) => any) {
 		if (typeof listener === 'function') {
 			onTokenCallbacks.add(listener);
+			this._triggerPendingCallbacks('_onToken');
 		}
 	}
 
@@ -261,6 +271,7 @@ export class MessagingCore implements IMessagingCore {
 	addOnNotificationTap(listener: (message: any) => any) {
 		if (typeof listener === 'function') {
 			onNotificationTapCallbacks.add(listener);
+			this._triggerPendingCallbacks('_onNotificationTap');
 		}
 	}
 
@@ -331,6 +342,16 @@ export class MessagingCore implements IMessagingCore {
 
 	get isDeviceRegisteredForRemoteMessages(): boolean {
 		return org.nativescript.firebase.messaging.FirebaseMessaging.hasPermission(Utils.android.getApplicationContext());
+	}
+
+	private _triggerPendingCallbacks(type: keyof typeof MessagingCore._messageQueues) {
+		const queue = MessagingCore._messageQueues[type];
+		if (queue.length > 0) {
+			MessagingCore._messageQueues[type] = [];
+			queue.forEach((message) => {
+				this[type](message);
+			});
+		}
 	}
 }
 
