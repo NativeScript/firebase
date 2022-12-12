@@ -1,3 +1,25 @@
+# [2.5.0](https://github.com/nativescript/firebase/compare/2.4.4...2.5.0) (2022-12-12)
+
+
+### Bug Fixes
+
+* **dynamic-links:** build link before generating long link ([#164](https://github.com/nativescript/firebase/issues/164)) ([c60775d](https://github.com/nativescript/firebase/commit/c60775d2dc1e32e352f6c70c7a93390e4fdce665))
+* **dynamic-links:** export ShortLinkType as an object ([#161](https://github.com/nativescript/firebase/issues/161)) ([050e7b9](https://github.com/nativescript/firebase/commit/050e7b995ecfe7ebc2ed9b1cc93bacee11c4c173))
+* **dynamic-links:** instance check ([d499eec](https://github.com/nativescript/firebase/commit/d499eeccb598bed8beeaed0e67bbe814c3cabdde))
+* **dynamic-links:** ios parameters builder assigned to wrong variable ([#162](https://github.com/nativescript/firebase/issues/162)) ([a4a5c45](https://github.com/nativescript/firebase/commit/a4a5c457f170adb774673446684bfa841c3bed68))
+* **firestore)(android:** arrayUnion always appends null to array ([#150](https://github.com/nativescript/firebase/issues/150)) ([e1b09f5](https://github.com/nativescript/firebase/commit/e1b09f599e98c7fe3977078d6dbe82bfe8249002))
+* **firestore:** update settings on firestore instance ([089b92e](https://github.com/nativescript/firebase/commit/089b92e98a01fb166e9b8581c76ef4beae299728))
+* **ios/core:** filter out nil values from `serialize` method ([#142](https://github.com/nativescript/firebase/issues/142)) ([1033984](https://github.com/nativescript/firebase/commit/1033984d467e5d766d35f23788289b93f1501803))
+* **messaging:** Activity registerForActivityResult is not a function ([#155](https://github.com/nativescript/firebase/issues/155)) ([94f93d2](https://github.com/nativescript/firebase/commit/94f93d2a964c9cd556f34546057dd8e4726a5ad8))
+* **messaging:** delay android messages only until a listener is added ([#165](https://github.com/nativescript/firebase/issues/165)) ([7b898c4](https://github.com/nativescript/firebase/commit/7b898c4698682979fa2d83e92559bc9b4b10623a))
+
+
+### Features
+
+* **dynamic-links:** support short links on iOS ([#163](https://github.com/nativescript/firebase/issues/163)) ([3ff4889](https://github.com/nativescript/firebase/commit/3ff48893514cbfbd521511152e9fe91be42cc0eb))
+
+
+
 ## [2.4.4](https://github.com/nativescript/firebase/compare/2.4.3...2.4.4) (2022-10-31)
 
 
