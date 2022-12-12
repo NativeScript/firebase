@@ -1,3 +1,14 @@
+## [2.5.1](https://github.com/nativescript/firebase/compare/2.5.0...2.5.1) (2022-12-12)
+
+
+### Bug Fixes
+
+* **dynamicLinks:** create social builder ([a28125f](https://github.com/nativescript/firebase/commit/a28125fad88e91dc73f44d0a689db88cf00fbc96))
+* **dynamicLinks:** demo ([f8ef50c](https://github.com/nativescript/firebase/commit/f8ef50cc17589897f119afa96ed6b571e9c08f04))
+* **dynamicLinks:** missing setters ([a647937](https://github.com/nativescript/firebase/commit/a647937508dc2bf8f34379d0c27251c8cc7faa7e))
+
+
+
 # [2.5.0](https://github.com/nativescript/firebase/compare/2.4.4...2.5.0) (2022-12-12)
 
 
