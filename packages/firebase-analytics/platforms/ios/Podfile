@@ -1,5 +1,6 @@
 platform :ios, '10.0'
   # Firebase dependencies
+  ### PLACEHOLDER_FOR_HOOK: $NSFirebaseAnalyticsWithoutAdIdSupport
   if defined?($NSFirebaseAnalyticsWithoutAdIdSupport)
     Pod::UI.puts "Using Firebase/AnalyticsWithoutAdIdSupport pod in place of default Firebase/Analytics"
 
