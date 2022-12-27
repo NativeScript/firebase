@@ -1,3 +1,13 @@
+## [2.5.2](https://github.com/nativescript/firebase/compare/2.5.1...2.5.2) (2022-12-27)
+
+
+### Bug Fixes
+
+* **firebase-analytics:** consistent handling of Podfile variable $NSFirebaseAnalyticsWithoutAdIdSupport ([#167](https://github.com/nativescript/firebase/issues/167)) ([7ca3c04](https://github.com/nativescript/firebase/commit/7ca3c046472e56552600febf8ee9062a5fda68f3))
+* **messaging:** fcm token callback not fired ([4f97aab](https://github.com/nativescript/firebase/commit/4f97aab89737ef805dc2d9418fc049fcca7942a4))
+
+
+
 ## [2.5.1](https://github.com/nativescript/firebase/compare/2.5.0...2.5.1) (2022-12-12)
 
 
