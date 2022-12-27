@@ -114,10 +114,13 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
     #endif
         UserDefaults.standard.set(true, forKey: NSCNotificationHelper.REMOTE_NOTIFICATIONS_REGISTRATION_STATUS)
         NSCFirebaseMessagingCore.registerDeviceForRemoteMessagesCallback?(UIApplication.shared.isRegisteredForRemoteNotifications, nil)
-        NSCFirebaseMessagingCore.registerDeviceForRemoteMessagesCallback = nil
+        //NSCFirebaseMessagingCore.registerDeviceForRemoteMessagesCallback = nil
         
+    #if !canImport(FirebaseMessaging)
         NSCFirebaseMessagingCore.onTokenCallback?(NSCFirebaseMessagingCore.apnsToken(toString: deviceToken))
-        NSCFirebaseMessagingCore.onTokenCallback = nil
+       // NSCFirebaseMessagingCore.onTokenCallback = nil
+    #endif
+        
     }
     
     @objc public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

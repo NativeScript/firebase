@@ -1,4 +1,5 @@
 {
+	"name": "firebase-performance",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "packages/firebase-performance",
@@ -30,12 +31,12 @@
 			]
 		},
 		"build.all": {
-			"executor": "@nrwl/workspace:run-commands",
+			"executor": "nx:run-commands",
 			"options": {
 				"commands": ["node tools/scripts/build-finish.ts firebase-performance"],
 				"parallel": false
 			},
-			"outputs": ["dist/packages/firebase-performance"],
+			"outputs": ["{workspaceRoot}/dist/packages/firebase-performance"],
 			"dependsOn": [
 				{
 					"target": "build.all",
@@ -48,7 +49,7 @@
 			]
 		},
 		"focus": {
-			"executor": "@nrwl/workspace:run-commands",
+			"executor": "nx:run-commands",
 			"options": {
 				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-performance"],
 				"parallel": false

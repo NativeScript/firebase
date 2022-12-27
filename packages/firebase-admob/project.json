@@ -1,4 +1,5 @@
 {
+	"name": "firebase-admob",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "packages/firebase-admob",
@@ -40,12 +41,12 @@
 			]
 		},
 		"build.all": {
-			"executor": "@nrwl/workspace:run-commands",
+			"executor": "nx:run-commands",
 			"options": {
 				"commands": ["node tools/scripts/build-finish.ts firebase-admob"],
 				"parallel": false
 			},
-			"outputs": ["dist/packages/firebase-admob"],
+			"outputs": ["{workspaceRoot}/dist/packages/firebase-admob"],
 			"dependsOn": [
 				{
 					"target": "build.all",
@@ -58,7 +59,7 @@
 			]
 		},
 		"focus": {
-			"executor": "@nrwl/workspace:run-commands",
+			"executor": "nx:run-commands",
 			"options": {
 				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-admob"],
 				"parallel": false

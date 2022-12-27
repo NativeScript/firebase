@@ -1,4 +1,5 @@
 {
+	"name": "firebase-dynamic-links",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"projectType": "library",
 	"sourceRoot": "packages/firebase-dynamic-links",
@@ -30,12 +31,12 @@
 			]
 		},
 		"build.all": {
-			"executor": "@nrwl/workspace:run-commands",
+			"executor": "nx:run-commands",
 			"options": {
 				"commands": ["node tools/scripts/build-finish.ts firebase-dynamic-links"],
 				"parallel": false
 			},
-			"outputs": ["dist/packages/firebase-dynamic-links"],
+			"outputs": ["{workspaceRoot}/dist/packages/firebase-dynamic-links"],
 			"dependsOn": [
 				{
 					"target": "build.all",
@@ -48,7 +49,7 @@
 			]
 		},
 		"focus": {
-			"executor": "@nrwl/workspace:run-commands",
+			"executor": "nx:run-commands",
 			"options": {
 				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-dynamic-links"],
 				"parallel": false

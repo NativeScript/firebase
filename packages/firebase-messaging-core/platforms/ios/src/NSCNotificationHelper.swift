@@ -28,7 +28,7 @@ public class NSCNotificationHelper: NSObject {
             NSCUNUserNotificationCenterDelegate.sharedInstance.observe()
         }
 
-#if canImport(NSCFIRMessagingDelegate)
+#if canImport(NSCFIRMessaging)
         NSCFIRMessagingDelegate.sharedInstance.observe()
 #endif
         let auto = UserDefaults.standard.bool(forKey: NSCNotificationHelper.REMOTE_NOTIFICATIONS_REGISTRATION_STATUS)

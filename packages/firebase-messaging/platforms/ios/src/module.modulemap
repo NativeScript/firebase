@@ -1,0 +1,5 @@
+ module NSCFIRMessaging {
+  umbrella header "NSCFIRMessagingUmbrella.h"
+  export *
+  module * { export * }
+}

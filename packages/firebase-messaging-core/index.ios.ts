@@ -44,6 +44,7 @@ function deserialize(data: any): any {
 export class MessagingCore implements IMessagingCore {
 	_APNSToken;
 	_onMessage(message: any) {
+		console.log('_onMessage', message);
 		if (onMessageCallbacks.size > 0) {
 			const msg = deserialize(message);
 			onMessageCallbacks.forEach((cb) => {
@@ -55,6 +56,7 @@ export class MessagingCore implements IMessagingCore {
 	}
 	_onToken(token: string) {
 		this._APNSToken = token;
+		console.log('_onToken', token);
 		if (onTokenCallbacks.size > 0) {
 			onTokenCallbacks.forEach((cb) => {
 				cb(token);
@@ -64,6 +66,7 @@ export class MessagingCore implements IMessagingCore {
 		}
 	}
 	_onNotificationTap(message: any) {
+		console.log('_onNotificationTap', message);
 		if (onNotificationTapCallbacks.size > 0) {
 			const msg = deserialize(message);
 			onNotificationTapCallbacks.forEach((cb) => {

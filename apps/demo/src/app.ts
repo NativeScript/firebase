@@ -37,6 +37,18 @@ dynamicLinks.onLink((link) => {
 
 const messaging = firebase().messaging();
 
+messaging.onMessage((message) => {
+	console.log('Firebase onMessage', message);
+});
+
+messaging.onNotificationTap((message) => {
+	console.log('Firebase onNotificationTap', message);
+});
+
+messaging.onToken((token) => {
+	console.log('Firebase onToken', token);
+});
+
 Application.on('launch', (args) => {
 	messaging.onMessage((message) => {
 		console.log('Firebase onMessage', message);

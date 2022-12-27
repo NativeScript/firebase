@@ -14,7 +14,7 @@ public class NSCFIRMessagingDelegate: NSObject, MessagingDelegate {
         if(NSCFIRMessagingDelegate.isObserving){
             return
         }
-        Messaging.messaging().delegate = NSCFIRMessagingDelegate.sharedInstance
+        Messaging.messaging().delegate = self
         NSCFIRMessagingDelegate.isObserving = true
     }
     
