@@ -357,7 +357,7 @@ export declare class Auth implements IAuth {
 
 	signInWithEmailLink(email: string, emailLink: string): Promise<UserCredential>;
 
-	signOut(): boolean;
+	signOut(): Promise<boolean>;
 
 	useUserAccessGroup(userAccessGroup: string): Promise<void>;
 
