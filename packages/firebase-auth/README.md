@@ -118,7 +118,18 @@ if (user && !user.emailVerified) {
 ### Signing Out
 
 ```ts
-firebase().auth().signOut();
+firebase().auth().signOut()
+.then(res => {
+  if(res) {
+    // user signed out
+    return
+  }
+  // else do staff
+});
+
+// OR
+
+let signedOut = await firebase().auth().signOut();
 ```
 
 ### Other sign-in methods
