@@ -1394,8 +1394,8 @@ export class Auth implements IAuth {
 		});
 	}
 
-	signOut() {
-		return this.native?.signOut?.();
+	async signOut(): Promise<boolean> {
+		return await this.native?.signOut?.();
 	}
 
 	get native() {
