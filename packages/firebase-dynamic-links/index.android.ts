@@ -1,6 +1,6 @@
 import { Application, AndroidActivityNewIntentEventData, AndroidApplication } from '@nativescript/core';
 import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, ShortLinkType } from './common';
+import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, OnLinkListener, ShortLinkType } from './common';
 
 let defaultDynamicLinks: DynamicLinks;
 
@@ -455,7 +455,7 @@ export class DynamicLink implements IDynamicLink {
 export class DynamicLinks implements IDynamicLinks {
 	_native: com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 	_app: FirebaseApp;
-	static _onLink: (link: DynamicLink) => void;
+	static _onLink: OnLinkListener;
 	static _didInit = false;
 	static _callback: org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>;
 	constructor() {
@@ -468,10 +468,13 @@ export class DynamicLinks implements IDynamicLinks {
 			DynamicLinks._callback = new org.nativescript.firebase.dynamic_links.FirebaseDynamicLinks.Callback<com.google.firebase.dynamiclinks.PendingDynamicLinkData>({
 				onSuccess(param0) {
 					if (typeof DynamicLinks._onLink === 'function') {
-						DynamicLinks._onLink(DynamicLink.fromNative(param0));
+						DynamicLinks._onLink(DynamicLink.fromNative(param0), null);
 					}
 				},
 				onError(param0) {
+					if (typeof DynamicLinks._onLink === 'function') {
+						DynamicLinks._onLink(null, FirebaseError.fromNative(param0));
+					}
 					console.error('Unknown error occurred when attempting to handle a universal link', param0);
 				},
 			});
@@ -520,7 +523,7 @@ export class DynamicLinks implements IDynamicLinks {
 		return DynamicLinkParameters.fromNative(dl, shortLinkType);
 	}
 
-	onLink(listener: (link: DynamicLink) => void) {
+	onLink(listener: OnLinkListener) {
 		DynamicLinks._onLink = listener;
 	}
 	resolveLink(link: string): Promise<DynamicLink> {
