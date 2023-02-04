@@ -120,7 +120,6 @@ class FirebaseDynamicLinks : Application.ActivityLifecycleCallbacks {
       url: String,
       callback: Callback<PendingDynamicLinkData>
     ) {
-      links.createDynamicLink().buildShortDynamicLink()
       try {
         links.getDynamicLink(Uri.parse(url))
           .addOnCompleteListener(executors) {
