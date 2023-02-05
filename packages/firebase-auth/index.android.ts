@@ -1395,7 +1395,20 @@ export class Auth implements IAuth {
 	}
 
 	async signOut(): Promise<boolean> {
-		return await this.native?.signOut?.();
+		return new Promise((resolve, reject) => {
+        this.native?.signOut();
+        let timeout = setTimeout(() => {
+            reject(false);
+        }, 3000);
+        this.addAuthStateChangeListener((user) => {
+            clearTimeout(timeout);
+            console.log("User signed out", user);
+            if(user) {
+                reject(false);
+            }
+            resolve(true);
+        });
+     })
 	}
 
 	get native() {
