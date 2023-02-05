@@ -1402,7 +1402,6 @@ export class Auth implements IAuth {
         }, 3000);
         this.addAuthStateChangeListener((user) => {
             clearTimeout(timeout);
-            console.log("User signed out", user);
             if(user) {
                 reject(false);
             }
