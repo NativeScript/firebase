@@ -1,4 +1,4 @@
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 
 export enum ShortLinkType {
 	DEFAULT = 'default',
@@ -67,11 +67,13 @@ export interface IDynamicLink {
 	utmParameters: Record<string, string>;
 }
 
+export type OnLinkListener = (link: IDynamicLink | null, error: FirebaseError | null) => void;
+
 export interface IDynamicLinks {
 	app: FirebaseApp;
 	createLink(link: string, domainUriPrefix: string): IDynamicLinkParameters;
 	createShortLink(link: string, domainUriPrefix: string, shortLinkType?: ShortLinkType): IDynamicLinkParameters;
 	buildLink(link: IDynamicLinkParameters): Promise<string>;
-	onLink(listener: (link: IDynamicLink) => void);
+	onLink(listener: OnLinkListener);
 	resolveLink(link: string): Promise<IDynamicLink>;
 }

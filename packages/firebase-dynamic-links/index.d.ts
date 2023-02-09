@@ -1,4 +1,4 @@
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { ShortLinkType, IDynamicLink } from './common';
 
 export { ShortLinkType };
@@ -93,6 +93,8 @@ export declare class DynamicLink implements IDynamicLink {
 	readonly android;
 }
 
+export type OnLinkListener = (link: DynamicLink | null, error: FirebaseError | null) => void;
+
 export declare class DynamicLinks implements IDynamicLinks {
 	createLink(link: string, domainUriPrefix: string): DynamicLinkParameters;
 
@@ -100,7 +102,7 @@ export declare class DynamicLinks implements IDynamicLinks {
 
 	buildLink(link: DynamicLinkParameters): Promise<string>;
 
-	onLink(listener: (link: DynamicLink) => void);
+	onLink(listener: OnLinkListener): void;
 
 	resolveLink(link: string): Promise<DynamicLink>;
 

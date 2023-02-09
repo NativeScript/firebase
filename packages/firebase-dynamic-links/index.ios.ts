@@ -1,5 +1,5 @@
 import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
-import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, ShortLinkType } from './common';
+import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, OnLinkListener, ShortLinkType } from './common';
 
 let defaultDynamicLinks: DynamicLinks;
 const fb = firebase();
@@ -457,7 +457,7 @@ export class DynamicLink implements IDynamicLink {
 export class DynamicLinks implements IDynamicLinks {
 	_native: FIRDynamicLinks;
 	_app: FirebaseApp;
-	static _onLink: (link: DynamicLink) => void;
+	static _onLink: OnLinkListener;
 	constructor() {
 		if (defaultDynamicLinks) {
 			return defaultDynamicLinks;
@@ -504,11 +504,11 @@ export class DynamicLinks implements IDynamicLinks {
 		}
 	}
 
-	onLink(listener: (link: DynamicLink) => void) {
+	onLink(listener: OnLinkListener) {
 		DynamicLinks._onLink = listener;
 		if (listener) {
-			TNSFirebaseDynamicLinksAppDelegate.onLinkCallback = (link) => {
-				listener(DynamicLink.fromNative(link));
+			TNSFirebaseDynamicLinksAppDelegate.onLinkCallback = (link, error) => {
+				listener(DynamicLink.fromNative(link), error && FirebaseError.fromNative(error));
 			};
 		} else {
 			TNSFirebaseDynamicLinksAppDelegate.onLinkCallback = null;

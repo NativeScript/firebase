@@ -10,7 +10,7 @@ public class TNSFirebaseDynamicLinksAppDelegate: UIResponder , UIApplicationDele
     
     private static var _sharedInstance: TNSFirebaseDynamicLinksAppDelegate?  = nil
     
-    @objc public static var onLinkCallback: ((DynamicLink) -> Void)? = nil
+    @objc public static var onLinkCallback: ((DynamicLink?, Error?) -> Void)? = nil
     
     @objc public static var sharedInstance: TNSFirebaseDynamicLinksAppDelegate {
         get {
@@ -30,22 +30,14 @@ public class TNSFirebaseDynamicLinksAppDelegate: UIResponder , UIApplicationDele
         
         if (dynamicLink == nil) {
            DynamicLinks.dynamicLinks().dynamicLink(fromUniversalLink: url, completion: { dynamicLink, error in
-                if (dynamicLink?.url != nil) {
-                    DispatchQueue.main.async {
-                        TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink!)
-                    }
+                DispatchQueue.main.async {
+                    TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink, error)
                 }
             })
             return false
         }
         
-        if (dynamicLink == nil) {
-            return false
-        }
-        
-        if (dynamicLink?.url != nil) {
-            TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink!)
-        }
+        TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink, nil)
         
         return false
     }
@@ -63,23 +55,16 @@ public class TNSFirebaseDynamicLinksAppDelegate: UIResponder , UIApplicationDele
         
         if(userActivity.webpageURL != nil){
             DynamicLinks.dynamicLinks().handleUniversalLink(userActivity.webpageURL!) { dynamicLink, error in
-                if(error == nil && dynamicLink?.url != nil){
-                    TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink!)
-                }
-                
-                
                 if(error != nil && !retried && (error as? NSError)?.domain == NSPOSIXErrorDomain && (error as? NSError)?.code == 53){
                     retried = true
                     DynamicLinks.dynamicLinks().handleUniversalLink(userActivity.webpageURL!) { dynamicLink, error in
-                        
-                        if(error == nil && dynamicLink?.url != nil){
-                            TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink!)
-                        }
+                        TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink, error)
                         if(error != nil && error?.localizedDescription != nil){
                             NSLog("%@", "CONSOLE LOG: ", error!.localizedDescription)
                         }
-                        
                     }
+                } else {
+                    TNSFirebaseDynamicLinksAppDelegate.onLinkCallback?(dynamicLink, error)
                 }
             }
         }
