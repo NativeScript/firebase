@@ -88,7 +88,7 @@ To learn more about how to send these options in your message payload, view the 
 
 The device state and message contents can also determine whether a Notification will be displayed:
 
-|     Foreground      |    Background    |       Quit       |				|
+|                     |    Foreground    |    Background    |			Quit	|
 | :-----------------: | :--------------: | :--------------: | ---------------- |
 |    Notification     | Notification: ❌ | Notification: ✅ | Notification: ✅ |
 | Notification + Data | Notification: ❌ | Notification: ✅ | Notification: ✅ |
