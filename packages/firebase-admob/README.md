@@ -1,8 +1,9 @@
 
 # @nativescript/firebase-admob
 
-A plugin that allows you to to monetize your NativeScript app by integrating the [Google Mobile Ads SDK](https://developers.google.com/admob/android/sdk) into the app. 
-Once the integration is complete, you can choose an ad format to get detailed implementation steps.
+A plugin that allows you to monetize your NativeScript app by integrating the [Google Mobile Ads SDK](https://developers.google.com/admob/android/sdk) into the app. 
+
+> **Note:** Before you use this plugin, follow the instructions at [@nativescript/firebase-core](../firebase-core/) to setup your app for Firebase.
 
 The Google Mobile Ads SDK for NativeScript currently supports loading and displaying the following ads:
 - [Banner](#banner-ads)
@@ -14,6 +15,7 @@ Note: This plugin also supports Google Ad Manager.
 <!-- If you are interested in creating and loading an ad with Ad Manager, follow the same prerequisites, platform setup, mobile ads SDK initialization steps outlined in this documentation. , and then see creating and loading an ad with Ad Manager for further instructions. -->
 
 ## Installation
+To install `@nativescript/firebase-admob`, run the following command in the root directory of the  project:
 
 ```cli
 npm install @nativescript/firebase-admob
@@ -28,11 +30,11 @@ Update your `Info.plist` file at `App_Resources/iOS` with a `GADApplicationIdent
 <string>ca-app-pub-3940256099942544~1458002511</string>
 ```
 
-See [Update your Info.plist](https://developers.google.com/admob/ios/quick-start#update%5C_your%5C_infoplist) for more information about configuring Info.plist and setting up your App ID.
+For more information about configuring the `Info.plist` and setting up your App ID, see [Update your Info.plist](https://developers.google.com/admob/ios/quick-start#update%5C_your%5C_infoplist).
 
 ## Setup Admob for Android
 
-Add AdMob App ID ([identified in the AdMob UI](https://support.google.com/admob/answer/7356431)) to the app's `AndroidManifest.xml` file, found at `App_Resources/Android/src/main`. Failure to do so will result in a crash on launch of an app. Add the ID by adding a `<meta-data>` tag with name `com.google.android.gms.ads.APPLICATION_ID`, as shown below. For `android:value` insert your own AdMob App ID in quotes.
+Add AdMob App ID ([identified in the AdMob UI](https://support.google.com/admob/answer/7356431)) to the app's `AndroidManifest.xml` file, found at `App_Resources/Android/src/main`. Failure to do so will result in a crash on app launch. Add the ID by adding a `<meta-data>` tag with name `com.google.android.gms.ads.APPLICATION_ID`, as shown below. For `android:value` insert your own AdMob App ID in quotes.
 
 ```xml
 <application>
@@ -58,17 +60,22 @@ import { Admob } from '@nativescript/firebase-admob'
 Admob.init()
 ```
 
-### 2. Select an Ad Format
+### 2. Add your preferred Ad Format
 
-The Mobile Ads SDK is now imported and you're ready to implement an ad. AdMob offers a number of different ad formats, so you can choose the one that best fits your app's user experience.
+The Mobile Ads SDK is now imported and you're ready to implement an ad. Click any of the links below to get detailed implementation steps for your desired ad format.
 
-### Banner Ads
+- [Banner](#add-a-banner-ad)
+- [Interstitial (full-screen)](#interstitial-ad)
+- [Native](#native-ads)
+- [Rewarded](#rewarded-ads)
 
-Rectangular ads that appear at the top or bottom of the device screen. Banner ads stay on screen while users are interacting with the app, and can refresh automatically after a certain period of time. If you're new to mobile advertising, they're a great place to start.
+### Add a Banner Ad
+
+Banner ads are rectangular ads that appear at the top or bottom of the device screen. They stay on screen while users are interacting with the app, and can refresh automatically after a certain period of time. If you're new to mobile advertising, they're a great place to start.
 
 #### Always test with test ads
 
-When building and testing your apps, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
+>**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
 The easiest way to load test ads is to use our dedicated test ad unit ID for banners:
 
@@ -79,7 +86,7 @@ It's been specially configured to return test ads for every request, and you're 
 
 #### Instantiate a Banner Ad
 
-A `BannerAd` requires an `unitId`, an `BannerAdSize`, an `AdRequest`, and a `BannerAdListener`. An example is shown below as well as more information on each parameter following.
+To instantiate a banner ad, add the `BannerAd` view to your markup. The `BannerAd` requires the following properties: an `unitId`, an `BannerAdSize`, an `AdRequest`, and a `BannerAdListener`. Below are examples of adding a Banner ad in different flavors of JS supported by {N}.
 
 #### Core
 
@@ -161,7 +168,6 @@ const adSize = new BannerAdSize(300, 50)
 Through the use of the emitted events, you can listen for lifecycle events, such as when an ad is loaded. This example implements each method and logs a message to the console:
 
 ```ts
-
 const bannerView = event.object;
 
 // Called when an ad is successfully received.
@@ -199,7 +205,8 @@ After a BannerAd is instantiated, load() must be called before it can be shown o
 bannerView.load()
 ```
 
-### Interstitial Ad
+### Add an Interstitial Ad
+
 Full-screen ads that cover the interface of an app until closed by the user. They're best used at natural pauses in the flow of an app's execution, such as between levels of a game or just after a task is completed.
 
 #### Always test with test ads
