@@ -1,21 +1,25 @@
 
 # @nativescript/firebase-admob
 
+A plugin that allows you to to monetize your NativeScript app by integrating the [Google Mobile Ads SDK](https://developers.google.com/admob/android/sdk) into the app. 
+Once the integration is complete, you can choose an ad format to get detailed implementation steps.
+
+The Google Mobile Ads SDK for NativeScript currently supports loading and displaying the following ads:
+- [Banner](#banner-ads)
+- [Interstitial (full-screen)](#interstitial-ad)
+- [Native](#native-ads)
+- [Rewarded](#rewarded-ads)
+
+Note: This plugin also supports Google Ad Manager. If you are interested in creating and loading an ad with Ad Manager, follow the same prerequisites, platform setup, mobile ads SDK initialization steps outlined in this documentation. , and then see creating and loading an ad with Ad Manager for further instructions.
+
+## Installation
+
 ```cli
 npm install @nativescript/firebase-admob
 ```
 
-This guide is intended for publishers who want to monetize a NativeScript app.
 
-Integrating Google Mobile Ads SDK into a NativeScript app, which you will do here, is the first step towards displaying AdMob ads and earning revenue. Once the integration is complete, you can choose an ad format to get detailed implementation steps.
-
-The Google Mobile Ads SDK for NativeScript currently supports loading and displaying banner, interstitial (full-screen), native ads, and rewarded ads.
-
-Note: This plugin also contains support for Google Ad Manager. If you are interested in creating and loading an Ad with Ad Manager, you may follow the same prerequisites, platform setup, mobile ads SDK initialization steps outlined in this doc, and then see creating and loading an ad with Ad Manager for further instructions.
-
-## Setup
-
-### iOS
+## Setup Admob for iOS
 
 Update your Info.plist
 
@@ -28,7 +32,7 @@ Update your Info.plist
 
 See https://developers.google.com/admob/ios/quick-start#update\_your\_infoplist for more information about configuring Info.plist and setting up your App ID.
 
-### Android
+## Setup Admob for Android
 
 Update AndroidManifest.xml
 
@@ -48,11 +52,11 @@ Add the AdMob App ID (identified in the AdMob UI) to the app's AndroidManifest.x
 
 See [here](https://developers.google.com/admob/android/quick-start#update_your_androidmanifestxml) for more information about configuring AndroidManifest.xml and setting up the App ID.
 
-## Usage
+## Using @nativescript/firebase-admob
 
 ### Initialize the Mobile Ads SDK
 
-Before loading ads, have your app initialize the Mobile Ads SDK by calling MobileAds.instance.initialize() which initializes the SDK and returns a Future that finishes once initialization is complete (or after a 30-second timeout). This needs to be done only once, ideally right before running the app.
+Before loading ads, initialize the Mobile Ads SDK by calling the static [init](#init) method on the Admob class. This needs to be done only once, ideally right before the app boots, in the `main.ts` file.
 
 ```ts
 import { Admob } from '@nativescript/firebase-admob'
@@ -64,18 +68,9 @@ Admob.init()
 
 The Mobile Ads SDK is now imported and you're ready to implement an ad. AdMob offers a number of different ad formats, so you can choose the one that best fits your app's user experience.
 
-- Banner
-  - Rectangular ads that appear at the top or bottom of the device screen. Banner ads stay on screen while users are interacting with the app, and can refresh automatically after a certain period of time. If you're new to mobile advertising, they're a great place to start.
-- Interstitial
-  - Full-screen ads that cover the interface of an app until closed by the user. They're best used at natural pauses in the flow of an app's execution, such as between levels of a game or just after a task is completed.
-- Native Ads
-  - Customizable ads that match the look and feel of your app. You decide how and where they're placed, so the layout is more consistent with your app's design.
-- Rewarded
-  - Ads that reward users for watching short videos and interacting with playable ads and surveys. Good for monetizing free-to-play users.
-
 ### Banner Ads
 
-Banner ads occupy a spot within an app's layout, either at the top or bottom of the device screen. They stay on screen while users are interacting with the app, and can refresh automatically after a certain period of time.
+Rectangular ads that appear at the top or bottom of the device screen. Banner ads stay on screen while users are interacting with the app, and can refresh automatically after a certain period of time. If you're new to mobile advertising, they're a great place to start.
 
 #### Always test with test ads
 
@@ -211,8 +206,7 @@ bannerView.load()
 ```
 
 ### Interstitial Ad
-
-Interstitial ads are full-screen ads that cover the interface of their host app. They're typically displayed at natural transition points in the flow of an app, such as between activities or during the pause between levels in a game. When an app shows an interstitial ad, the user has the choice to either tap on the ad and continue to its destination or close it and return to the app.
+Full-screen ads that cover the interface of an app until closed by the user. They're best used at natural pauses in the flow of an app's execution, such as between levels of a game or just after a task is completed.
 
 #### Always test with test ads
 
