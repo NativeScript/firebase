@@ -10,7 +10,8 @@ The Google Mobile Ads SDK for NativeScript currently supports loading and displa
 - [Native](#native-ads)
 - [Rewarded](#rewarded-ads)
 
-Note: This plugin also supports Google Ad Manager. If you are interested in creating and loading an ad with Ad Manager, follow the same prerequisites, platform setup, mobile ads SDK initialization steps outlined in this documentation. , and then see creating and loading an ad with Ad Manager for further instructions.
+Note: This plugin also supports Google Ad Manager. 
+<!-- If you are interested in creating and loading an ad with Ad Manager, follow the same prerequisites, platform setup, mobile ads SDK initialization steps outlined in this documentation. , and then see creating and loading an ad with Ad Manager for further instructions. -->
 
 ## Installation
 
@@ -18,27 +19,20 @@ Note: This plugin also supports Google Ad Manager. If you are interested in crea
 npm install @nativescript/firebase-admob
 ```
 
-
 ## Setup Admob for iOS
 
-Update your Info.plist
-
-- A GADApplicationIdentifier key with a string value of your AdMob app ID ([identified in the AdMob UI](https://support.google.com/admob/answer/7356431)).
+Update your `Info.plist` file at `App_Resources/iOS` with a `GADApplicationIdentifier` key with a string value of your AdMob app ID ([identified in the AdMob UI](https://support.google.com/admob/answer/7356431)).
 
 ```xml
 <key>GADApplicationIdentifier</key>
 <string>ca-app-pub-3940256099942544~1458002511</string>
 ```
 
-See https://developers.google.com/admob/ios/quick-start#update\_your\_infoplist for more information about configuring Info.plist and setting up your App ID.
+See [Update your Info.plist](https://developers.google.com/admob/ios/quick-start#update%5C_your%5C_infoplist) for more information about configuring Info.plist and setting up your App ID.
 
 ## Setup Admob for Android
 
-Update AndroidManifest.xml
-
-The AdMob App ID must be included in the AndroidManifest.xml. Failure to do so will result in a crash on launch of an app.
-
-Add the AdMob App ID (identified in the AdMob UI) to the app's AndroidManifest.xml file by adding a `<meta-data>` tag with name com.google.android.gms.ads.APPLICATION_ID, as shown below. You can find your App ID in the AdMob UI. For android:value insert your own AdMob App ID in quotes, as shown below.
+Add AdMob App ID ([identified in the AdMob UI](https://support.google.com/admob/answer/7356431)) to the app's `AndroidManifest.xml` file, found at `App_Resources/Android/src/main`. Failure to do so will result in a crash on launch of an app. Add the ID by adding a `<meta-data>` tag with name `com.google.android.gms.ads.APPLICATION_ID`, as shown below. For `android:value` insert your own AdMob App ID in quotes.
 
 ```xml
 <application>
@@ -50,11 +44,11 @@ Add the AdMob App ID (identified in the AdMob UI) to the app's AndroidManifest.x
 </application>
 ```
 
-See [here](https://developers.google.com/admob/android/quick-start#update_your_androidmanifestxml) for more information about configuring AndroidManifest.xml and setting up the App ID.
+See step 3. of [Configure your app](https://developers.google.com/admob/android/quick-start#import_the_mobile_ads_sdk) for more information about configuring AndroidManifest.xml and setting up the App ID.
 
 ## Using @nativescript/firebase-admob
 
-### Initialize the Mobile Ads SDK
+### 1. Initialize the Mobile Ads SDK
 
 Before loading ads, initialize the Mobile Ads SDK by calling the static [init](#init) method on the Admob class. This needs to be done only once, ideally right before the app boots, in the `main.ts` file.
 
@@ -64,7 +58,7 @@ import { Admob } from '@nativescript/firebase-admob'
 Admob.init()
 ```
 
-### Select an Ad Format
+### 2. Select an Ad Format
 
 The Mobile Ads SDK is now imported and you're ready to implement an ad. AdMob offers a number of different ad formats, so you can choose the one that best fits your app's user experience.
 
