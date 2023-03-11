@@ -71,37 +71,50 @@ The Mobile Ads SDK is now imported and you're ready to implement an ad. Click an
 
 ### Add a Banner Ad
 
-Banner ads are rectangular ads that appear at the top or bottom of the device screen. They stay on screen while users are interacting with the app, and can refresh automatically after a certain period of time. If you're new to mobile advertising, they're a great place to start.
+Banner ads are rectangular ads that appear at the top or bottom of the device screen. They stay on screen while users are interacting with the app, and can refresh automatically after a certain period. If you're new to mobile advertising, they're a great place to start.
 
 #### Always test with test ads
 
 >**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
-The easiest way to load test ads is to use our dedicated test ad unit ID for banners:
+To enable dedicated test ad unit ID for banners, visit the links below:
 
-- **Android**: https://developers.google.com/admob/android/test-ads#sample\_ad\_units
-- **iOS**: https://developers.google.com/admob/ios/test-ads#demo\_ad\_units
+- [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
+- [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
 
-It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. Just make sure you replace it with your own ad unit ID before publishing your app.
+Just make sure you replace it with your ad unit ID before publishing your app.
 
 #### Instantiate a Banner Ad
 
-To instantiate a banner ad, add the `BannerAd` view to your markup. The `BannerAd` requires the following properties: an `unitId`, an `BannerAdSize`, an `AdRequest`, and a `BannerAdListener`. Below are examples of adding a Banner ad in different flavors of JS supported by {N}.
+To instantiate a banner ad, add the `BannerAd` view to your markup. The `BannerAd` requires the following properties:
+- `unitId`
+- `BannerAdSize`
+- `AdRequest`
+- `BannerAdListener`
+
+ Below are examples of adding a Banner ad in different flavors of JS supported by {N}.
 
 #### Core
 
-> **Important:** Ensure you've included xmlns:ui="@nativescript/firebase-admob" on the Page element
+Register the plugin namespace in the Page element, access the `BannerAd` view from the namespace and add it to your XML. 
 
+> **Important:** Ensure you've included xmlns:ui="@nativescript/firebase-admob" on the Page element
 ```xml
-<ui:BannerAd
-  height="100"
-  width="100"
-  unitId="{{bannerAdUnit}}"
-  layoutChanged="{{bannerLoaded}}"
+<Page xmlns:ui="@nativescript/firebase-admob" >
+
+  <StackLayout>
+    <ui:BannerAd
+      height="100"
+      width="100"
+      unitId="{{bannerAdUnit}}"
+      layoutChanged="{{bannerLoaded}}"
 />
+  </StackLayout>
+
 ```
 
 #### Angular
+Register the `BannerAd` view by adding its `AdmobModule` to the `imports` array of the `@NgModule` decorator of the component where you want to use the view.
 
 ```ts
 import { AdmobModule } from '@nativescript/firebase-admob/angular';
@@ -116,6 +129,7 @@ import { AdmobModule } from '@nativescript/firebase-admob/angular';
     bootstrap: [AppComponent]
 })
 ```
+Next, add the `BannerAd` view to HTML.
 
 ```html
 <BannerAd
@@ -127,11 +141,15 @@ import { AdmobModule } from '@nativescript/firebase-admob/angular';
 ```
 #### Vue
 
-```ts
-import Vue from 'nativescript-vue'
-import Admob from '@nativescript/firebase-admob/vue'
+Register the `BannerAd` view in the `app.ts` file as follows:
 
-Vue.use(Admob)
+```ts
+import { createApp } from 'nativescript-vue';
+import Admob from '@nativescript/firebase-admob/vue'
+import Home from './components/Home.vue';
+
+const app = createApp(Home)
+app.use(Admob)
 
 ```
 
@@ -143,7 +161,12 @@ Vue.use(Admob)
   @layoutChanged="bannerLoaded"/>
 ```
 
-#### Banner Sizes
+#### Customize the banner size
+To define a custom banner size, set your desired AdSize, as shown here:
+
+```ts
+const adSize = new BannerAdSize(300, 50)
+```
 
 The table below lists the standard banner sizes.
 
@@ -157,15 +180,10 @@ The table below lists the standard banner sizes.
 | Provided width x Adaptive height | Adaptive Banner  | Use createAnchoredAdaptiveBanner(width, orientation) |
 | Provided width x Adaptive height | Adaptive Banner  |  Use createInLineAdaptiveBanner(width, orientation)  |
 
-To define a custom banner size, set your desired AdSize, as shown here:
 
-```ts
-const adSize = new BannerAdSize(300, 50)
-```
+#### Listen to banner ad lifecycle events
 
-#### Banner Ad Events
-
-Through the use of the emitted events, you can listen for lifecycle events, such as when an ad is loaded. This example implements each method and logs a message to the console:
+The plugin enables you to listen to different ad lifecycle events, such as when an ad is loaded. 
 
 ```ts
 const bannerView = event.object;
@@ -197,9 +215,9 @@ bannerView.on('adClicked', (args) =>{
 
 ```
 
-### Load Banner Ad
+### Show a banner ad to the user
 
-After a BannerAd is instantiated, load() must be called before it can be shown on the screen.
+To show an ad to the user, get the reference to the `BannerAd` view and call the `load` method on it.
 
 ```ts
 bannerView.load()
