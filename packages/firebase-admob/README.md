@@ -387,16 +387,17 @@ const view = event.object;
 loader.onAdEvent((event, error, data) => {
 	if (event === NativeAdEventType.LOADED) {
 		const ad = data as NativeAd;
-		const hlv = view.getViewById('headLineView');
-		hlv.text = ad.headline;
-		const mv = view.getViewById('mediaView');
-		view.mediaView = mv;
-		mv.mediaContent = ad.mediaContent;
-		const but = view.getViewById('callToActionView');
-		view.callToActionView = but;
-		but.text = ad.callToAction;
-		const bv = view.getViewById('bodyView');
-		bv.text = ad.body;
+
+		const headLineView = view.getViewById('headLineView');
+		headLineView.text = ad.headline;
+		const mediaView = view.getViewById('mediaView');
+		view.mediaView = mediaView;
+		mediaView.mediaContent = ad.mediaContent;
+		const callToActionButton = view.getViewById('callToActionView');
+		view.callToActionView = callToActionButton;
+		callToActionButton.text = ad.callToAction;
+		const bodyView = view.getViewById('bodyView');
+		bodyView.text = ad.body;
 		view.nativeAd = ad;
 		console.log('nativead loaded');
 	} else if (event === 'adFailedToLoad') {
@@ -405,6 +406,12 @@ loader.onAdEvent((event, error, data) => {
 });
 }
 ```
+6. Display the Native ad
+To display the Native ad, call the `load` method on a NativeAdLoader instance.
+
+```ts
+loader.load()
+```
 
 ### NativeAdOptions
 
@@ -412,54 +419,42 @@ A NativeAdOptions object is used to set the following options on the native ad.
 | Property | Type | Description
 |:---------|:-----|:-----------
 | `returnUrlsForImageAssets` | `boolean` | _Optional_: If set to `true`, the SDK will not load image asset content and native ad image URLs can be used to fetch content. Defaults to `false`.
-| `multipleImages` | [MediaAspectRatio](#)| 
+| `multipleImages` | `boolean`| _Optional_: Some image assets contain a series of images. Setting this property to `true` tells the app to display all the images of an asset. The `false`(the default) value informs the app to display the first image from the series of images in an image asset.
+| `adChoicesPlacement` | [AdChoicesPlacement](#adchoicesplacement) |_Optional_: The [AdChoices overlay](https://developers.google.com/admob/android/native/advanced#adchoices_overlay) is set to the top right corner by default. Apps can change which corner this overlay is rendered in by setting this property to one of the following:
+| `videoOptions` | [videoOptions](#videooptions)| _Optional_: Used to set video options for video assets returned as part of a native ad. If an ad contains a video(if `ad.mediaContent.hasVideoContent = true`), display the video. 
+| `mediaAspectRatio` | []() | _Optional_: This sets the aspect ratio for image or video to be returned for the native ad.
 
+#### AdChoicesPlacement
 
-
-
-Some image assets will contain a series of images rather than just one. By setting this value to true, your app indicates that it's prepared to display all the images for any assets that have more than one. By setting it to false (the default) your app instructs the SDK to provide just the first image for any assets that contain a series.
-
-`adChoicesPlacement`
-
-The [AdChoices overlay](https://developers.google.com/admob/android/native/advanced#adchoices_overlay) is set to the top right corner by default. Apps can change which corner this overlay is rendered in by setting this property to one of the following:
-
-- AdChoicesPlacement.TOP_RIGHT
-- AdChoicesPlacement.TOP_LEFT
-- AdChoicesPlacement.BOTTOM_RIGHT
-- AdChoicesPlacement.BOTTOM_LEFT
-
-`videoOptions`
-
-Can be used to set video options for video assets returned as part of a native ad.
 ```ts
-videoOptions?: {
-    startMuted?: boolean;
-    clickToExpandRequested?: boolean;
-    customControlsRequested?: boolean;
-};
+enum AdChoicesPlacement {
+	TOP_LEFT = 'topLeft',
+	TOP_RIGHT = 'topRight',
+	BOTTOM_RIGHT = 'bottomRight',
+	BOTTOM_LEFT = 'bottomLeft',
+}
 ```
+#### videoOptions
 
-Remember that if an ad contains a video, this video _must_ be shown. 
+The `videoOptions` property is an object with the following properties:
+| Property | Type | Optional
+|:---------|:----|:-------
+| `startMuted` | `boolean` | _Yes_
+| `clickToExpandRequested` | `boolean` | _Yes_
+| `customControlsRequested` | `boolean` | _Yes_
+
 
 ```ts
 ad.mediaContent.hasVideoContent = true | false
 ```
-
-`mediaAspectRatio`
-
-This sets the aspect ratio for image or video to be returned for the native ad. Setting mediaAspectRatio to one of the following constants will cause only ads with media of the specified aspect ratio to be returned:
-
-- MediaAspectRatio.LANDSCAPE
-- MediaAspectRatio.PORTRAIT
-- MediaAspectRatio.SQUARE
-- MediaAspectRatio.ANY
-
-If not set, ads with any aspect ratio will be returned.
-
-### Load Native Ad
-
+#### AdChoicesPlacement
 ```ts
-loader.load()
+enum AdChoicesPlacement {
+	TOP_LEFT = 'topLeft',
+	TOP_RIGHT = 'topRight',
+	BOTTOM_RIGHT = 'bottomRight',
+	BOTTOM_LEFT = 'bottomLeft',
+}
 ```
 
 That's it! Your app is now ready to display native ads.
@@ -474,7 +469,7 @@ That's it! Your app is now ready to display native ads.
 
 Rewarded ads are ads that users have the option of interacting with [in exchange for in-app rewards](https://support.google.com/admob/answer/7313578).
 
-### Always test with test ads
+### Use test ads for development
 
 When building and testing your apps, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
