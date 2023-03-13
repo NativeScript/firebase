@@ -348,11 +348,15 @@ To enable dedicated test ad unit ID, visit the links below:
 - [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
 - [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
 
-It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. Just make sure you replace it with your own ad unit ID before publishing your app.
+3. Import the `NativeAdLoader` class from `@nativescript/firebase-admob` in the view model file.
 
-### Instantiate a Native Ad
+```ts
+import { NativeAdLoader } from '@nativescript/firebase-admob'
+```
+The `NativeAdLoader` class is an interface for managing the the Native ad.
 
-A NativeAdLoader requires an adUnitId, an optional RequestOptions, an AdRequest, and an optional NativeAdOptions. An example is shown below as well as more information on each parameter following.
+4. Instantiate `NativeAdLoader`.
+Create an instance of `NativeAdLoader` by calling its constructor function. The constructor function accepts 3 parameters. The required adUnitId as the first parameter, optional RequestOptions and NativeAdOptions objects as the second and third parameter, respectively.
 
 ```ts
 const loader = new NativeAdLoader('ca-app-pub-3940256099942544/3986624511', null, {
@@ -362,12 +366,12 @@ const loader = new NativeAdLoader('ca-app-pub-3940256099942544/3986624511', null
 })
 ```
 
-#### Native Ad Events
+5. Listen to the Native ad lifecycle events
 
-Through the use of NativeAdListener, you can listen for lifecycle events, such as when an ad is closed or the user leaves the app. This example implements each method and logs a message to the console:
+To listen to the Native ad [lifecycle events](), call the `onAdEvent` method on the `NativeAdLoader` instance when the `NativeAdView` has loaded.
 
 ```xml
-<ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}">
+<ui:NativeAdView height="400" loaded="{{ nativeAdLoaded }}">
   <GridLayout height="300" width="300">
     <Label id="headLineView" />
     <ui:MediaView id="mediaView" height="100%"/>
@@ -404,17 +408,16 @@ loader.onAdEvent((event, error, data) => {
 
 ### NativeAdOptions
 
-NativeAdLoader have an optional argument, nativeAdOptions, which can be used to set specific options on the native ad.
+A NativeAdOptions object is used to set the following options on the native ad.
+| Property | Type | Description
+|:---------|:-----|:-----------
+| `returnUrlsForImageAssets` | `boolean` | _Optional_: If set to `true`, the SDK will not load image asset content and native ad image URLs can be used to fetch content. Defaults to `false`.
+| `multipleImages` | [MediaAspectRatio](#)| 
 
-returnUrlsForImageAssets
 
-If set to `true`, the SDK will not load image asset content and native ad image URLs can be used to fetch content. Defaults to false.
 
-multipleImages
 
 Some image assets will contain a series of images rather than just one. By setting this value to true, your app indicates that it's prepared to display all the images for any assets that have more than one. By setting it to false (the default) your app instructs the SDK to provide just the first image for any assets that contain a series.
-
-If no NativeadOptions are passed in when initializing a NativeAd, the default value for each property will be used.
 
 `adChoicesPlacement`
 
