@@ -444,9 +444,6 @@ The `videoOptions` property is an object with the following properties:
 | `customControlsRequested` | `boolean` | _Yes_
 
 
-```ts
-ad.mediaContent.hasVideoContent = true | false
-```
 #### AdChoicesPlacement
 ```ts
 enum AdChoicesPlacement {
@@ -471,14 +468,12 @@ Rewarded ads are ads that users have the option of interacting with [in exchange
 
 ### Use test ads for development
 
-When building and testing your apps, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
+>**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
-The easiest way to load test ads is to use our dedicated test ad unit ID for rewarded:
+To enable dedicated test ad unit ID, visit the links below:
 
-- **Android**: https://developers.google.com/admob/android/test-ads#sample\_ad\_units
-- **iOS**: https://developers.google.com/admob/ios/test-ads#demo\_ad\_units
-
-It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. Just make sure you replace it with your own ad unit ID before publishing your app.
+- [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
+- [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
 
 ### Load a Rewarded Ad
 
@@ -538,18 +533,12 @@ ad.load()
 
 ### Targeting
 
-The RequestConfiguration object collects the global configuration for every ad request and is applied by firebase().admob().setRequestConfiguration().
+The RequestConfiguration object collects the global configuration for every ad request and is applied by `firebase().admob().setRequestConfiguration()`.
 
 ### Child-directed setting
 
-For purposes of the [Children's Online Privacy Protection Act (COPPA)](https://www.ftc.gov/tips-advice/business-center/privacy-and-security/children%27s-privacy), there is a setting called "tag for child-directed treatment."
-
-As an app developer, you can indicate whether you want Google to treat your content as child-directed when you make an ad request. If you indicate that you want Google to treat your content as child-directed, we take steps to disable IBA and remarketing ads on that ad request. The setting can be used with all versions of the Google Play services SDK via RequestConfiguration.tagForChildDirectedTreatment:
-
-Use the argument `tagForChildDirectedTreatment: true` to indicate that you want your content treated as child-directed for the purposes of COPPA.
-Use the argument `tagForChildDirectedTreatment: false` to indicate that you don't want your content treated as child-directed for the purposes of COPPA.
-Use the argument `tagForChildDirectedTreatment: undefined` or do not set this tag if you do not wish to indicate how you would like your content treated with respect to COPPA in ad requests.
 The following example indicates that you want your content treated as child-directed for purposes of COPPA:
+To understand the example, read [Child-directed setting](https://developers.google.com/admob/android/targeting#child-directed_setting).
 
 ```ts
 import { Admob, RequestConfiguration } from '@nativescript/firebase-admob';
@@ -561,15 +550,7 @@ Admob.getInstance().requestConfiguration = requestConfiguration;
 
 ### Users under the age of consent
 
-You can mark your ad requests to receive treatment for users in the European Economic Area (EEA) under the age of consent. This feature is designed to help facilitate compliance with the [General Data Protection Regulation (GDPR)](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679). Note that you may have other legal obligations under GDPR. Please review the European Union’s guidance and consult with your own legal counsel. Please remember that Google's tools are designed to facilitate compliance and do not relieve any particular publisher of its obligations under the law. [Learn more about how the GDPR affects publishers](https://support.google.com/admob/answer/7666366).
-
-When using this feature, a Tag For Users under the Age of Consent in Europe (TFUA) parameter will be included in the ad request. This parameter disables personalized advertising, including remarketing, for that specific ad request. It also disables requests to third-party ad vendors, such as ad measurement pixels and third-party ad servers.
-
-The setting can be used via RequestConfiguration.tagForUnderAgeOfConsent
-
-Use the argument `tagForUnderAgeOfConsent: true` to indicate that you want the request configuration to be handled in a manner suitable for users under the age of consent.
-Use the argument `tagForUnderAgeOfConsent: false` to indicates that you don't want the request configuration to be handled in a manner suitable for users under the age of consent.
-Use the argument `tagForUnderAgeOfConsent: undefined` or do not set this tag to indicate that you have not specified whether the ad request should receive treatment for users in the European Economic Area (EEA) under the age of consent. The following example indicates that you want TFUA included in your ad request:
+The following example indicates that you want TFUA included in your ad request. For context, read [Users under the age of consent](https://developers.google.com/admob/android/targeting#users_under_the_age_of_consent)
 
 ```ts
 import { Admob, RequestConfiguration } from '@nativescript/firebase-admob';
@@ -579,7 +560,7 @@ const requestConfiguration: RequestConfiguration = {
 Admob.getInstance().requestConfiguration = requestConfiguration;
 ```
 
-The tags to enable the Child-directed setting and `tagForUnderAgeOfConsent` should not both simultaneously be set to true. If they are, the child-directed setting takes precedence.
+If the tags to enable the Child-directed setting and `tagForUnderAgeOfConsent`are both set to `true`, the child-directed setting takes precedence.
 
 ### Ad Content Filtering
 
