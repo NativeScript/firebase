@@ -82,7 +82,7 @@ To enable dedicated test ad unit ID for banners, visit the links below:
 - [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
 - [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
 
-Just make sure you replace it with your ad unit ID before publishing your app.
+Make sure you replace it with your ad unit ID before publishing your app.
 
 #### Instantiate a Banner Ad
 
@@ -215,9 +215,9 @@ bannerView.on('adClicked', (args) =>{
 
 ```
 
-### Show a banner ad to the user
+### Display a banner ad to the user
 
-To show an ad to the user, get the reference to the `BannerAd` view and call the `load` method on it.
+To display an ad to the user, get the reference to the `BannerAd` view and call the `load` method on it.
 
 ```ts
 bannerView.load()
@@ -225,33 +225,43 @@ bannerView.load()
 
 ### Add an Interstitial Ad
 
-Full-screen ads that cover the interface of an app until closed by the user. They're best used at natural pauses in the flow of an app's execution, such as between levels of a game or just after a task is completed.
+Interstitial ads are full-screen ads that cover the interface of an app until closed by the user. They're best used at natural pauses in the flow of an app's execution, such as between levels of a game or just after a task is completed.
 
 #### Always test with test ads
 
-When building and testing your apps, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
+>**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
-The easiest way to load test ads is to use our dedicated test ad unit ID for interstitials:
+To enable dedicated test ad unit ID, visit the links below:
 
-- **Android**: https://developers.google.com/admob/android/test-ads#sample\_ad\_units
-- **iOS**: https://developers.google.com/admob/ios/test-ads#demo\_ad\_units
+- [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
+- [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
 
 It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. Just make sure you replace it with your own ad unit ID before publishing your app.
 
-### Load an Interstitial Ad
+### Display an Interstitial ad to the user
 
-Loading an InterstitialAd requires an adUnitId and a optional RequestOptions. An example is shown below as well as more information on each parameter following.
+To display an Interstitial ad to the user, follow the 2 steps below:
+
+1. Import the `InterstitialAd` class from `@nativescript/firebase-admob`.
+```ts
+import { InterstitialAd } from '@nativescript/firebase-admob'
+```
+2. Create an Interstitial ad instance.
+
+Create an Interstitial ad instance by calling the static `createForAdRequest` on the class. The `createForAdRequest` method requires an adUnitId and you can optionally pass a [RequestOptions]() object.
 
 ```ts
 import { InterstitialAd } from '@nativescript/firebase-admob'
 const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/4411468910')
 ```
+3. Listen to an Interstitial ad lifecycle events
 
-### Interstitial Ad Events
-
-Through the use of the emitted events, you can listen for lifecycle events, such as when the ad is shown or dismissed. Set InterstitialAd.onAdEvent before showing the ad to receive notifications for these events. This example implements each method and logs a message to the console:
+To listen for the ad lifecycle events, such as when the ad is display or dismissed, call the `onAdEvent` method on the ad instance, before displaying the ad, passing it a callback function to handle the ad lifecycle events.
 
 ```ts
+import { InterstitialAd } from '@nativescript/firebase-admob'
+const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/4411468910')
+
 ad.onAdEvent((event, error, data) => {
   switch (event) {
     case AdEventType.LOADED:
@@ -266,22 +276,31 @@ ad.onAdEvent((event, error, data) => {
       break
   }
 })
-ad.load()
 ```
 
-### Display an Interstitial Ad
+4. Display the the ad
 
-An InterstitialAd is displayed as an Overlay on top of all app content and is statically placed. Which means it can not be added to the view. You can choose when to show the ad by calling show().
+To display the ad, call the `load` method on ad instance.
 
 ```ts
+import { InterstitialAd } from '@nativescript/firebase-admob'
+const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/4411468910')
+
 ad.onAdEvent((event, error, data) => {
-  if (event === AdEventType.LOADED) {
-    console.log('loaded')
-    ad.show()
-  } else if (event === AdEventType.FAILED_TO_LOAD_EVENT) {
-    console.error('InterstitialAd failed to load:', error)
+  switch (event) {
+    case AdEventType.LOADED:
+      break
+    case AdEventType.CLOSED:
+      break
+    case AdEventType.OPENED:
+      break
+    case AdEventType.IMPRESSION:
+      break
+    case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
+      break
   }
 })
+
 ad.load()
 ```
 
@@ -295,25 +314,41 @@ ad.load()
 
 Native ads are ad assets that are presented to users via UI components that are native to the platform. They're shown using the same types of views with which you're already building your layouts, and can be formatted to match the visual design of the user experience in which they live. In coding terms, this means that when a native ad loads, your app receives a NativeAd object that contains its assets, and the app (rather than the Google Mobile Ads SDK) is then responsible for displaying them.
 
-Broadly speaking, there are two parts to successfully implementing Native Ads: loading an ad via the SDK and displaying the ad content in your app. This guide is concerned with using the SDK to load native ads.
+### Add a Native ad to your app
 
 #### Core
+To add a Native ad to your {N} Core app, follow these steps:
 
-> **Important:** Ensure you've included `xmlns:ui="@nativescript/firebase-admob"` on the Page element
+1. Register the plugin namespace under a prefix, `ui` (this can be any name), with the Page element.
 
 ```xml
-<ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}" />
+<Page xmlns:ui="@nativescript/firebase-admob" >
+
+</Page>
+```
+2. Use the prefix to access the `NativeAdView` and add it to markup.
+
+```xml
+<Page xmlns:ui="@nativescript/firebase-admob" >
+<ActionBar title="Admob" />
+<StackLayout>
+
+  <ui:NativeAdView height="400" loaded="{{nativeAdLoaded}}" />
+
+</StackLayout>
+</Page>
 ```
 
-### Always test with test ads
+### Use test ads when in development mode
 
-When building and testing your apps, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
+>**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
-The easiest way to load test ads is to use our dedicated test ad unit ID for native ads:
+To enable dedicated test ad unit ID, visit the links below:
 
-- **Android**: https://developers.google.com/admob/android/test-ads#sample\_ad\_units
-- **iOS**: https://developers.google.com/admob/ios/test-ads#demo\_ad\_units
-  It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. Just make sure you replace it with your own ad unit ID before publishing your app.
+- [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
+- [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
+
+It's been specially configured to return test ads for every request, and you're free to use it in your own apps while coding, testing, and debugging. Just make sure you replace it with your own ad unit ID before publishing your app.
 
 ### Instantiate a Native Ad
 
