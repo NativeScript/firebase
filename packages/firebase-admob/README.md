@@ -18,17 +18,38 @@ The Google Mobile Ads SDK for NativeScript currently supports loading and displa
 * [Use @nativescript/firebase-admob](#use-nativescriptfirebase-admob)
   * [Initialize the Mobile Ads SDK](#1-initialize-the-mobile-ads-sdk)
   * [Add your preferred ad format to the app](#2-add-your-preferred-ad-format-to-the-app)
-  * [Add a Banner ad](#add-a-banner-ad)
-  * [Use test ads when in development mode](#use-test-ads-when-in-development-mode)
-  * [Instantiate a Banner ad](#instantiate-a-banner-ad)
-  * [Banner ad in NativeScript Core](#banner-ad-in-nativescript-core)
-  * [Banner ad in NativeScript Angular](#banner-ad-in-nativescript-angular)
-  * [Banner ad in NativeScript Vue](#banner-ad-in-nativescript-vue)
-  * [Customize the banner ad size](#customize-the-banner-ad-size)
+  * [Banner ads](#banner-ads)
+    * [Testing Banner ads in development mode](#testing-banner-ads-in-development-mode)
+    * [Instantiate a Banner ad](#instantiate-a-banner-ad)
+    * [Add Banner ad in NativeScript Core](#add-banner-ad-in-nativescript-core)
+    * [Add Banner ad in NativeScript Angular](#add-banner-ad-in-nativescript-angular)
+    * [Add Banner ad in NativeScript Vue](#add-banner-ad-in-nativescript-vue)
+    * [Customize the banner ad size](#customize-the-banner-ad-size)
+    * [Listen to a banner ad lifecycle events](#listen-to-a-banner-ad-lifecycle-events)
+    * [Display a banner ad to the user](#display-a-banner-ad-to-the-user)
+  * [Add an Interstitial ad](#add-an-interstitial-ad)
+    * [Testing an Interstitial ad in development](#testing-an-interstitial-ad-in-development)
+    * [Display an Interstitial ad to the user](#display-an-interstitial-ad-to-the-user)
+    * [Next steps](#next-steps)
+  * [Native ads](#native-ads)
+    * [Add a Native ad to your app](#add-a-native-ad-to-your-app)
+    * [Adding a Native ad in NativeScript Core](#adding-a-native-ad-in-nativescript-core)
+    * [Testing Native ads in development mode](#testing-native-ads-in-development-mode)
+    * [NativeAdOptions interface](#nativeadoptions-interface)
+    * [Next steps](#next-steps-1)
+  * [Rewarded Ads](#rewarded-ads)
+    * [Testing Rewarded ads in development mode](#testing-rewarded-ads-in-development-mode)
+    * [Display a Rewarded ad](#display-a-rewarded-ad)
+    * [Rewarded ad Events](#rewarded-ad-events)
+  * [Targeting](#targeting)
+  * [Child-directed setting](#child-directed-setting)
+  * [For users under the age of consent](#for-users-under-the-age-of-consent)
+  * [Ad content filtering](#ad-content-filtering)
 <!-- IfNote: This plugin also supports Google Ad Manager. 
  you are interested in creating and loading an ad with Ad Manager, follow the same prerequisites, platform setup, mobile ads SDK initialization steps outlined in this documentation. , and then see creating and loading an ad with Ad Manager for further instructions. -->
 
 ## Installation
+
 To install `@nativescript/firebase-admob`, run the following command in the root directory of the project:
 
 ```cli
@@ -83,11 +104,11 @@ The Mobile Ads SDK is now imported and you're ready to implement an ad. Click an
 - [Native](#native-ads)
 - [Rewarded](#rewarded-ads)
 
-### Add a Banner ad
+### Banner ads
 
 Banner ads are rectangular ads that appear at the top or bottom of the device screen. They stay on screen while users are interacting with the app, and can refresh automatically after a certain period. If you're new to mobile advertising, they're a great place to start.
 
-#### Use test ads when in development mode
+#### Testing Banner ads in development mode
 
 >**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
@@ -108,7 +129,7 @@ To instantiate a banner ad, add the `BannerAd` view to your markup. The `BannerA
 
  Below are examples of adding a Banner ad in NativeScript Core and NativeScript Angular.
 
-#### Banner ad in NativeScript Core
+#### Add Banner ad in NativeScript Core
 
 Register the plugin namespace in the Page element, access the `BannerAd` view from the namespace and add it to your XML. 
 
@@ -127,7 +148,7 @@ Register the plugin namespace in the Page element, access the `BannerAd` view fr
 
 ```
 
-#### Banner ad in NativeScript Angular
+#### Add Banner ad in NativeScript Angular
 
 Register the `BannerAd` view by adding its `AdmobModule` to the `imports` array of the `@NgModule` decorator of the component where you want to use the view.
 
@@ -154,7 +175,7 @@ Next, add the `BannerAd` view to HTML.
   (layoutChanged)="bannerLoaded($event)">
 </BannerAd>
 ```
-#### Banner ad in NativeScript Vue
+#### Add Banner ad in NativeScript Vue
 
 Register the `BannerAd` view in the `app.ts` file as follows:
 
@@ -187,7 +208,7 @@ const adSize = new BannerAdSize(300, 50)
 The table below lists the standard banner sizes.
 
 |         Size in dp (WxH)         |   Description    |                   AdSize Constant                    |
-| :------------------------------: | :--------------: | :--------------------------------------------------: |
+| :------------------------------| :--------------| :--------------------------------------------------
 |              320x50              | Standard Banner  |                        BANNER                        |
 |             320x100              |   Large Banner   |                     LARGE_BANNER                     |
 |             320x250              | Medium Rectangle |                   MEDIUM_RECTANGLE                   |
@@ -197,7 +218,7 @@ The table below lists the standard banner sizes.
 | Provided width x Adaptive height | Adaptive Banner  |  Use createInLineAdaptiveBanner(width, orientation)  |
 
 
-#### Listen to banner ad lifecycle events
+#### Listen to a banner ad lifecycle events
 
 The plugin enables you to listen to different ad lifecycle events, such as when an ad is loaded. 
 
@@ -239,13 +260,13 @@ To display an ad to the user, get the reference to the `BannerAd` view and call 
 bannerView.load()
 ```
 
-### Add an Interstitial Ad
+### Add an Interstitial ad
 
 Interstitial ads are full-screen ads that cover the interface of an app until closed by the user. They're best used at natural pauses in the flow of an app's execution, such as between levels of a game or just after a task is completed.
 
-#### Use test ads when in development mode
+#### Testing an Interstitial ad in development
 
->**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
+>**Note:** When your app is in development mode, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
 To enable dedicated test ad unit ID, visit the links below:
 
@@ -320,7 +341,7 @@ ad.onAdEvent((event, error, data) => {
 ad.load()
 ```
 
-### Next steps
+#### Next steps
 
 - See [Interstitial best practices](https://www.youtube.com/watch?v=r2RgFD3Apyo&index=5&list=PLOU2XLYxmsIKX0pUJV3uqp6N3NeHwHh0c) and [interstitial ad guidance](https://support.google.com/admob/answer/6066980).
 - Check out an [Interstitial ads case study](https://admob.google.com/home/resources/freaking-math-powers-revenue-increase-with-google-admob-support/).
@@ -330,9 +351,8 @@ ad.load()
 
 Native ads are ad assets that are presented to users via UI components that are native to the platform. They're shown using the same types of views with which you're already building your layouts, and can be formatted to match the visual design of the user experience in which they live. In coding terms, this means that when a native ad loads, your app receives a NativeAd object that contains its assets, and the app (rather than the Google Mobile Ads SDK) is then responsible for displaying them.
 
-### Add a Native ad to your app
 
-#### Core
+### Adding a Native ad in NativeScript Core
 To add a Native ad to your {N} Core app, follow these steps:
 
 1. Register the plugin namespace under a prefix, `ui` (this can be any name), with the Page element.
@@ -355,7 +375,7 @@ To add a Native ad to your {N} Core app, follow these steps:
 </Page>
 ```
 
-### Use test ads when in development mode
+### Testing Native ads in development mode
 
 >**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
@@ -429,7 +449,7 @@ To display the Native ad, call the `load` method on a NativeAdLoader instance.
 loader.load()
 ```
 
-### NativeAdOptions
+### NativeAdOptions interface
 
 A NativeAdOptions object is used to set the following options on the native ad.
 | Property | Type | Description
@@ -438,7 +458,7 @@ A NativeAdOptions object is used to set the following options on the native ad.
 | `multipleImages` | `boolean`| _Optional_: Some image assets contain a series of images. Setting this property to `true` tells the app to display all the images of an asset. The `false`(the default) value informs the app to display the first image from the series of images in an image asset.
 | `adChoicesPlacement` | [AdChoicesPlacement](#adchoicesplacement) |_Optional_: The [AdChoices overlay](https://developers.google.com/admob/android/native/advanced#adchoices_overlay) is set to the top right corner by default. Apps can change which corner this overlay is rendered in by setting this property to one of the following:
 | `videoOptions` | [videoOptions](#videooptions)| _Optional_: Used to set video options for video assets returned as part of a native ad. If an ad contains a video(if `ad.mediaContent.hasVideoContent = true`), display the video. 
-| `mediaAspectRatio` | []() | _Optional_: This sets the aspect ratio for image or video to be returned for the native ad.
+| `mediaAspectRatio` | [MediaAspectRatio](#mediaaspectratio) | _Optional_: This sets the aspect ratio for image or video to be returned for the native ad.
 
 #### AdChoicesPlacement
 
@@ -459,14 +479,13 @@ The `videoOptions` property is an object with the following properties:
 | `clickToExpandRequested` | `boolean` | _Yes_
 | `customControlsRequested` | `boolean` | _Yes_
 
-
-#### AdChoicesPlacement
+#### MediaAspectRatio
 ```ts
-enum AdChoicesPlacement {
-	TOP_LEFT = 'topLeft',
-	TOP_RIGHT = 'topRight',
-	BOTTOM_RIGHT = 'bottomRight',
-	BOTTOM_LEFT = 'bottomLeft',
+enum MediaAspectRatio {
+	LANDSCAPE = 'landscape',
+	PORTRAIT = 'portrait',
+	SQUARE = 'square',
+	ANY = 'any',
 }
 ```
 
@@ -482,7 +501,7 @@ That's it! Your app is now ready to display native ads.
 
 Rewarded ads are ads that users have the option of interacting with [in exchange for in-app rewards](https://support.google.com/admob/answer/7313578).
 
-### Use test ads for development
+### Testing Rewarded ads in development mode
 
 >**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
 
@@ -556,7 +575,7 @@ ad.onAdEvent((event, error, data) => {
 })
 ad.load()
 ```
-#### Rewarded Ad Events
+#### Rewarded ad Events
 
 RewardAd emits the following ly¡ifecycle events that you can listen to:
 
@@ -582,10 +601,10 @@ ad.onAdEvent((event, error, data) => {
 
 The RequestConfiguration object collects the global configuration for every ad request and is applied by `firebase().admob().setRequestConfiguration()`.
 
-### Child-directed setting
+### Child-directed ads setting
+For child-directed ads setting, read [Child-directed setting](https://developers.google.com/admob/android/targeting#child-directed_setting).
 
 The following example indicates that you want your content treated as child-directed for purposes of COPPA:
-To understand the example, read [Child-directed setting](https://developers.google.com/admob/android/targeting#child-directed_setting).
 
 ```ts
 import { Admob, RequestConfiguration } from '@nativescript/firebase-admob';
@@ -595,10 +614,11 @@ const requestConfiguration: RequestConfiguration = {
 Admob.getInstance().requestConfiguration = requestConfiguration;
 ```
 
-### Users under the age of consent
+### Handle ads requests for users under the age of consent
 
-The following example indicates that you want TFUA included in your ad request. For more information, read [Users under the age of consent](https://developers.google.com/admob/android/targeting#users_under_the_age_of_consent)
+To handle ads requests for users under the age of consent, read [Users under the age of consent](https://developers.google.com/admob/android/targeting#users_under_the_age_of_consent).
 
+The following example indicates that you want TFUA included in your ad request. 
 ```ts
 import { Admob, RequestConfiguration } from '@nativescript/firebase-admob';
 const requestConfiguration: RequestConfiguration = {
@@ -609,9 +629,9 @@ Admob.getInstance().requestConfiguration = requestConfiguration;
 
 If the tags to enable the Child-directed setting and `tagForUnderAgeOfConsent`are both set to `true`, the child-directed setting takes precedence.
 
-### Ad Content Filtering
+### Ad content filtering
 
-The setting can be set via RequestConfiguration.maxAdContentRating:
+This setting can be set via `RequestConfiguration.maxAdContentRating`:
 
 AdMob ads returned for these requests have a content rating at or below that level. The possible values for this network extra are based on [digital content label classifications](https://support.google.com/admob/answer/7562142), and should be one of the following MaxAdContentRating objects:
 
