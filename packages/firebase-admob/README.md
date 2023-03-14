@@ -121,7 +121,7 @@ To enable dedicated test ad unit ID for banners, visit the links below:
 
 Make sure you replace it with your ad unit ID before publishing your app.
 
-Below are examples of adding a Banner ad in NativeScript Core and NativeScript Angular.
+Below are examples of adding a Banner ad in several NativeScript flavors.
 
 #### Add Banner ad in NativeScript Core
 
