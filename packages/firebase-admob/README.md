@@ -128,12 +128,11 @@ Below are examples of adding a Banner ad in several NativeScript flavors.
 Register the plugin namespace in the Page element under a prefix(`ui` for example), access the `BannerAd` view from the namespace via the prefix and add it to your XML. 
 The `BannerAd` requires the following attributes to be set:
 -  `unitId`
-- `BannerAdSize`
+- `BannerAdSize`: You can set this value in the callback function of the `layoutChanged` event. For more information, see [Customize the banner ad size](#customize-the-banner-ad-size)
+- `height` and `width`
 
-You can set this value in the callback function of `layoutChanged` event. See [Customize the banner ad size](#customize-the-banner-ad-size)
-
-- `AdRequest`
-- `BannerAdListener`
+<!-- - `AdRequest`
+- `BannerAdListener` -->
 
 ```xml
 <Page xmlns:ui="@nativescript/firebase-admob" >
