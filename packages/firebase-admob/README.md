@@ -5,7 +5,7 @@ A plugin that allows you to monetize your NativeScript app by integrating the [G
 
 > **Note:** Before you use this plugin, if you haven't already, setup your app for Firebase by following the instructions at [@nativescript/firebase-core](../firebase-core/).
 
-The `@nativescript/firebase-admob` plugin for currently supports loading and displaying the following ad types:
+The `@nativescript/firebase-admob` plugin currently supports loading and displaying the following ad types:
 
 - [Banner](#banner-ads)
 - [Interstitial (full-screen)](#interstitial-ad)
@@ -46,9 +46,9 @@ The `@nativescript/firebase-admob` plugin for currently supports loading and dis
   * [Child-directed setting](#child-directed-setting)
   * [For users under the age of consent](#for-users-under-the-age-of-consent)
   * [Ad content filtering](#ad-content-filtering)
-<!-- IfNote: This plugin also supports Google Ad Manager. 
- you are interested in creating and loading an ad with Ad Manager, follow the same prerequisites, platform setup, mobile ads SDK initialization steps outlined in this documentation. , and then see creating and loading an ad with Ad Manager for further instructions. -->
-
+<!-- Note: This plugin also supports Google Ad Manager. 
+If you are interested in creating and loading an ad with Ad Manager, follow the same prerequisites, platform setup, mobile ads SDK initialization steps outlined in this documentation. , and then see creating and loading an ad with Ad Manager for further instructions. -->
+<!-- WHERE are the instructions for Ad Manager? -->
 ## Installation
 
 To install `@nativescript/firebase-admob`, run the following command in the root directory of the project:
