@@ -3,7 +3,7 @@
 
 A plugin that allows you to monetize your NativeScript app by integrating the [Google Mobile Ads SDK](https://developers.google.com/admob/android/sdk) into the app. 
 
-> **Note:** Before you use this plugin, setup your app for Firebase by following the instructions at [@nativescript/firebase-core](../firebase-core/).
+> **Note:** Before you use this plugin, if you haven't already, setup your app for Firebase by following the instructions at [@nativescript/firebase-core](../firebase-core/).
 
 The `@nativescript/firebase-admob` plugin for currently supports loading and displaying the following ad types:
 
@@ -29,7 +29,7 @@ The `@nativescript/firebase-admob` plugin for currently supports loading and dis
     * [Listen to a banner ad lifecycle events](#listen-to-a-banner-ad-lifecycle-events)
     * [Display a banner ad to the user](#display-a-banner-ad-to-the-user)
   * [Add an Interstitial ad](#add-an-interstitial-ad)
-    * [Testing an Interstitial ad in development](#testing-an-interstitial-ad-in-development)
+    * [Testing Interstitial ads in development](#testing-an-interstitial-ads-in-development)
     * [Display an Interstitial ad to the user](#display-an-interstitial-ad-to-the-user)
     * [Next steps](#next-steps)
   * [Native ads](#native-ads)
@@ -85,6 +85,7 @@ Add AdMob App ID ([identified in the AdMob UI](https://support.google.com/admob/
 See step 3. of [Configure your app](https://developers.google.com/admob/android/quick-start#import_the_mobile_ads_sdk) for more information about configuring AndroidManifest.xml and setting up the App ID.
 
 ## Use @nativescript/firebase-admob
+
 To use the `@nativescript/firebase-admob` plugin, follow the steps below:
 
 ### 1. Initialize the Mobile Ads SDK
@@ -112,20 +113,20 @@ Banner ads are rectangular ads that appear at the top or bottom of the device sc
 
 #### Testing Banner ads in development mode
 
->**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
+>**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account. Make sure you replace the test unit ID with your ad unit ID before publishing your app.
 
 To enable dedicated test ad unit ID for banners, visit the links below:
 
 - [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
 - [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
 
-Make sure you replace it with your ad unit ID before publishing your app.
 
 Below are examples of adding a Banner ad in several NativeScript flavors.
 
 #### Add Banner ad in NativeScript Core
 
 Register the plugin namespace in the Page element under a prefix(`ui` for example), access the `BannerAd` view from the namespace via the prefix and add it to your XML. 
+
 The `BannerAd` requires the following attributes to be set:
 -  `unitId`
 - `BannerAdSize`: You can set this value in the callback function of the `layoutChanged` event. For more information, see [Customize the banner ad size](#customize-the-banner-ad-size)
@@ -165,7 +166,10 @@ import { AdmobModule } from '@nativescript/firebase-admob/angular';
     bootstrap: [AppComponent]
 })
 ```
-Next, add the `BannerAd` view to HTML. Set the view's `unitId` property to the ad's unit ID.
+Next, add the `BannerAd` view to HTML. The `BannerAd` requires the following attributes to be set:
+-  `unitId`
+- `BannerAdSize`: You can set this value in the callback function of the `layoutChanged` event. For more information, see [Customize the banner ad size](#customize-the-banner-ad-size)
+- `height` and `width`
 
 ```html
 <BannerAd
@@ -188,7 +192,10 @@ const app = createApp(Home)
 app.use(Admob)
 
 ```
-And then add it to markup as follows. Set the view's `unitId` property to the ad's unit ID.
+And then add it to markup as follows. The `BannerAd` requires the following attributes to be set:
+-  `unitId`
+- `BannerAdSize`: You can set this value in the callback function of the `layoutChanged` event. For more information, see [Customize the banner ad size](#customize-the-banner-ad-size)
+- `height` and `width`
 
 ```html
 <BannerAd
@@ -199,9 +206,10 @@ And then add it to markup as follows. Set the view's `unitId` property to the ad
 ```
 
 #### Customize the banner ad size
+
 To define a custom banner size, you have 2 options:
 
-- Instantiate the `BannerAdSize` class with the desired width and height and set the `size` attribute to that instance.
+- Instantiate the `BannerAdSize` class with the desired width and height and set it to the `size` attribute of `BannerAd`.
 ```ts
 import { BannerAdSize } from "@nativescript/firebase-admob"
 
@@ -209,7 +217,7 @@ const adSize = new BannerAdSize(300, 50)
 
 banner.size = adSize
 ```
-- Set the `size` to any of the constants on the `BannerAdSize` class.
+- Set the `size` to any of the constants of the `BannerAdSize` class.
 
 The table below lists the available constants and the sizes they represent.
 
@@ -217,17 +225,17 @@ The table below lists the available constants and the sizes they represent.
 | AdSize Constant | Size in dp (WxH) | Description 
 |:---------------|:--------------|:---------------
 | `BANNER` | `320x50` | Standard Banner 
-| LARGE_BANNER | 320x100 | Large Banner   
-| MEDIUM_RECTANGLE | 320x250 | Medium Rectangle 
-| FULL_BANNER | 468x60  | Full-Size Banner    
-| LEADERBOARD | 728x90  | Leaderboard     
-| Use createAnchoredAdaptiveBanner(width, orientation)| Provided width x Adaptive height | Adaptive Banner   
-| Use createInLineAdaptiveBanner(width, orientation) | Provided width x Adaptive height | Adaptive Banner  
+| `LARGE_BANNER` | `320x100` | Large Banner   
+| `MEDIUM_RECTANGLE` | `320x250` | Medium Rectangle 
+| `FULL_BANNER` | `468x60`  | Full-Size Banner    
+| `LEADERBOARD` | `728x90`  | Leaderboard     
+| `createAnchoredAdaptiveBanner(width, orientation)`| Provided width x Adaptive height | Adaptive Banner   
+| `createInLineAdaptiveBanner(width, orientation)` | Provided width x Adaptive height | Adaptive Banner  
 
 
 #### Listen to a banner ad lifecycle events
 
-The plugin enables you to listen to different ad lifecycle events, such as when an ad is loaded. Register the events handlers before calling the `load` method.
+The plugin enables you to listen to different lifecycle events of an ad, such as when an ad is loaded. Register the events handlers before calling the `load` method.
 
 ```ts
 const bannerView = event.object;
@@ -242,7 +250,7 @@ bannerView.on('adFailedToLoad', (args) =>{
    console.log('Ad failed to load: ', args.error);
 });
 
- // Called when an ad removes an overlay that covers the screen.
+ // Called when the user removes an overlay that covers the screen.
 bannerView.on('adClosed', (args) =>{
    console.log('Ad closed.');
 });
@@ -271,20 +279,18 @@ bannerView.load()
 
 Interstitial ads are full-screen ads that cover the interface of an app until closed by the user. They're best used at natural pauses in the flow of an app's execution, such as between levels of a game or just after a task is completed.
 
-#### Testing an Interstitial ad in development
+#### Testing Interstitial ads in development
 
->**Note:** When your app is in development mode, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
-
+>**Note:** When your app is in development mode, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account. Make sure you replace the test unit ID with your ad unit ID before publishing your app.
 To enable dedicated test ad unit ID, visit the links below:
 
 - [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
 - [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
 
-Just make sure you replace the test ad unit ID with your own ad unit ID before publishing your app.
 
 ### Display an Interstitial ad to the user
 
-To display an Interstitial ad to the user, follow the 2 steps below:
+To display an Interstitial ad to the user, follow the steps below:
 
 1. Import the `InterstitialAd` class from `@nativescript/firebase-admob`.
 ```ts
@@ -321,10 +327,8 @@ ad.onAdEvent((event, error, data) => {
   }
 })
 ```
-
-4. Display the the ad
-
-To display the ad, call the `load` method on ad instance.
+4. Load the ad
+You load the ad by calling the `load` method on the ad instance.
 
 ```ts
 import { InterstitialAd } from '@nativescript/firebase-admob'
@@ -335,6 +339,33 @@ ad.onAdEvent((event, error, data) => {
     case AdEventType.LOADED:
       break
     case AdEventType.CLOSED:
+      break
+    case AdEventType.OPENED:
+      break
+    case AdEventType.IMPRESSION:
+      break
+    case AdEventType.FAILED_TO_SHOW_FULL_SCREEN_CONTENT:
+      break
+  }
+})
+
+ad.load()
+```
+
+5. Display the the ad
+
+To display the ad, call the `show` method on the ad instance. This method is called after the `load` method.
+
+```ts
+import { InterstitialAd } from '@nativescript/firebase-admob'
+const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/4411468910')
+
+ad.onAdEvent((event, error, data) => {
+  switch (event) {
+    case AdEventType.LOADED:
+      break
+    case AdEventType.CLOSED:
+      ad.show()
       break
     case AdEventType.OPENED:
       break
@@ -510,7 +541,8 @@ Rewarded ads are ads that users have the option of interacting with [in exchange
 
 ### Testing Rewarded ads in development mode
 
->**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account.
+>**Note:** When developing your app, make sure you use test ads rather than live, production ads. Failure to do so can lead to suspension of your account. Make sure you replace the test unit ID with your ad unit ID before publishing your app.
+
 
 To enable dedicated test ad unit ID, visit the links below:
 
@@ -566,7 +598,7 @@ ad.load()
 ```
 6. Display the ad
 
-You can choose when to show the ad by calling `show()` on the ad instance. For example, you can call the method after the load event.
+To show the ad on the screen, call the `show()` method on the ad instance. 
 
 ```ts
 import { RewardedAd } from '@nativescript/firebase-admob'
@@ -584,7 +616,7 @@ ad.load()
 ```
 #### Rewarded ad Events
 
-RewardAd emits the following ly¡ifecycle events that you can listen to:
+RewardAd emits the following lifecycle events that you can listen to:
 
 ```ts
 ad.onAdEvent((event, error, data) => {
@@ -602,7 +634,7 @@ ad.onAdEvent((event, error, data) => {
   }
 })
 ```
-`onAdEvent` with the event 'rewarded_earned_reward' is invoked when the user earns a reward. Be sure to implement this and reward the user for watching an ad.
+`onAdEvent` with the event `rewarded_earned_reward`'is invoked when the user earns a reward. Be sure to implement this and reward the user for watching an ad.
 
 ### Targeting
 
