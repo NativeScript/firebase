@@ -125,9 +125,16 @@ Below are examples of adding a Banner ad in several NativeScript flavors.
 
 #### Add Banner ad in NativeScript Core
 
-Register the plugin namespace in the Page element under a prefix(`ui` for example), access the `BannerAd` view from the namespace via the prefix and add it to your XML. Set the view's `unitId` property to the ad's unit ID.
+Register the plugin namespace in the Page element under a prefix(`ui` for example), access the `BannerAd` view from the namespace via the prefix and add it to your XML. 
+The `BannerAd` requires the following attributes to be set:
+-  `unitId`
+- `BannerAdSize`
 
-> **Important:** Ensure you've included xmlns:ui="@nativescript/firebase-admob" on the Page element
+You can set this value in the callback function of `layoutChanged` event. See [Customize the banner ad size](#customize-the-banner-ad-size)
+
+- `AdRequest`
+- `BannerAdListener`
+
 ```xml
 <Page xmlns:ui="@nativescript/firebase-admob" >
 
@@ -193,8 +200,9 @@ And then add it to markup as follows. Set the view's `unitId` property to the ad
 ```
 
 #### Customize the banner ad size
-To define a custom banner size, instantiate the `BannerAdSize` class with the desired width and height:
+To define a custom banner size, you have 2 options:
 
+- Instantiate the `BannerAdSize` class with the desired width and height and set the `size` attribute to that instance.
 ```ts
 import { BannerAdSize } from "@nativescript/firebase-admob"
 
@@ -202,18 +210,20 @@ const adSize = new BannerAdSize(300, 50)
 
 banner.size = adSize
 ```
+- Set the `size` to any of the constants on the `BannerAdSize` class.
 
-The table below lists the standard banner sizes.
+The table below lists the available constants and the sizes they represent.
 
-|         Size in dp (WxH)         |   Description    |                   AdSize Constant                    |
-| :------------------------------| :--------------| :--------------------------------------------------
-|              320x50              | Standard Banner  |                        BANNER                        |
-|             320x100              |   Large Banner   |                     LARGE_BANNER                     |
-|             320x250              | Medium Rectangle |                   MEDIUM_RECTANGLE                   |
-|              468x60              | Full-Size Banner |                     FULL_BANNER                      |
-|              728x90              |   Leaderboard    |                     LEADERBOARD                      |
-| Provided width x Adaptive height | Adaptive Banner  | Use createAnchoredAdaptiveBanner(width, orientation) |
-| Provided width x Adaptive height | Adaptive Banner  |  Use createInLineAdaptiveBanner(width, orientation)  |
+
+| AdSize Constant | Size in dp (WxH) | Description 
+|:---------------|:--------------|:---------------
+| `BANNER` | `320x50` | Standard Banner 
+| LARGE_BANNER | 320x100 | Large Banner   
+| MEDIUM_RECTANGLE | 320x250 | Medium Rectangle 
+| FULL_BANNER | 468x60  | Full-Size Banner    
+| LEADERBOARD | 728x90  | Leaderboard     
+| Use createAnchoredAdaptiveBanner(width, orientation)| Provided width x Adaptive height | Adaptive Banner   
+| Use createInLineAdaptiveBanner(width, orientation) | Provided width x Adaptive height | Adaptive Banner  
 
 
 #### Listen to a banner ad lifecycle events
