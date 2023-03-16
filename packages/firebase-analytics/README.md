@@ -26,9 +26,10 @@ Analytics offers a wealth of Predefined Events to track user behavior.
 
 ### Log custom events
 
-Analytics also allows developers to track custom events. If you're already familiar with Google Analytics, this method is equivalent to using the event command in [gtag.js](https://developers.google.com/gtagjs/).
+Analytics also allows developers to log custom events. If you're already familiar with Google Analytics, this method is equivalent to using the event command in [gtag.js](https://developers.google.com/gtagjs/).
+To log a custom event to Analytics, call the `logEvent` method on an instance of the `Analytics` class passing it the name of the custom event as the first argument and the event data object as the second argument.
 
-The example below shows you how to log a custom event. Please be aware that primitive data types or arrays of primitive data types are logged in your Firebase Analytics console.
+Please be aware that primitive data types or arrays of primitive data types are logged in your Firebase Analytics console.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -50,7 +51,7 @@ To help you get started, Google Analytics automatically logs events that are com
 
 To log a predefined event, call the `logEvent` method on the `Analytics` class instance passing it the event name and the [event data](https://support.google.com/analytics/answer/13316687#zippy=%2Cmobile-android-and-ios) object.
 
-The following is an example of using the `logEvent` method to log the [select_content](https://developers.google.com/analytics/devguides/collection/ga4/reference/events#select_content) event.
+The following example demonstrates logging the [select_content](https://developers.google.com/analytics/devguides/collection/ga4/reference/events#select_content) event.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
