@@ -13,8 +13,20 @@ Analytics collects usage and behavior data for your app. Its two primary concern
 
 [![image](https://img.youtube.com/vi/8iZpH7O6zXo/hqdefault.jpg)](https://www.youtube.com/watch?v=8iZpH7O6zXo)
 
+* [Installation](#installation)
+* [Use @nativescript/firebase-analytics](#use-nativescriptfirebase-analytics)
+	* [Log custom events](#log-custom-events)
+	* [Log Predefined Events](#log-predefined-events)
+	* [Reserved Events](#reserved-events)
+	* [Get the app instance id](#get-the-appinstance-id)
+	* [Disable Ad Id usage on iOS](#disable-ad-id-usage-on-ios)
+* [Analytics class API](#analytics-class-api)
+	* [Properties](#properties)
+	* [Methods](#Methods)
+* [License](#License)
 
 ## Installation
+Install the plugin by running the following command in the root directory of your project.
 
 ```cli
 npm install @nativescript/firebase-analytics
@@ -22,7 +34,7 @@ npm install @nativescript/firebase-analytics
 
 ## Use @nativescript/firebase-analytics
 
-Analytics offers a wealth of Predefined Events to track user behavior. 
+The examples below show you how to use `@nativescript/firebase-analytics` to log custom and predefined events.
 
 ### Log custom events
 
@@ -44,8 +56,9 @@ firebase()
 		size: 'L',
 	});
 ```
+After calling `logEvent`, look for your event name in the Analytics Realtime data to see if it's logged.
 
-### Log predefined events
+### Log Predefined Events
 
 To help you get started, Google Analytics automatically logs events that are common among different types of apps, including retail and e-commerce, travel, and gaming apps.
 
@@ -63,6 +76,7 @@ firebase().analytics().logEvent('select_content', {
 	item_id: 'abcd',
 });
 ```
+After calling `logEvent`, look for your event name in the Analytics Realtime data to see if it's logged.
 
 ### Reserved Events
 
@@ -81,7 +95,7 @@ In Analytics, the names of the automatically logged events are referred to as [R
 
 For more Reserved event names, visit [Event naming rules](https://support.google.com/analytics/answer/13316687#zippy=%2Cmobile-android-and-ios).
 
-### Get app instance id
+### Get the app instance id
 
 To get the app instance id of the application, call the `getAppInstanceId` method. This returns `null` on Android if `ConsentType.Analytics_Storage = ConsentStatus.Denied`.
 
@@ -105,7 +119,32 @@ $NSFirebaseAnalyticsWithoutAdIdSupport = true
 
 During pod install, using that variable installs a new `Analytics With No Ad Ids` pod that the firebase-ios-sdk team created, and allows both the use of Firebase Analytics in Kids Category apps and Firebase Analytics without needing the App Tracking Transparency handling (assuming no other parts of your app handles data in a way that requires ATT)
 
-Note that for obvious reasons, configuring Firebase Analytics for use without IDFA is incompatible with AdMob
+Note that for obvious reasons, configuring Firebase Analytics for use without IDFA is incompatible with AdMob.
+
+## Analytics class API
+
+The plugin offers you the Analytics class through which you can manage Firebase Analytics.
+The Analytics class has the following properties and methods.
+
+### Properties
+|Property | Type
+|---------|-----
+| `appInstanceId` | `string` 
+
+### Methods
+
+| Method | Returns  | Description
+|------------|------------|-----------
+| `logEvent(name: string, parameters: EventParameter)` | `void` | Sends the specified event data to Google Analystics. `name`: the name of the event to log.<br> `parameters`: an object of specifying the event data. For a list of supported properties for `parameters` for a Reserved event, visit [FirebaseAnalytics.Param Constants Summary](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Param#constant-summary).
+| `setUserId(userId: string)`| `void` |
+| `resetAnalyticsData()`| `void`
+| `setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean)` | `void`
+| `setUserProperty(name: string, value: string)` | `void`
+| `setSessionTimeoutInterval(sessionTimeoutInterval: number)` | `void`
+| `setDefaultEventParameters(parameters: EventParameter)` | `void`
+| `setConsent(consentSettings: Map<ConsentType, ConsentStatus>)` | `void`
+| `handleOpenURL(url: string)` | `void`
+| `handleUserActivity(userActivity: any)` | `void`
 
 ## License
 
