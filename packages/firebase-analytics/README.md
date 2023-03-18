@@ -131,20 +131,132 @@ The Analytics class has the following properties and methods.
 |---------|-----
 | `appInstanceId` | `string` 
 
-### Methods
+### logEvent()
+```ts
+firebase().analytics()
+		.logEvent(name, parameters)
+```
+Sends the specified event data to Google Analytics.
+| Parameter | Type | Description
+|-----------|------|-----------
+| `name` | `string`| The name of the event to log.
+| `parameters` | [EventParameter](#eventparameter)| An object specifying the event data. For the list of supported properties for `parameters` for a Reserved event, visit [FirebaseAnalytics.Param Constants Summary](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Param#constant-summary).
 
-| Method | Returns  | Description
-|------------|------------|-----------
-| `logEvent(name: string, parameters: EventParameter)` | `void` | Sends the specified event data to Google Analystics. `name`: the name of the event to log.<br> `parameters`: an object of specifying the event data. For a list of supported properties for `parameters` for a Reserved event, visit [FirebaseAnalytics.Param Constants Summary](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Param#constant-summary).
-| `setUserId(userId: string)`| `void` | See the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setuserid-string-id)
-| `resetAnalyticsData()`| `void` | See the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-resetanalyticsdata).
-| `setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean)` | `void` | See the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setanalyticscollectionenabled-boolean-enabled)
-| `setUserProperty(name: string, value: string)` | `void` | Find the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setuserproperty-string-name,-string-value).
-| `setSessionTimeoutInterval(sessionTimeoutInterval: number)` | `void` | For the description, see [setSessionTimeoutDuration](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setsessiontimeoutduration-long-milliseconds).
-| `setDefaultEventParameters(parameters: EventParameter)` | `void` | Read the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setdefaulteventparameters-bundle-parameters)
-| `setConsent(consentSettings: Map<ConsentType, ConsentStatus>)` | `void` | See the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setconsent-mapfirebaseanalytics.consenttype,-firebaseanalytics.consentstatus-consentsettings).
-| `handleOpenURL(url: string)` | `void` | (`iOS-specific`)Handles the event when the app is launched by a URL.
-| `handleUserActivity(userActivity: any)` | `void` | (`iOS-specific`)Handles the event when the app receives data associated with user activity that includes a Universal Link (on iOS 9.0 and above).
+---
+### setUserId()
+
+```ts
+firebase().analytics().setUserId(userId)
+```
+Allows you to store a user ID for the individual using your app. Read more about setting user ID [here](https://firebase.google.com/docs/analytics/userid). 
+
+---
+### resetAnalyticsData()
+```ts
+firebase().analytics().resetAnalyticsData()
+```
+See the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-resetanalyticsdata).
+
+---
+### setAnalyticsCollectionEnabled()
+```ts
+firebase().analytics().setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean)
+```
+A method used to manually disable or enable the collection of analytics data.
+
+- `analyticsCollectionEnabled`: A `boolean` value. If set to `true` analytics data is collected. If set to `false` analytics collection is disabled.
+---
+### setUserProperty()
+
+```ts
+firebase().analytics().setUserProperty(name: string, value: string)
+```
+Sets a user property. For more details, see [Set user properties](https://firebase.google.com/docs/analytics/user-properties?platform=ios).
+
+| Parameter | Type | Description
+|-----------|------|-----------
+| `name` | `string` | The name of the user property to set.
+| `value` | `string` | The value of the user property.
+
+---
+### setSessionTimeoutInterval()
+```ts
+firebase().analytics().setSessionTimeoutInterval(sessionTimeoutInterval: number)
+```
+ For the description, see [setSessionTimeoutDuration](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setsessiontimeoutduration-long-milliseconds).
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `sessionTimeoutInterval` | `number` | The duration of inactivity, in milliseconds. Defaults to `1800000` (`30` minutes).
+
+---
+### setDefaultEventParameters()
+```ts
+firebase().analytics().setDefaultEventParameters(parameters)
+```
+Read the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setdefaulteventparameters-bundle-parameters).
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `parameters` | [EventParameter](#eventparameter) | Parameters object. For the list of supported properties for `parameters` for a Reserved event, visit [FirebaseAnalytics.Param Constants Summary](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Param#constant-summary).
+
+#### EventParameter
+```ts
+interface EventParameter {
+	[key: string]: any;
+}
+```
+---
+### setConsent()
+```ts
+firebase().analytics().setConsent(consentSettings)
+```
+See the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setconsent-mapfirebaseanalytics.consenttype,-firebaseanalytics.consentstatus-consentsettings).
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `consentSettings`| Map\<[ConsentType](#consenttype),[ConsentStatus](#consentstatus)\> |
+
+#### ConsentType
+```ts
+enum ConsentType {
+	Ad_Storage,
+	Analytics_Storage,
+}
+```
+#### ConsentStatus
+```ts
+enum ConsentStatus {
+	Denied,
+	Granted,
+}
+```
+
+---
+### handleOpenURL()
+```ts
+firebase().analytics().handleOpenURL(url)
+```
+
+(`iOS-specific`)Handles the event when the app is launched by a URL.
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `url` | `string` | The URL from which to open the app.
+
+---
+### handleUserActivity()
+```ts
+firebase().analytics().handleUserActivity(userActivity)
+```
+
+(`iOS-specific`)Handles the event when the app receives data associated with user activity that includes a Universal Link (on iOS 9.0 and above).
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `userActivity` | `any` | The URL from which to open the app.
+
+---
 
 ## License
 
