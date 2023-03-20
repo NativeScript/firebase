@@ -1,22 +1,24 @@
 # @nativescript/firebase-auth
 
+A plugin that allows you to add [Firebase Authentification](https://firebase.google.com/docs/auth) to your NativeScript app.
+
+[![image](https://img.youtube.com/vi/8sGY55yxicA/hqdefault.jpg)](https://www.youtube.com/watch?v=8sGY55yxicA)
+
+> **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
+
+## Installation
+
+Install the plugin by running the following command in the root directory of your project.
+
 ```cli
 npm install @nativescript/firebase-auth
 ```
 
-## Authentication
+## Use @nativescript/firebase-auth
 
-### What does it do?
+Before using Firebase Auth, ensure to initialize Firebase.
 
-Firebase Authentication provides backend services & easy-to-use SDKs to authenticate users to your app. It supports authentication using passwords, phone numbers, popular federated identity providers like Google, Facebook and Twitter, and more.
-
-[![image](https://img.youtube.com/vi/8sGY55yxicA/hqdefault.jpg)](https://www.youtube.com/watch?v=8sGY55yxicA)
-
-## Usage
-
-Before using Firebase Auth, you must first have ensured you have initialized Firebase.
-
-To create a new Firebase Auth instance, call the auth method on the firebase instance as follow:
+To create a new Firebase Auth instance, call the `auth` method on the firebase instance as follow:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -25,7 +27,7 @@ import '@nativescript/firebase-auth'; // only needs to be imported 1x
 const auth = firebase().auth();
 ```
 
-By default, this allows you to interact with Firebase Auth using the default Firebase App used whilst installing Firebase on your platform. If however you'd like to use a secondary Firebase App, pass the secondary app instance when calling the auth method:
+By default, this allows you to interact with Firebase Auth using the default Firebase App used whilst installing Firebase on your platform. If, however, you'd like to use a secondary Firebase App, call the `auth` method with the FirebaseApp instance.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -38,11 +40,9 @@ const secondaryApp = firebase.initializeApp(config, 'SECONDARY_APP');
 const auth = firebase().auth(secondaryApp);
 ```
 
-### Authentication state
+### Listen to the authentication state change
 
-In many cases, you will need to know about the authentication state of your user, such as whether they're logged in or logged out.
-
-To subscribe to these changes, call the addAuthStateChangeListener() method on your FirebaseAuth instance:
+To subscribe to auth state change event, call the `addAuthStateChangeListener` method on your FirebaseAuth instance:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -58,9 +58,9 @@ firebase().auth()
   }))
 ```
 
-### Sign-in methods
+### Sign a user in anonymously
 
-#### Anonymous sign-in
+To sign a user in anonymously, call the `signInAnonymously` method on the instance of the FirebaseAuth class returned by `firebase().auth()`.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -73,11 +73,12 @@ firebase()
 	.catch((error) => {});
 ```
 
-#### Email/Password Registration & Sign-in
+#### Sign up a user with email and password
+To sign up a user with an email and password, call the `createUserWithEmailAndPassword` method on the FirebaseAuth instance(`firebase().auth()`) passing it the user's email and secure password.
 
-Email/Password is a common user sign in method for most applications. This requires the user to provide an email address and secure password. Users can register new accounts with a method called createUserWithEmailAndPassword() or sign in to an existing account with signInWithEmailAndPassword().
+createUserWithEmailAndPassword() or sign in to an existing account with signInWithEmailAndPassword().
 
-### Ensure the "Email/Password" sign-in provider is enabled on the Firebase Console.
+> **Note** To authenticate a user with email and password, enable `Email/Password` sign-in provider Firebase Console following the steps below: <br> 1. Go to Firebase Console. <br> 2. Click on your project. <br> 3. On the left sidebar, select `Authentication`. <br> 4. Click on the `Sign-in method` tab. <br> 5. Click on the `Email\password` provider. <br> 5. Turn `Enable` switch on.
 
 ### Registration
 
@@ -105,7 +106,7 @@ firebase()
 	.catch((error) => {});
 ```
 
-### Verifying a users email
+### Verifying a user's email
 
 ```ts
 const user = firebase().auth().currentUser;
@@ -157,7 +158,7 @@ signIn(
 
 #### Facebook
 
-Before getting started setup your [Facebook Developer App](https://developers.facebook.com/apps/) and follow the setup process to enable Facebook Login.
+Before getting started, set up your [Facebook Developer App](https://developers.facebook.com/apps/) and follow the setup process to enable Facebook Login.
 
 Ensure the "Facebook" sign-in provider is enabled on the [Firebase Console](https://console.firebase.google.com/u/0/project/_/authentication/providers). with the Facebook App ID and Secret set.
 
