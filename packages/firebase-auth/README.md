@@ -160,13 +160,20 @@ signIn(
     .catch(err => console.log("Error signing in: " + err));
 ```
 
-#### Facebook
+#### Sign in Facebook account
 
-Before getting started, set up your [Facebook Developer App](https://developers.facebook.com/apps/) and follow the setup process to enable Facebook Login.
+- Before getting started, follow the steps at [Facebook Developer App](https://developers.facebook.com/apps/) to enable Facebook login and obtain the Facebook `App ID` and `App secret` that you need for setting the Facebook sign-in provider.
 
-Ensure the "Facebook" sign-in provider is enabled on the [Firebase Console](https://console.firebase.google.com/u/0/project/_/authentication/providers). with the Facebook App ID and Secret set.
+- Enable the `Facebook sign-in provider` by following the steps below:
+	1. Go to [Firebase Console](https://console.firebase.google.com).
+	2. Click on your project.
+	3. On the left sidebar, select `Authentication`. 
+	4. Click on the `Sign-in method` tab. 
+	5. Click on the `Facebook` provider.
+	6. Switch on `Enable`
+	7. Enter your `App ID` and `App secret`, and click on `Save`. 
 
-A 3rd party library is required to both install the Facebook SDK and trigger the authentication flow.
+- Install the `@nativescript/facebook` plugin and call the `logInWithPermissions` method on the `LoginManager` class to get the user's credentials from Facabook that you pass to Firebase.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -190,9 +197,12 @@ LoginManager.logInWithPermissions(['public_profile', 'email']).then((result) => 
 
 > **Note:** Firebase will not set the User.emailVerified property to true if your user logs in with Facebook. Should your user login using a provider that verifies email (e.g. Google sign-in) then this will be set to true.
 
-#### Twitter
+#### Sign in with Twitter account
 
-Ensure the "Twitter" sign-in provider is enabled on the Firebase Console with an API Key and API Secret set.
+- Before you authenticate the user with their Twitter account, follow steps `1-5` at [Before you begin](https://firebase.google.com/docs/auth/android/twitter-login?hl=en&authuser=0#before_you_begin) to enable the `Twitter` sign-in provider.
+
+- Install the `@nativescript/twitter` plugin and call the `logIn` method on the `TwitterSignIn` class to get the user's credentials from Facabook that you pass to Firebase.
+
 
 A 3rd party library is required to both install the Twitter SDK and trigger the authentication flow.
 
@@ -213,9 +223,9 @@ TwitterSignIn.logIn().then((data) => {
 
 ```
 
-#### GitHub
+#### Sign in with GitHub account
 
-Ensure that you have setup an OAuth App from your GitHub Developer Settings and that the "GitHub" sign-in provider is enabled on the Firebase Console with the Client ID and Secret are set, with the callback URL set in the GitHub app.
+Ensure that you have set up an OAuth App from your GitHub Developer Settings and that the "GitHub" sign-in provider is enabled on the Firebase Console with the Client ID and Secret, with the callback URL set in the GitHub app.
 
 A 3rd party library is required to both install the GitHub SDK and trigger the authentication flow.
 
@@ -227,7 +237,7 @@ const githubAuthCredential = GithubAuthProvider.credential(token);
 firebase().auth().signInWithCredential(githubAuthCredential);
 ```
 
-#### Google
+#### Sign in with Google account
 
 Most configuration is already setup when using Google Sign-In with Firebase, however you need to ensure your machine's SHA1 key has been configured for use with Android. You can see how to generate the key on the [Authenticating Your Client documentation](https://developers.google.com/android/guides/client-auth).
 
