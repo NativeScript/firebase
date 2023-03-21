@@ -42,7 +42,7 @@ const auth = firebase().auth(secondaryApp);
 
 ### Listen to the authentication state change
 
-To subscribe to auth state change event, call the `addAuthStateChangeListener` method on your FirebaseAuth instance:
+To subscribe to auth state change event, call the `addAuthStateChangeListener` method on your FirebaseAuth class returned by `firebase().auth()`:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -73,14 +73,11 @@ firebase()
 	.catch((error) => {});
 ```
 
-#### Sign up a user with email and password
-To sign up a user with an email and password, call the `createUserWithEmailAndPassword` method on the FirebaseAuth instance(`firebase().auth()`) passing it the user's email and secure password.
-
-createUserWithEmailAndPassword() or sign in to an existing account with signInWithEmailAndPassword().
+#### Create a user account with email and password
 
 > **Note** To authenticate a user with email and password, enable `Email/Password` sign-in provider Firebase Console following the steps below: <br> 1. Go to Firebase Console. <br> 2. Click on your project. <br> 3. On the left sidebar, select `Authentication`. <br> 4. Click on the `Sign-in method` tab. <br> 5. Click on the `Email\password` provider. <br> 5. Turn `Enable` switch on.
 
-### Registration
+Next, to create a user account with an email and password, call the `createUserWithEmailAndPassword` method on the FirebaseAuth instance(`firebase().auth()`) passing it the user's email and secure password.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -93,7 +90,9 @@ firebase()
 	.catch((error) => {});
 ```
 
-### Sign-in
+### Sign in a user with email and password
+
+To sign in a user with their registered email and password, call `signInWithEmailAndPassword` method, with the email and password, on `firebase().auth()`
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -106,7 +105,9 @@ firebase()
 	.catch((error) => {});
 ```
 
-### Verifying a user's email
+### Send a user's email verification email
+
+To send an email to the user to request them to verify their email, call the `sendEmailVerification` method on `User` object.
 
 ```ts
 const user = firebase().auth().currentUser;
@@ -116,7 +117,8 @@ if (user && !user.emailVerified) {
 }
 ```
 
-### Signing Out
+### Sign a user out
+To sign a user out, call the `signOut` method on `firebase().auth()`.
 
 ```ts
 firebase().auth().signOut();
@@ -130,18 +132,21 @@ firebase().auth().signOut();
 - [Google Sign-In.](#Google)
 - [Phone Number Sign-In.](#Phone)
 
-#### Apple
+#### Sign in a user with Apple
 
 Apple announced that any applications using 3rd party login services (such as Facebook, Twitter, Google etc) must also have an Apple Sign-In method. Apple Sign-In is not required for Android devices.
 
-Before you begin [configure Sign In with Apple](https://firebase.google.com/docs/auth/ios/apple#configure-sign-in-with-apple) and [enable Apple as a sign-in provider](https://firebase.google.com/docs/auth/ios/apple#enable-apple-as-a-sign-in-provider).
+- Before you begin [configure Sign In with Apple](https://firebase.google.com/docs/auth/ios/apple#configure-sign-in-with-apple) and [enable Apple as a sign-in provider](https://firebase.google.com/docs/auth/ios/apple#enable-apple-as-a-sign-in-provider).
 
-Next, ensure that your app have the "Sign in with Apple" capability.
+- Next, ensure that the app has the [Sign in with Apple capability](https://developer.apple.com/documentation/xcode/configuring-sign-in-with-apple#Add-the-Sign-in-with-Apple-capability-to-your-app).
+
+- Install the `@nativescript/apple-sign-in` plugin. Use the `signIn` method from the plugin to get the user's credentials from Apple.
+- Create an AuthCredential instance from the user's credentials. Call the `signInWithCredential` method passing it the Apple credentials. 
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 import { AppleAuthProvider } from '@nativescript/firebase-auth';
-import { SignIn, User } from "@nativescript/apple-sign-in";
+import { signIn, User } from "@nativescript/apple-sign-in";
 
 signIn(
     {
@@ -153,7 +158,6 @@ signIn(
 		firebase().auth().signInWithCredential(oauthCredential);
     })
     .catch(err => console.log("Error signing in: " + err));
-
 ```
 
 #### Facebook
