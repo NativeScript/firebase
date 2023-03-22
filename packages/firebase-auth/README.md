@@ -5,7 +5,7 @@
 	* [Listen to the authentication state change](#listen-to-the-authentication-state-change)
 	* [Sign a user in anonymously](#sign-a-user-in-anonymously)
 	* [Create a user account with email and password](#create-a-user-account-with-email-and-password)
-	* [Sign in email and password](#sign-in-with-email-and-password)
+	* [Sign in with email and password](#sign-in-with-email-and-password)
 	* [Send a user's email verification email](#send-a-users-email-verification-email)
 	* [Sign a user out](#Signauserout)
 	* [Sign in with Apple](#sign-in-a-with-apple)
@@ -310,6 +310,61 @@ Firebase provides support for locally testing phone numbers:
 
 - Enter a new phone number (e.g. +44 7444 555666) and a test code (e.g. 123456).
 If providing a test phone number to either the `verifyPhoneNumber` or `signInWithPhoneNumber` methods, no SMS will be sent. You can instead provide the test code directly to the `PhoneAuthProvider` or with `signInWithPhoneNumbers` confirmation result handler.
+
+## API
+### Auth
+| Property | Type | Description
+|----------|------|-------------
+| `app`| `FirebaseApp` | _readonly_
+| `currentUser`| [User](#user) \| `null` | _readonly_
+| `languageCode`| `boolean` | _readonly_
+| `settings` | [AuthSettings]()|  _readonly_
+| `tenantId` | `string` |  _readonly_
+
+#### 
+| Method | Returns | Description
+|----------|------|-------------
+| `useEmulator(host: string, port: number)` | `void`
+| `applyActionCode(code: string)` | `Promise<void>`
+| `checkActionCode(code: string)` | Promise\<[ActionCodeInfo]()\>
+
+
+### User
+The user object has the following members.
+
+#### Properties
+
+| Property | Type | Description
+|----------|------|-------------
+| `uid`| `string` | _readonly_
+| `displayName`| `string` | _readonly_
+| `anonymous`| `boolean` | _readonly_
+| `emailVerified`| `boolean` | _readonly_
+| `email`| `string` | _readonly_
+| `phoneNumber`| ` string` | _readonly_
+| `providerId`| `string` | _readonly_
+| `photoURL`| `string` | _readonly_
+| `metadata`| UserMetadata | _readonly_` 
+| `providerData`| UserInfo[] | _readonly_
+
+#### Methods
+
+| Method | Returns | Description
+|----------|------|-------------
+| `delete()` | `Promise<void>` |
+| `getIdToken(forceRefresh?: undefined | false | true)` | `Promise<string>` |
+| `getIdTokenResult(forceRefresh?: undefined | false | true)` | Promise<AuthTokenResult> |
+| `linkWithCredential(credential: AuthCredential)` | Promise<UserCredential> |
+| `reauthenticateWithProvider(provider: OAuthProvider)` | Promise<UserCredential> |
+| `reauthenticateWithCredential(credential: AuthCredential)` | Promise<UserCredential> |
+| `reload()` | `Promise<void>` |
+| `sendEmailVerification(actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
+| `unlink(providerId: string)` | Promise<User> |
+`updateEmail(email: string)` | `Promise<void>` |
+| `updatePassword(password: string)` | ` Promise<void>` |
+| `updatePhoneNumber(credential: AuthCredential)` | `Promise<void>` |
+| `updateProfile(updates: UserProfileChangeRequest)` | `Promise<void>` |
+| `verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
 
 ## License
 
