@@ -1,10 +1,31 @@
 # @nativescript/firebase-auth
+* [Intro](#intro)
+* [Installation](#installation)
+* [Use @nativescript/firebase-auth](#use-nativescriptfirebase-auth)
+	* [Listen to the authentication state change](#listen-to-the-authentication-state-change)
+	* [Sign a user in anonymously](#sign-a-user-in-anonymously)
+	* [Create a user account with email and password](#create-a-user-account-with-email-and-password)
+	* [Sign in email and password](#sign-in-with-email-and-password)
+	* [Send a user's email verification email](#send-a-users-email-verification-email)
+	* [Sign a user out](#Signauserout)
+	* [Sign in with Apple](#sign-in-a-with-apple)
+	* [Sign in with Facebook account](#sign-in-with-facebook-account)
+	* [Sign in with Twitter account](#sign-in-with-twitter-account)
+	* [Sign in with GitHub account](#sign-in-with-github-account)
+	* [Sign in with Google account](#sign-in-with-google-account)
+	* [Phone number authentication](#phone-number-authentication)
+		* [Phone number auth setup](#phone-number-auth-setup)
+		* [Sign in user with phone number](#sign-in-user-with-phone-number)
+		* [Testing phone number auth](#testing-phone-number-auth)
+* [License](#license)
 
+## Intro
 A plugin that allows you to add [Firebase Authentification](https://firebase.google.com/docs/auth) to your NativeScript app.
 
 [![image](https://img.youtube.com/vi/8sGY55yxicA/hqdefault.jpg)](https://www.youtube.com/watch?v=8sGY55yxicA)
 
 > **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
+
 
 ## Installation
 
@@ -27,7 +48,7 @@ import '@nativescript/firebase-auth'; // only needs to be imported 1x
 const auth = firebase().auth();
 ```
 
-By default, this allows you to interact with Firebase Auth using the default Firebase App used whilst installing Firebase on your platform. If, however, you'd like to use a secondary Firebase App, call the `auth` method with the FirebaseApp instance.
+By default, this allows you to interact with Firebase Auth using the default Firebase App used whilst installing Firebase on your platform. If, however, you'd like to use a secondary Firebase App, call the `auth` method with the `FirebaseApp` instance.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -73,7 +94,7 @@ firebase()
 	.catch((error) => {});
 ```
 
-#### Create a user account with email and password
+### Create a user account with email and password
 
 > **Note** To authenticate a user with email and password, enable `Email/Password` sign-in provider Firebase Console following the steps below: <br> 1. Go to Firebase Console. <br> 2. Click on your project. <br> 3. On the left sidebar, select `Authentication`. <br> 4. Click on the `Sign-in method` tab. <br> 5. Click on the `Email\password` provider. <br> 5. Turn `Enable` switch on.
 
@@ -90,7 +111,7 @@ firebase()
 	.catch((error) => {});
 ```
 
-### Sign in a user with email and password
+#### Sign in a user with email and password
 
 To sign in a user with their registered email and password, call `signInWithEmailAndPassword` method, with the email and password, on `firebase().auth()`
 
@@ -105,7 +126,7 @@ firebase()
 	.catch((error) => {});
 ```
 
-### Send a user's email verification email
+#### Send a user's email verification email
 
 To send an email to the user to request them to verify their email, call the `sendEmailVerification` method on `User` object.
 
@@ -124,15 +145,7 @@ To sign a user out, call the `signOut` method on `firebase().auth()`.
 firebase().auth().signOut();
 ```
 
-### Other sign-in methods
-
-- [Apple Sign-In.](#Apple)
-- [Facebook Sign-In.](#Facebook)
-- [Twitter Sign-In.](#Twitter)
-- [Google Sign-In.](#Google)
-- [Phone Number Sign-In.](#Phone)
-
-#### Sign in a user with Apple
+### Sign in a user with Apple
 
 Apple announced that any applications using 3rd party login services (such as Facebook, Twitter, Google etc) must also have an Apple Sign-In method. Apple Sign-In is not required for Android devices.
 
@@ -160,7 +173,7 @@ signIn(
     .catch(err => console.log("Error signing in: " + err));
 ```
 
-#### Sign in Facebook account
+### Sign in with Facebook account
 
 - Before getting started, follow the steps at [Facebook Developer App](https://developers.facebook.com/apps/) to enable Facebook login and obtain the Facebook `App ID` and `App secret` that you need for setting the Facebook sign-in provider.
 
@@ -197,14 +210,11 @@ LoginManager.logInWithPermissions(['public_profile', 'email']).then((result) => 
 
 > **Note:** Firebase will not set the User.emailVerified property to true if your user logs in with Facebook. Should your user login using a provider that verifies email (e.g. Google sign-in) then this will be set to true.
 
-#### Sign in with Twitter account
+### Sign in with Twitter account
 
 - Before you authenticate the user with their Twitter account, follow steps `1-5` at [Before you begin](https://firebase.google.com/docs/auth/android/twitter-login?hl=en&authuser=0#before_you_begin) to enable the `Twitter` sign-in provider.
 
-- Install the `@nativescript/twitter` plugin and call the `logIn` method on the `TwitterSignIn` class to get the user's credentials from Facabook that you pass to Firebase.
-
-
-A 3rd party library is required to both install the Twitter SDK and trigger the authentication flow.
+- Install the `@nativescript/twitter` plugin and call the `logIn` method on the `TwitterSignIn` class to get the user's credentials from Twitter, as shown below, that you pass to Firebase.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -223,11 +233,12 @@ TwitterSignIn.logIn().then((data) => {
 
 ```
 
-#### Sign in with GitHub account
+### Sign in with GitHub account
 
-Ensure that you have set up an OAuth App from your GitHub Developer Settings and that the "GitHub" sign-in provider is enabled on the Firebase Console with the Client ID and Secret, with the callback URL set in the GitHub app.
+- Set up a GitHub OAuth App from your GitHub Developer Settings and enable `GitHub` sign-in provider by following steps 1-5 at [Before you begin using GitHub](https://firebase.google.com/docs/auth/android/github-auth?hl=en&authuser=0#before_you_begin)
+A 3rd party library is required to both install the GitHub SDK and trigger the authentication flow. The `credential` method of the `GithubAuthProvider` class achieves that.
 
-A 3rd party library is required to both install the GitHub SDK and trigger the authentication flow.
+- Call the `signInWithCredential` method on `firebase().auth()` passing it the GitHub credentials.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -237,10 +248,11 @@ const githubAuthCredential = GithubAuthProvider.credential(token);
 firebase().auth().signInWithCredential(githubAuthCredential);
 ```
 
-#### Sign in with Google account
+### Sign in with Google account
 
-Most configuration is already setup when using Google Sign-In with Firebase, however you need to ensure your machine's SHA1 key has been configured for use with Android. You can see how to generate the key on the [Authenticating Your Client documentation](https://developers.google.com/android/guides/client-auth).
+Most configuration is already set up when using Google Sign-In with Firebase. However, you need to ensure your machine's SHA1 key has been configured for use with Android. You can see how to generate the key on the [Authenticating Your Client documentation](https://developers.google.com/android/guides/client-auth).
 
+- Install the `nativescript/google-signin` plugin, configure Google Sign-in by calling the `configure` method, sign in the user to their Google account to obtain the ID and access tokens. Pass the obtained tokens to Firebase.
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 import { GoogleAuthProvider } from '@nativescript/firebase-auth';
@@ -255,15 +267,15 @@ GoogleSignin.signIn().then((user) => {
 });
 ```
 
-### Phone Authentication
+### Phone number authentication
 
-Phone authentication allows users to sign in to Firebase using their phone as the authenticator. An SMS message is sent to the user (using the provided phone number) containing a unique code. Once the code has been authorized, the user is able to sign into Firebase.
+Phone authentication allows users to sign in to Firebase using their phone as the authenticator. An SMS message containing a unique code is sent to the user (using the provided phone number). Once the code has been authorized, the user can sign in into Firebase.
 
-> **Note:** Phone numbers that end users provide for authentication will be sent and stored by Google to improve spam and abuse prevention across Google service, including to, but not limited to Firebase. Developers should ensure they have the appropriate end-user consent prior to using the Firebase Authentication phone number sign-in service.authentication
+> **Note:** Phone numbers that end users provide for authentication will be sent and stored by Google to improve spam and abuse prevention across Google services, including , but not limited to Firebase. Developers should ensure they have the appropriate end-user consent prior to using the Firebase Authentication phone number sign-in service.
 
 Firebase Phone Authentication is not supported in all countries. Please see their [FAQs](https://firebase.google.com/support/faq/#develop) for more information.
 
-#### Setup
+#### Phone number auth setup
 
 Before starting with Phone Authentication, ensure you have followed these steps:
 
@@ -271,13 +283,12 @@ Before starting with Phone Authentication, ensure you have followed these steps:
 2. **Android**: If you haven't already set your app's SHA-1 hash in the [Firebase console](https://console.firebase.google.com/), do so. See [Authenticating Your Client](https://developers.google.com/android/guides/client-auth) for information about finding your app's SHA-1 hash.
 3. **iOS**: In Xcode, [enable push notifications](http://help.apple.com/xcode/mac/current/#/devdfd3d04a1) for your project & ensure your APNs authentication key is [configured with Firebase Cloud Messaging (FCM)](https://firebase.google.com/docs/cloud-messaging/ios/certs). To view an in-depth explanation of this step, view the [Firebase iOS Phone Auth](https://firebase.google.com/docs/auth/ios/phone-auth) documentation.
 
-**Note**; Phone number sign-in is only available for use on real devices and the web. To test your authentication flow on device emulators, please see Testing.
+**Note**; Phone number sign-in is only available for use on real devices and the web. To test your authentication flow on device emulators, please see [Testing](#testing).
 
-### Usage
 
-#### verifyPhoneNumber
+#### Sign in user with phone number
 
-The user's phone number must be first verified and then the user can either sign-in or link their account with a PhoneAuthCredential.
+The user's phone number must be first verified before the user can either sign in or link their account with a PhoneAuthCredential. Verify the phone number by calling the `verifyPhoneNumber` method with the number. Once the number is verified, pass the verification id and code to Firebase.
 
 ```ts
 import { PhoneAuthProvider } from '@nativescript/firebase-auth';
@@ -291,13 +302,14 @@ PhoneAuthProvider.provider()
 	});
 ```
 
-#### Testing
+#### Testing phone number auth
 
 Firebase provides support for locally testing phone numbers:
 
-On the Firebase Console, select the "Phone" authentication provider and click on the "Phone numbers for testing" dropdown.
-Enter a new phone number (e.g. +44 7444 555666) and a test code (e.g. 123456).
-If providing a test phone number to either the verifyPhoneNumber or signInWithPhoneNumber methods, no SMS will actually be sent. You can instead provide the test code directly to the PhoneAuthProvider or with signInWithPhoneNumbers confirmation result handler.
+- On the Firebase Console, enable the "Phone" authentication provider and click on the "Phone numbers for testing" dropdown by following the steps at []().
+
+- Enter a new phone number (e.g. +44 7444 555666) and a test code (e.g. 123456).
+If providing a test phone number to either the `verifyPhoneNumber` or `signInWithPhoneNumber` methods, no SMS will be sent. You can instead provide the test code directly to the `PhoneAuthProvider` or with `signInWithPhoneNumbers` confirmation result handler.
 
 ## License
 
