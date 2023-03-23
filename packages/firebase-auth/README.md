@@ -90,7 +90,7 @@ import '@nativescript/firebase-auth';
 firebase()
 	.auth()
 	.signInAnonymously()
-	.then((cred: UserCredential) => {})
+	.then((cred: [UserCredential]()) => {})
 	.catch((error) => {});
 ```
 
@@ -107,7 +107,7 @@ import '@nativescript/firebase-auth';
 firebase()
 	.auth()
 	.createUserWithEmailAndPassword('myemail@myemail.com', 'password')
-	.then((cred: UserCredential) => {})
+	.then((cred: [UserCredential]()) => {})
 	.catch((error) => {});
 ```
 
@@ -122,7 +122,7 @@ import '@nativescript/firebase-auth';
 firebase()
 	.auth()
 	.signInWithEmailAndPassword('myemail@myemail.com', 'password')
-	.then((cred: UserCredential) => {})
+	.then((cred: [UserCredential]()) => {})
 	.catch((error) => {});
 ```
 
@@ -324,9 +324,29 @@ If providing a test phone number to either the `verifyPhoneNumber` or `signInWit
 #### 
 | Method | Returns | Description
 |----------|------|-------------
-| `useEmulator(host: string, port: number)` | `void`
+| `useEmulator(host: string, port: number)` | ``
 | `applyActionCode(code: string)` | `Promise<void>`
-| `checkActionCode(code: string)` | Promise\<[ActionCodeInfo]()\>
+| `checkActionCode(code: string)` | Promise<[ActionCodeInfo]()>
+| `confirmPasswordReset(code: string, newPassword: string)` | `Promise<void>` |
+| `createUserWithEmailAndPassword(email: string, password: string)` | Promise<[UserCredential](#usercredential)> |
+| `fetchSignInMethodsForEmail(email: string)` | `Promise<string[]>` |
+| `isSignInWithEmailLink(emailLink: string)` | `boolean` |
+| `addAuthStateChangeListener(listener: (user: User) => void)` | `
+| `removeAuthStateChangeListener(listener: (user: User) => void)` | `
+| `addIdTokenChangeListener(listener: (user: User) => void)` | `
+| `removeIdTokenChangListener(listener: (user: User) => void)` | `
+| `sendPasswordResetEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
+| `sendSignInLinkToEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
+| `signInAnonymously()` | Promise<[UserCredential](#usercredential)> |
+| `signInWithProvider(provider: OAuthProvider)` | Promise<[UserCredential](#usercredential)> |
+| `getProviderCredential(provider: OAuthProvider)` | Promise<[OAuthCredential]()> |
+| `signInWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> |
+| `signInWithCustomToken(customToken: string)` | Promise<[UserCredential]()> |
+| `signInWithEmailAndPassword(email: string, password: string)` | Promise<[UserCredential](#usercredential)> |
+| `signInWithEmailLink(email: string, emailLink: string)` | Promise<[UserCredential](#usercredential)> |
+| `signOut()` | `boolean` |
+| `useUserAccessGroup(userAccessGroup: string)` | `Promise<void>` |
+| `verifyPasswordResetCode(code: string)` | `Promise<string>` |
 
 
 ### User
@@ -352,19 +372,46 @@ The user object has the following members.
 | Method | Returns | Description
 |----------|------|-------------
 | `delete()` | `Promise<void>` |
-| `getIdToken(forceRefresh?: undefined | false | true)` | `Promise<string>` |
-| `getIdTokenResult(forceRefresh?: undefined | false | true)` | Promise<AuthTokenResult> |
-| `linkWithCredential(credential: AuthCredential)` | Promise<UserCredential> |
-| `reauthenticateWithProvider(provider: OAuthProvider)` | Promise<UserCredential> |
-| `reauthenticateWithCredential(credential: AuthCredential)` | Promise<UserCredential> |
+| `getIdToken(forceRefresh?: undefined \| false \| true)` | `Promise<string>` |
+| `getIdTokenResult(forceRefresh?: undefined \| false \| true)` | Promise<[AuthTokenResult]()> |
+| `linkWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> |
+| `reauthenticateWithProvider(provider: OAuthProvider)` | Promise<[UserCredential](#usercredential)> |
+| `reauthenticateWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> |
 | `reload()` | `Promise<void>` |
 | `sendEmailVerification(actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
-| `unlink(providerId: string)` | Promise<User> |
+| `unlink(providerId: string)` | Promise<[User](#user)> |
 `updateEmail(email: string)` | `Promise<void>` |
 | `updatePassword(password: string)` | ` Promise<void>` |
 | `updatePhoneNumber(credential: AuthCredential)` | `Promise<void>` |
 | `updateProfile(updates: UserProfileChangeRequest)` | `Promise<void>` |
 | `verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
+
+### UserCredential
+
+| Property | Type | Description
+|----------|------|-------------
+| `additionalUserInfo` |<[AdditionalUserInfo](#additionaluserinfo)> |
+| `user` |<[User](#user)> |
+| `credential` |<[AuthCredential](#authcredential)> |
+
+### AdditionalUserInfo
+
+| Property | Type | Description
+|----------|------|-------------
+| `newUser` | `boolean` |
+| `profile` | `Record<string, any>` |
+| `providerId` | `string` |
+| `username` | `string` |
+
+### AuthCredential
+| Property | Type | Description
+|----------|------|-------------
+| `ios` | `FIRAuthCredential` |_readonly_
+| `android` | `com.google.firebase.auth.AuthCredential`| _readonly_
+| `signInMethod` | `string` | _readonly_
+| `idToken` | `string` | _readonly_
+| `accessToken` | `string` | _readonly_
+| `secret` | `string` | _readonly_
 
 ## License
 
