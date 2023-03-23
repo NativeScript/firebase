@@ -146,7 +146,7 @@ export interface IAuth {
 	signInWithCustomToken(customToken: string): Promise<IUserCredential>;
 	signInWithEmailAndPassword(email: string, password: string): Promise<IUserCredential>;
 	signInWithEmailLink(email: string, emailLink: string): Promise<IUserCredential>;
-	signOut();
+	signOut(): Promise<boolean>;
 	useUserAccessGroup(userAccessGroup: string): Promise<void>;
 	verifyPasswordResetCode(code: string): Promise<string>;
 }

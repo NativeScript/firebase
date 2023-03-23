@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-remote-config",
-	"version": "2.5.2",
+	"version": "3.0.0-alpha.0",
 	"description": "NativeScript Firebase - Remote Config",
 	"main": "index",
 	"typings": "index.d.ts",
