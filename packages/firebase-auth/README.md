@@ -17,6 +17,15 @@
 		* [Phone number auth setup](#phone-number-auth-setup)
 		* [Sign in user with phone number](#sign-in-user-with-phone-number)
 		* [Testing phone number auth](#testing-phone-number-auth)
+* [API](#api)
+	* [Auth class](#auth-class)
+		* [Properties](#properties)
+		* [Methods](#methods)
+	* [User](#user)
+		* [Properties](#properties-1)
+		* [Methods](#methods-1)
+	* [UserCredential](#usercredential)
+	
 * [License](#license)
 
 ## Intro
@@ -312,7 +321,9 @@ Firebase provides support for locally testing phone numbers:
 If providing a test phone number to either the `verifyPhoneNumber` or `signInWithPhoneNumber` methods, no SMS will be sent. You can instead provide the test code directly to the `PhoneAuthProvider` or with `signInWithPhoneNumbers` confirmation result handler.
 
 ## API
-### Auth
+### Auth class
+
+#### Properties
 | Property | Type | Description
 |----------|------|-------------
 | `app`| `FirebaseApp` | _readonly_
@@ -321,7 +332,7 @@ If providing a test phone number to either the `verifyPhoneNumber` or `signInWit
 | `settings` | [AuthSettings]()|  _readonly_
 | `tenantId` | `string` |  _readonly_
 
-#### 
+#### Methods
 | Method | Returns | Description
 |----------|------|-------------
 | `useEmulator(host: string, port: number)` | ``
@@ -394,7 +405,7 @@ The user object has the following members.
 | `user` |<[User](#user)> |
 | `credential` |<[AuthCredential](#authcredential)> |
 
-### AdditionalUserInfo
+#### AdditionalUserInfo
 
 | Property | Type | Description
 |----------|------|-------------
@@ -403,16 +414,25 @@ The user object has the following members.
 | `providerId` | `string` |
 | `username` | `string` |
 
-### AuthCredential
+#### AuthCredential
 | Property | Type | Description
 |----------|------|-------------
-| `ios` | `FIRAuthCredential` |_readonly_
+| `ios` | `FIRAuthCredential` ` | |_readonly_
 | `android` | `com.google.firebase.auth.AuthCredential`| _readonly_
 | `signInMethod` | `string` | _readonly_
 | `idToken` | `string` | _readonly_
 | `accessToken` | `string` | _readonly_
 | `secret` | `string` | _readonly_
 
+### OAuthCredential
+| Property | Type | Description
+|----------|------|-------------
+| `ios` | |_readonly_
+| `android` | |_readonly_
+| `signInMethod` | `string` |
+| `idToken` | `string` | _readonly_
+| `accessToken` | `string` |_readonly_
+| `secret` | `string` |_readonly_
 ## License
 
 Apache License Version 2.0
