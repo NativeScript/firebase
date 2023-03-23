@@ -1,22 +1,45 @@
 # @nativescript/firebase-auth
+* [Intro](#intro)
+* [Installation](#installation)
+* [Use @nativescript/firebase-auth](#use-nativescriptfirebase-auth)
+	* [Listen to the authentication state change](#listen-to-the-authentication-state-change)
+	* [Sign a user in anonymously](#sign-a-user-in-anonymously)
+	* [Create a user account with email and password](#create-a-user-account-with-email-and-password)
+	* [Sign in with email and password](#sign-in-with-email-and-password)
+	* [Send a user's email verification email](#send-a-users-email-verification-email)
+	* [Sign a user out](#Signauserout)
+	* [Sign in with Apple](#sign-in-a-with-apple)
+	* [Sign in with Facebook account](#sign-in-with-facebook-account)
+	* [Sign in with Twitter account](#sign-in-with-twitter-account)
+	* [Sign in with GitHub account](#sign-in-with-github-account)
+	* [Sign in with Google account](#sign-in-with-google-account)
+	* [Phone number authentication](#phone-number-authentication)
+		* [Phone number auth setup](#phone-number-auth-setup)
+		* [Sign in user with phone number](#sign-in-user-with-phone-number)
+		* [Testing phone number auth](#testing-phone-number-auth)
+* [License](#license)
+
+## Intro
+A plugin that allows you to add [Firebase Authentification](https://firebase.google.com/docs/auth) to your NativeScript app.
+
+[![image](https://img.youtube.com/vi/8sGY55yxicA/hqdefault.jpg)](https://www.youtube.com/watch?v=8sGY55yxicA)
+
+> **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
+
+
+## Installation
+
+Install the plugin by running the following command in the root directory of your project.
 
 ```cli
 npm install @nativescript/firebase-auth
 ```
 
-## Authentication
+## Use @nativescript/firebase-auth
 
-### What does it do?
+Before using Firebase Auth, ensure to initialize Firebase.
 
-Firebase Authentication provides backend services & easy-to-use SDKs to authenticate users to your app. It supports authentication using passwords, phone numbers, popular federated identity providers like Google, Facebook and Twitter, and more.
-
-[![image](https://img.youtube.com/vi/8sGY55yxicA/hqdefault.jpg)](https://www.youtube.com/watch?v=8sGY55yxicA)
-
-## Usage
-
-Before using Firebase Auth, you must first have ensured you have initialized Firebase.
-
-To create a new Firebase Auth instance, call the auth method on the firebase instance as follow:
+To create a new Firebase Auth instance, call the `auth` method on the firebase instance as follow:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -25,7 +48,7 @@ import '@nativescript/firebase-auth'; // only needs to be imported 1x
 const auth = firebase().auth();
 ```
 
-By default, this allows you to interact with Firebase Auth using the default Firebase App used whilst installing Firebase on your platform. If however you'd like to use a secondary Firebase App, pass the secondary app instance when calling the auth method:
+By default, this allows you to interact with Firebase Auth using the default Firebase App used whilst installing Firebase on your platform. If, however, you'd like to use a secondary Firebase App, call the `auth` method with the `FirebaseApp` instance.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -38,11 +61,9 @@ const secondaryApp = firebase.initializeApp(config, 'SECONDARY_APP');
 const auth = firebase().auth(secondaryApp);
 ```
 
-### Authentication state
+### Listen to the authentication state change
 
-In many cases, you will need to know about the authentication state of your user, such as whether they're logged in or logged out.
-
-To subscribe to these changes, call the addAuthStateChangeListener() method on your FirebaseAuth instance:
+To subscribe to auth state change event, call the `addAuthStateChangeListener` method on your FirebaseAuth class returned by `firebase().auth()`:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -58,9 +79,9 @@ firebase().auth()
   }))
 ```
 
-### Sign-in methods
+### Sign a user in anonymously
 
-#### Anonymous sign-in
+To sign a user in anonymously, call the `signInAnonymously` method on the instance of the FirebaseAuth class returned by `firebase().auth()`.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -73,13 +94,11 @@ firebase()
 	.catch((error) => {});
 ```
 
-#### Email/Password Registration & Sign-in
+### Create a user account with email and password
 
-Email/Password is a common user sign in method for most applications. This requires the user to provide an email address and secure password. Users can register new accounts with a method called createUserWithEmailAndPassword() or sign in to an existing account with signInWithEmailAndPassword().
+> **Note** To authenticate a user with email and password, enable `Email/Password` sign-in provider Firebase Console following the steps below: <br> 1. Go to Firebase Console. <br> 2. Click on your project. <br> 3. On the left sidebar, select `Authentication`. <br> 4. Click on the `Sign-in method` tab. <br> 5. Click on the `Email\password` provider. <br> 5. Turn `Enable` switch on.
 
-### Ensure the "Email/Password" sign-in provider is enabled on the Firebase Console.
-
-### Registration
+Next, to create a user account with an email and password, call the `createUserWithEmailAndPassword` method on the FirebaseAuth instance(`firebase().auth()`) passing it the user's email and secure password.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -92,7 +111,9 @@ firebase()
 	.catch((error) => {});
 ```
 
-### Sign-in
+#### Sign in a user with email and password
+
+To sign in a user with their registered email and password, call `signInWithEmailAndPassword` method, with the email and password, on `firebase().auth()`
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -105,7 +126,9 @@ firebase()
 	.catch((error) => {});
 ```
 
-### Verifying a users email
+#### Send a user's email verification email
+
+To send an email to the user to request them to verify their email, call the `sendEmailVerification` method on `User` object.
 
 ```ts
 const user = firebase().auth().currentUser;
@@ -115,7 +138,8 @@ if (user && !user.emailVerified) {
 }
 ```
 
-### Signing Out
+### Sign a user out
+To sign a user out, call the `signOut` method on `firebase().auth()`.
 
 ```ts
 firebase().auth().signOut()
@@ -132,26 +156,21 @@ firebase().auth().signOut()
 let signedOut = await firebase().auth().signOut();
 ```
 
-### Other sign-in methods
-
-- [Apple Sign-In.](#Apple)
-- [Facebook Sign-In.](#Facebook)
-- [Twitter Sign-In.](#Twitter)
-- [Google Sign-In.](#Google)
-- [Phone Number Sign-In.](#Phone)
-
-#### Apple
+### Sign in a user with Apple
 
 Apple announced that any applications using 3rd party login services (such as Facebook, Twitter, Google etc) must also have an Apple Sign-In method. Apple Sign-In is not required for Android devices.
 
-Before you begin [configure Sign In with Apple](https://firebase.google.com/docs/auth/ios/apple#configure-sign-in-with-apple) and [enable Apple as a sign-in provider](https://firebase.google.com/docs/auth/ios/apple#enable-apple-as-a-sign-in-provider).
+- Before you begin [configure Sign In with Apple](https://firebase.google.com/docs/auth/ios/apple#configure-sign-in-with-apple) and [enable Apple as a sign-in provider](https://firebase.google.com/docs/auth/ios/apple#enable-apple-as-a-sign-in-provider).
 
-Next, ensure that your app have the "Sign in with Apple" capability.
+- Next, ensure that the app has the [Sign in with Apple capability](https://developer.apple.com/documentation/xcode/configuring-sign-in-with-apple#Add-the-Sign-in-with-Apple-capability-to-your-app).
+
+- Install the `@nativescript/apple-sign-in` plugin. Use the `signIn` method from the plugin to get the user's credentials from Apple.
+- Create an AuthCredential instance from the user's credentials. Call the `signInWithCredential` method passing it the Apple credentials. 
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 import { AppleAuthProvider } from '@nativescript/firebase-auth';
-import { SignIn, User } from "@nativescript/apple-sign-in";
+import { signIn, User } from "@nativescript/apple-sign-in";
 
 signIn(
     {
@@ -163,16 +182,22 @@ signIn(
 		firebase().auth().signInWithCredential(oauthCredential);
     })
     .catch(err => console.log("Error signing in: " + err));
-
 ```
 
-#### Facebook
+### Sign in with Facebook account
 
-Before getting started setup your [Facebook Developer App](https://developers.facebook.com/apps/) and follow the setup process to enable Facebook Login.
+- Before getting started, follow the steps at [Facebook Developer App](https://developers.facebook.com/apps/) to enable Facebook login and obtain the Facebook `App ID` and `App secret` that you need for setting the Facebook sign-in provider.
 
-Ensure the "Facebook" sign-in provider is enabled on the [Firebase Console](https://console.firebase.google.com/u/0/project/_/authentication/providers). with the Facebook App ID and Secret set.
+- Enable the `Facebook sign-in provider` by following the steps below:
+	1. Go to [Firebase Console](https://console.firebase.google.com).
+	2. Click on your project.
+	3. On the left sidebar, select `Authentication`. 
+	4. Click on the `Sign-in method` tab. 
+	5. Click on the `Facebook` provider.
+	6. Switch on `Enable`
+	7. Enter your `App ID` and `App secret`, and click on `Save`. 
 
-A 3rd party library is required to both install the Facebook SDK and trigger the authentication flow.
+- Install the `@nativescript/facebook` plugin and call the `logInWithPermissions` method on the `LoginManager` class to get the user's credentials from Facabook that you pass to Firebase.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -196,11 +221,11 @@ LoginManager.logInWithPermissions(['public_profile', 'email']).then((result) => 
 
 > **Note:** Firebase will not set the User.emailVerified property to true if your user logs in with Facebook. Should your user login using a provider that verifies email (e.g. Google sign-in) then this will be set to true.
 
-#### Twitter
+### Sign in with Twitter account
 
-Ensure the "Twitter" sign-in provider is enabled on the Firebase Console with an API Key and API Secret set.
+- Before you authenticate the user with their Twitter account, follow steps `1-5` at [Before you begin](https://firebase.google.com/docs/auth/android/twitter-login?hl=en&authuser=0#before_you_begin) to enable the `Twitter` sign-in provider.
 
-A 3rd party library is required to both install the Twitter SDK and trigger the authentication flow.
+- Install the `@nativescript/twitter` plugin and call the `logIn` method on the `TwitterSignIn` class to get the user's credentials from Twitter, as shown below, that you pass to Firebase.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -219,11 +244,12 @@ TwitterSignIn.logIn().then((data) => {
 
 ```
 
-#### GitHub
+### Sign in with GitHub account
 
-Ensure that you have setup an OAuth App from your GitHub Developer Settings and that the "GitHub" sign-in provider is enabled on the Firebase Console with the Client ID and Secret are set, with the callback URL set in the GitHub app.
+- Set up a GitHub OAuth App from your GitHub Developer Settings and enable `GitHub` sign-in provider by following steps 1-5 at [Before you begin using GitHub](https://firebase.google.com/docs/auth/android/github-auth?hl=en&authuser=0#before_you_begin)
+A 3rd party library is required to both install the GitHub SDK and trigger the authentication flow. The `credential` method of the `GithubAuthProvider` class achieves that.
 
-A 3rd party library is required to both install the GitHub SDK and trigger the authentication flow.
+- Call the `signInWithCredential` method on `firebase().auth()` passing it the GitHub credentials.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -233,10 +259,11 @@ const githubAuthCredential = GithubAuthProvider.credential(token);
 firebase().auth().signInWithCredential(githubAuthCredential);
 ```
 
-#### Google
+### Sign in with Google account
 
-Most configuration is already setup when using Google Sign-In with Firebase, however you need to ensure your machine's SHA1 key has been configured for use with Android. You can see how to generate the key on the [Authenticating Your Client documentation](https://developers.google.com/android/guides/client-auth).
+Most configuration is already set up when using Google Sign-In with Firebase. However, you need to ensure your machine's SHA1 key has been configured for use with Android. You can see how to generate the key on the [Authenticating Your Client documentation](https://developers.google.com/android/guides/client-auth).
 
+- Install the `nativescript/google-signin` plugin, configure Google Sign-in by calling the `configure` method, sign in the user to their Google account to obtain the ID and access tokens. Pass the obtained tokens to Firebase.
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 import { GoogleAuthProvider } from '@nativescript/firebase-auth';
@@ -251,15 +278,15 @@ GoogleSignin.signIn().then((user) => {
 });
 ```
 
-### Phone Authentication
+### Phone number authentication
 
-Phone authentication allows users to sign in to Firebase using their phone as the authenticator. An SMS message is sent to the user (using the provided phone number) containing a unique code. Once the code has been authorized, the user is able to sign into Firebase.
+Phone authentication allows users to sign in to Firebase using their phone as the authenticator. An SMS message containing a unique code is sent to the user (using the provided phone number). Once the code has been authorized, the user can sign in into Firebase.
 
-> **Note:** Phone numbers that end users provide for authentication will be sent and stored by Google to improve spam and abuse prevention across Google service, including to, but not limited to Firebase. Developers should ensure they have the appropriate end-user consent prior to using the Firebase Authentication phone number sign-in service.authentication
+> **Note:** Phone numbers that end users provide for authentication will be sent and stored by Google to improve spam and abuse prevention across Google services, including , but not limited to Firebase. Developers should ensure they have the appropriate end-user consent prior to using the Firebase Authentication phone number sign-in service.
 
 Firebase Phone Authentication is not supported in all countries. Please see their [FAQs](https://firebase.google.com/support/faq/#develop) for more information.
 
-#### Setup
+#### Phone number auth setup
 
 Before starting with Phone Authentication, ensure you have followed these steps:
 
@@ -267,13 +294,12 @@ Before starting with Phone Authentication, ensure you have followed these steps:
 2. **Android**: If you haven't already set your app's SHA-1 hash in the [Firebase console](https://console.firebase.google.com/), do so. See [Authenticating Your Client](https://developers.google.com/android/guides/client-auth) for information about finding your app's SHA-1 hash.
 3. **iOS**: In Xcode, [enable push notifications](http://help.apple.com/xcode/mac/current/#/devdfd3d04a1) for your project & ensure your APNs authentication key is [configured with Firebase Cloud Messaging (FCM)](https://firebase.google.com/docs/cloud-messaging/ios/certs). To view an in-depth explanation of this step, view the [Firebase iOS Phone Auth](https://firebase.google.com/docs/auth/ios/phone-auth) documentation.
 
-**Note**; Phone number sign-in is only available for use on real devices and the web. To test your authentication flow on device emulators, please see Testing.
+**Note**; Phone number sign-in is only available for use on real devices and the web. To test your authentication flow on device emulators, please see [Testing](#testing).
 
-### Usage
 
-#### verifyPhoneNumber
+#### Sign in user with phone number
 
-The user's phone number must be first verified and then the user can either sign-in or link their account with a PhoneAuthCredential.
+The user's phone number must be first verified before the user can either sign in or link their account with a PhoneAuthCredential. Verify the phone number by calling the `verifyPhoneNumber` method with the number. Once the number is verified, pass the verification id and code to Firebase.
 
 ```ts
 import { PhoneAuthProvider } from '@nativescript/firebase-auth';
@@ -287,13 +313,69 @@ PhoneAuthProvider.provider()
 	});
 ```
 
-#### Testing
+#### Testing phone number auth
 
 Firebase provides support for locally testing phone numbers:
 
-On the Firebase Console, select the "Phone" authentication provider and click on the "Phone numbers for testing" dropdown.
-Enter a new phone number (e.g. +44 7444 555666) and a test code (e.g. 123456).
-If providing a test phone number to either the verifyPhoneNumber or signInWithPhoneNumber methods, no SMS will actually be sent. You can instead provide the test code directly to the PhoneAuthProvider or with signInWithPhoneNumbers confirmation result handler.
+- On the Firebase Console, enable the "Phone" authentication provider and click on the "Phone numbers for testing" dropdown by following the steps at []().
+
+- Enter a new phone number (e.g. +44 7444 555666) and a test code (e.g. 123456).
+If providing a test phone number to either the `verifyPhoneNumber` or `signInWithPhoneNumber` methods, no SMS will be sent. You can instead provide the test code directly to the `PhoneAuthProvider` or with `signInWithPhoneNumbers` confirmation result handler.
+
+## API
+### Auth
+| Property | Type | Description
+|----------|------|-------------
+| `app`| `FirebaseApp` | _readonly_
+| `currentUser`| [User](#user) \| `null` | _readonly_
+| `languageCode`| `boolean` | _readonly_
+| `settings` | [AuthSettings]()|  _readonly_
+| `tenantId` | `string` |  _readonly_
+
+#### 
+| Method | Returns | Description
+|----------|------|-------------
+| `useEmulator(host: string, port: number)` | `void`
+| `applyActionCode(code: string)` | `Promise<void>`
+| `checkActionCode(code: string)` | Promise\<[ActionCodeInfo]()\>
+
+
+### User
+The user object has the following members.
+
+#### Properties
+
+| Property | Type | Description
+|----------|------|-------------
+| `uid`| `string` | _readonly_
+| `displayName`| `string` | _readonly_
+| `anonymous`| `boolean` | _readonly_
+| `emailVerified`| `boolean` | _readonly_
+| `email`| `string` | _readonly_
+| `phoneNumber`| ` string` | _readonly_
+| `providerId`| `string` | _readonly_
+| `photoURL`| `string` | _readonly_
+| `metadata`| UserMetadata | _readonly_` 
+| `providerData`| UserInfo[] | _readonly_
+
+#### Methods
+
+| Method | Returns | Description
+|----------|------|-------------
+| `delete()` | `Promise<void>` |
+| `getIdToken(forceRefresh?: undefined | false | true)` | `Promise<string>` |
+| `getIdTokenResult(forceRefresh?: undefined | false | true)` | Promise<AuthTokenResult> |
+| `linkWithCredential(credential: AuthCredential)` | Promise<UserCredential> |
+| `reauthenticateWithProvider(provider: OAuthProvider)` | Promise<UserCredential> |
+| `reauthenticateWithCredential(credential: AuthCredential)` | Promise<UserCredential> |
+| `reload()` | `Promise<void>` |
+| `sendEmailVerification(actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
+| `unlink(providerId: string)` | Promise<User> |
+`updateEmail(email: string)` | `Promise<void>` |
+| `updatePassword(password: string)` | ` Promise<void>` |
+| `updatePhoneNumber(credential: AuthCredential)` | `Promise<void>` |
+| `updateProfile(updates: UserProfileChangeRequest)` | `Promise<void>` |
+| `verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
 
 ## License
 
