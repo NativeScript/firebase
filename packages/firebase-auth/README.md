@@ -350,7 +350,7 @@ If providing a test phone number to either the `verifyPhoneNumber` or `signInWit
 | `sendSignInLinkToEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
 | `signInAnonymously()` | Promise<[UserCredential](#usercredential)> |
 | `signInWithProvider(provider: OAuthProvider)` | Promise<[UserCredential](#usercredential)> |
-| `getProviderCredential(provider: OAuthProvider)` | Promise<[OAuthCredential]()> |
+| `getProviderCredential(provider: OAuthProvider)` | Promise<[OAuthCredential](#oauthcredential)> |
 | `signInWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> |
 | `signInWithCustomToken(customToken: string)` | Promise<[UserCredential]()> |
 | `signInWithEmailAndPassword(email: string, password: string)` | Promise<[UserCredential](#usercredential)> |
@@ -424,7 +424,7 @@ The user object has the following members.
 | `accessToken` | `string` | _readonly_
 | `secret` | `string` | _readonly_
 
-### OAuthCredential
+#### OAuthCredential
 | Property | Type | Description
 |----------|------|-------------
 | `ios` | |_readonly_
