@@ -21,7 +21,8 @@ iOS prevents messages containing notification (or 'alert') payloads from being d
 This module provides a requestPermission method which triggers a native permission dialog requesting the user's permission:
 
 ```ts
-import { firebase, AuthorizationStatus } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript/firebase-core';
+import { AuthorizationStatus } from "@nativescript/firebase-messaging";
 import '@nativescript/firebase-messaging'; // only needs to be imported 1x
 
 async function requestUserPermission() {
@@ -103,11 +104,16 @@ For example, the Alert API could be used to display a new Alert each time a mess
 ```ts
 import { alert } from '@nativescript/core';
 import { firebase } from '@nativescript/firebase-core';
+import { MessagingCore } from '@nativescript/firebase-messaging-core';
 
 firebase()
 	.messaging()
 	.onMessage(async (remoteMessage) => {
-		alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+		if(MessagingCore.inForeground){
+			alert('A new FCM message arrived with application inForeground!', JSON.stringify(remoteMessage));
+		}else{
+			alert('A new FCM message arrived! with application in background!', JSON.stringify(remoteMessage));
+		}
 	});
 ```
 
