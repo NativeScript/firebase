@@ -6,19 +6,19 @@
 	*  [Import the plugin](#import-the-plugin)
 	*  [Create a database instance](#create-a-database-instance)
 	*  [Get or create a reference](#get-or-create-a-reference)
-	*  [Reading data](#Reading-data)
-	*  [One-time read](#One-timeread)
-	*  [Listen to real-time changes in a reference](#Listentoreal-timechangesinareference)
-	*  [Remove the real-time changes event listener](#Remove-the-real-time-changes-event-listener)
-	*  [Additional events](#Additional-events)
+	*  [Read a reference data](#read-a-reference-data)
+	*  [One-time read](#One-time-read)
+	*  [Listen to real-time changes in a reference](#listen-to-real-time-changes-in-a-reference)
+	*  [Listen to events of a reference child](#listen-to-events-of-a-references-child)
+	*  [Remove a reference event listener](#Remove-a-reference-event-listener)
 	*  [Data querying](#Data-querying)
-	*  [Ordering data](#Ordering-data)
-	*  [Limit the number of results](#Limit-the-number-of-results)
+		*  [Ordering data](#Ordering-data)
+		*  [Limit the number of results](#Limit-the-number-of-results)
 	*  [Writing data](#Writing-data)
 		*  [Setting data](#Setting-data)
 		*  [Updating data](#Updating-data)
-	*  [Pushing data](#Pushing-data)
-		*  [Removing data](#Removing-data)
+	*  [Generate a new child reference](#generate-a-new-child-reference)
+	*  [Remove data from a reference](#remove-data-from-a-reference)
 	*  [Save data as transactions](#Save-data-as-transactions)
 *  [API](#API)
 	*  [Database class](#Database-class)
@@ -89,7 +89,6 @@ const secondaryApp = firebase.initializeApp(config, 'SECONDARY_APP');
 const database = firebase().database(secondaryApp);
 ```
 
-
 ### Get or create a reference
 
 A core concept to understanding Realtime Database is references - a reference to a specific node within your database. A node can be a specific property or sub-nodes.
@@ -102,13 +101,11 @@ import { firebase } from '@nativescript/firebase-core';
 const reference = firebase().database().ref('/users/123');
 ```
 
-### Reading data
+### Read a reference data
 
-The Realtime Data provides the ability to read the value of a reference as a one-time read or read real-time changes to the node. When a value is read from the database, `ref` returns a [DataSnapshot](#datasnapshot-class).
+You can read a reference data in two ways: once or whenever there is a change in the reference or its children.
 
-The snapshot includes information such as whether the reference node exists, the reference's value or any children the node has, and more.
-
-### One-time read
+#### One-time read
 
 To read the value once, call the `once` method on a reference passing it the `value` event name:
 
@@ -122,9 +119,9 @@ firebase()
 	.then((snapshot) => {
 		console.log('User data: ', snapshot.val());
 	});
-```
+``` 
 
-### Listen to real-time changes in a reference 
+#### Listen to real-time changes in a reference 
 
 To set up an active listener to react to any changes to the node and its children, call the `on` method passing it the `value` event as the first parameter and the event handler as the second paramater:
 
@@ -141,27 +138,15 @@ firebase()
 
 The event handler will be called straight away with the snapshot data, and further called when any changes to the node occur.
 
-### Remove the real-time changes event listener
+### Listen to events of a reference's child
 
- To unsubscribe from the `value` event, call the `off` method with the function that the `on` method returned. This can be used within any useEffect hooks to automatically unsubscribe when the hook needs to unsubscribe itself:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-const onValueChange = firebase()
-	.database()
-	.ref(`/users/${userId}`)
-	.on('value', (snapshot) => {
-		console.log('User data: ', snapshot.val());
-	});
-
-// Stop listening for updates when no longer required
-firebase().database().ref(`/users/${userId}`).off('value', onValueChange);
-```
-
-### Additional events
-
-The above example demonstrates how to subscribe to events whenever a value within the node changes. In some cases, you may need to only subscribe to events whenever a child node is added/changed/moved/removed. This can be achieved by passing any of [EventType](#eventtype) values to the `on` method.
+To listen any of the following events of a reference's child, call the `on` method on the reference passing it the event name as the first argument and the event handler as the second argument.
+pass the event name to the `on` method as first argument and, as a second argument, pass 
+The above example demonstrates how to subscribe to events whenever a value within the node changes. In some cases, you may need to only subscribe to events whenever a child node is 
+- `child_added`
+- `child_changed`
+- `child_removed`
+_ `child_moved`
 
 If you are listening to a node with many children, only listening to data you care about helps reduce network bandwidth and speeds up your application.
 
@@ -178,14 +163,31 @@ const onChildAdd = firebase()
 // Stop listening for updates when no longer required
 firebase().database().ref('/users').off('child_added', onChildAdd);
 ```
+### Remove a reference event listener
+
+ To unsubscribe from an event, call the `off` method on the reference passing it the event name and the function that the `on` method returned. This can be used within any useEffect hooks to automatically unsubscribe when the hook needs to unsubscribe itself.
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+const onValueChange = firebase()
+	.database()
+	.ref(`/users/${userId}`)
+	.on('value', (snapshot) => {
+		console.log('User data: ', snapshot.val());
+	});
+
+// Stop listening for updates when no longer required
+firebase().database().ref(`/users/${userId}`).off('value', onValueChange);
+```
 
 ### Data querying
 
 Realtime Database provides support for basic querying of your data. When a reference node contains children, you can both order & limit the returned results.
 
-If your application requires more advanced query capabilities, it is recommended you use Cloud Firestore.
+If your application requires more advanced query capabilities, it is recommended you use Cloud Firestore. For available query API, see the [Query class](#query-class).
 
-### Ordering data
+#### Ordering data
 
 By default, results are ordered based on the node keys. However, if you are using custom keys you can order your data by calling one of the `orderBy*` methods a [Query](#query-class) instance.
 
@@ -213,7 +215,7 @@ scores.forEach((snapShot)=>{
 	// do someting
 })
 ```
-### Limit the number of results
+#### Limit the number of results
 
 You can limit the number of results returned from a query by using one of the `limitTo*` methods. For example, to limit to the first 10 results, you call the `limitToFirst(10)` on the reference:
 
@@ -235,11 +237,11 @@ await firebase().database().ref('users').orderByChild('age').startAt(21).once('v
 
 ### Writing data
 
-Use the `set` or `update` method to write data to the database.
+You write data to a reference using either the `set` or `update` method.
 
 #### Setting data
 
-The `set` method on a Reference overwrites all of the existing data at that reference node. The value can be anything; a string, number, object etc:
+Calling the `set` method on a Reference overwrites all of the existing data at that reference node. The value can be anything; a string, number, object etc:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -258,7 +260,7 @@ If you set the value to `null`, Firebase will automatically class the node as re
 
 #### Updating data
 
-Rather than overwriting all existing data, the update method provides the ability to update any existing data on the reference node. Firebase will automatically merge the data depending on what currently exists.
+Rather than overwriting all existing data, the `update` method updates any existing data on the reference node. Firebase automatically merges the data depending on what currently exists.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -272,11 +274,10 @@ firebase()
 	.then(() => console.log('Data updated.'));
 ```
 
-### Pushing data
+### Generate a new child reference
 
-The example above only demonstrated working with known reference node keys (e.g. `/users/123`). In some cases, you may not have a suitable id or may want Firebase to automatically create a node with a generated key. The `push` method returns a ThenableReference, allowing you to observe a node before it is sent to a remote Firebase database.
-
-The `push` method automatically generates a new key if one is not provided:
+To generate a new child reference for a reference, call the `push` on the reference optionally passing the value to store.
+The `push` method automatically generates a new key. To store a value in the child reference, call the `set` method passing the value to store.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -294,9 +295,9 @@ newReference
 
 The keys generated are ordered to the current time, so the list of items returned from Firebase will be chronologically sorted by default.
 
-#### Removing data
+#### Remove data from a reference
 
-To remove data, you can call the `remove` method on a reference:
+To remove data from a reference, call the `remove` method on the reference:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
