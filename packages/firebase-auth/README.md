@@ -335,30 +335,29 @@ If providing a test phone number to either the `verifyPhoneNumber` or `signInWit
 #### Methods
 | Method | Returns | Description
 |----------|------|-------------
-| `useEmulator(host: string, port: number)` | `void` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#useemulator).
-| `applyActionCode(code: string)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#applyactioncode).
-| `checkActionCode(code: string)` | Promise<[ActionCodeInfo]()> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#checkactioncode).
-| `confirmPasswordReset(code: string, newPassword: string)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#confirmpasswordreset).
-| `createUserWithEmailAndPassword(email: string, password: string)` | Promise<[UserCredential](#usercredential)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#createuserwithemailandpassword).
-| `fetchSignInMethodsForEmail(email: string)` | `Promise<string[]>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#fetchsigninmethodsforemail).
-| `isSignInWithEmailLink(emailLink: string)` | `boolean` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#issigninwithemaillink).
-| `addAuthStateChangeListener(listener: (user: User) => void)` | `void` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#onauthstatechanged).
+| `useEmulator(host: string, port: number)` | `void` | For the description, see [useEmulator](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#useemulator) on the Firebase documentation.
+| `applyActionCode(code: string)` | `Promise<void>` | For the description, see [applyActionCode](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#applyactioncode) on the Firebase documentation.
+| `checkActionCode(code: string)` | Promise<[ActionCodeInfo]()> | For the description, see [checkActionCode](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#checkactioncode) on the Firebase documentation.
+| `confirmPasswordReset(code: string, newPassword: string)` | `Promise<void>` | For the description, see [confirmPasswordReset](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#confirmpasswordreset) on the Firebase documentation.
+| `createUserWithEmailAndPassword(email: string, password: string)` | Promise<[UserCredential](#usercredential)> | For the description, see [createUserWithEmailAndPassword](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#createuserwithemailandpassword) on the Firebase documentation.
+| `fetchSignInMethodsForEmail(email: string)` | `Promise<string[]>` | For the description, see [fetchSignInMethodsForEmail](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#fetchsigninmethodsforemail) on the Firebase documentation.
+| `isSignInWithEmailLink(emailLink: string)` | `boolean` | For the description, see [isSignInWithEmailLink](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#issigninwithemaillink) on the Firebase documentation.
+| `addAuthStateChangeListener(listener: (user: User) => void)` | `void` | For the description, see [onAuthStateChanged](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#onauthstatechanged) on the Firebase documentation.
 | `removeAuthStateChangeListener(listener: (user: User) => void)` | `void` | 
-| `addIdTokenChangeListener(listener: (user: User) => void)` | `void` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#onidtokenchanged).
+| `addIdTokenChangeListener(listener: (user: User) => void)` | `void` | For the description, see [onIdTokenChanged](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#onidtokenchanged) on the Firebase documentation.
 | `removeIdTokenChangListener(listener: (user: User) => void)` | `void` | 
-| `sendPasswordResetEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#sendpasswordresetemail).
-| `sendSignInLinkToEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#sendsigninlinktoemail).
-| `signInAnonymously()` | Promise<[UserCredential](#usercredential)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinanonymously).
+| `sendPasswordResetEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` | For the description, see [sendPasswordResetEmail](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#sendpasswordresetemail) on the Firebase documentation.
+| `sendSignInLinkToEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` | For the description, see [sendSignInLinkToEmail(](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#sendsigninlinktoemail) on the Firebase documentation.
+| `signInAnonymously()` | Promise<[UserCredential](#usercredential)> | For the description, see [signInAnonymously](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinanonymously) on the Firebase documentation.
 | `signInWithProvider(provider: OAuthProvider)` | Promise<[UserCredential](#usercredential)> | 
 | `getProviderCredential(provider: OAuthProvider)` | Promise<[OAuthCredential](#oauthcredential)> |
-| `signInWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithcredential).
-| `signInWithCustomToken(customToken: string)` | Promise<[UserCredential](#usercredential)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithcustomtoken).
-| `signInWithEmailAndPassword(email: string, password: string)` | Promise<[UserCredential](#usercredential)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithemailandpassword).
-| `signInWithEmailLink(email: string, emailLink: string)` | Promise<[UserCredential](#usercredential)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithemaillink).
+| `signInWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> | For the description, see [signInWithCredential](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithcredential)  on the Firebase documentation.
+| `signInWithCustomToken(customToken: string)` | Promise<[UserCredential](#usercredential)> | For the description, see [signInWithCustomToken](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithcustomtoken) on the Firebase documentation.
+| `signInWithEmailAndPassword(email: string, password: string)` | Promise<[UserCredential](#usercredential)> | For the description, see [signInWithEmailAndPassword](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithemailandpassword) on the Firebase documentation.
+| `signInWithEmailLink(email: string, emailLink: string)` | Promise<[UserCredential](#usercredential)> | For the description, see [signInWithEmailLink](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#signinwithemaillink) on the Firebase documentation.
 | `signOut()` | `boolean` | Signs the user out.
 | `useUserAccessGroup(userAccessGroup: string)` | `Promise<void>` |
-| `verifyPasswordResetCode(code: string)` | `Promise<string>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#overifypasswordreset).
-
+| `verifyPasswordResetCode(code: string)` | `Promise<string>` | For the description, see [verifyPasswordResetCode](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#overifypasswordreset) on the Firebase documentation.
 
 ### User
 The user object has the following members.
@@ -382,20 +381,20 @@ The user object has the following members.
 
 | Method | Returns | Description
 |----------|------|-------------
-| `delete()` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#delete). 
-| `getIdToken(forceRefresh?: undefined \| false \| true)` | `Promise<string>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#getidtoken). 
+| `delete()` | `Promise<void>` | For the description, see [delete](https://firebase.google.com/docs/reference/js/v8/firebase.User#delete)  on the Firebase documentation.
+| `getIdToken(forceRefresh?: undefined \| false \| true)` | `Promise<string>` | For the description, see [getIdToken](https://firebase.google.com/docs/reference/js/v8/firebase.User#getidtoken) on the Firebase documentation.
 | `getIdTokenResult(forceRefresh?: undefined \| false \| true)` | Promise<[AuthTokenResult]()> |  
-| `linkWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#linkwithcredential).
+| `linkWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> | For the description, see [linkWithCredential](https://firebase.google.com/docs/reference/js/v8/firebase.User#linkwithcredential) on the Firebase documentation.
 | `reauthenticateWithProvider(provider: OAuthProvider)` | Promise<[UserCredential](#usercredential)> | 
-| `reauthenticateWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#reauthenticatewithcredintial).
-| `reload()` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#reload).
-| `sendEmailVerification(actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#sendemailverification).
-| `unlink(providerId: string)` | Promise<[User](#user)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#unlink).
-`updateEmail(email: string)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#updateemail).
-| `updatePassword(password: string)` | ` Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#gupdatepassword).
-| `updatePhoneNumber(credential: AuthCredential)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#updatephonenumber).
-| `updateProfile(updates: UserProfileChangeRequest)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#updateprofile).
-| `verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.User#verifybeforeupdateemail).
+| `reauthenticateWithCredential(credential: AuthCredential)` | Promise<[UserCredential](#usercredential)> | For the description, see [reauthenticateWithCredential](https://firebase.google.com/docs/reference/js/v8/firebase.User#reauthenticatewithcredintial) on the Firebase documentation.
+| `reload()` | `Promise<void>` | For the description, see [reload](https://firebase.google.com/docs/reference/js/v8/firebase.User#reload) on the Firebase documentation.
+| `sendEmailVerification(actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` | For the description, see [sendEmailVerification](https://firebase.google.com/docs/reference/js/v8/firebase.User#sendemailverification) on the Firebase documentation.
+| `unlink(providerId: string)` | Promise<[User](#user)> | For the description, see [unlink](https://firebase.google.com/docs/reference/js/v8/firebase.User#unlink) on the Firebase documentation.
+`updateEmail(email: string)` | `Promise<void>` | For the description, see [updateEmail](https://firebase.google.com/docs/reference/js/v8/firebase.User#updateemail) on the Firebase documentation.
+| `updatePassword(password: string)` | ` Promise<void>` | For the description, see [updatePassword](https://firebase.google.com/docs/reference/js/v8/firebase.User#updatepassword) on the Firebase documentation.
+| `updatePhoneNumber(credential: AuthCredential)` | `Promise<void>` | For the description, see [updatePhoneNumber](https://firebase.google.com/docs/reference/js/v8/firebase.User#updatephonenumber) on the Firebase documentation.
+| `updateProfile(updates: UserProfileChangeRequest)` | `Promise<void>` | For the description, see [updateProfile](https://firebase.google.com/docs/reference/js/v8/firebase.User#updateprofile) on the Firebase documentation.
+| `verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` | For the description, see [verifyBeforeUpdateEmail](https://firebase.google.com/docs/reference/js/v8/firebase.User#verifybeforeupdateemail) on the Firebase documentation.
 
 ### UserCredential
 
