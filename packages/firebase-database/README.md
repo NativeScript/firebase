@@ -24,7 +24,7 @@
 	*  [Database class](#Database-class)
 		*  [Properties](#Properties)
 		*  [Methods](#Methods)
-	*  [Reference](#Reference)
+	*  [Reference class](#Reference-class)
 		*  [Properties](#Properties-1)
 		*  [Methods](#Methods-1)
 		*   [OnDisconnect class](#OnDisconnect-class)
@@ -370,8 +370,9 @@ The database class has the following members.
 | `goOffline()` | `void`| For the description, see [goOffline](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#gooffline) on Firebase documentation.
 | `goOnline()` | `void`| For the description, see [goOnline](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#goonline) on Firebase documentation.
 
-### Reference
+### Reference class
 
+The Reference class has the following properties:
 #### Properties
 
 | Property | Type | Description
@@ -383,7 +384,11 @@ The database class has the following members.
 | `ref` | `Reference`| _readonly_. For the description, see [ref](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#ref) on Firebase documentation.
 | `root` | `Reference`| _readonly_. For the description, see [root](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#root) on Firebase documentation.
 
+
 #### Methods
+
+The Reference class has the following methods:
+
 | Method | Returns 
 |----------|------
 | `child(path: string)` | `Reference` | For the description, see [child](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#child) on Firebase documentation.
