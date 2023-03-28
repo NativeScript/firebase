@@ -363,12 +363,12 @@ The database class has the following members.
 | Method | Returns | Description
 |----------|------|------------
 | `constructor(app?: FirebaseApp)` | `void` | Creates a Firebase Realtime Database instance. 
-| `useEmulator(host: string, port: number)`| `void` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#useemulator).
-| `refFromURL(url: string)`| [Reference](#reference) | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#reffromurl).
+| `useEmulator(host: string, port: number)`| `void` | For the description, see [useEmulator](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#useemulator) on Firebase documentation.
+| `refFromURL(url: string)`| [Reference](#reference) | For the description, see [refFromURL](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#reffromurl) on Firebase documentation.
 | `setLoggingEnabled(enabled: boolean)`| `void` | 
-| `ref(path?: string)` | [Reference](#reference) | Returns a [Reference]() instance
-| `goOffline()` | `void`| Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#gooffline)
-| `goOnline()` | `void`| Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#goonline)
+| `ref(path?: string)` | [Reference](#reference) | Returns a [Reference](#reference) instance.
+| `goOffline()` | `void`| For the description, see [goOffline](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#gooffline) on Firebase documentation.
+| `goOnline()` | `void`| For the description, see [goOnline](https://firebase.google.com/docs/reference/js/v8/firebase.database.Database#goonline) on Firebase documentation.
 
 ### Reference
 
@@ -378,23 +378,23 @@ The database class has the following members.
 |----------|------|------------
 | `android` | [com.google.firebase.database.Reference](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference)| A _readonly_ native Android instance the Reference class.
 | `ios` | [FIRDatabaseReference](https://firebase.google.com/docs/reference/ios/firebasedatabase/api/reference/Classes/FIRDatabaseReference)| A _readonly_ native iOS instance the Reference class.
-| `key` | `string`| _readonly_. Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#key).
-| `parent` | `Reference`| _readonly_. Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#parent).
-| `ref` | `Reference`| _readonly_. Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#ref).
-| `root` | `Reference`| _readonly_. Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#root).
+| `key` | `string`| _readonly_. For the description, see [key](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#key) on Firebase documentation.
+| `parent` | `Reference`| _readonly_. For the description, see [parent](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#parent) on Firebase documentation.
+| `ref` | `Reference`| _readonly_. For the description, see [ref](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#ref) on Firebase documentation.
+| `root` | `Reference`| _readonly_. For the description, see [root](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#root) on Firebase documentation.
 
 #### Methods
 | Method | Returns 
 |----------|------
-| `child(path: string)` | `Reference` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#child).
-| `onDisconnect()` | [OnDisconnect](#ondisconnect-class) | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#ondisconnect).
-| `push(value?: any, onComplete?: () => void)` | `IThenableReference`  | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#push).
-| `remove(onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#remove).
-| `set(value: any, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#set).
-| `setPriority(priority: string | number, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#setpriority).
-| `setWithPriority(newVal: any, newPriority: string | number, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#setwithpriority).
-| `transaction(transactionUpdate: (currentData: object) => object, onComplete?: (error: FirebaseError, committed: boolean, finalResult: any) => void, applyLocally: boolean = true)` | Promise<[TransactionResult](#transactionresult)> | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#transaction).
-| `update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#update).
+| `child(path: string)` | `Reference` | For the description, see [child](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#child) on Firebase documentation.
+| `onDisconnect()` | [OnDisconnect](#ondisconnect-class) | For the description, see [onDisconnect](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#ondisconnect) on Firebase documentation.
+| `push(value?: any, onComplete?: () => void)` | `IThenableReference`  | For the description, see [push](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#push) on Firebase documentation.
+| `remove(onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [remove](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#remove) on Firebase documentation.
+| `set(value: any, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [set](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#set) on Firebase documentation.
+| `setPriority(priority: string | number, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [setPriority](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#setpriority) on Firebase documentation.
+| `setWithPriority(newVal: any, newPriority: string | number, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [setWithPriority](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#setwithpriority) on Firebase documentation.
+| `transaction(transactionUpdate: (currentData: object) => object, onComplete?: (error: FirebaseError, committed: boolean, finalResult: any) => void, applyLocally: boolean = true)` | Promise<[TransactionResult](#transactionresult)> | For the description, see [transaction](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#transaction) on Firebase documentation.
+| `update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [update](https://firebase.google.com/docs/reference/js/v8/firebase.database.Reference#update) on Firebase documentation.
 
 #### OnDisconnect class
 
@@ -409,11 +409,11 @@ The database class has the following members.
 
 | Method | Returns | Description
 |----------|------|------------
-| `cancel(onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#cancel).
-| `remove(onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#remove).
-| `set(value: any, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#set).
-| `setWithPriority(value: any, priority: string | number, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#setwithpriority).
-| `update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#update).
+| `cancel(onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [cancel](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#cancel) on Firebase documentation.
+| `remove(onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [remove](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#remove) on Firebase documentation.
+| `set(value: any, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [set](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#set) on Firebase documentation.
+| `setWithPriority(value: any, priority: string | number, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [setWithPriority](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#setwithpriority) on Firebase documentation.
+| `update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void)` | `Promise<void>` | For the description, see [update](https://firebase.google.com/docs/reference/js/v8/firebase.database.OnDisconnect#update) on Firebase documentation.
 
 ### Query class
 
@@ -427,19 +427,19 @@ The database class has the following members.
 #### Methods
 | Method | Returns | Description
 |----------|------|------------
-| `endAt(value: string | number | boolean, key?: string)` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#endat).
-| `equalTo(value: string | number | boolean, key?: string)` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#equalto).
+| `endAt(value: string | number | boolean, key?: string)` | `Query` | For the description, see [endAt](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#endat) on Firebase documentation.
+| `equalTo(value: string | number | boolean, key?: string)` | `Query` | For the description, see [equalTo](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#equalto) on Firebase documentation.
 | `keepSynced(bool: boolean)` |
-| `limitToFirst(limit: number)` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#limittofirst).
-| `limitToLast(limit: number)` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#limittolast).
+| `limitToFirst(limit: number)` | `Query` | For the description, see [limitToFirst](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#limittofirst) on Firebase documentation.
+| `limitToLast(limit: number)` | `Query` | For the description, see [limitToLast](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#limittolast) on Firebase documentation.
 | `off(eventType?: EventType, callback?: (a: DataSnapshot, b: string) => void, context?: Record<string, any>)` | `void` |
 | `on(eventType: EventType, callback: (data: DataSnapshot, previousChildKey: string) => void, cancelCallbackOrContext?: (a: FirebaseError) => void | Record<string, any>, context?: Record<string, any>)` | `(a: DataSnapshot, b: string) => void` |
 | `once(eventType: EventType, successCallback?: (a: DataSnapshot, b: string) => any, failureCallbackContext?: (a: FirebaseError) => void | Record<string, any>): Promise<DataSnapshot>` |
-| `orderByChild(path: string)` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#orderbychild).
-| `orderByKey()` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#orderbykey).
-| `orderByPriority()` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#orderbykey).
-| `orderByValue()` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#orderbyvalue).
-| `startAt(value: string | number | boolean, key?: string)` | `Query` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#startat).
+| `orderByChild(path: string)` | `Query` | For the description, see [orderByChild](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#orderbychild) on Firebase documentation.
+| `orderByKey()` | `Query` | For the description, see [orderByKey](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#orderbykey) on Firebase documentation.
+| `orderByPriority()` | `Query` | For the description, see [orderByPriority](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#orderbykey) on Firebase documentation.
+| `orderByValue()` | `Query` | For the description, see [orderByValue](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#orderbyvalue) on Firebase documentation.
+| `startAt(value: string | number | boolean, key?: string)` | `Query` | For the description, see [startAt](https://firebase.google.com/docs/reference/js/v8/firebase.database.Query#startat) on Firebase documentation.
 
 ### DataSnapShot class
 
@@ -455,15 +455,15 @@ The database class has the following members.
 #### Methods
 | Method | Returns | Description
 |----------|------|------------
-| `child(path: string)` | `DataSnapshot` | 
-| `exists()` | `boolean` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#child).
-| `exportVal()` | `void` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#exportVal).
-| `forEach(action: (child: DataSnapshot) => true)` | `boolean` | Find the descriptin [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#foreach)
-| `getPriority()` | `string \| number` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#getpriority).
-| `hasChild(path: string)` | `boolean` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#haschild).
-| `hasChildren()` | ` boolean` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#haschildren).
-| `numChildren()` | ` number` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#numchildre).
-| `val()` | `void` | Find the description [here](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#val).
+| `child(path: string)` | `DataSnapshot` | For the description, see [child](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#child).
+| `exists()` | `boolean` | For the description, see [exists](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#exists) on Firebase documentation.
+| `exportVal()` | `void` | For the description, see [exportVal](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#exportVal) on Firebase documentation.
+| `forEach(action: (child: DataSnapshot) => true)` | `boolean` | Find the descriptin [forEach](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#foreach)
+| `getPriority()` | `string \| number` | For the description, see [getPriority](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#getpriority) on Firebase documentation.
+| `hasChild(path: string)` | `boolean` | For the description, see [hasChild](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#haschild) on Firebase documentation.
+| `hasChildren()` | ` boolean` | For the description, see [hasChildren](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#haschildren) on Firebase documentation.
+| `numChildren()` | ` number` | For the description, see [numChildren](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#numchildren) on Firebase documentation.
+| `val()` | `void` | For the description, see [val](https://firebase.google.com/docs/reference/js/v8/firebase.database.DataSnapshot#val) on Firebase documentation.
 
 ### EventType
 The EventType consists can be any of the following event names:
