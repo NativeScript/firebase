@@ -1,22 +1,25 @@
 # @nativescript/firebase-dynamic-links
 
+## Intro 
+
+A plugin that allows you to create [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) for your app.
+
+[![image](https://img.youtube.com/vi/LvY1JMcrPF8/hqdefault.jpg)](https://www.youtube.com/watch?v=LvY1JMcrPF8)
+
+
+## Installation
+
+Install the plugin by running the following command in the root directory of your project.
+
 ```cli
 npm install @nativescript/firebase-dynamic-links
 ```
 
-## What does it do
+## Use @nativescript/firebase-dynamic-links
 
-Dynamic Links are links that work the way you want, on either iOS or Android and whether or not your app is already installed.
+### Create a dynamic link
 
-[![image](https://img.youtube.com/vi/LvY1JMcrPF8/hqdefault.jpg)](https://www.youtube.com/watch?v=LvY1JMcrPF8)
-
-With Dynamic Links, your users get the best available experience for the platform they open your link on. If a user opens a Dynamic Link on iOS or Android, they can be taken directly to the linked content in your app.
-
-## Usage
-
-### Create a Link
-
-You can create dynamic links via the Firebase console, your app or even your custom API. Please refer to Firebase create dynamic link documentation for further details. Below, we will show how to build links as part of your application code:
+You can create a dynamic link via the Firebase console, your app or even your custom API. The following is an example of how to use the plugin to create dynamic links for your application code:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -39,6 +42,184 @@ async function buildLink() {
 	return link;
 }
 ```
+
+## API
+### DynamicLinks class
+
+#### ios
+```ts
+dynamicLinks = firebase().dynamicLinks()
+dynamicLinksIOS = firebase().dynamicLinks().ios
+```
+A `readonly` property that returns the iOS version of the `DynamicLinks` class.
+
+---
+#### android
+```ts
+dynamicLinks = firebase().dynamicLinks()
+dynamicLinksAndroid = firebase().dynamicLinks().android
+```
+A `readonly` property that returns the Android version of the `DynamicLinks` class.
+
+---
+#### app
+```ts
+dynamicLinks = firebase().dynamicLinks()
+dynamicLinksApp: FirebaseApp = firebase().dynamicLinks().app
+```
+A `readonly` property that returns the FirebaseApp instance through which the dynamic links are managed.
+
+---
+#### createLink()
+```ts
+dynamicLinks = firebase().dynamicLinks()
+
+dynamicLinksParameters: DynamicLinkParameters = dynamicLinks.createLink(link, domainUri)
+```
+ and returns a [DynamicLinkParameters]() object.
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `link` | `string` |
+| `domainUriPrefix` | `string` |
+
+#### createShortLink()
+```ts
+dynamicLinks = firebase().dynamicLinks()
+
+dynamicLinkParameters: DynamicLinkParameters = dynamicLinks.createLink(link, domainUri, shortLinkType)
+```
+ and returns a [DynamicLinkParameters]() object.
+ 
+| Parameter | Type | Description
+|-----------|------|------------
+| `link` | `string` |
+| `domainUriPrefix` | `string` |
+| `shortLinkType` | [ShortLinkType]() | _Optional_
+
+#### buildLink()
+```ts
+dynamicLinks = firebase().dynamicLinks()
+
+link: string = dynamicLinks.buildLink(link)
+```
+ and returns a link `string`.
+ 
+| Parameter | Type | Description
+|-----------|------|------------
+| `link` | [DynamicLinkParameters]() |
+
+#### onLink()
+```ts
+dynamicLinks: DynamicLinks = firebase().dynamicLinks()
+listener = (link: DynamicLink | null, error: FirebaseError | null) =>{
+	// handle the link event
+}
+dynamicLinks.onLink(listener)
+```
+
+| Parameter | Type | Description
+|-----------|-----|------------
+| `listener` | [OnLinkListener]() | 
+
+---
+#### resolveLink()
+```ts
+dynamicLinks: DynamicLinks = firebase().dynamicLinks()
+
+dynamicLinks.resolveLink(link).then((dynamicLink: DynamicLink)=>{
+
+})
+```
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `link` | `string` |
+
+---
+
+### DynamicLinkAnalyticsParameters class
+
+#### ios
+```ts
+ios = dynamicLinkAnalyticsParameters.ios
+```
+
+--
+#### android
+```ts
+android = dynamicLinkAnalyticsParameters.android
+```
+
+---
+#### campaign
+```ts
+campaign: undefined | string = dynamicLinkAnalyticsParameters.campign
+```
+
+---
+#### content
+```ts
+content: undefined | string = dynamicLinkAnalyticsParameters.content
+// or
+```
+
+---
+#### source
+```ts
+source: undefined | string = dynamicLinkAnalyticsParameters.source
+```
+
+---
+#### term
+```ts
+term: undefined | string = dynamicLinkAnalyticsParameters.term
+```
+
+### DynamicLinkParameters
+#### analytics
+```ts
+dynamicAnalytics: DynamicLinkAnalyticsParameters = dynamicLinkParameters.analytics
+```
+
+---
+#### android
+```ts
+dynamicLinkParametersAndroid: DynamicLinkAnalyticsParameters = dynamicLinkParameters.android
+```
+
+---
+#### ios
+```ts
+dynamicLinkParametersIOS: DynamicLinkAnalyticsParameters = dynamicLinkParameters.ios
+```
+
+---
+#### domainUriPrefix
+```ts
+dynamicDomainUriPrefix: string = dynamicLinkParameters.domainUriPrefix
+```
+
+---
+#### itunes
+```ts
+dynamicLinkITunesParameters: DynamicLinkITunesParameters = dynamicLinkParameters.itunes
+```
+
+---
+#### navigation
+```ts
+dynamicLinkNavigationParameters: DynamicLinkNavigationParameters = dynamicLinkParameters.navigation
+```
+
+---
+#### social
+```ts
+dynamicLinkSocialParameters: DynamicLinkSocialParameters = dynamicLinkParameters.social
+```
+
+---
+
 
 ## License
 
