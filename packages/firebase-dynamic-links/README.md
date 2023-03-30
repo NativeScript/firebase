@@ -291,6 +291,40 @@ dynamicLinkSocialParameters: DynamicLinkSocialParameters = dynamicLinkParameters
 
 ---
 
+### DynamicLink object
+
+#### ios
+```ts
+linkIOS: FIRDynamicLink = link.ios
+```
+
+---
+#### android
+```ts
+linkAndroid: com.google.firebase.dynamiclinks.PendingDynamicLinkData  = link.android
+```
+
+---
+#### minimumAppVersion
+```ts
+minimumAppVersion: string = link.minimumAppVersion
+```
+For the description of this property, see the description of [getMinimumAppVersion()](https://firebase.google.com/docs/reference/android/com/google/firebase/dynamiclinks/PendingDynamicLinkData#getMinimumAppVersion()) on the PendingDynamicLinkData class documentation.
+
+---
+#### url
+```ts
+url: string = link.url
+```
+For the description of this property, see the description of [getUrl()](https://firebase.google.com/docs/reference/android/com/google/firebase/dynamiclinks/PendingDynamicLinkData#getLink()) on the PendingDynamicLinkData class documentation.
+
+---
+#### utmParameters
+```ts
+utmParameters: Record<string, string> = link.utmParameters
+```
+
+For the description of this property, see the description of [getUtmParameters()](https://firebase.google.com/docs/reference/android/com/google/firebase/dynamiclinks/PendingDynamicLinkData#getUtmParameters()) on the PendingDynamicLinkData class documentation.
 
 ## License
 
