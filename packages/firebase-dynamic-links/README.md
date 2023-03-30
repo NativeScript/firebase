@@ -2,13 +2,13 @@
 
 ## Intro 
 
-A plugin that allows you to add and handle [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) for your app.
+This plugin allows you to add the Dynamic Links SDK, create dynamic links and handle [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) for your app.
 
 [![image](https://img.youtube.com/vi/LvY1JMcrPF8/hqdefault.jpg)](https://www.youtube.com/watch?v=LvY1JMcrPF8)
 
-## Create dynamic links for your app
-### Set up Firebase and the Dynamic Links SDK
+## Set up Firebase and the Dynamic Links SDK
 - To set up and initialize Firebase for your app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+
 - Install the `@nativescript/firebase-dynamic-links` to add the Dynamic Links SDK
 
 Install the plugin by running the following command in the root directory of your project.
@@ -19,32 +19,24 @@ npm install @nativescript/firebase-dynamic-links
 
 - To add the Dynamic Links SDK, import the `@nativescript/firebase-dynamic-links` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrap file( `app.ts`, `main.ts`, etc).
 
->**Tip** For an optimal experience with Dynamic Links, the Firebase Dynamic Links documentation recommends you to enable Google Analytics by adding the Firebase SDK for Google Analytics to your app. For instructions on how to add and use Firebase SDK for Google Analytics in your NativeScript app, see the [@nativescript/firebase-analytics](../firebase-analytics) plugin documentation.
+>**Tip** For an optimal experience with Dynamic Links, the Firebase Dynamic Links documentation recommends you to enable Google Analytics by adding the Firebase SDK for Google Analytics to your app. To add and use Firebase SDK for Google Analytics in your NativeScript app, see the [@nativescript/firebase-analytics](../firebase-analytics) plugin documentation.
 
 - Add a URL prefix for your Dynamic Links with the following steps:
 	- Go to the Firebase Console
 	- Click on `Dynamic Link`
 	- Click on `Get started` and fill in the form that follows to add your URL prefix.
 
-### Android: Add intent filters for deep links
-To receive a dynamic link with a deep link to your scheme, add an `intent-filter` to your app's `AndroidManifest.xml` file located at `app/App_Resources/src/main` as follows.
+- **Recommended:** Specify the URL patterns allowed in your deep links and fallback links. For more information, refer to [Allow specific URL patterns](https://support.google.com/firebase/answer/9021429).
 
-```xml
-<activity ...>
-	....
-<intent-filter>
-        		<action android:name="android.intent.action.VIEW" />
-        		<category android:name="android.intent.category.DEFAULT" />
-        		<category android:name="android.intent.category.BROWSABLE" />
-        		<data android:scheme="YOUR_SCHEME" />
-    		</intent-filter>
-</activity>
-```
-## Use @nativescript/firebase-dynamic-links
+### iOS: Confirm that your Firebase project is properly configured
 
-### Create a Dynamic Link from parameters
+For instructions to confirm that your Firebase project is properly configured to use Dynamic Links for iOS, see [configuration step 4](https://firebase.google.com/docs/dynamic-links/ios/create#set-up-firebase-and-the-dynamic-links-sdk).
 
-You can create a dynamic link via the Firebase console, your app or even your custom API. To create a dynamic link from parameters, call the [buildLink](#buildlink) method passing it a literal object of parameters or an instance of [DynamiclinkParameters](#dynamiclinkparameters) returned by the [createLink](#createlink) or [createShortLink](#createshortlink) method.
+## Use @nativescript/firebase-dynamic-links to create a dynamic link
+
+### Create a dynamic link from parameters
+
+You can create a dynamic link via the Firebase console, your app or even your custom API. To create a dynamic link from parameters with the plugin, call the [buildLink](#buildlink) method on the [DynamicLinks class](#dynamiclinks-class) passing it a literal object of parameters or an instance of [DynamiclinkParameters](#dynamiclinkparameters) returned by the [createLink](#createlink) or [createShortLink](#createshortlink) method.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -67,9 +59,9 @@ async function buildLink() {
 	return link;
 }
 ```
-### Create a dynamic link's parameters
+### Create the parameters of a dynamic link
 
-As mentioned in the [Create a Dynamic Link from parameters](#create-a-dynamic-link-from-parameters) section, you can create a dynamic link's parameters with the `createLink` or `createShortLink` method. The example below shows how to use the `createShortLink` method.
+As mentioned in the [Create a Dynamic Link from parameters](#create-a-dynamic-link-from-parameters) section above, you can create a dynamic link's parameters with the `createLink` or `createShortLink` method. The example below shows how to use the `createShortLink` method.
 ```ts
 const dynamicLinks = firebase().dynamicLinks()
 
@@ -81,6 +73,33 @@ link.social.imageUrl = 'https://art.nativescript.org/logo/export/NativeScript_Lo
 let dynamiLink = await dynamicLinks.buildLink(link)
 ```
 
+## Receive Dynamic Links
+
+### Android: Add intent filters for deep links
+To receive a dynamic link with a deep link to your scheme, add an `intent-filter` to your app's `AndroidManifest.xml` file located at `app/App_Resources/src/main` as follows.
+
+```xml
+<activity ...>
+	....
+<intent-filter>
+        		<action android:name="android.intent.action.VIEW" />
+        		<category android:name="android.intent.category.DEFAULT" />
+        		<category android:name="android.intent.category.BROWSABLE" />
+        		<data android:scheme="YOUR_SCHEME" />
+    		</intent-filter>
+</activity>
+```
+### Add a callback function to receive the links
+
+To receive the deep link that launches a screen of your app, call the [onLink](#onlink) method on an instance of the [DynamicLinks class](#dynamiclinks-class) with the function to be notified with the link.
+
+```ts
+const dynamicLinks = firebase().dynamicLinks();
+
+dynamicLinks.onLink((link: DynamicLink) => {
+	console.log('onLink', link);
+});
+```
 ## API
 ### DynamicLinks class
 
