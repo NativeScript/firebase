@@ -6,8 +6,6 @@ A plugin that allows you to add and handle [Firebase Dynamic Links](https://fire
 
 [![image](https://img.youtube.com/vi/LvY1JMcrPF8/hqdefault.jpg)](https://www.youtube.com/watch?v=LvY1JMcrPF8)
 
-> **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
-
 ## Create dynamic links for your app
 ### Set up Firebase and the Dynamic Links SDK
 - To set up and initialize Firebase for your app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
