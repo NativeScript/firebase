@@ -1,20 +1,33 @@
 # @nativescript/firebase-firestore
 
+## Intro
+This plugin allows you to add [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore) to your NativeScript app.
+
+[![image](https://img.youtube.com/vi/QcsAb2RR52c/hqdefault.jpg)](https://www.youtube.com/watch?v=QcsAb2RR52c)
+
+## Set up Firebase
+
+- To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+
+## Create your Firestore database
+
+To create your Firestore database, follow the instructions at [Create a Cloud Firestore database](https://firebase.google.com/docs/firestore/quickstart#create).
+
+## Add the Firestore SDK to your app
+
+To add the Cloud Firestore SDK to your app, install and import the `@nativescript/firebase-firestore` plugin.
+
+1. Install the plugin by running the following command in the root directory of your project.
+
 ```cli
 npm install @nativescript/firebase-firestore
 ```
 
-## What does it do?
+2. To add the Firestore SDK, import the `@nativescript/firebase-firestore` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrapping file( `app.ts`, `main.ts`, etc).
 
-Firestore is a flexible, scalable NoSQL cloud database to store and sync data. It keeps your data in sync across client apps through realtime listeners and offers offline support so you can build responsive apps that work regardless of network latency or Internet connectivity.
+## Initialize Cloud Firestore
 
-[![image](https://img.youtube.com/vi/QcsAb2RR52c/hqdefault.jpg)](https://www.youtube.com/watch?v=QcsAb2RR52c)
-
-## Usage
-
-Before using Firestore, you must first have ensured you have initialized Firebase.
-
-To create a new Firestore instance, call the firestore method on Firebase:
+To initialize your Firestore database, create its instance by calling the `firestore` method on the `FirebaseApp` instance returned by the `firebase` method imported from the [@nativescript/firebase-core](../firebase-core) plugin.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -22,7 +35,7 @@ import '@nativescript/firebase-firestore';
 const firestore = firebase().firestore();
 ```
 
-By default, this allows you to interact with Firestore using the default Firebase App used whilst installing Firebase on your platform. If however you'd like to use Firestore with a secondary Firebase App, pass the secondary app instance when calling the firestore method:
+By default, this allows you to interact with Firestore using the default Firebase App used whilst installing Firebase on your platform. However, if you'd like to use Firestore with a secondary Firebase App, pass the secondary app instance when calling the `firestore` method:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -35,11 +48,11 @@ const secondaryApp = firebase().initializeApp(config, 'SECONDARY_APP');
 const firestore = firebase().firestore(secondaryApp);
 ```
 
-### Collections & Documents
+## Firestore collections and documents
 
-Firestore stores data within "documents", which are contained within "collections". Documents can also contain nested collections. For example, our users would each have their own "document" stored inside the "Users" collection. The collection method allows us to reference a collection within our code.
+Firestore stores data within `documents`, which are contained within `collections`. Documents can also contain nested collections. For example, our users would each have their own "document" stored inside the "users" collection. The collection method allows us to reference a collection within our code.
 
-In the below example, we can reference the collection users, and create a new user document:
+In the example below, we can reference the collection `users`, and create a new user document:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -54,12 +67,279 @@ users
 	.then((value) => console.log('User Added'))
 	.catch((error) => console.error('Failed to add user:', error));
 ```
+## Writing Data
+
+Before you write data to Firestore, see [Structure your data](https://firebase.google.com/docs/firestore/manage-data/structure-data) for the best practices for structuring your data.
+
+### Adding Documents
+
+To add a new document to a collection, call the [collection]() method on [add]() method with the data on a [CollectionReference]() instance:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+	.firestore()
+	.collection('users')
+	.add({
+		name: 'Ada Lovelace',
+		age: 30,
+	})
+	.then(() => {
+		console.log('User added!');
+	});
+```
+
+The add method adds the new document to your collection with a random unique ID. If you'd like to specify your own ID, call the set method on a DocumentReference instead:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+	.firestore()
+	.collection('users')
+	.doc('ABC')
+	.set({
+		name: 'Ada Lovelace',
+		age: 30,
+	})
+	.then(() => {
+		console.log('User added!');
+	});
+```
+
+### Updating documents
+
+The set method exampled above replaces any existing data on a given DocumentReference. if you'd like to update a document instead, use the update method:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+	.firestore()
+	.collection('users')
+	.doc('ABC')
+	.update({
+		age: 31,
+	})
+	.then(() => {
+		console.log('User updated!');
+	});
+```
+
+The method also provides support for updating deeply nested values via dot-notation:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+	.firestore()
+	.collection('users')
+	.doc('ABC')
+	.update({
+		'info.address.zipcode': 94040,
+	})
+	.then(() => {
+		console.log('User updated!');
+	});
+```
+
+### Field values
+
+Cloud Firestore supports storing and manipulating values on your database, such as Timestamps, GeoPoints, Blobs and array management.
+
+To store GeoPoint values, provide the latitude and longitude to a new instance of the class:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+import { GeoPoint } from '@nativescript/firebase-firestore';
+
+firebase()
+	.firestore()
+	.doc('users/ABC')
+	.update({
+		'info.address.location': new GeoPoint(53.483959, -2.244644),
+	});
+```
+
+To store a Blob (Bytes) (for example of a Base64 image string), provide the string to the static fromBase64String method on the class:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+import { Bytes } from '@nativescript/firebase-firestore';
+
+firebase()
+	.firestore()
+	.doc('users/ABC')
+	.update({
+		'info.avatar': Bytes.fromBase64String('data:image/png;base64,iVBOR...'),
+	});
+```
+
+When storing timestamps, it is recommended you use the serverTimestamp static method on the FieldValue class. When written to the database, the Firebase servers will write a new timestamp based on their time, rather than the clients. This helps resolve any data consistency issues with different client timezones:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+import { FieldValue } from '@nativescript/firebase-firestore';
+
+firebase().firestore().doc('users/ABC').update({
+	createdAt: FieldValue.serverTimestamp(),
+});
+```
+
+Cloud Firestore also allows for storing arrays. To help manage the values with an array (adding or removing) the API exposes an arrayUnion and arrayRemove methods on the FieldValue class.
+
+To add a new value to an array (if it does not exist):
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+	.firestore()
+	.doc('users/ABC')
+	.update({
+		fcmTokens: firestore.FieldValue.arrayUnion('ABCDE123456'),
+	});
+```
+
+To remove a value from the array (if it exists):
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+	.firestore()
+	.doc('users/ABC')
+	.update({
+		fcmTokens: firestore.FieldValue.arrayRemove('ABCDE123456'),
+	});
+```
+### Removing data
+
+You can delete documents within Cloud Firestore using the delete method on a DocumentReference:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+	.firestore()
+	.collection('users')
+	.doc('ABC')
+	.delete()
+	.then(() => {
+		console.log('User deleted!');
+	});
+```
+
+If you need to remove a specific property with a document, rather than the document itself, you can use the delete method on the FieldValue class:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+import { FieldValue } from '@nativescript/firebase-firestore';
+
+firebase().firestore().collection('users').doc('ABC').update({
+	fcmTokens: FieldValue.delete(),
+});
+```
+
+### Transactions
+
+Transactions are a way to always ensure a write occurs with the latest information available on the server. Transactions never partially apply writes & all writes execute at the end of a successful transaction.
+
+Transactions are useful when you want to update a field's value based on its current value, or the value of some other field. If you simply want to write multiple documents without using the document's current state, a batch write would be more appropriate.
+
+When using transactions, note that:
+
+Read operations must come before write operations.
+A function calling a transaction (transaction function) might run more than once if a concurrent edit affects a document that the transaction reads.
+Transaction functions should not directly modify application state (return a value from the updateFunction).
+Transactions will fail when the client is offline.
+Imagine a scenario whereby an app has the ability to "Like" user posts. Whenever a user presses the "Like" button, a "likes" value (number of likes) on a "Posts" collection document increments. Without transactions, we'd first need to read the existing value and then increment that value in two separate operations.
+
+On a high traffic application, the value on the server could already have changed by the time the operation sets a new value, causing the actual number to not be consistent.
+
+Transactions remove this issue by atomically updating the value on the server. If the value changes whilst the transaction is executing, it will retry. This always ensures the value on the server is used rather than the client value.
+
+To execute a new transaction, call the runTransaction method:
+
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+function onPostLike(postId) {
+  // Create a reference to the post
+  const postReference = firebase().firestore().doc(`posts/${postId}`);
+
+  return firestore().runTransaction(async transaction => {
+    // Get post data first
+    const postSnapshot = await transaction.get(postReference);
+
+    if (!postSnapshot.exists) {
+      throw 'Post does not exist!';
+    }
+
+    transaction.update(postReference, {
+      likes: postSnapshot.data().likes + 1,
+    });
+  });
+}
+
+onPostLike('ABC')
+  .then(() => console.log('Post likes incremented via a transaction'))
+  .catch(error => console.error(error));
+```
+
+
+### Batch write
+
+If you do not need to read any documents in your operation set, you can execute multiple write operations as a single batch that contains any combination of set, update, or delete operations. A batch of writes completes atomically and can write to multiple documents.
+
+First, create a new batch instance via the batch method, perform operations on the batch and finally commit it once ready. The example below shows how to delete all documents in a collection in a single operation:
+
+```ts 
+import { firebase } from '@nativescript/firebase-core';
+
+async function massDeleteUsers() {
+  // Get all users
+  const usersQuerySnapshot = await firebase().firestore().collection('users').get();
+
+  // Create a new batch instance
+  const batch = firebase().firestore().batch();
+
+  usersQuerySnapshot.forEach(documentSnapshot => {
+    batch.delete(documentSnapshot.ref);
+  });
+
+  return batch.commit();
+}
+
+massDeleteUsers().then(() => console.log('All users deleted in a single batch operation.'));
+
+```
+
+
+### Secure your data
+
+It is important that you understand how to write rules in your Firebase console to ensure that your data is secure. Please follow the Firebase Firestore documentation on [security](https://firebase.google.com/docs/firestore/security/get-started).
+
+### Offline Capabilities
+
+
+Firestore provides out of the box support for offline capabilities. When reading and writing data, Firestore uses a local database which synchronizes automatically with the server. Firestore functionality continues when users are offline, and automatically handles data migration to the server when they regain connectivity.
+
+This functionality is enabled by default, however it can be disabled if you need it to be disabled (e.g. on apps containing sensitive information). The settings() method must be called before any Firestore interaction is performed, otherwise it will only take effect on the next app launch:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+firebase().firestore().settings.persistence = false;
+
+```
 
 ### Read Data
 
-Cloud Firestore gives you the ability to read the value of a collection or a document. This can be a one-time read, or provided by realtime updates when the data within a query changes.
+Cloud Firestore gives you the ability to read the value of a collection or a document. This can be a one-time read, or provided by real-time updates when the data within a query changes.
 
-#### One-time Read
+#### One-time read
 
 To read a collection or document once, call the Query.get or DocumentReference.get methods. In the below example a FutureBuilder is used to help manage the state of the request:
 
@@ -82,7 +362,7 @@ users
 
 ### Realtime changes
 
-To setup an active listener to react to any changes to the query, call the onSnapshot method with an event handler callback. For example, to watch the entire "Users" collection for when any documents are changed (removed, added, modified):
+To react to any changes to a collection or a document, call the [onSnapshot]() method on the collection or document with an event handler callback.  
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -100,7 +380,7 @@ firebase()
 	);
 ```
 
-The onSnapshot method also returns a function, allowing you to unsubscribe from events.
+The example below watches for changes in the  `userId` document:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -116,11 +396,9 @@ const unsubscriber = firebase()
 unsubscriber();
 ```
 
-Realtime changes via the onSnapshot method can be applied to both collections and documents.
+## Snapshots
 
-### Snapshots
-
-Once a query has returned a result, Firestore returns either a QuerySnapshot (for collection queries) or a DocumentSnapshot (for document queries). These snapshots provide the ability to view the data, view query metadata (such as whether the data was from local cache), whether the document exists or not and more.
+Once a query has returned a result, Firestore returns either a [QuerySnapshot]() (for collection queries) or a [DocumentSnapshot]() (for document queries). These snapshots provide the ability to view the data, view query metadata (such as whether the data was from local cache), whether the document exists or not and more.
 
 ### QuerySnapshot
 
@@ -147,9 +425,9 @@ Each child document of a QuerySnapshot is a QueryDocumentSnapshot, which allows 
 
 ### DocumentSnapshot
 
-A DocumentSnapshot is returned from a query to a specific document, or as part of the documents returned via a QuerySnapshot. The snapshot provides the ability to view a documents data, metadata and whether a document actually exists.
+A DocumentSnapshot is returned from a query to a specific document, or as part of the documents returned via a QuerySnapshot. The snapshot provides the ability to view a documents data, metadata and whether a document exists.
 
-To view a documents data, call the data method on the snapshot:
+To view a document's data, call the [data]() method on the snapshot:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -298,276 +576,6 @@ Cloud Firestore does not support the following types of queries:
 - Logical OR queries. In this case, you should create a separate query for each OR condition and merge the query results in your app.
 - Queries with a != clause. In this case, you should split the query into a greater-than query and a less-than query. For example, the query clause where("age", '!=', 30) is not supported, however you can get the same result set by combining two queries, one with the clause where("age", '<', 30) and one with the clause where("age", '>', 30)
 
-### Writing Data
-
-The [Firebase Documentation](https://firebase.google.com/docs/firestore/manage-data/structure-data) provides some great examples on the best practices to structuring your data. It is recommended that you read the guide before building your database.
-
-For more information on what is possible when writing data to Firestore, please refer to this [documentation](https://firebase.google.com/docs/firestore/manage-data/add-data)
-
-### Adding Documents
-
-To add a new document to a collection, use the add method on a CollectionReference:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.firestore()
-	.collection('users')
-	.add({
-		name: 'Ada Lovelace',
-		age: 30,
-	})
-	.then(() => {
-		console.log('User added!');
-	});
-```
-
-The add method adds the new document to your collection with a random unique ID. If you'd like to specify your own ID, call the set method on a DocumentReference instead:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.firestore()
-	.collection('users')
-	.doc('ABC')
-	.set({
-		name: 'Ada Lovelace',
-		age: 30,
-	})
-	.then(() => {
-		console.log('User added!');
-	});
-```
-
-### Updating documents
-
-The set method exampled above replaces any existing data on a given DocumentReference. if you'd like to update a document instead, use the update method:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.firestore()
-	.collection('users')
-	.doc('ABC')
-	.update({
-		age: 31,
-	})
-	.then(() => {
-		console.log('User updated!');
-	});
-```
-
-The method also provides support for updating deeply nested values via dot-notation:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.firestore()
-	.collection('users')
-	.doc('ABC')
-	.update({
-		'info.address.zipcode': 94040,
-	})
-	.then(() => {
-		console.log('User updated!');
-	});
-```
-
-### Field values
-
-Cloud Firestore supports storing and manipulating values on your database, such as Timestamps, GeoPoints, Blobs and array management.
-
-To store GeoPoint values, provide the latitude and longitude to a new instance of the class:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-import { GeoPoint } from '@nativescript/firebase-firestore';
-
-firebase()
-	.firestore()
-	.doc('users/ABC')
-	.update({
-		'info.address.location': new GeoPoint(53.483959, -2.244644),
-	});
-```
-
-To store a Blob (Bytes) (for example of a Base64 image string), provide the string to the static fromBase64String method on the class:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-import { Bytes } from '@nativescript/firebase-firestore';
-
-firebase()
-	.firestore()
-	.doc('users/ABC')
-	.update({
-		'info.avatar': Bytes.fromBase64String('data:image/png;base64,iVBOR...'),
-	});
-```
-
-When storing timestamps, it is recommended you use the serverTimestamp static method on the FieldValue class. When written to the database, the Firebase servers will write a new timestamp based on their time, rather than the clients. This helps resolve any data consistency issues with different client timezones:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-import { FieldValue } from '@nativescript/firebase-firestore';
-
-firebase().firestore().doc('users/ABC').update({
-	createdAt: FieldValue.serverTimestamp(),
-});
-```
-
-Cloud Firestore also allows for storing arrays. To help manage the values with an array (adding or removing) the API exposes an arrayUnion and arrayRemove methods on the FieldValue class.
-
-To add a new value to an array (if it does not exist):
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.firestore()
-	.doc('users/ABC')
-	.update({
-		fcmTokens: firestore.FieldValue.arrayUnion('ABCDE123456'),
-	});
-```
-
-To remove a value from the array (if it exists):
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.firestore()
-	.doc('users/ABC')
-	.update({
-		fcmTokens: firestore.FieldValue.arrayRemove('ABCDE123456'),
-	});
-```
-
-### Removing data
-
-You can delete documents within Cloud Firestore using the delete method on a DocumentReference:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.firestore()
-	.collection('users')
-	.doc('ABC')
-	.delete()
-	.then(() => {
-		console.log('User deleted!');
-	});
-```
-
-If you need to remove a specific property with a document, rather than the document itself, you can use the delete method on the FieldValue class:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-import { FieldValue } from '@nativescript/firebase-firestore';
-
-firebase().firestore().collection('users').doc('ABC').update({
-	fcmTokens: FieldValue.delete(),
-});
-```
-
-### Transactions
-
-Transactions are a way to always ensure a write occurs with the latest information available on the server. Transactions never partially apply writes & all writes execute at the end of a successful transaction.
-
-Transactions are useful when you want to update a field's value based on its current value, or the value of some other field. If you simply want to write multiple documents without using the document's current state, a batch write would be more appropriate.
-
-When using transactions, note that:
-
-Read operations must come before write operations.
-A function calling a transaction (transaction function) might run more than once if a concurrent edit affects a document that the transaction reads.
-Transaction functions should not directly modify application state (return a value from the updateFunction).
-Transactions will fail when the client is offline.
-Imagine a scenario whereby an app has the ability to "Like" user posts. Whenever a user presses the "Like" button, a "likes" value (number of likes) on a "Posts" collection document increments. Without transactions, we'd first need to read the existing value and then increment that value in two separate operations.
-
-On a high traffic application, the value on the server could already have changed by the time the operation sets a new value, causing the actual number to not be consistent.
-
-Transactions remove this issue by atomically updating the value on the server. If the value changes whilst the transaction is executing, it will retry. This always ensures the value on the server is used rather than the client value.
-
-To execute a new transaction, call the runTransaction method:
-
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-function onPostLike(postId) {
-  // Create a reference to the post
-  const postReference = firebase().firestore().doc(`posts/${postId}`);
-
-  return firestore().runTransaction(async transaction => {
-    // Get post data first
-    const postSnapshot = await transaction.get(postReference);
-
-    if (!postSnapshot.exists) {
-      throw 'Post does not exist!';
-    }
-
-    transaction.update(postReference, {
-      likes: postSnapshot.data().likes + 1,
-    });
-  });
-}
-
-onPostLike('ABC')
-  .then(() => console.log('Post likes incremented via a transaction'))
-  .catch(error => console.error(error));
-```
-
-
-### Batch write
-
-If you do not need to read any documents in your operation set, you can execute multiple write operations as a single batch that contains any combination of set, update, or delete operations. A batch of writes completes atomically and can write to multiple documents.
-
-First, create a new batch instance via the batch method, perform operations on the batch and finally commit it once ready. The example below shows how to delete all documents in a collection in a single operation:
-
-```ts 
-import { firebase } from '@nativescript/firebase-core';
-
-async function massDeleteUsers() {
-  // Get all users
-  const usersQuerySnapshot = await firebase().firestore().collection('users').get();
-
-  // Create a new batch instance
-  const batch = firebase().firestore().batch();
-
-  usersQuerySnapshot.forEach(documentSnapshot => {
-    batch.delete(documentSnapshot.ref);
-  });
-
-  return batch.commit();
-}
-
-massDeleteUsers().then(() => console.log('All users deleted in a single batch operation.'));
-
-```
-
-
-### Secure your data
-
-It is important that you understand how to write rules in your Firebase console to ensure that your data is secure. Please follow the Firebase Firestore documentation on [security](https://firebase.google.com/docs/firestore/security/get-started).
-
-### Offline Capabilities
-
-
-Firestore provides out of the box support for offline capabilities. When reading and writing data, Firestore uses a local database which synchronizes automatically with the server. Firestore functionality continues when users are offline, and automatically handles data migration to the server when they regain connectivity.
-
-This functionality is enabled by default, however it can be disabled if you need it to be disabled (e.g. on apps containing sensitive information). The settings() method must be called before any Firestore interaction is performed, otherwise it will only take effect on the next app launch:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-firebase().firestore().settings.persistence = false;
-
-```
 
 ## License
 
