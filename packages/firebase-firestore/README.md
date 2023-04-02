@@ -50,30 +50,15 @@ const firestore = firebase().firestore(secondaryApp);
 
 ## Firestore collections and documents
 
-Firestore stores data within `documents`, which are contained within `collections`. Documents can also contain nested collections. For example, our users would each have their own "document" stored inside the "users" collection. The collection method allows us to reference a collection within our code.
+Firestore stores data within `documents`, which are contained within `collections`. Documents can also contain nested collections. For example, our users would each have their own "document" stored inside the "users" collection. 
 
-In the example below, we can reference the collection `users`, and create a new user document:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-const users = firebase().firestore().collection('users');
-
-users
-	.add({
-		full_name: fullName, // John Doe
-		company: company, // Stokes and Sons
-		age: age, // 42
-	})
-	.then((value) => console.log('User Added'))
-	.catch((error) => console.error('Failed to add user:', error));
-```
 ## Writing Data
 
 Before you write data to Firestore, see [Structure your data](https://firebase.google.com/docs/firestore/manage-data/structure-data) for the best practices for structuring your data.
 
 ### Adding Documents
 
-To add a new document to a collection, call the [collection]() method on [add]() method with the data on a [CollectionReference]() instance:
+To add a new document to a collection, first, get the collection instance by calling the [collection]() method on the Firestore instance with the collection's name.  Next, call the [add]() method on the [CollectionReference]() instance with the data for the document.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -90,7 +75,7 @@ firebase()
 	});
 ```
 
-The add method adds the new document to your collection with a random unique ID. If you'd like to specify your own ID, call the set method on a DocumentReference instead:
+The add method adds the new document to your collection with a random unique ID. If you'd like to specify an ID, call the [set]() method on a [DocumentReference] instead:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -107,10 +92,11 @@ firebase()
 		console.log('User added!');
 	});
 ```
+The [set]() method replaces any existing data on a given DocumentReference instance.
 
 ### Updating documents
 
-The set method exampled above replaces any existing data on a given DocumentReference. if you'd like to update a document instead, use the update method:
+To update a document's data, call the [update]() method on the document passing it the object of data to update.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -127,7 +113,7 @@ firebase()
 	});
 ```
 
-The method also provides support for updating deeply nested values via dot-notation:
+The method also provides support for updating deeply nested values via the dot notation. The following example updates the `zipcode` property of the `address` object which is a property of an `info` object.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -144,11 +130,10 @@ firebase()
 	});
 ```
 
-### Field values
+#### Update geolocation points
 
-Cloud Firestore supports storing and manipulating values on your database, such as Timestamps, GeoPoints, Blobs and array management.
 
-To store GeoPoint values, provide the latitude and longitude to a new instance of the class:
+To update geolocation data, instantiate the [GeoPoint class]() with the latitude and longitude and use the instance as the value to update with.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -161,8 +146,8 @@ firebase()
 		'info.address.location': new GeoPoint(53.483959, -2.244644),
 	});
 ```
-
-To store a Blob (Bytes) (for example of a Base64 image string), provide the string to the static fromBase64String method on the class:
+#### Update blob (bytes) data
+To store a Blob (Bytes) (for example of a Base64 image string), provide the string to the static `fromBase64String` method of the [Bytes class]():
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -175,8 +160,8 @@ firebase()
 		'info.avatar': Bytes.fromBase64String('data:image/png;base64,iVBOR...'),
 	});
 ```
-
-When storing timestamps, it is recommended you use the serverTimestamp static method on the FieldValue class. When written to the database, the Firebase servers will write a new timestamp based on their time, rather than the clients. This helps resolve any data consistency issues with different client timezones:
+#### Update timestamps
+To create a timestamp to store, call the [serverTimestamp]() static method on the [FieldValue class]() and pass the timestamp to the [update]() method as shown below.  When your code passes the timestamp to the database, the Firebase servers write a new timestamp based on their time, rather than that of the client. This helps resolve any data consistency issues with different client timezones.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -186,10 +171,11 @@ firebase().firestore().doc('users/ABC').update({
 	createdAt: FieldValue.serverTimestamp(),
 });
 ```
+#### Update arrays
 
-Cloud Firestore also allows for storing arrays. To help manage the values with an array (adding or removing) the API exposes an arrayUnion and arrayRemove methods on the FieldValue class.
+To help manage(adding or removing) the values with an array, the API exposes an [arrayUnion]() and [arrayRemove]() methods on the [FieldValue class]().
 
-To add a new value to an array (if it does not exist):
+- The code below adds(if it does not exist) `'ABCDE123456'` to the `fcmTokens` array:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -202,7 +188,7 @@ firebase()
 	});
 ```
 
-To remove a value from the array (if it exists):
+- The code below removes(if it exists) `'ABCDE123456'` from the `fcmTokens` array:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -216,7 +202,7 @@ firebase()
 ```
 ### Removing data
 
-You can delete documents within Cloud Firestore using the delete method on a DocumentReference:
+- To delete a document within Cloud Firestore, get the document and call the [delete]() method on it.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -231,7 +217,7 @@ firebase()
 	});
 ```
 
-If you need to remove a specific property with a document, rather than the document itself, you can use the delete method on the FieldValue class:
+- To remove a specific property from a document, rather than the document itself, call the [delete]() method on the [FieldValue class]():
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
