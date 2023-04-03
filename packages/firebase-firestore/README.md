@@ -75,7 +75,7 @@ firebase()
 	});
 ```
 
-The add method adds the new document to your collection with a random unique ID. If you'd like to specify an ID, call the [set]() method on a [DocumentReference] instead:
+The add method adds the new document to your collection with a random unique ID. If you'd like to specify an ID, call the [set]() method on a [DocumentReference]() instead:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -94,7 +94,7 @@ firebase()
 ```
 The [set]() method replaces any existing data on a given DocumentReference instance.
 
-### Updating documents
+### Updating data
 
 To update a document's data, call the [update]() method on the document passing it the object of data to update.
 
@@ -147,6 +147,7 @@ firebase()
 	});
 ```
 #### Update blob (bytes) data
+
 To store a Blob (Bytes) (for example of a Base64 image string), provide the string to the static `fromBase64String` method of the [Bytes class]():
 
 ```ts
@@ -161,7 +162,8 @@ firebase()
 	});
 ```
 #### Update timestamps
-To create a timestamp to store, call the [serverTimestamp]() static method on the [FieldValue class]() and pass the timestamp to the [update]() method as shown below.  When your code passes the timestamp to the database, the Firebase servers write a new timestamp based on their time, rather than that of the client. This helps resolve any data consistency issues with different client timezones.
+
+To create a timestamp value, call the [serverTimestamp]() static method on the [FieldValue class]() and pass the timestamp to the [update]() method as shown below. When your code passes the timestamp to the database, the Firebase servers write a new timestamp based on their time, rather than that of the client. This helps resolve any data consistency issues with different client timezones.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -171,7 +173,7 @@ firebase().firestore().doc('users/ABC').update({
 	createdAt: FieldValue.serverTimestamp(),
 });
 ```
-#### Update arrays
+#### Update data in an array
 
 To help manage(adding or removing) the values with an array, the API exposes an [arrayUnion]() and [arrayRemove]() methods on the [FieldValue class]().
 
@@ -228,42 +230,43 @@ firebase().firestore().collection('users').doc('ABC').update({
 });
 ```
 
-### Transactions
+### Update data with transactions
 
-Transactions are a way to always ensure a write occurs with the latest information available on the server. Transactions never partially apply writes & all writes execute at the end of a successful transaction.
+Transactions are a way to always ensure a data write occurs with the latest information available on the server. 
 
-Transactions are useful when you want to update a field's value based on its current value, or the value of some other field. If you simply want to write multiple documents without using the document's current state, a batch write would be more appropriate.
+Imagine a scenario whereby an app can "like" user posts. Whenever a user presses the "Like" button, a "likes" value (number of likes) on a "Posts" collection document increments. Without transactions, we'd first need to read the existing value and then increment that value in two separate operations.
 
-When using transactions, note that:
-
-Read operations must come before write operations.
-A function calling a transaction (transaction function) might run more than once if a concurrent edit affects a document that the transaction reads.
-Transaction functions should not directly modify application state (return a value from the updateFunction).
-Transactions will fail when the client is offline.
-Imagine a scenario whereby an app has the ability to "Like" user posts. Whenever a user presses the "Like" button, a "likes" value (number of likes) on a "Posts" collection document increments. Without transactions, we'd first need to read the existing value and then increment that value in two separate operations.
-
-On a high traffic application, the value on the server could already have changed by the time the operation sets a new value, causing the actual number to not be consistent.
+On a high-traffic application, the value on the server could already have changed by the time the operation sets a new value, causing the actual number to not be consistent.
 
 Transactions remove this issue by atomically updating the value on the server. If the value changes whilst the transaction is executing, it will retry. This always ensures the value on the server is used rather than the client value.
 
-To execute a new transaction, call the runTransaction method:
+You can read more about transactions at [Update data with transactions](https://firebase.google.com/docs/firestore/manage-data/transactions#transactions).
+
+To update a document data with a transaction, follow these steps:
+
+1. Get the reference of the document you want to update.
+2. Call the [runTransaction]() method on the database instance to instantiate a transaction. passing it a callback function that receives the transaction instance. 
+3. In the callback function, read the document obtained in step 1 by passing it to the [get]() method.
+
+4. Update the document by calling the transaction object's [update]() method with the document reference as the first argument and the object with the data to update as the second argument. 
 
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 
 function onPostLike(postId) {
-  // Create a reference to the post
-  const postReference = firebase().firestore().doc(`posts/${postId}`);
+  // 1. Create a reference to the post
 
+const postReference = firebase().firestore().doc(`posts/${postId}`);
+// 2. Instantiate a transaction.
   return firestore().runTransaction(async transaction => {
-    // Get post data first
+    // 3. Read the document's data
     const postSnapshot = await transaction.get(postReference);
 
     if (!postSnapshot.exists) {
       throw 'Post does not exist!';
     }
-
+// 4. Update the document
     transaction.update(postReference, {
       likes: postSnapshot.data().likes + 1,
     });
@@ -276,26 +279,35 @@ onPostLike('ABC')
 ```
 
 
-### Batch write
+### Batched writes
 
-If you do not need to read any documents in your operation set, you can execute multiple write operations as a single batch that contains any combination of set, update, or delete operations. A batch of writes completes atomically and can write to multiple documents.
+If you do not need to read any documents in your operation set, you can execute multiple write operations as a single batch that contains any combination of `set`, `update`, or `delete` operations. A batch of writes completes atomically and can write to multiple documents.
 
-First, create a new batch instance via the batch method, perform operations on the batch and finally commit it once ready. The example below shows how to delete all documents in a collection in a single operation:
+To execute a batched write, follow these steps:
+
+1. Get the reference of the documents to operate on.
+2. Create a new [WriteBatch]() instance by calling the [batch]() method on the Firestore database instance.
+
+3. Perform operations() on the batch instance.
+
+4. After calling the batch operations method, commit the batch instance by calling the [commit]() method on the instance.
+
+The example below shows how to delete all documents in a collection in a single operation:
 
 ```ts 
 import { firebase } from '@nativescript/firebase-core';
 
 async function massDeleteUsers() {
-  // Get all users
+  // 1. Documents references
   const usersQuerySnapshot = await firebase().firestore().collection('users').get();
 
   // Create a new batch instance
   const batch = firebase().firestore().batch();
-
+// Batch operation: delete
   usersQuerySnapshot.forEach(documentSnapshot => {
     batch.delete(documentSnapshot.ref);
   });
-
+// Commit the batch operation
   return batch.commit();
 }
 
@@ -303,17 +315,15 @@ massDeleteUsers().then(() => console.log('All users deleted in a single batch op
 
 ```
 
-
 ### Secure your data
 
-It is important that you understand how to write rules in your Firebase console to ensure that your data is secure. Please follow the Firebase Firestore documentation on [security](https://firebase.google.com/docs/firestore/security/get-started).
+You must understand how to write rules in your Firebase Console to ensure that your data is secure. To learn about Firestore security rules, see [Get started with Cloud Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started).
 
 ### Offline Capabilities
 
+Firestore provides out-of-the-box support for offline capabilities. When reading and writing data, Firestore uses a local database that synchronizes automatically with the server. Firestore functionality continues even when users are offline, and automatically handles data migration to the server when they regain connectivity.
 
-Firestore provides out of the box support for offline capabilities. When reading and writing data, Firestore uses a local database which synchronizes automatically with the server. Firestore functionality continues when users are offline, and automatically handles data migration to the server when they regain connectivity.
-
-This functionality is enabled by default, however it can be disabled if you need it to be disabled (e.g. on apps containing sensitive information). The settings() method must be called before any Firestore interaction is performed, otherwise it will only take effect on the next app launch:
+This functionality is enabled by default. However, you can disable it whenever you need to(e.g. on apps containing sensitive information) by setting the `settings` property of the Firestore instance to `false`. You should set the property before any Firestore interaction is performed. Otherwise, it will only take effect on the next app launch:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
