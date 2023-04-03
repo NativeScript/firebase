@@ -1,6 +1,5 @@
 use_frameworks!
-platform :ios, '10.0'
-#pod 'Firebase/CoreOnly'
+platform :ios, '12.0'
 
 
 post_install do |installer|

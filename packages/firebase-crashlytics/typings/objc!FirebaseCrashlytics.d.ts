@@ -19,6 +19,8 @@ declare class FIRCrashlytics extends NSObject {
 
 	recordError(error: NSError): void;
 
+	recordErrorUserInfo(error: NSError, userInfo: NSDictionary<string, any>): void;
+
 	recordExceptionModel(exceptionModel: FIRExceptionModel): void;
 
 	sendUnsentReports(): void;

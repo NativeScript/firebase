@@ -1,3 +1,27 @@
+declare class FIRAggregateQuery extends NSObject {
+	static alloc(): FIRAggregateQuery; // inherited from NSObject
+
+	static new(): FIRAggregateQuery; // inherited from NSObject
+
+	readonly query: FIRQuery;
+
+	aggregationWithSourceCompletion(source: FIRAggregateSource, completion: (p1: FIRAggregateQuerySnapshot, p2: NSError) => void): void;
+}
+
+declare class FIRAggregateQuerySnapshot extends NSObject {
+	static alloc(): FIRAggregateQuerySnapshot; // inherited from NSObject
+
+	static new(): FIRAggregateQuerySnapshot; // inherited from NSObject
+
+	readonly count: number;
+
+	readonly query: FIRAggregateQuery;
+}
+
+declare const enum FIRAggregateSource {
+	Server = 0,
+}
+
 declare class FIRCollectionReference extends FIRQuery {
 	static alloc(): FIRCollectionReference; // inherited from NSObject
 
@@ -140,6 +164,56 @@ declare class FIRFieldValue extends NSObject {
 	static new(): FIRFieldValue; // inherited from NSObject
 }
 
+declare class FIRFilter extends NSObject {
+	static alloc(): FIRFilter; // inherited from NSObject
+
+	static andFilterWithFilters(filters: NSArray<FIRFilter> | FIRFilter[]): FIRFilter;
+
+	static filterWhereFieldArrayContains(field: string, value: any): FIRFilter;
+
+	static filterWhereFieldArrayContainsAny(field: string, values: NSArray<any> | any[]): FIRFilter;
+
+	static filterWhereFieldIn(field: string, values: NSArray<any> | any[]): FIRFilter;
+
+	static filterWhereFieldIsEqualTo(field: string, value: any): FIRFilter;
+
+	static filterWhereFieldIsGreaterThan(field: string, value: any): FIRFilter;
+
+	static filterWhereFieldIsGreaterThanOrEqualTo(field: string, value: any): FIRFilter;
+
+	static filterWhereFieldIsLessThan(field: string, value: any): FIRFilter;
+
+	static filterWhereFieldIsLessThanOrEqualTo(field: string, value: any): FIRFilter;
+
+	static filterWhereFieldIsNotEqualTo(field: string, value: any): FIRFilter;
+
+	static filterWhereFieldNotIn(field: string, values: NSArray<any> | any[]): FIRFilter;
+
+	static filterWhereFieldPathArrayContains(path: FIRFieldPath, value: any): FIRFilter;
+
+	static filterWhereFieldPathArrayContainsAny(path: FIRFieldPath, values: NSArray<any> | any[]): FIRFilter;
+
+	static filterWhereFieldPathIn(path: FIRFieldPath, values: NSArray<any> | any[]): FIRFilter;
+
+	static filterWhereFieldPathIsEqualTo(path: FIRFieldPath, value: any): FIRFilter;
+
+	static filterWhereFieldPathIsGreaterThan(path: FIRFieldPath, value: any): FIRFilter;
+
+	static filterWhereFieldPathIsGreaterThanOrEqualTo(path: FIRFieldPath, value: any): FIRFilter;
+
+	static filterWhereFieldPathIsLessThan(path: FIRFieldPath, value: any): FIRFilter;
+
+	static filterWhereFieldPathIsLessThanOrEqualTo(path: FIRFieldPath, value: any): FIRFilter;
+
+	static filterWhereFieldPathIsNotEqualTo(path: FIRFieldPath, value: any): FIRFilter;
+
+	static filterWhereFieldPathNotIn(path: FIRFieldPath, values: NSArray<any> | any[]): FIRFilter;
+
+	static new(): FIRFilter; // inherited from NSObject
+
+	static orFilterWithFilters(filters: NSArray<FIRFilter> | FIRFilter[]): FIRFilter;
+}
+
 declare class FIRFirestore extends NSObject {
 	static alloc(): FIRFirestore; // inherited from NSObject
 
@@ -182,6 +256,12 @@ declare class FIRFirestore extends NSObject {
 	loadBundleStreamCompletion(bundleStream: NSInputStream, completion: (p1: FIRLoadBundleTaskProgress, p2: NSError) => void): FIRLoadBundleTask;
 
 	runTransactionWithBlockCompletion(updateBlock: (p1: FIRTransaction, p2: interop.Pointer | interop.Reference<NSError>) => any, completion: (p1: any, p2: NSError) => void): void;
+
+	runTransactionWithOptionsBlockCompletion(options: FIRTransactionOptions, updateBlock: (p1: FIRTransaction, p2: interop.Pointer | interop.Reference<NSError>) => any, completion: (p1: any, p2: NSError) => void): void;
+
+	setIndexConfigurationFromJSONCompletion(json: string, completion: (p1: NSError) => void): void;
+
+	setIndexConfigurationFromStreamCompletion(stream: NSInputStream, completion: (p1: NSError) => void): void;
 
 	terminateWithCompletion(completion: (p1: NSError) => void): void;
 
@@ -318,6 +398,8 @@ declare class FIRQuery extends NSObject {
 
 	static new(): FIRQuery; // inherited from NSObject
 
+	readonly count: FIRAggregateQuery;
+
 	readonly firestore: FIRFirestore;
 
 	addSnapshotListener(listener: (p1: FIRQuerySnapshot, p2: NSError) => void): FIRListenerRegistration;
@@ -397,6 +479,8 @@ declare class FIRQuery extends NSObject {
 	queryWhereFieldPathIsNotEqualTo(path: FIRFieldPath, value: any): FIRQuery;
 
 	queryWhereFieldPathNotIn(path: FIRFieldPath, values: NSArray<any> | any[]): FIRQuery;
+
+	queryWhereFilter(filter: FIRFilter): FIRQuery;
 }
 
 declare class FIRQueryDocumentSnapshot extends FIRDocumentSnapshot {
@@ -485,6 +569,16 @@ declare class FIRTransaction extends NSObject {
 	setDataForDocumentMergeFields(data: NSDictionary<string, any>, document: FIRDocumentReference, mergeFields: NSArray<any> | any[]): FIRTransaction;
 
 	updateDataForDocument(fields: NSDictionary<any, any>, document: FIRDocumentReference): FIRTransaction;
+}
+
+declare class FIRTransactionOptions extends NSObject implements NSCopying {
+	static alloc(): FIRTransactionOptions; // inherited from NSObject
+
+	static new(): FIRTransactionOptions; // inherited from NSObject
+
+	maxAttempts: number;
+
+	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
 }
 
 declare class FIRWriteBatch extends NSObject {
