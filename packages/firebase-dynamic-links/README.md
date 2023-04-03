@@ -79,28 +79,23 @@ For instructions to confirm that your Firebase project is properly configured to
 
 ### Create a dynamic link from parameters
 
-You can create a dynamic link via the Firebase console, your app or even your custom API. To create a dynamic link from parameters with the plugin, call the [buildLink](#buildlink) method on the [DynamicLinks class](#dynamiclinks-class) instance passing it a literal object of parameters or an instance of [DynamiclinkParameters](#dynamiclinkparameters) returned by the [createLink](#createlink) or [createShortLink](#createshortlink) method.
+You can create a dynamic link via the Firebase console, your app or even your custom API. To create a dynamic link from parameters with the plugin, call the [buildLink](#buildlink) method on the [DynamicLinks class](#dynamiclinks-class) instance passing it a literal object of parameters or an instance of [DynamiclinkParameters](#dynamiclinkparameters-class) returned by the [createLink](#createlink) or [createShortLink](#createshortlink) method.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-dynamic-links';
+const link = firebase().dynamicLinks().createShortLink('https://docs.nativescript.org', 'https://triniwiz.page.link');
 
-async function buildLink() {
-	const link = await firebase()
-		.dynamicLinks()
-		.buildLink({
-			link: 'https://nativescript.org',
-			// domainUriPrefix is created in your Firebase console
-			domainUriPrefix: 'https://xyz.page.link',
-			// optional setup which updates Firebase analytics campaign
-			// "banner". This also needs setting up before hand
-			analytics: {
-				campaign: 'banner',
-			},
-		});
+		link.social = new DynamicLinkSocialParameters();
+		link.social.imageUrl = 'https://art.nativescript.org/logo/export/NativeScript_Logo_White_Blue_Rounded.png';
 
-	return link;
-}
+		firebase()
+			.dynamicLinks()
+			.buildLink(link)
+			.then((link) => {
+				console.log('link', link);
+			})
+			.catch((e) => {
+				console.log('dynamicLinks: build error', e);
+			});
 ```
 ### Create the parameters of a dynamic link
 
@@ -177,7 +172,7 @@ dynamicLinks = firebase().dynamicLinks()
 
 dynamicLinkParameters: DynamicLinkParameters = dynamicLinks.createLink(link, domainUri)
 ```
-Creates parameters for a dynamic link and returns a [DynamicLinkParameters](#dynamiclinkparameters) object to be passed to the method to create a dynamic link.
+Creates parameters for a dynamic link and returns a [DynamicLinkParameters](#dynamiclinkparameters-class) object to be passed to the method to create a dynamic link.
 
 | Parameter | Type | Description
 |-----------|------|------------
@@ -191,7 +186,7 @@ dynamicLinks = firebase().dynamicLinks()
 
 dynamicLinkParameters: DynamicLinkParameters = dynamicLinks.createShortLink(link, domainUri, shortLinkType)
 ```
-Creates parameters for a dynamic link and returns a [DynamicLinkParameters](#dynamiclinkparameters) object to be passed to the method to create a dynamic link.
+Creates parameters for a dynamic link and returns a [DynamicLinkParameters](#dynamiclinkparameters-class) object to be passed to the method to create a dynamic link.
 
  
 | Parameter | Type | Description
@@ -219,7 +214,7 @@ Builds a dynamic link from parameters and returns the link as a `string`. Use th
  
 | Parameter | Type | Description
 |-----------|------|------------
-| `linkParameters` | [DynamicLinkParameters](#dynamiclinkparameters) | The dynamic link parameters used to create a dynamic link.
+| `linkParameters` | [DynamicLinkParameters](#dynamiclinkparameters-class) | The dynamic link parameters used to create a dynamic link.
 
 #### onLink()
 ```ts
