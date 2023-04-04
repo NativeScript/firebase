@@ -333,11 +333,11 @@ firebase().firestore().settings.persistence = false;
 
 ### Read Data
 
-Cloud Firestore gives you the ability to read the value of a collection or a document. This can be a one-time read, or provided by real-time updates when the data within a query changes.
+Cloud Firestore gives you the ability to read the value of a collection or a document. This can be a one-time read or a read that occurs whenever the data within a query changes.
 
 #### One-time read
 
-To read a collection or document once, call the Query.get or DocumentReference.get methods. In the below example a FutureBuilder is used to help manage the state of the request:
+To read a collection or document once, call the Query.get or DocumentReference.get methods, for a collection or document respectively. 
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -356,9 +356,9 @@ users
 	.catch((error) => console.error('Failed to add user:', error));
 ```
 
-### Realtime changes
+#### Realtime changes
 
-To react to any changes to a collection or a document, call the [onSnapshot]() method on the collection or document with an event handler callback.  
+To react to any changes to a collection or a document, call the [onSnapshot]() method on the collection or document with an event handler function. The example below watches for changes in the `users` collection.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -376,7 +376,7 @@ firebase()
 	);
 ```
 
-The example below watches for changes in the  `userId` document:
+The example below watches for changes in the `userId` document:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -392,15 +392,15 @@ const unsubscriber = firebase()
 unsubscriber();
 ```
 
-## Snapshots
+## Firestore snapshots
 
-Once a query has returned a result, Firestore returns either a [QuerySnapshot]() (for collection queries) or a [DocumentSnapshot]() (for document queries). These snapshots provide the ability to view the data, view query metadata (such as whether the data was from local cache), whether the document exists or not and more.
+Once a query has returned a result, Firestore returns either a [QuerySnapshot]() (for collection queries) or a [DocumentSnapshot]() (for document queries). These snapshots provide the ability to view the data, view query metadata (such as whether the data was from a local cache), whether the document exists or not and more.
 
-### QuerySnapshot
+#### QuerySnapshot
 
 A QuerySnapshot returned from a collection query allows you to inspect the collection, such as how many documents exist within it, access to the documents within the collection, any changes since the last query and more.
 
-To access the documents within a QuerySnapshot, call the forEach method:
+To access the documents within a QuerySnapshot, call the [forEach]() method:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -419,9 +419,9 @@ firebase()
 
 Each child document of a QuerySnapshot is a QueryDocumentSnapshot, which allows you to access specific information about a document (see below).
 
-### DocumentSnapshot
+#### DocumentSnapshot
 
-A DocumentSnapshot is returned from a query to a specific document, or as part of the documents returned via a QuerySnapshot. The snapshot provides the ability to view a documents data, metadata and whether a document exists.
+A DocumentSnapshot is returned from a query to a specific document, or as part of the documents returned via a QuerySnapshot. The snapshot provides the ability to view a document's data, metadata and whether a document exists.
 
 To view a document's data, call the [data]() method on the snapshot:
 
@@ -442,7 +442,7 @@ firebase()
 	});
 ```
 
-A snapshot also provides a helper function to easily access deeply nested data within a document. Call the get method with a dot-notated path:
+A snapshot also provides a helper function to easily access deeply nested data within a document. Call the [get]() method with a dot-notated path:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -460,13 +460,13 @@ firebase()
 	});
 ```
 
-### Querying
+### Firestore querying
 
 Cloud Firestore offers advanced capabilities for querying collections. Queries work with both one-time reads or subscribing to changes
 
-### Filtering
+#### Filtering data
 
-To filter documents within a collection, the where method can be chained onto a collection reference. Filtering supports equality checks and "in" queries. For example, for filter users where their age is greater than 20:
+To filter documents within a collection, call the `where` method on a collection reference. Filtering supports equality checks and "in" queries. For example, to filter users whose age is greater than 20 years, call where as follows:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -479,7 +479,7 @@ firebase().firestore()
 
 ```
 
-Firestore also supports array queries. For example, to filter users who speak English (en) or Italian (it), use the arrayContainsAny filter:
+Firestore also supports array queries. For example, to filter users who speak English (en) or Italian (it), use the `arrayContainsAny` filter:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -491,11 +491,11 @@ firebase().firestore()
   .then(...);
 ```
 
-To learn more about all of the querying capabilities Cloud Firestore has to offer, view the [Firebase documentation](https://firebase.google.com/docs/firestore/query-data/queries).
+To learn more about all of the querying capabilities Cloud Firestore has to offer, see [Perform simple and compound queries in Cloud Firestore](https://firebase.google.com/docs/firestore/query-data/queries).
 
-### Limiting
+#### Limiting data
 
-To limit the number of documents returned from a query, use the limit method on a collection reference:
+To limit the number of documents returned from a query, use the `limit` method on a collection reference:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -507,7 +507,7 @@ firebase().firestore()
   .then(...);
 ```
 
-You can also limit to the last documents within the collection query by using limitToLast:
+You can also limit to the last documents within the collection query by using the `limitToLast` method:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -520,9 +520,9 @@ firebase().firestore()
   .then(...);
 ```
 
-### Ordering
+#### Ordering data
 
-To order the documents by a specific value, use the orderBy method:
+To order the documents by a specific value, use the `orderBy` method:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -534,9 +534,9 @@ firebase().firestore()
   .then(...);
 ```
 
-### Start & End Cursors
+#### Start and End Cursors
 
-To start and/or end a query at a specific point within a collection, you can pass a value to the startAt, endAt, startAfter or endBefore methods. You must specify an order to use cursor queries, for example:
+To start and/or end a query at a specific point within a collection, you can pass a value to the `startAt`, `endAt`, `startAfter` or `endBefore` methods. 
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -551,7 +551,7 @@ firebase().firestore()
   .then(...);
 ```
 
-You can further specify a DocumentSnapshot instead of a specific value, by passing it to the startAfterDocument, startAtDocument, endAtDocument or endBeforeDocument methods. For example:
+You can also specify a DocumentSnapshot instead of a specific value, by passing it to the `startAfterDocument`, `startAtDocument`, `endAtDocument` or `endBeforeDocument` methods. For example:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -564,14 +564,180 @@ firebase().firestore()
   .then(...);
 ```
 
-### Query Limitations
+#### Query Limitations
 
 Cloud Firestore does not support the following types of queries:
 
 - Queries with range filters on different fields, as described in the previous section.
 - Logical OR queries. In this case, you should create a separate query for each OR condition and merge the query results in your app.
-- Queries with a != clause. In this case, you should split the query into a greater-than query and a less-than query. For example, the query clause where("age", '!=', 30) is not supported, however you can get the same result set by combining two queries, one with the clause where("age", '<', 30) and one with the clause where("age", '>', 30)
+- Queries with a != clause. In this case, you should split the query into a greater-than query and a less-than query. For example, the query clause `where("age", '!=', 30)` is not supported. However, you can get the same result set by combining two queries, one with the clause `where("age", '<', 30)` and one with the clause `where("age", '>', 30)`.
 
+## API
+
+This class is a wrapper for the [FirebaseFirestore](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore) class that represents a Cloud Firestore database and is the entry point for all Cloud Firestore operations.
+
+#### app
+```ts
+firebaseApp: = firestore.app
+```
+The FirebaseApp instance through which the Firestore database is accessed.
+
+#### android
+```ts
+firestoreAndroid: com.google.firebase.firestore.FirebaseFirestore = firebase().firestore().android
+```
+The Firestore database instance for Android.
+#### ios
+```ts
+firestoreIOS: FIRFirestore = firebase().firestore().ios
+```
+The Firestore database instance for iOS.
+
+---
+#### settings
+```ts
+settings: Settings = firebase().firestore().settings
+// 
+settings = new Settings()
+
+firebase().firestore().settings = settings
+```
+For the description, see [getFirestoreSettings()](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#getFirestoreSettings()) on the FirebaseFirestore class documentation.
+
+---
+#### useEmulator()
+```ts
+firebase().firestore().useEmulator(host, port)
+```
+For the description, see [useEmulator](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#useEmulator(java.lang.String,int)) on the FirebaseFirestore class documentation.
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `host` | `string` | 
+| `port` | `number`
+
+----
+#### batch()
+```ts
+writeBatch: WriteBatch = firebase().firestore().batch()
+```
+Creates a write batch instance. For more information, see [batch()](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#batch()) on the FirebaseFirestore class documentation.
+
+---
+#### collection()
+```ts
+collectionReference: CollectionReference = firebase().firestore().collection(collectionPath)
+```
+Gets the `CollectionReference` in the database at the specified path.
+| Parameter | Type | Description
+|-----------|------|------------
+| `collectionPath` | `string` | The slash-separated path string of the collection.
+
+---
+#### clearPersistence()
+```ts
+firebase().firestore().clearPersistence().then(()=>{
+	// do something after clearing
+}).catch( (err) =>{
+
+})
+```
+For the description, see [clearPersistence()](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#clearPersistence()) on the FirebaseFirestlre class documentation.
+
+---
+#### collectionGroup()
+```ts
+collectionGroup: Query = firebase().firestore().collectionGroup(collectionId)
+```
+For the description, see the [collectionGroup](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#collectionGroup(java.lang.String)) method on the documentation of the FirebaseFirestore class.
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `collectionId` | `string` | 
+
+---
+#### disableNetwork()
+```ts
+firebase().firestore().disableNetwork().then(()=>{
+	// do something after disabling network
+}).catch( (err) =>{
+
+})
+```
+For the description, see the description of the [disableNetwork()](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#disableNetwork()) method on the FirebaseFirestore documentation.
+
+---
+#### enableNetwork()
+```ts
+firebase().firestore().enableNetwork().then(()=>{
+	// do something after disabling network
+}).catch( (err) =>{
+
+})
+```
+For the description, see the description of the [enableNetwork()](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#enableNetwork()) method on the FirebaseFirestore documentation.
+
+---
+#### doc()
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+```
+Gets the `DocumentReference` instance for the document at the specified path.
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `documentPath` | `string`| The slash-separated path string for a document in the database.
+
+
+---
+#### runTransaction()
+```ts
+firebase().firestore().runTransaction(updateFunction).then((result: any)=>{
+
+}).catch((err)=>{
+
+})
+
+```
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `updateFunction` | `(transaction: Transaction) => Promise<any>` | 
+
+---
+#### terminate()
+```ts
+firebase().firestore().terminate().then(()=>{
+	// do something after disabling network
+}).catch( (err) =>{
+
+})
+```
+
+For the description, see the description of the [terminate()](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#terminate()) method on the FirebaseFirestore class documentation.
+
+---
+#### waitForPendingWrites()
+```ts
+firebase().firestore().waitForPendingWrites().then(()=>{
+	// do something after disabling network
+}).catch( (err) =>{
+
+})
+```
+For the description, see the description of the [waitForPendingWrites](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#waitForPendingWrites()) method on the FirebaseFirestore class documation.
+
+---
+### CollectionReference object
+An object that represents a collection on the database.
+
+For available methods and properties, see [CollectionReference](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L366-L380) class and for the descriptions of the methods and properties, see the documentation of [CollectionReference](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/CollectionReference) class on the Firebase documentation.
+
+
+### DocumentReference object
+An object that represents a document on the database.
+
+For available methods and properties, see [DocumentReference](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L366-L380) class and for the descriptions of the methods and properties, see the documentation of [DocumentReference](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/DocumentReference) class on the Firebase documentation.
 
 ## License
 
