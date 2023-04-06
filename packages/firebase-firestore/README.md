@@ -874,17 +874,23 @@ document.delete().then(()=>{
 
 })
 ```
+Asynchronously delete this document.
 
 ---
 #### get()
 ```ts
 document: DocumentReference = firebase().firestore().doc(documentPath)
-document.get(options).then((document: DocumentSnapshot<T>)=>{
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
 	//handle the document data
 }).catch(err =>{
 
 })
 ```
+Reads the data from the document.
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `options` | [GetOptions](#getoptions-interface) | _Optional_ settings object for the get operation.
 
 ---
 #### set()
@@ -896,11 +902,19 @@ document.set(data, options).then(()=>{
 
 })
 ```
-Overwrites the data of this document, if the document exists. Otherwise, it creates the document and saves the set data to the document.
+Overwrites the data of this document with the specified data, if the document exists. Otherwise, it creates the document and saves the data to the document.
 
 | Parameter | Type | Description
 |----------|-------|------------
+| `data` | `any` | The data to save.
+| `options` | [SetOptions](#setoptions-interface) | _Optional_ settings object for the set operation.
 
+#### SetOptions interface
+
+| Option | Type | Description
+|----------|-------|------------
+| `merge` | `undefined \| false \| true` | For the description, see [merge](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/SetOptions#merge()) on the Firebase documentation.
+| `mergeFields` | `string[] \| IFieldPath[]` | For the description, see [mergeFields](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/SetOptions#mergeFields(java.lang.String...)) and[mergeFields](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/SetOptions#mergeFieldPaths(java.util.List%3Ccom.google.firebase.firestore.FieldPath%3E)) on the Firebase documentation.
 
 ---
 #### onSnapshot()
@@ -936,6 +950,99 @@ update(data: Partial<{ [K in keyof T]: FieldValue | T[K] }>): Promise<void>;
 
 update(field: FieldPath | keyof T, value: any, moreFieldsAndValues: any[]): Promise<void>;
 ```
+
+### DocumentSnapshot object
+
+#### exists
+```ts
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
+	docExists: boolean = snapshot.exists
+}).catch(err =>{
+// handle any error here
+})
+```
+A `readonly` property that returns `true` if the document exists or `false` otherwise.
+
+---
+#### id
+```ts
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
+	docID: string = snapshot.id
+}).catch(err =>{
+// handle any error here
+})
+```
+A `readonly` property that returns the ID of the snapshot.
+
+---
+#### metadata
+```ts
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
+	snapshotMetadata: SnapshotMetadata = snapshot.metadata
+}).catch(err =>{
+// handle any error here
+})
+```
+A `readonly` property that returns metadata about the snapshot, describing the state of the snapshot.
+
+---
+#### ref
+```ts
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
+	docReference: DocumentReference = snapshot.ref
+}).catch(err =>{
+// handle any error here
+})
+```
+A `readonly` property that returns the `DocumentReference` instance of the document.
+
+---
+#### android
+```ts
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
+	documentSnapshotAndroid: com.google.firebase.firestore.DocumentSnapshot = snapshot.android
+}).catch(err =>{
+// handle any error here
+})
+```
+A `readonly` property that returns the `DocumentSnapshot` instance for Android.
+
+---
+#### ios
+```ts
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
+	documentSnapshotIOS: FIRDocumentSnapshot = snapshot.ios
+}).catch(err =>{
+// handle any error here
+})
+```
+A `readonly` property that returns the `DocumentSnapshot` instance for iOS.
+
+---
+#### data()
+```ts
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
+	documentSnapshotData: any = snapshot.data()
+}).catch(err =>{
+// handle any error here
+})
+```
+Extracts the fields of data.
+
+---
+#### get()
+```ts
+document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
+	documentField: fieldType = snapshot.get(fieldPath)
+}).catch(err =>{
+// handle any error here
+})
+```
+| Parameter | Type | Description
+|-----------|-----|-----------
+| `fieldPath` | `string \| number \| FieldPath` | "Returns the value at the field or null if the field doesn't exist."
+
+---
 
 ## License
 
