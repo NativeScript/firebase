@@ -356,7 +356,7 @@ users
 	.catch((error) => console.error('Failed to add user:', error));
 ```
 
-#### Realtime changes
+#### Listen to realtime changes
 
 To react to any changes to a collection or a document, call the [onSnapshot]() method on the collection or document with an event handler function. The example below watches for changes in the `users` collection.
 
@@ -725,19 +725,217 @@ firebase().firestore().waitForPendingWrites().then(()=>{
 
 })
 ```
-For the description, see the description of the [waitForPendingWrites](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#waitForPendingWrites()) method on the FirebaseFirestore class documation.
+For the description, see the description of the [waitForPendingWrites](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#waitForPendingWrites()) method on the FirebaseFirestore class documentation.
 
 ---
 ### CollectionReference object
+
 An object that represents a collection on the database.
 
-For available methods and properties, see [CollectionReference](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L366-L380) class and for the descriptions of the methods and properties, see the documentation of [CollectionReference](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/CollectionReference) class on the Firebase documentation.
+#### id
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+collectionReferenceId: string = collectionReference.id
+```
 
+A `readonly` property that returns the ID of the collection.
+
+---
+#### path
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+collectionReferencePath: string = collectionReference.path
+```
+
+A `readonly` property that returns the path of the collection.
+
+---
+#### parent
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+collectionReferenceParent: DocumentReference = collectionReference.parent
+```
+
+A `readonly` property that returns the `DocumentReference` containing this collection, if the collection is a subcollection.  If the collection is a root collection, `null` gets returned.
+
+---
+#### ios
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+collectionReferenceIOS: FIRCollectionReference = collectionReference.ios
+```
+
+A `readonly` property that returns the `CollectionReference` instance for iOS.
+
+---
+#### android
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+collectionReferenceAndroid: com.google.firebase.firestore.CollectionReference = collectionReference.android
+```
+
+A `readonly` property that returns the `CollectionReference` instance for Android.
+
+---
+#### add()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+collectionReference.add(dataObject).then((docReference: DocumentReference<T>)=>{
+
+}).catch((err)=>{
+
+})
+```
+Adds a new document to this collection with the specified data, assigning it a document ID automatically.
+
+---
+#### doc()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+document: IDocumentReference<T> = collectionReference.doc(documentPath).doc(documentPath)
+```
+Gets a `DocumentReference` instance that refers to the document at the specified path within this collection.
+
+| Parameter | Type | Description
+|-----|------|-------
+| `documentPath` | `string` | The document path.
+
+---
 
 ### DocumentReference object
 An object that represents a document on the database.
 
-For available methods and properties, see [DocumentReference](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L366-L380) class and for the descriptions of the methods and properties, see the documentation of [DocumentReference](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/DocumentReference) class on the Firebase documentation.
+#### firestore
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+documentReferenceFirestore: Firestore = document.firestore
+```
+A `readonly` property that returns the Firestore database instance for this document.
+
+---
+#### id
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+documentReferenceId: string = document.id
+```
+
+A `readonly` property that returns the ID of the doocument.
+
+---
+#### path
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+documentPath: string = document.path
+```
+
+A `readonly` property that returns the path of the document.
+
+---
+#### parent
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+documentParent: CollectionReference = document.parent
+```
+
+A `readonly` property that returns the `CollectionReference` that contains this document.
+
+---
+#### ios
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+documentIOS: FIRDocumentReference = document.ios
+```
+
+A `readonly` property that returns the `DocumentReference` instance for iOS.
+
+---
+#### android
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+documentAndroid: com.google.firebase.firestore.DocumentReference = document.android
+```
+
+A `readonly` property that returns the `DocumentReference` instance for Android.
+
+---
+#### collection()
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+document.ollection(collectionPath)
+```
+
+---
+#### delete()
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+document.delete().then(()=>{
+	//
+}).catch(err =>{
+
+})
+```
+
+---
+#### get()
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+document.get(options).then((document: DocumentSnapshot<T>)=>{
+	//handle the document data
+}).catch(err =>{
+
+})
+```
+
+---
+#### set()
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+document.set(data, options).then(()=>{
+
+}).catch(err =>{
+
+})
+```
+Overwrites the data of this document, if the document exists. Otherwise, it creates the document and saves the set data to the document.
+
+| Parameter | Type | Description
+|----------|-------|------------
+
+
+---
+#### onSnapshot()
+```ts
+document: DocumentReference = firebase().firestore().doc(documentPath)
+document.onSnapshot(observer)
+```
+Allows you to add a function to listen for the document's real-time changes event. The `onSnapshot` method has the following additional overloads:
+
+```ts
+onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
+
+onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
+
+onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
+
+onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
+
+```
+
+---
+#### update()
+```ts
+update(data).then(()=>{
+
+}).catch(err =>{
+
+})
+```
+Allows you to update this document with the specified data. The method has the following overloads:
+```ts
+update(data: Partial<{ [K in keyof T]: FieldValue | T[K] }>): Promise<void>;
+
+update(field: FieldPath | keyof T, value: any, moreFieldsAndValues: any[]): Promise<void>;
+```
 
 ## License
 
