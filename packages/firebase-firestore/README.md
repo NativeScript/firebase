@@ -1,6 +1,73 @@
 # @nativescript/firebase-firestore
 
+* [Intro](#intro)
+* [Set up Firebase](#set-up-firebase)
+* [Create your Firestore database](#create-your-firestore-database)
+* [Add the Firestore SDK to your app](#add-the-firestore-sdk-to-your-app)
+* [Initialize Cloud Firestore](#initialize-cloud-firestore)
+* [Firestore collections and documents](#firestore-collections-and-documents)
+* [Writing Data](#writing-data)
+	* [Adding Documents](#adding-documents)
+	* [Updating data](#updating-data)
+		* [Update geolocation points](#update-geolocation-points)
+		* [Update timestamps](#update-timestamps)
+		* [Update data in an array](#update-data-in-an-array)
+	* [Removing data](#removing-data)
+	* [Update data with transactions](#update-data-with-transactions)
+	* [Batched writes](#batched-writes)
+	* [Secure your data](#secure-your-data)
+	* [Offline Capabilities](#offline-capabilities)
+	* [Read Data](#read-data)
+		* [One-time read](#one-time-read)
+		* [Listen to real-time data changes](#listen-to-real-time-data-changes)
+* [Firestore snapshots](#firestore-snapshots)
+	* [Handle QuerySnapshot](#handle-querysnapshot)
+	* [Handle DocumentSnapshot](#handle-documentsnapshot)
+	* [Firestore querying](#firestore-querying)
+		* [Filtering data](#filtering-data)
+		* [Limiting data](#limiting-data)
+		* [Ordering data](#ordering-data)
+		* [Start and End Cursors](#start-and-end-cursors)
+		* [Query Limitations](#query-limitations)
+
+* [CollectionReference object](#collectionReference-object)
+	* [id](#id)
+	* [path](#path)
+	* [parent](#parent)
+	* [ios](#ios-1)
+	* [android](#android-1)
+	* [add()](#add)
+	* [doc()](#doc-1)
+	* [endAt()](#endAt)
+	* [endBefore()](#endBefore)
+	* [get()](#get)
+	* [limit()](#limit)
+	* [limitToLast()](#limitToLast)
+	* [onSnapshot()](#onSnapshot)
+	* [Observer interface](#Observer-interface)
+	* [orderBy()](#orderBy)
+	* [startAfter()](#startAfter)
+	* [startAt()](#startAt)
+	* [where()](#where)
+	* [isEqual()](#isEqual)
+* [DocumentSnapshot object](#DocumentSnapshot-object)
+	* [exists](#exists)
+	* [id](#id-1)
+	* [metadata](#metadata)
+	* [ref](#ref)
+	* [android](#android-1)
+	* [ios](#ios-1)
+	* [data()](#data)
+	* [get()](#get-1)
+* [Transaction class](#Transaction-class)
+	* [android](#android-1)
+	* [ios](#ios-1)
+	* [get()](#get-1)
+	* [delete()](#delete-1)
+	* [update()](#update-1)
+	* [set()](#set-1)
 ## Intro
+
 This plugin allows you to add [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore) to your NativeScript app.
 
 [![image](https://img.youtube.com/vi/QcsAb2RR52c/hqdefault.jpg)](https://www.youtube.com/watch?v=QcsAb2RR52c)
@@ -58,7 +125,7 @@ Before you write data to Firestore, see [Structure your data](https://firebase.g
 
 ### Adding Documents
 
-To add a new document to a collection, first, get the collection instance by calling the [collection]() method on the Firestore instance with the collection's name.  Next, call the [add]() method on the [CollectionReference]() instance with the data for the document.
+To add a new document to a collection, first, get the collection instance by calling the [collection](#collection) method on the Firestore instance with the collection's name.  Next, call the [add](#add) method on the [CollectionReference](#collectionreference-object) instance with the data for the document.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -75,7 +142,7 @@ firebase()
 	});
 ```
 
-The add method adds the new document to your collection with a random unique ID. If you'd like to specify an ID, call the [set]() method on a [DocumentReference]() instead:
+The `add` method adds the new document to your collection with a random unique ID. If you'd like to specify an ID, call the [set](#set) method on a [DocumentReference](#documentreference-object) instead:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -92,11 +159,11 @@ firebase()
 		console.log('User added!');
 	});
 ```
-The [set]() method replaces any existing data on a given DocumentReference instance.
+The `set` method replaces any existing data on a given DocumentReference instance.
 
 ### Updating data
 
-To update a document's data, call the [update]() method on the document passing it the object of data to update.
+To update a document's data, call the [update](#update) method on the document passing it the object of data to update.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -132,8 +199,7 @@ firebase()
 
 #### Update geolocation points
 
-
-To update geolocation data, instantiate the [GeoPoint class]() with the latitude and longitude and use the instance as the value to update with.
+To update geolocation data, instantiate the [GeoPoint class](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L439-L449) with the latitude and longitude and use the instance as the value to update with.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -146,7 +212,7 @@ firebase()
 		'info.address.location': new GeoPoint(53.483959, -2.244644),
 	});
 ```
-#### Update blob (bytes) data
+<!-- #### Update blob (bytes) data
 
 To store a Blob (Bytes) (for example of a Base64 image string), provide the string to the static `fromBase64String` method of the [Bytes class]():
 
@@ -160,10 +226,10 @@ firebase()
 	.update({
 		'info.avatar': Bytes.fromBase64String('data:image/png;base64,iVBOR...'),
 	});
-```
+``` -->
 #### Update timestamps
 
-To create a timestamp value, call the [serverTimestamp]() static method on the [FieldValue class]() and pass the timestamp to the [update]() method as shown below. When your code passes the timestamp to the database, the Firebase servers write a new timestamp based on their time, rather than that of the client. This helps resolve any data consistency issues with different client timezones.
+To create a timestamp value, call the `serverTimestamp` static method on the [FieldValue class](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437) and pass the timestamp to the `update` method as shown below. When your code passes the timestamp to the database, the Firebase servers write a new timestamp based on their time, rather than that of the client. This helps resolve any data consistency issues with different client timezones.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -175,7 +241,7 @@ firebase().firestore().doc('users/ABC').update({
 ```
 #### Update data in an array
 
-To help manage(adding or removing) the values with an array, the API exposes an [arrayUnion]() and [arrayRemove]() methods on the [FieldValue class]().
+To help manage(adding or removing) the values with an array, the API exposes an `arrayUnion` and `arrayRemove` methods on the [FieldValue class](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437).
 
 - The code below adds(if it does not exist) `'ABCDE123456'` to the `fcmTokens` array:
 
@@ -194,17 +260,18 @@ firebase()
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
+import { FieldValue } from '@nativescript/firebase-firestore';
 
 firebase()
 	.firestore()
 	.doc('users/ABC')
 	.update({
-		fcmTokens: firestore.FieldValue.arrayRemove('ABCDE123456'),
+		fcmTokens: FieldValue.arrayRemove('ABCDE123456'),
 	});
 ```
 ### Removing data
 
-- To delete a document within Cloud Firestore, get the document and call the [delete]() method on it.
+- To delete a document within Cloud Firestore, get the document and call the [delete](#delete) method on the document reference.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -219,7 +286,7 @@ firebase()
 	});
 ```
 
-- To remove a specific property from a document, rather than the document itself, call the [delete]() method on the [FieldValue class]():
+- To remove a specific property from a document, rather than the document itself, call the `delete` method on the [FieldValue class](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437):
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -245,10 +312,10 @@ You can read more about transactions at [Update data with transactions](https://
 To update a document data with a transaction, follow these steps:
 
 1. Get the reference of the document you want to update.
-2. Call the [runTransaction]() method on the database instance to instantiate a transaction. passing it a callback function that receives the transaction instance. 
-3. In the callback function, read the document obtained in step 1 by passing it to the [get]() method.
+2. Call the [runTransaction](#runtransaction) method on the database instance to instantiate a transaction. passing it a callback function that receives the transaction instance. 
+3. In the callback function, read the document obtained in step 1 by passing it to the [get](#get-2) method.
 
-4. Update the document by calling the transaction object's [update]() method with the document reference as the first argument and the object with the data to update as the second argument. 
+4. Update the document by calling the transaction object's [update](#update-1) method with the document reference as the first argument and the object with the data to update as the second argument. 
 
 
 ```ts
@@ -286,11 +353,11 @@ If you do not need to read any documents in your operation set, you can execute 
 To execute a batched write, follow these steps:
 
 1. Get the reference of the documents to operate on.
-2. Create a new [WriteBatch]() instance by calling the [batch]() method on the Firestore database instance.
+2. Create a new [WriteBatch](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L477-L490) instance by calling the [batch](#batch) method on the Firestore database instance.
 
 3. Perform operations() on the batch instance.
 
-4. After calling the batch operations method, commit the batch instance by calling the [commit]() method on the instance.
+4. After calling the batch operations method, commit the batch instance by calling the `commit` method on the `WriteBatch` instance.
 
 The example below shows how to delete all documents in a collection in a single operation:
 
@@ -317,7 +384,7 @@ massDeleteUsers().then(() => console.log('All users deleted in a single batch op
 
 ### Secure your data
 
-You must understand how to write rules in your Firebase Console to ensure that your data is secure. To learn about Firestore security rules, see [Get started with Cloud Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started).
+You must understand how to write rules in your Firebase Console to ensure that your data is secure. To learn about Firestore security rules, see [Get Started with Cloud Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started).
 
 ### Offline Capabilities
 
@@ -356,9 +423,9 @@ users
 	.catch((error) => console.error('Failed to add user:', error));
 ```
 
-#### Listen to realtime changes
+#### Listen to real-time data changes
 
-To react to any changes to a collection or a document, call the [onSnapshot]() method on the collection or document with an event handler function. The example below watches for changes in the `users` collection.
+To react to any changes to a collection or a document, call the [onSnapshot](#onsnapshot) method on the collection or document with an event handler function. The example below watches for changes in the `users` collection.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -394,13 +461,13 @@ unsubscriber();
 
 ## Firestore snapshots
 
-Once a query has returned a result, Firestore returns either a [QuerySnapshot]() (for collection queries) or a [DocumentSnapshot]() (for document queries). These snapshots provide the ability to view the data, view query metadata (such as whether the data was from a local cache), whether the document exists or not and more.
+Once a query has returned a result, Firestore returns either a [QuerySnapshot](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L346-L364) (for collection queries) or a [DocumentSnapshot](#documentsnapshot-object) (for document queries). These snapshots provide the ability to view the data, view query metadata (such as whether the data was from a local cache), whether the document exists or not and more.
 
-#### QuerySnapshot
+#### Handle QuerySnapshot
 
-A QuerySnapshot returned from a collection query allows you to inspect the collection, such as how many documents exist within it, access to the documents within the collection, any changes since the last query and more.
+A QuerySnapshot returned by the `get` method of a collection query allows you to inspect the collection, such as how many documents exist within it, access to the documents within the collection, any changes since the last query and more.
 
-To access the documents within a QuerySnapshot, call the [forEach]() method:
+To access the documents within a QuerySnapshot object, call the `forEach` method:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -419,11 +486,11 @@ firebase()
 
 Each child document of a QuerySnapshot is a QueryDocumentSnapshot, which allows you to access specific information about a document (see below).
 
-#### DocumentSnapshot
+#### Handle DocumentSnapshot
 
 A DocumentSnapshot is returned from a query to a specific document, or as part of the documents returned via a QuerySnapshot. The snapshot provides the ability to view a document's data, metadata and whether a document exists.
 
-To view a document's data, call the [data]() method on the snapshot:
+- To view a document's data, call the `data` method on the snapshot:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -442,7 +509,7 @@ firebase()
 	});
 ```
 
-A snapshot also provides a helper function to easily access deeply nested data within a document. Call the [get]() method with a dot-notated path:
+- A snapshot also provides a helper function to easily access deeply nested data within a document. Call the `get` method with a dot-notated path:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -573,6 +640,8 @@ Cloud Firestore does not support the following types of queries:
 - Queries with a != clause. In this case, you should split the query into a greater-than query and a less-than query. For example, the query clause `where("age", '!=', 30)` is not supported. However, you can get the same result set by combining two queries, one with the clause `where("age", '<', 30)` and one with the clause `where("age", '>', 30)`.
 
 ## API
+
+### Firestore class
 
 This class is a wrapper for the [FirebaseFirestore](https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore) class that represents a Cloud Firestore database and is the entry point for all Cloud Firestore operations.
 
@@ -756,7 +825,7 @@ collectionReference = firebase().firestore().collection(collectionPath)
 collectionReferenceParent: DocumentReference = collectionReference.parent
 ```
 
-A `readonly` property that returns the `DocumentReference` containing this collection, if the collection is a subcollection.  If the collection is a root collection, `null` gets returned.
+A `readonly` property that returns the `DocumentReference` containing this collection, if the collection is a sub-collection.  If the collection is a root collection, `null` gets returned.
 
 ---
 #### ios
@@ -800,9 +869,160 @@ Gets a `DocumentReference` instance that refers to the document at the specified
 |-----|------|-------
 | `documentPath` | `string` | The document path.
 
+
+---
+#### endAt()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+query: Query = collectionReference.endAt(snapshot)
+// or 
+query: Query = collectionReference.endAt(fieldValues)
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `snapshot` | [DocumentSnapshot](#documentsnapshot-object) | 
+| `fieldValues` | [DocumentSnapshot](#documentsnapshot-object) \| [FieldValue](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437)[]| 
+
+---
+#### endBefore()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+query: Query = collectionReference.endBefore(snapshot)
+// or 
+query: Query = collectionReference.endBefore(fieldValues)
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `snapshot` | [DocumentSnapshot](#documentsnapshot-object) | 
+| `fieldValues` | [DocumentSnapshot](#documentsnapshot-object) \| [FieldValue](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437)[]| 
+
+---
+#### get()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+collectionReference.get(options).then((querySnapshot: QuerySnapshot) =>{
+
+}).catch(err =>{
+
+})
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `options` | [GetOptions](#getoptions-interface) | _Optional_
+
+---
+#### limit()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+query: Query = collectionReference.limit(limit)
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `limit` | `number` | _Optional_
+
+---
+#### limitToLast()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+query: Query = collectionReference.limitToLast(limitToLast)
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `limitToLast` | `number` | _Optional_
+
+---
+#### onSnapshot()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+collectionReference.onSnapshot(observer)
+//OR
+collectionReference.onSnapshot(options,observer)
+//OR
+collectionReference.onSnapshot(onNext, onError, onCompletion)
+//OR
+collectionReference.onSnapshot(options,onNext, onError,onCompletion)
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `observer` | [IObserver](#observer-interface) | 
+| `options` |  [SnapshotListenOptions](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L177-L179)| 
+| `onNext` |  `(snapshot: QuerySnapshot) => void` | _Optional_
+| `onError` |  `(error: Error) => void` | _Optional_
+| `onCompletion` |  `() => void`| _Optional_
+
+#### Observer interface
+```ts
+interface IObserver { 
+	complete?: () => void;
+	 error?: (error: Error) => void;
+	next?: (snapshot: QuerySnapshot) => void 
+	}
+```
+---
+#### orderBy()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+query: Query = collectionReference.orderBy(fieldPath,directionStr)
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `fieldPath` | `keyof` `DocumentData` | 
+| `directionStr` | `'asc' \| 'desc'` | Defaults to `'asc'`
+
+---
+#### startAfter()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+query: Query = collectionReference.startAfter(snapshot)
+// or 
+query: Query = collectionReference.startAfter(fieldValues)
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `snapshot` | [DocumentSnapshot](#documentsnapshot-object) | 
+| `fieldValues` | [DocumentSnapshot](#documentsnapshot-object) \| [FieldValue](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437)[]| 
+
+---
+#### startAt()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+query: Query = collectionReference.startAt(snapshot)
+// or 
+query: Query = collectionReference.startAt(fieldValues)
+```
+| Parameter | Type | Description
+|-----------|------|------------
+| `snapshot` | [DocumentSnapshot](#documentsnapshot-object) | 
+| `fieldValues` | [DocumentSnapshot](#documentsnapshot-object) \| [FieldValue](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437)[]| 
+
+---
+#### where()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+query: Query = collectionReference.where(fieldPath,opStr,value)
+```
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `fieldPath` | [FieldPath](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L412-L421) \| `keyof`  `DocumentData` | 
+| `opStr` | [WhereFilterOp](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L3) | 
+| `value` | `any` | 
+
+---
+#### isEqual()
+```ts
+collectionReference = firebase().firestore().collection(collectionPath)
+isEqual: boolean = collectionReference.isEqual(other)
+```
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `other` | `any` | 
+
 ---
 
 ### DocumentReference object
+
 An object that represents a document on the database.
 
 #### firestore
@@ -861,7 +1081,7 @@ A `readonly` property that returns the `DocumentReference` instance for Android.
 #### collection()
 ```ts
 document: DocumentReference = firebase().firestore().doc(documentPath)
-document.ollection(collectionPath)
+document.collection(collectionPath)
 ```
 
 ---
@@ -892,6 +1112,14 @@ Reads the data from the document.
 |----------|-------|------------
 | `options` | [GetOptions](#getoptions-interface) | _Optional_ settings object for the get operation.
 
+#### GetOptions interface
+```ts
+enum GetOptions {
+	Default = 'default',
+	Server = 'server',
+	Cache = 'cache',
+}
+```
 ---
 #### set()
 ```ts
@@ -925,15 +1153,22 @@ document.onSnapshot(observer)
 Allows you to add a function to listen for the document's real-time changes event. The `onSnapshot` method has the following additional overloads:
 
 ```ts
-onSnapshot(observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
-
-onSnapshot(options: SnapshotListenOptions, observer: { complete?: () => void; error?: (error: Error) => void; next?: (snapshot: DocumentSnapshot<T>) => void }): () => void;
-
-onSnapshot(onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
-
-onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: DocumentSnapshot<T>) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
-
+document.onSnapshot(observer)
+//OR
+document.onSnapshot(options,observer)
+//OR
+document.onSnapshot(onNext, onError, onCompletion)
+//OR
+document.onSnapshot(options,onNext, onError,onCompletion)
 ```
+| Parameter | Type | Description
+|-----------|------|------------
+| `observer` | [IObserver](#observer-interface) | 
+| `options` |  [SnapshotListenOptions](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L177-L179)| 
+| `onNext` |  `(snapshot: QuerySnapshot) => void` | _Optional_
+| `onError` |  `(error: Error) => void` | _Optional_
+| `onCompletion` |  `() => void`| _Optional_
+
 
 ---
 #### update()
@@ -943,13 +1178,21 @@ update(data).then(()=>{
 }).catch(err =>{
 
 })
-```
-Allows you to update this document with the specified data. The method has the following overloads:
-```ts
-update(data: Partial<{ [K in keyof T]: FieldValue | T[K] }>): Promise<void>;
+//OR
+update(field,value,moreFieldsAndValues).then(()=>{
 
-update(field: FieldPath | keyof T, value: any, moreFieldsAndValues: any[]): Promise<void>;
+}).catch(err =>{
+
+})
 ```
+| Parameter | Type | Description
+|--------|---------|---------
+| `data` | `Partial<{ [K in keyof T]: FieldValue | T[K] }>)` | 
+| `field` | [FieldPath](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L412-L421) | 
+| `value` | `any` | 
+| `moreFieldsAndValues` | `any[]`
+
+Allows you to update this document with the specified data.
 
 ### DocumentSnapshot object
 
@@ -1027,7 +1270,7 @@ document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
 // handle any error here
 })
 ```
-Extracts the fields of data.
+Extracts the fields of the document data.
 
 ---
 #### get()
@@ -1038,12 +1281,105 @@ document.get(options).then((snapshot: DocumentSnapshot<T>)=>{
 // handle any error here
 })
 ```
+Returns the value for the specified field. If the field does not exist, it returns `null`.
 | Parameter | Type | Description
 |-----------|-----|-----------
 | `fieldPath` | `string \| number \| FieldPath` | "Returns the value at the field or null if the field doesn't exist."
 
 ---
 
+### Transaction class
+#### android
+```ts
+firestore().runTransaction(async transaction => {
+    // 3. Read the document's data
+    const transactionAndroid: com.google.firebase.firestore.Transaction  = transaction.android;
+
+  });
+
+```
+Returns the Transaction object for Android.
+
+---
+#### ios
+```ts
+firestore().runTransaction(async transaction => {
+    // 3. Read the document's data
+    const transactionIOS: FIRTransaction = transaction.ios;
+
+  });
+
+```
+Returns the Transaction object for iOS.
+
+---
+#### get()
+```ts
+firestore().runTransaction(async transaction => {
+    // 3. Read the document's data
+    const documentSnapshot: DocumentSnapshot = await transaction.get(documentReference);
+
+  });
+
+```
+Reads the specified document.
+
+---
+#### delete()
+```ts
+firestore().runTransaction(async transaction => {
+    // 3. Read the document's data
+    transactionAfterDelete = transaction.delete(documentReference);
+
+  });
+}
+```
+Deletes the specified `DocumentReference` instance.
+
+---
+#### update()
+```ts
+firestore().runTransaction(async transaction => {
+    // 3. Read the document's data
+    const documentSnapshot = await transaction.get(documentReference);
+
+    if (!documentSnapshot.exists) {
+      throw 'Document does not exist!';
+    }
+// 4. Update the document
+    transactionAfterUpdate = transaction.update(documentReference, data);
+	// OR 
+	transactionAfterUpdate = transaction.update(documentReference, field, value, moreFieldsAndValues);
+	//OR
+	transactionAfterUpdate = transaction.update(documentReference, data);
+
+
+  });
+
+```
+Updates the specified document with the provided data and return the transaction.
+| Parameter | Type | Description
+|-----------|------|-----------
+| `documentReference`| [DocumentReference object](#documentreference-object)| The `DocumentReference` instance to update.
+| `field` | `any` | The document field to update.
+| `value` | `any` | The new value to set.
+| `moreFieldsAndValues` | `any[]`
+
+---
+#### set()
+```ts
+firestore().runTransaction(async transaction => {
+    // 3. Read the document's data
+    const documentSnapshot = await transaction.get(documentReference);
+
+// 4. Set document data
+    transactionAfterSet = transaction.set(documentReference, data);
+  });
+
+```
+Saves data to the specified `DocumentReference`. If the document does not exist, it creates the document.
+
+---
 ## License
 
 Apache License Version 2.0
