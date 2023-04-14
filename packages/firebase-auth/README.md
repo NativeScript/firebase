@@ -360,22 +360,22 @@ The user object has the following members.
 
 #### Methods
 
-| Method | Returns | Description
-|----------|------|-------------
-| `delete()` | `Promise<void>` |
-| `getIdToken(forceRefresh?: undefined | false | true)` | `Promise<string>` |
-| `getIdTokenResult(forceRefresh?: undefined | false | true)` | Promise<AuthTokenResult> |
-| `linkWithCredential(credential: AuthCredential)` | Promise<UserCredential> |
-| `reauthenticateWithProvider(provider: OAuthProvider)` | Promise<UserCredential> |
-| `reauthenticateWithCredential(credential: AuthCredential)` | Promise<UserCredential> |
-| `reload()` | `Promise<void>` |
-| `sendEmailVerification(actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
-| `unlink(providerId: string)` | Promise<User> |
-`updateEmail(email: string)` | `Promise<void>` |
-| `updatePassword(password: string)` | ` Promise<void>` |
-| `updatePhoneNumber(credential: AuthCredential)` | `Promise<void>` |
-| `updateProfile(updates: UserProfileChangeRequest)` | `Promise<void>` |
-| `verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>` |
+| Method                                                                            | Returns                    |
+| --------------------------------------------------------------------------------- | -------------------------- |
+| `delete()`                                                                        | `Promise<void>`            |
+| `getIdToken(forceRefresh?: boolean`                                               | `Promise<string>`          |
+| `getIdTokenResult(forceRefresh?: boolean`                                         | `Promise<AuthTokenResult>` |
+| `linkWithCredential(credential: AuthCredential)`                                  | `Promise<UserCredential>`  |
+| `reauthenticateWithProvider(provider: OAuthProvider)`                             | `Promise<UserCredential>`  |
+| `reauthenticateWithCredential(credential: AuthCredential)`                        | `Promise<UserCredential>`  |
+| `reload()`                                                                        | `Promise<void>`            |
+| `sendEmailVerification(actionCodeSettings?: ActionCodeSettings)`                  | `Promise<void>`            |
+| `unlink(providerId: string)`                                                      | `Promise<User>`            |
+| `updateEmail(email: string)`                                                      | `Promise<void>`            |
+| `updatePassword(password: string)`                                                | `Promise<void>`            |
+| `updatePhoneNumber(credential: AuthCredential)`                                   | `Promise<void>`            |
+| `updateProfile(updates: UserProfileChangeRequest)`                                | `Promise<void>`            |
+| `verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings)` | `Promise<void>`            |
 
 ## License
 
