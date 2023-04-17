@@ -1,5 +1,21 @@
 # @nativescript/firebase-in-app-messaging
 
+## Contents
+
+- [Intro](#intro)
+- [Set up your app for Firebase](#set-up-your-app-for-firebase)
+- [Add the Firebase In-App Messaging SDK to your app](#add-the-firebase-in-app-messaging-sdk-to-your-app)
+- [Firebase In-App Messaging limitations](#firebase-in-app-messaging-limitations)
+- [Create message campaigns](#create-message-campaigns)
+- [Control messages display](#control-messages-display)
+- [Trigger contextual messages](#trigger-contextual-messages)
+- [API](#api)
+  - [InAppMessaging class](#inappmessaging-class)
+    - [app](#app)
+    - [isAutomaticDataCollectionEnabled](#isautomaticdatacollectionenabled)
+    - [isMessagesDisplaySuppressed](#ismessagesdisplaysuppressed)
+    - [triggerEvent()](#triggerevent)
+- [License](#license)
 ## Intro
 
 This plugin allows you to use the [Firebase In-App Messaging SDK](https://firebase.google.com/docs/in-app-messaging) in your NativeScript app.
@@ -13,21 +29,29 @@ You need to set up your app for Firebase before you can use the Firebase in-app 
 
 ## Add the Firebase In-App Messaging SDK to your app
 
-To add the Firebase In-App Messaging SDK to your app, install the `@nativescript/firebase-in-app-messaging` plugin by running the following command in the root directory of your project.
+To add the Firebase In-App Messaging SDK to your app follow these steps:
+
+1. Install the `@nativescript/firebase-in-app-messaging` plugin by running the following command in the root directory of your project.
 
 ```cli
 npm install @nativescript/firebase-in-app-messaging
 ```
+2. Add the SDK by importing the `@nativescript/firebase-in-app-messaging` module in your app's main file (e.g. `app.ts` or `main.ts`).
+```ts
+import '@nativescript/firebase-in-app-messaging';
+```
+
 ## Firebase In-App Messaging limitations
 
+According to a github issue https://github.com/firebase/firebase-ios-sdk/issues/4768, Firebase In-App Messaging allows only 1 campaign per day on app foreground or app launch. This limit is to prevent you from accidentally overwhelming your users with non-contextually appropriate messages. However, if you use contextual triggers (for example Analytics events or programmatically triggered in-app-messaging campaigns), there is no daily rate limit.
 
-According to github issue https://github.com/firebase/firebase-ios-sdk/issues/4768, Firebase In-App Messaging allows only 1 campaign per day on app foreground or app launch. This limit is to prevent you from accidentally overwhelming your users with non-contextually appropriate messages. However, if you use contextual triggers (for example Analytics events or programmatically triggered in-app-messaging campaigns), there is no daily rate limit.
+## Create message campaigns
 
-## Usage
+To create a message campaign, go to the `In-App Messaging` page in the [Firebase Console](https://console.firebase.google.com/u/0/project/_/inappmessaging) and follow the instructions there. You can create campaigns and customize elements such as Image, Banner, Modal & Cards to appear on predefined events (e.g. purchase).
 
-Most of the set up occurs on [Firebase Console](https://console.firebase.google.com/u/0/project/_/inappmessaging) in the In-App Messaging tab. You can create campaigns and customize elements such as Image, Banner, Modal & Cards to appear on predefined events (e.g. purchase). This involves no code for the developer to implement. Any published campaigns from the Firebase Console are automatically handled and displayed on your user's device.
+Any published campaigns from the Firebase Console are automatically handled and displayed on your user's device.
 
-### Control messages display
+## Control messages display
 
 To control whether to display messages or not, set the `isMessagesDisplaySuppressed` property of the `InAppMessaging` instance to `true` or `false`. The `InAppMessaging` instance is returneb calling the `inAppMessaging()` on the FirebaseApp instance. By default, `isMessagesDisplaySuppressed` is set to `false` which means messages will be displayed.
 
@@ -47,7 +71,7 @@ async function onSetup(user) {
 ```
 > **Note:** The suppressed state is not persisted between restarts, so ensure it is called as early as possible ideally in the app bootstrapping file(`app.ts` or `main.ts`).
 
-### Trigger contextual messages
+## Trigger contextual messages
 
 To trigger contextual messages, call the `triggerEvent()` method of the `InAppMessaging` instance with the event name as a parameter. This triggers the display of any messages that are configured on the Firebase Console.
 ```ts
@@ -91,6 +115,10 @@ For the description of this property, see [areMessagesSuppressed](https://fireba
 ```ts
 firebase().inAppMessaging().triggerEvent(eventId);
 ```
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `eventId` | `string` | The name of the event to trigger. 
+
 For the description of this method, see [triggerEvent](https://firebase.google.com/docs/reference/android/com/google/firebase/inappmessaging/FirebaseInAppMessaging#triggerEvent(java.lang.String)) on the Firebase documentation.
 
 ---
