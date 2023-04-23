@@ -16,6 +16,7 @@
 - [@nativescript/firebase-performance](packages/firebase-performance/README.md)
 - [@nativescript/firebase-remote-config](packages/firebase-remote-config/README.md)
 - [@nativescript/firebase-storage](packages/firebase-storage/README.md)
+- [@nativescript/firebase-ui](packages/firebase-ui/README.md)
 
 # How to use?
 
