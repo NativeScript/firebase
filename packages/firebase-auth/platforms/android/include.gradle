@@ -1,5 +1,6 @@
 dependencies {
-    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "28.4.2" }
+    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "31.2.3" }
     implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
+    
     implementation 'com.google.firebase:firebase-auth'
 }

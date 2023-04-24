@@ -207,6 +207,13 @@ module.exports = {
 					description: '@nativescript/firebase-messaging-core: Build',
 				},
 			},
+			// @nativescript/firebase-ui
+			'firebase-ui': {
+				build: {
+					script: 'nx run firebase-ui:build.all',
+					description: '@nativescript/firebase-ui: Build',
+				},
+			},
 			'build-all': {
 				script: 'nx run-many --target=build.all --all',
 				description: 'Build all packages',
@@ -288,6 +295,10 @@ module.exports = {
 			'firebase-messaging-core': {
 				script: 'nx run firebase-messaging-core:focus',
 				description: 'Focus on @nativescript/firebase-messaging-core',
+			},
+			'firebase-ui': {
+				script: 'nx run firebase-ui:focus',
+				description: 'Focus on @nativescript/firebase-ui',
 			},
 			reset: {
 				script: 'nx g @nativescript/plugin-tools:focus-packages',

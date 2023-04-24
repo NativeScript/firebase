@@ -43,6 +43,7 @@ The examples below show you how to use `@nativescript/firebase-analytics` to log
 ### Log custom events
 
 Analytics also allows developers to log custom events. If you're already familiar with Google Analytics, this method is equivalent to using the event command in [gtag.js](https://developers.google.com/gtagjs/).
+
 To log a custom event to Analytics, call the `logEvent` method on an instance of the [Analytics](#analytics-class) class passing it the name of the custom event as the first argument and the event data object as the second argument.
 
 Please be aware that primitive data types or arrays of primitive data types are logged in your Firebase Analytics console.

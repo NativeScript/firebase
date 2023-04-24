@@ -1,3 +1,19 @@
+# [3.0.0-alpha.0](https://github.com/nativescript/firebase/compare/2.5.2...3.0.0-alpha.0) (2023-03-23)
+
+
+### Bug Fixes
+
+* **crashlytics/ios:** record stacktrace for JS errors ([#177](https://github.com/nativescript/firebase/issues/177)) ([155cae4](https://github.com/nativescript/firebase/commit/155cae441ba3ffe7c2038d410edcb7a6de990f9f))
+* remove buildShortDynamicLink call ([#179](https://github.com/nativescript/firebase/issues/179)) ([85c3a4f](https://github.com/nativescript/firebase/commit/85c3a4f53ea744a099013c0894a215552cb5ccbc))
+
+
+### Features
+
+* **dynamic-links:** forward errors to application ([#176](https://github.com/nativescript/firebase/issues/176)) ([a50026e](https://github.com/nativescript/firebase/commit/a50026e59392d2733989f07523d0fc26eb062654))
+* v3 ([0eebaa7](https://github.com/nativescript/firebase/commit/0eebaa7fa5fbf5889d0220e0c1bf2ea454fb18ee))
+
+
+
 ## [2.5.2](https://github.com/nativescript/firebase/compare/2.5.1...2.5.2) (2022-12-27)
 
 

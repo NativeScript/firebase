@@ -1,0 +1,66 @@
+{
+	"name": "firebase-ui",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"projectType": "library",
+	"sourceRoot": "packages/firebase-ui",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"options": {
+				"outputPath": "dist/packages/firebase-ui",
+				"tsConfig": "packages/firebase-ui/tsconfig.json",
+				"packageJson": "packages/firebase-ui/package.json",
+				"main": "packages/firebase-ui/index.d.ts",
+				"assets": [
+					"packages/firebase-ui/*.md",
+					"packages/firebase-ui/index.d.ts",
+					"packages/firebase-ui/typings/*.d.ts",
+					"LICENSE",
+					{
+						"glob": "**/*",
+						"input": "packages/firebase-ui/platforms/",
+						"output": "./platforms/"
+					}
+				],
+				"dependsOn": [
+					{
+						"target": "build.all",
+						"projects": "dependencies"
+					}
+				]
+			}
+		},
+		"build.all": {
+			"executor": "nx:run-commands",
+			"options": {
+				"commands": ["node tools/scripts/build-finish.ts firebase-ui"],
+				"parallel": false
+			},
+			"outputs": ["dist/packages/firebase-ui"],
+			"dependsOn": [
+				{
+					"target": "build.all",
+					"projects": "dependencies"
+				},
+				{
+					"target": "build",
+					"projects": "self"
+				}
+			]
+		},
+		"focus": {
+			"executor": "nx:run-commands",
+			"options": {
+				"commands": ["nx g @nativescript/plugin-tools:focus-packages firebase-ui"],
+				"parallel": false
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": ["packages/firebase-ui/**/*.ts"]
+			}
+		}
+	},
+	"tags": []
+}
