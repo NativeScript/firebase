@@ -1,27 +1,47 @@
 # @nativescript/firebase-analytics
 
+This plugin allows you to add [Google Analytics for Firebase](https://firebase.google.com/docs/analytics)
+ to your app. 
+
+> **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
+
+Analytics collects usage and behavior data for your app. Its two primary concerns are:
+
+- [Events](https://support.google.com/analytics/answer/9234069): These are events that occur in your app, such as user actions, system events, or errors. Google Analytics collects information for 3 types of events: [Automatically collected](https://support.google.com/analytics/answer/9234069?hl=en&ref_topic=13367566), [Recommended](https://support.google.com/analytics/answer/9267735?hl=en&ref_topic=13367566) and [Custom](https://support.google.com/analytics/answer/12229021?hl=en&ref_topic=13367566) events.
+
+- [user properties](https://support.google.com/analytics/answer/9268042): Attributes you define to describe segments of your user base, such as language preference or geographic location.
+
+[![image](https://img.youtube.com/vi/8iZpH7O6zXo/hqdefault.jpg)](https://www.youtube.com/watch?v=8iZpH7O6zXo)
+
+* [Installation](#installation)
+* [Use @nativescript/firebase-analytics](#use-nativescriptfirebase-analytics)
+	* [Log custom events](#log-custom-events)
+	* [Log Predefined Events](#log-predefined-events)
+	* [Reserved Events](#reserved-events)
+	* [Get the app instance id](#get-the-appinstance-id)
+	* [Disable Ad Id usage on iOS](#disable-ad-id-usage-on-ios)
+* [Analytics class API](#analytics-class-api)
+	* [Properties](#properties)
+	* [Methods](#Methods)
+* [License](#License)
+
+## Installation
+Install the plugin by running the following command in the root directory of your project.
+
 ```cli
 npm install @nativescript/firebase-analytics
 ```
 
-## What does it do?
+## Use @nativescript/firebase-analytics
 
-Analytics collects usage and behavior data for your app. Its two primary concerns are:
+The examples below show you how to use `@nativescript/firebase-analytics` to log custom and predefined events.
 
-- **Events**: What is happening in your app, such as user actions, system events, or errors.
-- **User properties**: Attributes you define to describe segments of your user base, such as language preference or geographic location.
+### Log custom events
 
-[![image](https://img.youtube.com/vi/8iZpH7O6zXo/hqdefault.jpg)](https://www.youtube.com/watch?v=8iZpH7O6zXo)
+Analytics also allows developers to log custom events. If you're already familiar with Google Analytics, this method is equivalent to using the event command in [gtag.js](https://developers.google.com/gtagjs/).
+To log a custom event to Analytics, call the `logEvent` method on an instance of the `Analytics` class passing it the name of the custom event as the first argument and the event data object as the second argument.
 
-Analytics automatically logs some [events](https://support.google.com/analytics/answer/9234069) and [user properties](https://support.google.com/analytics/answer/9268042); you don't need to add any code to enable them. However, Analytics also allows you to log custom or predefined events within your app. How you can do this will be explained below.
-
-## Usage
-
-Analytics offers a wealth of Predefined Events to track user behavior. Analytics also offers folks the ability to log Custom Events . If you're already familiar with Google Analytics, this method is equivalent to using the event command in [gtag.js](https://developers.google.com/gtagjs/).
-
-### Custom Events
-
-Below is an example showing how a custom event can be logged. Please be aware that primitive data types or arrays of primitive data types are logged in your Firebase Analytics console.
+Please be aware that primitive data types or arrays of primitive data types are logged in your Firebase Analytics console.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -36,14 +56,15 @@ firebase()
 		size: 'L',
 	});
 ```
+After calling `logEvent`, look for your event name in the Analytics Realtime data to see if it's logged.
 
-### Predefined Events
+### Log Predefined Events
 
-To help you get started, Analytics provides a number of events that are common among different types of apps, including retail and e-commerce, travel, and gaming apps. To learn more about these events and when to use them, browse the [Events and properties articles](https://support.google.com/analytics/answer/9322688?hl=en&ref_topic=9267641) in the Firebase Help Center.
+To help you get started, Google Analytics automatically logs events that are common among different types of apps, including retail and e-commerce, travel, and gaming apps.
 
-Below is a sample of how to use one of the predefined events the Analytics module provides for you.
+To log a predefined event, call the `logEvent` method on the `Analytics` class instance passing it the event name and the [event data](https://support.google.com/analytics/answer/13316687#zippy=%2Cmobile-android-and-ios) object.
 
-Using the [select_content](https://developers.google.com/analytics/devguides/collection/ga4/reference/events#select_content) event
+The following example demonstrates logging the [select_content](https://developers.google.com/analytics/devguides/collection/ga4/reference/events#select_content) event.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -55,25 +76,28 @@ firebase().analytics().logEvent('select_content', {
 	item_id: 'abcd',
 });
 ```
+After calling `logEvent`, look for your event name in the Analytics Realtime data to see if it's logged.
 
 ### Reserved Events
 
-The Analytics package works out of the box, however a number of events are automatically reported to Firebase. These event names are called as 'Reserved Events'. Attempting to send any custom event using the logEvent method with any of the following event names will throw an error.
+In Analytics, the names of the automatically logged events are referred to as [Reserved Events](https://support.google.com/analytics/answer/13316687#zippy=%2Cmobile-android-and-ios). Creating custom events with those names results in an error. Below are some of the Reserved Events names:
 
-| Reserved Events Names |                         |                   |
-| :-------------------: | :---------------------: | :---------------: |
-|    app_clear_data     |      app_uninstall      |    app_update     |
-|         error         |       first_open        |    first_visit    |
-|    first_open_time    |    first_visit_time     |  in_app_purchase  |
-| notification_dismiss  | notification_foreground | notification_open |
-| notification_receive  |        os_update        |   session_start   |
-|      screen_view      |     user_engagement     |   ad_impression   |
-|       ad_click        |        ad_query         |    ad_exposure    |
-|    adunit_exposure    |      ad_activeiew       |
+| Reserved Events Names
+|:-------------------
+| `app_clear_data`
+| `error`    
+| `first_open_time`   
+| `notification_dismiss`
+| `notification_receive` 
+| `screen_view` 
+| `ad_click`      
+| `adunit_exposure`  
 
-### App instance id
+For more Reserved event names, visit [Event naming rules](https://support.google.com/analytics/answer/13316687#zippy=%2Cmobile-android-and-ios).
 
-Below is an example showing how to retrieve the app instance id of the application. This will return null on android if ConsentType.Analytics_Storage has been set to ConsentStatus.Denied.
+### Get the app instance id
+
+To get the app instance id of the application, call the `getAppInstanceId` method. This returns `null` on Android if `ConsentType.Analytics_Storage = ConsentStatus.Denied`.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -83,19 +107,156 @@ const appInstanceId = firebase().analytics().getAppInstanceId();
 
 ### Disable Ad Id usage on iOS
 
-Apple has a strict ban on the usage of Ad Ids ("IDFA") in Kids Category apps. They will not accept any app in the Kids category if the app accesses the IDFA iOS symbols.
+Apple strictly bans an app from being in the Kids category if the app accesses IDFA iOS symbols.
 
-Additionally, apps must implement Apples "App Tracking Transparency" (or "ATT") requirements if they access IDFA symbols. However, if an app does not use IDFA and otherwise handles data in an ATT-compatible way, it eliminates this ATT requirement.
+Additionally, if an app accesses IDFA iOS symbols, it must implement Apple's [App Tracking Transparency](https://developer.apple.com/documentation/apptrackingtransparency)(or `ATT`). However, if an app does not use IDFA and otherwise handles data in an ATT-compatible way, it eliminates this ATT requirement.
 
-If you need to avoid IDFA usage while still using analytics, then you need to define the following variable in your Podfile:
+If you need to avoid IDFA usage while still using analytics, define the following variable in your Podfile:
 
 ```ruby
 $NSFirebaseAnalyticsWithoutAdIdSupport = true
 ```
 
-During pod install, using that variable installs a new "Analytics With No Ad Ids" pod the firebase-ios-sdk team has created, and allows both the use of Firebase Analytics in Kids Category apps, and use of Firebase Analytics without needing the App Tracking Transparency handling (assuming no other parts of your app handle data in a way that requires ATT)
+During pod install, using that variable installs a new `Analytics With No Ad Ids` pod that the firebase-ios-sdk team created, and allows both the use of Firebase Analytics in Kids Category apps and Firebase Analytics without needing the App Tracking Transparency handling (assuming no other parts of your app handles data in a way that requires ATT)
 
-Note that for obvious reasons, configuring Firebase Analytics for use without IDFA is incompatible with AdMob
+Note that for obvious reasons, configuring Firebase Analytics for use without IDFA is incompatible with AdMob.
+
+## Analytics class API
+
+The plugin offers you the Analytics class through which you can manage Firebase Analytics.
+The Analytics class has the following properties and methods.
+
+### Properties
+|Property | Type
+|---------|-----
+| `appInstanceId` | `string` 
+
+### logEvent()
+```ts
+firebase().analytics()
+		.logEvent(name, parameters)
+```
+Sends the specified event data to Google Analytics.
+| Parameter | Type | Description
+|-----------|------|-----------
+| `name` | `string`| The name of the event to log.
+| `parameters` | [EventParameter](#eventparameter)| An object specifying the event data. For the list of supported properties for `parameters` for a Reserved event, visit [FirebaseAnalytics.Param Constants Summary](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Param#constant-summary).
+
+---
+### setUserId()
+
+```ts
+firebase().analytics().setUserId(userId)
+```
+Allows you to store a user ID for the individual using your app. Read more about setting user ID [here](https://firebase.google.com/docs/analytics/userid). 
+
+---
+### resetAnalyticsData()
+```ts
+firebase().analytics().resetAnalyticsData()
+```
+See the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-resetanalyticsdata).
+
+---
+### setAnalyticsCollectionEnabled()
+```ts
+firebase().analytics().setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean)
+```
+A method used to manually disable or enable the collection of analytics data.
+
+- `analyticsCollectionEnabled`: A `boolean` value. If set to `true` analytics data is collected. If set to `false` analytics collection is disabled.
+---
+### setUserProperty()
+
+```ts
+firebase().analytics().setUserProperty(name: string, value: string)
+```
+Sets a user property. For more details, see [Set user properties](https://firebase.google.com/docs/analytics/user-properties?platform=ios).
+
+| Parameter | Type | Description
+|-----------|------|-----------
+| `name` | `string` | The name of the user property to set.
+| `value` | `string` | The value of the user property.
+
+---
+### setSessionTimeoutInterval()
+```ts
+firebase().analytics().setSessionTimeoutInterval(sessionTimeoutInterval: number)
+```
+ For the description, see [setSessionTimeoutDuration](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setsessiontimeoutduration-long-milliseconds).
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `sessionTimeoutInterval` | `number` | The duration of inactivity, in milliseconds. Defaults to `1800000` (`30` minutes).
+
+---
+### setDefaultEventParameters()
+```ts
+firebase().analytics().setDefaultEventParameters(parameters)
+```
+Read the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setdefaulteventparameters-bundle-parameters).
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `parameters` | [EventParameter](#eventparameter) | Parameters object. For the list of supported properties for `parameters` for a Reserved event, visit [FirebaseAnalytics.Param Constants Summary](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics.Param#constant-summary).
+
+#### EventParameter
+```ts
+interface EventParameter {
+	[key: string]: any;
+}
+```
+---
+### setConsent()
+```ts
+firebase().analytics().setConsent(consentSettings)
+```
+See the description [here](https://firebase.google.com/docs/reference/android/com/google/firebase/analytics/FirebaseAnalytics#public-void-setconsent-mapfirebaseanalytics.consenttype,-firebaseanalytics.consentstatus-consentsettings).
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `consentSettings`| Map\<[ConsentType](#consenttype),[ConsentStatus](#consentstatus)\> |
+
+#### ConsentType
+```ts
+enum ConsentType {
+	Ad_Storage,
+	Analytics_Storage,
+}
+```
+#### ConsentStatus
+```ts
+enum ConsentStatus {
+	Denied,
+	Granted,
+}
+```
+
+---
+### handleOpenURL()
+```ts
+firebase().analytics().handleOpenURL(url)
+```
+
+(`iOS-specific`)Handles the event when the app is launched by a URL.
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `url` | `string` | The URL from which to open the app.
+
+---
+### handleUserActivity()
+```ts
+firebase().analytics().handleUserActivity(userActivity)
+```
+
+(`iOS-specific`)Handles the event when the app receives data associated with user activity that includes a Universal Link (on iOS 9.0 and above).
+
+| Parameter | Type | Description
+|----------|-------|------------
+| `userActivity` | `any` | The URL from which to open the app.
+
+---
 
 ## License
 

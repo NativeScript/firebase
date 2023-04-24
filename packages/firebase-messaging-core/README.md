@@ -52,7 +52,11 @@ import { alert } from '@nativescript/core';
 import { MessagingCore } from '@nativescript/firebase-messaging-core';
 
 MessagingCore.getInstance().addOnMessage(async (remoteMessage) => {
-	alert('A new Push message arrived!', JSON.stringify(remoteMessage));
+	if(MessagingCore.inForeground){
+		alert('A new Push message arrived with application inForeground!', JSON.stringify(remoteMessage));
+	}else{
+		alert('A new Push message arrived with application in background!', JSON.stringify(remoteMessage));
+	}
 });
 ```
 

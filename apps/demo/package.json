@@ -23,7 +23,8 @@
 		"@nativescript/firebase-storage": "file:../../packages/firebase-storage",
 		"@nativescript/google-signin": "^1.0.0-alpha.9",
 		"@nativescript/firebase-app-check-debug": "file:../../packages/firebase-app-check-debug",
-		"@nativescript/firebase-messaging-core": "file:../../packages/firebase-messaging-core"
+		"@nativescript/firebase-messaging-core": "file:../../packages/firebase-messaging-core",
+		"@nativescript/firebase-ui": "file:../../packages/firebase-ui"
 	},
 	"devDependencies": {
 		"@nativescript/android": "~8.4.0",

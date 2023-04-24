@@ -17,6 +17,8 @@ declare class FIRAnalytics extends NSObject {
 
 	static resetAnalyticsData(): void;
 
+	static sessionIDWithCompletion(completion: (p1: number, p2: NSError) => void): void;
+
 	static setAnalyticsCollectionEnabled(analyticsCollectionEnabled: boolean): void;
 
 	static setConsent(consentSettings: NSDictionary<string, string>): void;

@@ -215,7 +215,7 @@ export class User implements IUser {
 			} else {
 				NSFirebaseAuth().User.delete(
 					this.native,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -236,7 +236,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.getIdToken(
 					this.native,
 					forceRefresh,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(success);
 						},
@@ -257,7 +257,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.getIdTokenResult(
 					this.native,
 					forceRefresh,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(AuthTokenResult.fromNative(success));
 						},
@@ -278,7 +278,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.linkWithCredential(
 					this.native,
 					credential.native,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -294,11 +294,11 @@ export class User implements IUser {
 	reauthenticateWithProvider(provider: OAuthProvider): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (provider._isCustomProvider && provider._builder) {
-				org.nativescript.firebaseauth.FirebaseAuth.User.reauthenticateWithProvider(
+				org.nativescript.firebase.auth.FirebaseAuth.User.reauthenticateWithProvider(
 					Application.android.foregroundActivity || Application.android.startActivity,
 					this.native,
 					provider._builder,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -324,7 +324,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.reauthenticateWithCredential(
 					this.native,
 					credential.native,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -344,7 +344,7 @@ export class User implements IUser {
 			} else {
 				NSFirebaseAuth().User.reload(
 					this.native,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -365,7 +365,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.sendEmailVerification(
 					this.native,
 					actionCodeSettings?.native ?? null,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -386,7 +386,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.unlink(
 					this.native,
 					providerId,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(User.fromNative(success.getUser()));
 						},
@@ -407,7 +407,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.updateEmail(
 					this.native,
 					email,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -428,7 +428,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.updatePassword(
 					this.native,
 					password,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -449,7 +449,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.updatePhoneNumber(
 					this.native,
 					credential.native,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -479,7 +479,7 @@ export class User implements IUser {
 				NSFirebaseAuth().User.updateProfile(
 					this.native,
 					builder.build(),
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -501,7 +501,7 @@ export class User implements IUser {
 					this.native,
 					email,
 					actionCodeSettings?.native ?? null,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -955,7 +955,7 @@ export class AuthTokenResult implements IAuthTokenResult {
 	}
 }
 
-const NSFirebaseAuth = lazy(() => org.nativescript.firebaseauth.FirebaseAuth);
+const NSFirebaseAuth = lazy(() => org.nativescript.firebase.auth.FirebaseAuth);
 
 export class Auth implements IAuth {
 	_native: com.google.firebase.auth.FirebaseAuth;
@@ -984,7 +984,7 @@ export class Auth implements IAuth {
 			NSFirebaseAuth().fetchSignInMethodsForEmail(
 				this.native,
 				email,
-				new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+				new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 					onSuccess(success) {
 						const nativeArray = success.getSignInMethods().toArray();
 						const arr = [];
@@ -1066,7 +1066,7 @@ export class Auth implements IAuth {
 					this.native,
 					email,
 					actionCodeSettings?.native || null,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -1088,7 +1088,7 @@ export class Auth implements IAuth {
 					this.native,
 					email,
 					actionCodeSettings.native,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -1108,7 +1108,7 @@ export class Auth implements IAuth {
 			} else {
 				NSFirebaseAuth().signInAnonymously(
 					this.native,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -1124,11 +1124,11 @@ export class Auth implements IAuth {
 	signInWithProvider(provider: OAuthProvider): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (provider._isCustomProvider && provider._builder) {
-				org.nativescript.firebaseauth.FirebaseAuth.signInWithProvider(
+				org.nativescript.firebase.auth.FirebaseAuth.signInWithProvider(
 					Application.android.foregroundActivity || Application.android.startActivity,
 					this.native,
 					provider._builder,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -1149,11 +1149,11 @@ export class Auth implements IAuth {
 	getProviderCredential(provider: OAuthProvider): Promise<OAuthCredential> {
 		return new Promise((resolve, reject) => {
 			if (provider._isCustomProvider && provider._builder) {
-				org.nativescript.firebaseauth.FirebaseAuth.signInWithProvider(
+				org.nativescript.firebase.auth.FirebaseAuth.signInWithProvider(
 					Application.android.foregroundActivity || Application.android.startActivity,
 					this.native,
 					provider._builder,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(OAuthCredential.fromNative(success?.getCredential?.() as any));
 						},
@@ -1179,7 +1179,7 @@ export class Auth implements IAuth {
 				NSFirebaseAuth().signInWithCredential(
 					this.native,
 					credential.native,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -1200,7 +1200,7 @@ export class Auth implements IAuth {
 				NSFirebaseAuth().signInWithCustomToken(
 					this.native,
 					customToken,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -1222,7 +1222,7 @@ export class Auth implements IAuth {
 					this.native,
 					email,
 					emailLink,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -1247,7 +1247,7 @@ export class Auth implements IAuth {
 				NSFirebaseAuth().verifyPasswordResetCode(
 					this.native,
 					code,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(success);
 						},
@@ -1269,7 +1269,7 @@ export class Auth implements IAuth {
 					this.native,
 					email,
 					password,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -1292,7 +1292,7 @@ export class Auth implements IAuth {
 				this.native,
 				code,
 				newPassword,
-				new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+				new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 					onSuccess(success) {
 						resolve();
 					},
@@ -1316,7 +1316,7 @@ export class Auth implements IAuth {
 			NSFirebaseAuth().checkActionCode(
 				this.native,
 				code,
-				new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+				new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 					onSuccess(success) {
 						const operation = toActionCodeOperation(success.getOperation());
 						const actionCodeInfo: ActionCodeInfo = {
@@ -1359,7 +1359,7 @@ export class Auth implements IAuth {
 				NSFirebaseAuth().applyActionCode(
 					this.native,
 					code,
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve();
 						},
@@ -1381,7 +1381,7 @@ export class Auth implements IAuth {
 					this.native,
 					email || '',
 					password || '',
-					new org.nativescript.firebaseauth.FirebaseAuth.Callback({
+					new org.nativescript.firebase.auth.FirebaseAuth.Callback({
 						onSuccess(success) {
 							resolve(toUserCredential(success));
 						},
@@ -1394,8 +1394,22 @@ export class Auth implements IAuth {
 		});
 	}
 
-	signOut() {
-		return this.native?.signOut?.();
+	async signOut(): Promise<boolean> {
+		return new Promise((resolve, reject) => {
+			const timeout = setTimeout(() => {
+				reject(false);
+			}, 5000);
+			const listener = (user) => {
+				this.removeAuthStateChangeListener(listener);
+				clearTimeout(timeout);
+				if (user) {
+					reject(false);
+				}
+				resolve(true);
+			};
+			this.addAuthStateChangeListener(listener);
+			this.native?.signOut();
+		});
 	}
 
 	get native() {

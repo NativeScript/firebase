@@ -17,6 +17,7 @@
 		* [Phone number auth setup](#phone-number-auth-setup)
 		* [Sign in user with phone number](#sign-in-user-with-phone-number)
 		* [Testing phone number auth](#testing-phone-number-auth)
+
 * [API](#api)
 	* [Auth class](#auth-class)
 		* [Properties](#properties)
@@ -25,7 +26,6 @@
 		* [Properties](#properties-1)
 		* [Methods](#methods-1)
 	* [UserCredential](#usercredential)
-	
 * [License](#license)
 
 ## Intro
@@ -151,7 +151,18 @@ if (user && !user.emailVerified) {
 To sign a user out, call the `signOut` method on `firebase().auth()`.
 
 ```ts
-firebase().auth().signOut();
+firebase().auth().signOut()
+.then(res => {
+  if(res) {
+    // user signed out
+    return
+  }
+  // else do staff
+});
+
+// OR
+
+let signedOut = await firebase().auth().signOut();
 ```
 
 ### Sign in a user with Apple
@@ -161,6 +172,7 @@ Apple announced that any applications using 3rd party login services (such as Fa
 - Before you begin [configure Sign In with Apple](https://firebase.google.com/docs/auth/ios/apple#configure-sign-in-with-apple) and [enable Apple as a sign-in provider](https://firebase.google.com/docs/auth/ios/apple#enable-apple-as-a-sign-in-provider).
 
 - Next, ensure that the app has the [Sign in with Apple capability](https://developer.apple.com/documentation/xcode/configuring-sign-in-with-apple#Add-the-Sign-in-with-Apple-capability-to-your-app).
+
 
 - Install the `@nativescript/apple-sign-in` plugin. Use the `signIn` method from the plugin to get the user's credentials from Apple.
 - Create an AuthCredential instance from the user's credentials. Call the `signInWithCredential` method passing it the Apple credentials. 
@@ -324,6 +336,7 @@ If providing a test phone number to either the `verifyPhoneNumber` or `signInWit
 ### Auth class
 
 #### Properties
+
 | Property | Type | Description
 |----------|------|-------------
 | `app`| `FirebaseApp` | _readonly_
@@ -358,6 +371,7 @@ If providing a test phone number to either the `verifyPhoneNumber` or `signInWit
 | `signOut()` | `boolean` | Signs the user out.
 | `useUserAccessGroup(userAccessGroup: string)` | `Promise<void>` |
 | `verifyPasswordResetCode(code: string)` | `Promise<string>` | For the description, see [verifyPasswordResetCode](https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#overifypasswordreset) on the Firebase documentation.
+
 
 ### User
 The user object has the following members.
@@ -432,6 +446,7 @@ The user object has the following members.
 | `idToken` | `string` | _readonly_
 | `accessToken` | `string` |_readonly_
 | `secret` | `string` |_readonly_
+
 ## License
 
 Apache License Version 2.0

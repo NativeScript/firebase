@@ -13,6 +13,7 @@ import '@nativescript/firebase-messaging';
 import '@nativescript/firebase-performance';
 import '@nativescript/firebase-remote-config';
 import '@nativescript/firebase-storage';
+import '@nativescript/firebase-ui';
 
 import { Admob } from '@nativescript/firebase-admob';
 

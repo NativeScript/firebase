@@ -111,11 +111,7 @@ declare class FIROptions extends NSObject implements NSCopying {
 
 	readonly isAnalyticsCollectionExplicitlySet: boolean;
 
-	readonly isAnalyticsEnabled: boolean;
-
 	readonly isMeasurementEnabled: boolean;
-
-	readonly isSignInEnabled: boolean;
 
 	readonly libraryVersionID: string;
 

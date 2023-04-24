@@ -7,6 +7,9 @@ import FirebaseMessaging
 #if canImport(FirebaseAuth)
 import FirebaseAuth
 #endif
+#if canImport(FirebaseAuthUI)
+import FirebaseAuthUI
+#endif
 import NSCFirebaseMessagingCore
 
 @objc(NSCUIApplicationDelegate)
@@ -95,11 +98,19 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
     
     
     @objc public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        var result = false
         #if canImport(FirebaseAuth)
-        result = Auth.auth().canHandle(url)
+        if(Auth.auth().canHandle(url)){
+            return true
+        }
         #endif
-        return result
+        
+        #if canImport(FirebaseAuthUI)
+        let sourceApplication = options[UIApplication.OpenURLOptionsKey.sourceApplication] as! String?
+        if(FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false){
+            return true
+        }
+        #endif
+        return false
     }
     
     
