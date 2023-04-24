@@ -733,6 +733,7 @@ Checks if the app, on iOS, has permission to send notifications to the user.
 import { firebase } from '@nativescript/firebase-core';
 firebase().messaging().onMessage(listener);
 ```
+Registers a callback function that is invoked when a new message is received.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
@@ -744,6 +745,8 @@ firebase().messaging().onMessage(listener);
 import { firebase } from '@nativescript/firebase-core';
 firebase().messaging().onNotificationTap(listener);
 ```
+Registers a callback function that is invoked when a user taps on a notification.
+
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `listener` | `(message: RemoteMessage) => any` | A callback function that is invoked when a new message is received |
@@ -754,6 +757,8 @@ firebase().messaging().onNotificationTap(listener);
 import { firebase } from '@nativescript/firebase-core';
 firebase().messaging().onToken(listener);
 ```
+Registers a callback function that is invoked when a user's device changes its registration token.
+
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `listener` | `(token: string) => any` | A callback function that is invoked when  |
@@ -787,6 +792,7 @@ firebase().messaging().requestPermission(permissions)
 
 ---
 #### subscribeToTopic()
+
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 firebase().messaging().subscribeToTopic(topic)
@@ -796,6 +802,8 @@ firebase().messaging().subscribeToTopic(topic)
 		console.log('Error: ', error);
 	});
 ```
+For the description of this method, visit [subscribeToTopic()](https://firebase.google.com/docs/reference/android/com/google/firebase/messaging/FirebaseMessaging#subscribeToTopic(java.lang.String)) on the Firebase website.
+
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `topic` | `string` | The name of the topic to subscribe to. |
@@ -811,6 +819,8 @@ firebase().messaging().unsubscribeFromTopic(topic)
 		console.log('Error: ', error);
 	});
 ```
+For the description of this method, visit [unsubscribeToTopic()](https://firebase.google.com/docs/reference/android/com/google/firebase/messaging/FirebaseMessaging#unsubscribeFromTopic(java.lang.String)) on the Firebase website.
+
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `topic` | `string` | The name of the topic to unsubscribe from. |
@@ -838,6 +848,7 @@ firebase().messaging().deleteToken()
 		console.log('Error: ', error);
 	});
 ```
+For the description of the deleteToken method, visit [deleteToken()](https://firebase.google.com/docs/reference/android/com/google/firebase/messaging/FirebaseMessaging#deleteToken()) on the Firebase website.
 
 ---
 
