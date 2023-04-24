@@ -81,26 +81,55 @@ For instructions to confirm that your Firebase project is properly configured to
 
 You can create a dynamic link via the Firebase console, your app or even your custom API. To create a dynamic link from parameters with the plugin, call the [buildLink](#buildlink) method on the [DynamicLinks class](#dynamiclinks-class) instance passing it a literal object of parameters or an instance of [DynamiclinkParameters](#dynamiclinkparameters) returned by the [createLink](#createlink) or [createShortLink](#createshortlink) method.
 
+
+#### ShortLinkType
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-dynamic-links';
-
-async function buildLink() {
-	const link = await firebase()
-		.dynamicLinks()
-		.buildLink({
-			link: 'https://nativescript.org',
-			// domainUriPrefix is created in your Firebase console
-			domainUriPrefix: 'https://xyz.page.link',
-			// optional setup which updates Firebase analytics campaign
-			// "banner". This also needs setting up before hand
-			analytics: {
-				campaign: 'banner',
-			},
-		});
-
-	return link;
+enum ShortLinkType {
+	DEFAULT = 'default',
+	SHORT = 'short',
+	UNGUESSABLE = 'unguessable',
 }
+```
+---
+#### buildLink()
+```ts
+dynamicLinks = firebase().dynamicLinks()
+
+link: string = dynamicLinks.buildLink(linkParameters)
+```
+Builds a dynamic link from parameters and returns the link as a `string`. Use the returned link to direct the user to your desired content.
+ 
+| Parameter | Type | Description
+|-----------|------|------------
+| `linkParameters` | [DynamicLinkParameters](#dynamiclinkparameters-class) | The dynamic link parameters used to create a dynamic link.
+
+#### onLink()
+```ts
+dynamicLinks: DynamicLinks = firebase().dynamicLinks()
+listener = (link: DynamicLink | null, error: FirebaseError | null) => {
+	// handle the link event
+}
+dynamicLinks.onLink(listener)
+```
+Allows you to add a callback function that gets called when your app's screen is launched by a dynamic link.
+
+| Parameter | Type | Description
+|-----------|-----|------------
+| `listener` | [OnLinkListener](#onlinklistener-type)| The function to be called when the app's screen is launched by a dynamic link.
+
+##### OnLinkListener type
+
+```ts
+type OnLinkListener = (link: DynamicLink | null, error: FirebaseError | null) => void;
+```
+---
+#### resolveLink()
+```ts
+dynamicLinks: DynamicLinks = firebase().dynamicLinks()
+
+dynamicLinks.resolveLink(link).then((dynamicLink: DynamicLink)=>{
+
+})
 ```
 ### Create the parameters of a dynamic link
 
@@ -249,6 +278,137 @@ dynamicLinks.resolveLink(link).then((dynamicLink: DynamicLink)=>{
 
 })
 ```
+
+Resolves the passed string and returns it as a [DynamicLink](#dynamiclink-object) if it's valid. Otherwise, it returns an error.
+
+| Parameter | Type | Description
+|-----------|------|------------
+| `link` | `string` | The string to be resolved.
+
+---
+
+### DynamicLinkAnalyticsParameters class
+Used to create Analytics parameters for a dynamic link.
+
+#### ios
+```ts
+ios = dynamicLinkAnalyticsParameters.ios
+```
+
+--
+#### android
+```ts
+android = dynamicLinkAnalyticsParameters.android
+```
+
+---
+#### campaign
+```ts
+campaign: undefined | string = dynamicLinkAnalyticsParameters.campign
+```
+
+---
+#### content
+```ts
+content: undefined | string = dynamicLinkAnalyticsParameters.content
+// or
+```
+
+---
+#### source
+```ts
+source: undefined | string = dynamicLinkAnalyticsParameters.source
+```
+
+---
+#### term
+```ts
+term: undefined | string = dynamicLinkAnalyticsParameters.term
+```
+
+### DynamicLinkParameters class
+
+#### analytics
+```ts
+dynamicAnalytics: DynamicLinkAnalyticsParameters = dynamicLinkParameters.analytics
+```
+
+---
+#### android
+```ts
+dynamicLinkParametersAndroid: DynamicLinkAnalyticsParameters = dynamicLinkParameters.android
+```
+
+---
+#### ios
+```ts
+dynamicLinkParametersIOS: DynamicLinkAnalyticsParameters = dynamicLinkParameters.ios
+```
+
+---
+#### domainUriPrefix
+```ts
+dynamicDomainUriPrefix: string = dynamicLinkParameters.domainUriPrefix
+```
+
+The URL prefix of the dynamic link.
+
+---
+#### itunes
+```ts
+dynamicLinkITunesParameters: DynamicLinkITunesParameters = dynamicLinkParameters.itunes
+```
+
+---
+#### navigation
+```ts
+dynamicLinkNavigationParameters: DynamicLinkNavigationParameters = dynamicLinkParameters.navigation
+```
+
+Gets or sets navigation info parameters.
+
+---
+#### social
+```ts
+dynamicLinkSocialParameters: DynamicLinkSocialParameters = dynamicLinkParameters.social
+```
+
+---
+
+### DynamicLink object
+This object represents data of the link received by your app.
+#### ios
+```ts
+linkIOS: FIRDynamicLink = link.ios
+```
+
+---
+#### android
+```ts
+linkAndroid: com.google.firebase.dynamiclinks.PendingDynamicLinkData  = link.android
+```
+
+---
+#### minimumAppVersion
+```ts
+minimumAppVersion: string = link.minimumAppVersion
+```
+For the description of this property, see the description of [getMinimumAppVersion()](https://firebase.google.com/docs/reference/android/com/google/firebase/dynamiclinks/PendingDynamicLinkData#getMinimumAppVersion()) on the PendingDynamicLinkData class documentation.
+
+---
+#### url
+```ts
+url: string = link.url
+```
+For the description of this property, see the description of [getUrl()](https://firebase.google.com/docs/reference/android/com/google/firebase/dynamiclinks/PendingDynamicLinkData#getLink()) on the PendingDynamicLinkData class documentation.
+
+---
+#### utmParameters
+```ts
+utmParameters: Record<string, string> = link.utmParameters
+```
+
+For the description of this property, see the description of [getUtmParameters()](https://firebase.google.com/docs/reference/android/com/google/firebase/dynamiclinks/PendingDynamicLinkData#getUtmParameters()) on the PendingDynamicLinkData class documentation.
 
 Resolves the passed string and returns it as a [DynamicLink](#dynamiclink-object) if it's valid. Otherwise, it returns an error.
 

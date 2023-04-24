@@ -21,11 +21,13 @@ declare class FIRStorage extends NSObject {
 
 	maxUploadRetryTime: number;
 
+	uploadChunkSizeBytes: number;
+
 	reference(): FIRStorageReference;
 
-	referenceForURL(string: string): FIRStorageReference;
+	referenceForURL(url: string): FIRStorageReference;
 
-	referenceWithPath(string: string): FIRStorageReference;
+	referenceWithPath(path: string): FIRStorageReference;
 
 	useEmulatorWithHostPort(host: string, port: number): void;
 }
@@ -157,11 +159,11 @@ declare class FIRStorageMetadata extends NSObject {
 
 	readonly updated: Date;
 
-	constructor(o: { dictionary: NSDictionary<string, any> });
+	constructor(o: { dictionary: NSDictionary<string, NSObject> });
 
-	dictionaryRepresentation(): NSDictionary<string, any>;
+	dictionaryRepresentation(): NSDictionary<string, NSObject>;
 
-	initWithDictionary(dictionary: NSDictionary<string, any>): this;
+	initWithDictionary(dictionary: NSDictionary<string, NSObject>): this;
 }
 
 declare class FIRStorageObservableTask extends FIRStorageTask {
@@ -192,8 +194,6 @@ declare class FIRStorageReference extends NSObject {
 	readonly storage: FIRStorage;
 
 	child(path: string): FIRStorageReference;
-
-	copy(zone: interop.Pointer | interop.Reference<any>): FIRStorageReference;
 
 	dataWithMaxSizeCompletion(maxSize: number, completion: (p1: NSData, p2: NSError) => void): FIRStorageDownloadTask;
 

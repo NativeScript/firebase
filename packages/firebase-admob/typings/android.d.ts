@@ -157,16 +157,12 @@ declare module com {
 	export module google {
 		export module ads {
 			export module mediation {
-				export class MediationAdapter<ADDITIONAL_PARAMETERS, SERVER_PARAMETERS>  extends java.lang.Object {
+				export class MediationAdapter<ADDITIONAL_PARAMETERS, SERVER_PARAMETERS> extends java.lang.Object {
 					public static class: java.lang.Class<com.google.ads.mediation.MediationAdapter>;
 					/**
 					 * Constructs a new instance of the com.google.ads.mediation.MediationAdapter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 					 */
-					public constructor(implementation: {
-						destroy(): void;
-						getAdditionalParametersType(): java.lang.Class<ADDITIONAL_PARAMETERS>;
-						getServerParametersType(): java.lang.Class<SERVER_PARAMETERS>;
-					});
+					public constructor(implementation: { destroy(): void; getAdditionalParametersType(): java.lang.Class<ADDITIONAL_PARAMETERS>; getServerParametersType(): java.lang.Class<SERVER_PARAMETERS> });
 					public constructor();
 					public getServerParametersType(): java.lang.Class<SERVER_PARAMETERS>;
 					public destroy(): void;
@@ -181,18 +177,12 @@ declare module com {
 	export module google {
 		export module ads {
 			export module mediation {
-				export class MediationBannerAdapter<ADDITIONAL_PARAMETERS, SERVER_PARAMETERS>  extends com.google.ads.mediation.MediationAdapter<any,any> {
+				export class MediationBannerAdapter<ADDITIONAL_PARAMETERS, SERVER_PARAMETERS> extends com.google.ads.mediation.MediationAdapter<any, any> {
 					public static class: java.lang.Class<com.google.ads.mediation.MediationBannerAdapter>;
 					/**
 					 * Constructs a new instance of the com.google.ads.mediation.MediationBannerAdapter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 					 */
-					public constructor(implementation: {
-						requestBannerAd(param0: com.google.ads.mediation.MediationBannerListener, param1: globalAndroid.app.Activity, param2: any, param3: com.google.ads.AdSize, param4: com.google.ads.mediation.MediationAdRequest, param5: any): void;
-						getBannerView(): globalAndroid.view.View;
-						destroy(): void;
-						getAdditionalParametersType(): java.lang.Class<any>;
-						getServerParametersType(): java.lang.Class<any>;
-					});
+					public constructor(implementation: { requestBannerAd(param0: com.google.ads.mediation.MediationBannerListener, param1: globalAndroid.app.Activity, param2: any, param3: com.google.ads.AdSize, param4: com.google.ads.mediation.MediationAdRequest, param5: any): void; getBannerView(): globalAndroid.view.View; destroy(): void; getAdditionalParametersType(): java.lang.Class<any>; getServerParametersType(): java.lang.Class<any> });
 					public constructor();
 					public getBannerView(): globalAndroid.view.View;
 					public destroy(): void;
@@ -215,20 +205,20 @@ declare module com {
 					 * Constructs a new instance of the com.google.ads.mediation.MediationBannerListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 					 */
 					public constructor(implementation: {
-						onReceivedAd(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
-						onFailedToReceiveAd(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>, param1: com.google.ads.AdRequest.ErrorCode): void;
-						onPresentScreen(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
-						onDismissScreen(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
-						onLeaveApplication(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
-						onClick(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
+						onReceivedAd(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
+						onFailedToReceiveAd(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>, param1: com.google.ads.AdRequest.ErrorCode): void;
+						onPresentScreen(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
+						onDismissScreen(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
+						onLeaveApplication(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
+						onClick(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
 					});
 					public constructor();
-					public onFailedToReceiveAd(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>, param1: com.google.ads.AdRequest.ErrorCode): void;
-					public onReceivedAd(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
-					public onDismissScreen(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
-					public onPresentScreen(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
-					public onLeaveApplication(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
-					public onClick(param0: com.google.ads.mediation.MediationBannerAdapter<any,any>): void;
+					public onFailedToReceiveAd(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>, param1: com.google.ads.AdRequest.ErrorCode): void;
+					public onReceivedAd(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
+					public onDismissScreen(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
+					public onPresentScreen(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
+					public onLeaveApplication(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
+					public onClick(param0: com.google.ads.mediation.MediationBannerAdapter<any, any>): void;
 				}
 			}
 		}
@@ -239,18 +229,12 @@ declare module com {
 	export module google {
 		export module ads {
 			export module mediation {
-				export class MediationInterstitialAdapter<ADDITIONAL_PARAMETERS, SERVER_PARAMETERS>  extends com.google.ads.mediation.MediationAdapter<any,any> {
+				export class MediationInterstitialAdapter<ADDITIONAL_PARAMETERS, SERVER_PARAMETERS> extends com.google.ads.mediation.MediationAdapter<any, any> {
 					public static class: java.lang.Class<com.google.ads.mediation.MediationInterstitialAdapter>;
 					/**
 					 * Constructs a new instance of the com.google.ads.mediation.MediationInterstitialAdapter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 					 */
-					public constructor(implementation: {
-						requestInterstitialAd(param0: com.google.ads.mediation.MediationInterstitialListener, param1: globalAndroid.app.Activity, param2: any, param3: com.google.ads.mediation.MediationAdRequest, param4: any): void;
-						showInterstitial(): void;
-						destroy(): void;
-						getAdditionalParametersType(): java.lang.Class<any>;
-						getServerParametersType(): java.lang.Class<any>;
-					});
+					public constructor(implementation: { requestInterstitialAd(param0: com.google.ads.mediation.MediationInterstitialListener, param1: globalAndroid.app.Activity, param2: any, param3: com.google.ads.mediation.MediationAdRequest, param4: any): void; showInterstitial(): void; destroy(): void; getAdditionalParametersType(): java.lang.Class<any>; getServerParametersType(): java.lang.Class<any> });
 					public constructor();
 					public destroy(): void;
 					public getServerParametersType(): java.lang.Class<any>;
@@ -272,19 +256,13 @@ declare module com {
 					/**
 					 * Constructs a new instance of the com.google.ads.mediation.MediationInterstitialListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 					 */
-					public constructor(implementation: {
-						onReceivedAd(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>): void;
-						onFailedToReceiveAd(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>, param1: com.google.ads.AdRequest.ErrorCode): void;
-						onPresentScreen(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>): void;
-						onDismissScreen(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>): void;
-						onLeaveApplication(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>): void;
-					});
+					public constructor(implementation: { onReceivedAd(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>): void; onFailedToReceiveAd(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>, param1: com.google.ads.AdRequest.ErrorCode): void; onPresentScreen(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>): void; onDismissScreen(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>): void; onLeaveApplication(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>): void });
 					public constructor();
-					public onLeaveApplication(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>): void;
-					public onReceivedAd(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>): void;
-					public onFailedToReceiveAd(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>, param1: com.google.ads.AdRequest.ErrorCode): void;
-					public onPresentScreen(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>): void;
-					public onDismissScreen(param0: com.google.ads.mediation.MediationInterstitialAdapter<any,any>): void;
+					public onLeaveApplication(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>): void;
+					public onReceivedAd(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>): void;
+					public onFailedToReceiveAd(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>, param1: com.google.ads.AdRequest.ErrorCode): void;
+					public onPresentScreen(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>): void;
+					public onDismissScreen(param0: com.google.ads.mediation.MediationInterstitialAdapter<any, any>): void;
 				}
 			}
 		}
@@ -298,7 +276,7 @@ declare module com {
 				export abstract class MediationServerParameters {
 					public static class: java.lang.Class<com.google.ads.mediation.MediationServerParameters>;
 					public constructor();
-					public load(param0: java.util.Map<string,string>): void;
+					public load(param0: java.util.Map<string, string>): void;
 				}
 				export module MediationServerParameters {
 					export class MappingException {
@@ -310,10 +288,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.ads.mediation.MediationServerParameters$Parameter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							name(): string;
-							required(): boolean;
-						});
+						public constructor(implementation: { name(): string; required(): boolean });
 						public constructor();
 						public name(): string;
 						public required(): boolean;
@@ -333,8 +308,7 @@ declare module com {
 					/**
 					 * Constructs a new instance of the com.google.ads.mediation.NetworkExtras interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 					 */
-					public constructor(implementation: {
-					});
+					public constructor(implementation: {});
 					public constructor();
 				}
 			}
@@ -375,9 +349,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.ads.mediation.customevent.CustomEvent interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							destroy(): void;
-						});
+						public constructor(implementation: { destroy(): void });
 						public constructor();
 						public destroy(): void;
 					}
@@ -423,10 +395,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.ads.mediation.customevent.CustomEventBanner interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							requestBannerAd(param0: com.google.ads.mediation.customevent.CustomEventBannerListener, param1: globalAndroid.app.Activity, param2: string, param3: string, param4: com.google.ads.AdSize, param5: com.google.ads.mediation.MediationAdRequest, param6: any): void;
-							destroy(): void;
-						});
+						public constructor(implementation: { requestBannerAd(param0: com.google.ads.mediation.customevent.CustomEventBannerListener, param1: globalAndroid.app.Activity, param2: string, param3: string, param4: com.google.ads.AdSize, param5: com.google.ads.mediation.MediationAdRequest, param6: any): void; destroy(): void });
 						public constructor();
 						public requestBannerAd(param0: com.google.ads.mediation.customevent.CustomEventBannerListener, param1: globalAndroid.app.Activity, param2: string, param3: string, param4: com.google.ads.AdSize, param5: com.google.ads.mediation.MediationAdRequest, param6: any): void;
 						public destroy(): void;
@@ -447,14 +416,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.ads.mediation.customevent.CustomEventBannerListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onReceivedAd(param0: globalAndroid.view.View): void;
-							onClick(): void;
-							onFailedToReceiveAd(): void;
-							onPresentScreen(): void;
-							onDismissScreen(): void;
-							onLeaveApplication(): void;
-						});
+						public constructor(implementation: { onReceivedAd(param0: globalAndroid.view.View): void; onClick(): void; onFailedToReceiveAd(): void; onPresentScreen(): void; onDismissScreen(): void; onLeaveApplication(): void });
 						public constructor();
 						public onDismissScreen(): void;
 						public onFailedToReceiveAd(): void;
@@ -479,11 +441,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.ads.mediation.customevent.CustomEventInterstitial interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							requestInterstitialAd(param0: com.google.ads.mediation.customevent.CustomEventInterstitialListener, param1: globalAndroid.app.Activity, param2: string, param3: string, param4: com.google.ads.mediation.MediationAdRequest, param5: any): void;
-							showInterstitial(): void;
-							destroy(): void;
-						});
+						public constructor(implementation: { requestInterstitialAd(param0: com.google.ads.mediation.customevent.CustomEventInterstitialListener, param1: globalAndroid.app.Activity, param2: string, param3: string, param4: com.google.ads.mediation.MediationAdRequest, param5: any): void; showInterstitial(): void; destroy(): void });
 						public constructor();
 						public showInterstitial(): void;
 						public destroy(): void;
@@ -505,13 +463,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.ads.mediation.customevent.CustomEventInterstitialListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onReceivedAd(): void;
-							onFailedToReceiveAd(): void;
-							onPresentScreen(): void;
-							onDismissScreen(): void;
-							onLeaveApplication(): void;
-						});
+						public constructor(implementation: { onReceivedAd(): void; onFailedToReceiveAd(): void; onPresentScreen(): void; onDismissScreen(): void; onLeaveApplication(): void });
 						public constructor();
 						public onReceivedAd(): void;
 						public onDismissScreen(): void;
@@ -535,12 +487,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.ads.mediation.customevent.CustomEventListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onFailedToReceiveAd(): void;
-							onPresentScreen(): void;
-							onDismissScreen(): void;
-							onLeaveApplication(): void;
-						});
+						public constructor(implementation: { onFailedToReceiveAd(): void; onPresentScreen(): void; onDismissScreen(): void; onLeaveApplication(): void });
 						public constructor();
 						public onDismissScreen(): void;
 						public onFailedToReceiveAd(): void;
@@ -619,7 +566,7 @@ declare module com {
 				export class zza extends com.google.android.gms.ads.mediation.UnifiedNativeAdMapper {
 					public static class: java.lang.Class<com.google.ads.mediation.zza>;
 					public constructor();
-					public trackViews(param0: globalAndroid.view.View, param1: java.util.Map<string,globalAndroid.view.View>, param2: java.util.Map<string,globalAndroid.view.View>): void;
+					public trackViews(param0: globalAndroid.view.View, param1: java.util.Map<string, globalAndroid.view.View>, param2: java.util.Map<string, globalAndroid.view.View>): void;
 					public constructor(param0: com.google.android.gms.ads.formats.UnifiedNativeAd);
 				}
 			}
@@ -797,8 +744,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.AdInspectorError$AdInspectorErrorCode interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -834,7 +780,7 @@ declare module com {
 		export module android {
 			export module gms {
 				export module ads {
-					export abstract class AdLoadCallback<AdT>  extends java.lang.Object {
+					export abstract class AdLoadCallback<AdT> extends java.lang.Object {
 						public static class: java.lang.Class<com.google.android.gms.ads.AdLoadCallback>;
 						public constructor();
 						public onAdLoaded(param0: AdT): void;
@@ -923,7 +869,6 @@ declare module com {
 							public setAdString(param0: string): com.google.android.gms.ads.AdRequest.Builder;
 							public setContentUrl(param0: string): com.google.android.gms.ads.AdRequest.Builder;
 							public addKeyword(param0: string): com.google.android.gms.ads.AdRequest.Builder;
-							public setLocation(param0: globalAndroid.location.Location): com.google.android.gms.ads.AdRequest.Builder;
 							public addNetworkExtrasBundle(param0: java.lang.Class<any>, param1: globalAndroid.os.Bundle): com.google.android.gms.ads.AdRequest.Builder;
 							public addCustomEventExtrasBundle(param0: java.lang.Class<any>, param1: globalAndroid.os.Bundle): com.google.android.gms.ads.AdRequest.Builder;
 							public build(): com.google.android.gms.ads.AdRequest;
@@ -1019,8 +964,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.AdValue$PrecisionType interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 							public static UNKNOWN: number;
 							public static ESTIMATED: number;
@@ -1162,8 +1106,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.android.gms.ads.MediaAspectRatio interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-						});
+						public constructor(implementation: {});
 						public constructor();
 						public static UNKNOWN: number;
 						public static ANY: number;
@@ -1187,15 +1130,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.android.gms.ads.MediaContent interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							getAspectRatio(): number;
-							getDuration(): number;
-							getCurrentTime(): number;
-							getVideoController(): com.google.android.gms.ads.VideoController;
-							hasVideoContent(): boolean;
-							setMainImage(param0: globalAndroid.graphics.drawable.Drawable): void;
-							getMainImage(): globalAndroid.graphics.drawable.Drawable;
-						});
+						public constructor(implementation: { getAspectRatio(): number; getDuration(): number; getCurrentTime(): number; getVideoController(): com.google.android.gms.ads.VideoController; hasVideoContent(): boolean; setMainImage(param0: globalAndroid.graphics.drawable.Drawable): void; getMainImage(): globalAndroid.graphics.drawable.Drawable });
 						public constructor();
 						public hasVideoContent(): boolean;
 						public getMainImage(): globalAndroid.graphics.drawable.Drawable;
@@ -1289,9 +1224,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.android.gms.ads.MuteThisAdListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onAdMuted(): void;
-						});
+						public constructor(implementation: { onAdMuted(): void });
 						public constructor();
 						public onAdMuted(): void;
 					}
@@ -1311,9 +1244,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.android.gms.ads.MuteThisAdReason interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							getDescription(): string;
-						});
+						public constructor(implementation: { getDescription(): string });
 						public constructor();
 						public getDescription(): string;
 					}
@@ -1333,9 +1264,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.android.gms.ads.OnAdInspectorClosedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onAdInspectorClosed(param0: com.google.android.gms.ads.AdInspectorError): void;
-						});
+						public constructor(implementation: { onAdInspectorClosed(param0: com.google.android.gms.ads.AdInspectorError): void });
 						public constructor();
 						public onAdInspectorClosed(param0: com.google.android.gms.ads.AdInspectorError): void;
 					}
@@ -1355,9 +1284,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.android.gms.ads.OnPaidEventListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onPaidEvent(param0: com.google.android.gms.ads.AdValue): void;
-						});
+						public constructor(implementation: { onPaidEvent(param0: com.google.android.gms.ads.AdValue): void });
 						public constructor();
 						public onPaidEvent(param0: com.google.android.gms.ads.AdValue): void;
 					}
@@ -1377,9 +1304,7 @@ declare module com {
 						/**
 						 * Constructs a new instance of the com.google.android.gms.ads.OnUserEarnedRewardListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 						 */
-						public constructor(implementation: {
-							onUserEarnedReward(param0: com.google.android.gms.ads.rewarded.RewardItem): void;
-						});
+						public constructor(implementation: { onUserEarnedReward(param0: com.google.android.gms.ads.rewarded.RewardItem): void });
 						public constructor();
 						public onUserEarnedReward(param0: com.google.android.gms.ads.rewarded.RewardItem): void;
 					}
@@ -1428,8 +1353,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.RequestConfiguration$MaxAdContentRating interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 						export class TagForChildDirectedTreatment {
@@ -1437,8 +1361,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.RequestConfiguration$TagForChildDirectedTreatment interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 						export class TagForUnderAgeOfConsent {
@@ -1446,8 +1369,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.RequestConfiguration$TagForUnderAgeOfConsent interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -1664,9 +1586,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.admanager.AppEventListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onAppEvent(param0: string, param1: string): void;
-							});
+							public constructor(implementation: { onAppEvent(param0: string, param1: string): void });
 							public constructor();
 							public onAppEvent(param0: string, param1: string): void;
 						}
@@ -1725,8 +1645,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.appopen.AppOpenAd$AppOpenAdOrientation interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 						}
@@ -1860,8 +1779,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.formats.NativeAdOptions$AdChoicesPlacement interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 							export class Builder {
@@ -1882,8 +1800,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.formats.NativeAdOptions$NativeMediaAspectRatio interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 						}
@@ -1905,18 +1822,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.formats.NativeCustomTemplateAd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getText(param0: string): string;
-								getImage(param0: string): com.google.android.gms.ads.formats.NativeAd.Image;
-								getVideoController(): com.google.android.gms.ads.VideoController;
-								getVideoMediaView(): com.google.android.gms.ads.formats.MediaView;
-								getAvailableAssetNames(): java.util.List<string>;
-								getCustomTemplateId(): string;
-								performClick(param0: string): void;
-								recordImpression(): void;
-								getDisplayOpenMeasurement(): com.google.android.gms.ads.formats.NativeCustomTemplateAd.DisplayOpenMeasurement;
-								destroy(): void;
-							});
+							public constructor(implementation: { getText(param0: string): string; getImage(param0: string): com.google.android.gms.ads.formats.NativeAd.Image; getVideoController(): com.google.android.gms.ads.VideoController; getVideoMediaView(): com.google.android.gms.ads.formats.MediaView; getAvailableAssetNames(): java.util.List<string>; getCustomTemplateId(): string; performClick(param0: string): void; recordImpression(): void; getDisplayOpenMeasurement(): com.google.android.gms.ads.formats.NativeCustomTemplateAd.DisplayOpenMeasurement; destroy(): void });
 							public constructor();
 							public static ASSET_NAME_VIDEO: string;
 							public getCustomTemplateId(): string;
@@ -1936,10 +1842,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.formats.NativeCustomTemplateAd$DisplayOpenMeasurement interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									start(): boolean;
-									setView(param0: globalAndroid.view.View): void;
-								});
+								public constructor(implementation: { start(): boolean; setView(param0: globalAndroid.view.View): void });
 								public constructor();
 								public start(): boolean;
 								public setView(param0: globalAndroid.view.View): void;
@@ -1949,9 +1852,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.formats.NativeCustomTemplateAd$OnCustomClickListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onCustomClick(param0: com.google.android.gms.ads.formats.NativeCustomTemplateAd, param1: string): void;
-								});
+								public constructor(implementation: { onCustomClick(param0: com.google.android.gms.ads.formats.NativeCustomTemplateAd, param1: string): void });
 								public constructor();
 								public onCustomClick(param0: com.google.android.gms.ads.formats.NativeCustomTemplateAd, param1: string): void;
 							}
@@ -1960,9 +1861,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.formats.NativeCustomTemplateAd$OnCustomTemplateAdLoadedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onCustomTemplateAdLoaded(param0: com.google.android.gms.ads.formats.NativeCustomTemplateAd): void;
-								});
+								public constructor(implementation: { onCustomTemplateAdLoaded(param0: com.google.android.gms.ads.formats.NativeCustomTemplateAd): void });
 								public constructor();
 								public onCustomTemplateAdLoaded(param0: com.google.android.gms.ads.formats.NativeCustomTemplateAd): void;
 							}
@@ -1985,9 +1884,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.formats.OnAdManagerAdViewLoadedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onAdManagerAdViewLoaded(param0: com.google.android.gms.ads.admanager.AdManagerAdView): void;
-							});
+							public constructor(implementation: { onAdManagerAdViewLoaded(param0: com.google.android.gms.ads.admanager.AdManagerAdView): void });
 							public constructor();
 							public onAdManagerAdViewLoaded(param0: com.google.android.gms.ads.admanager.AdManagerAdView): void;
 						}
@@ -2034,9 +1931,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.formats.ShouldDelayBannerRenderingListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								shouldDelayBannerRendering(param0: java.lang.Runnable): boolean;
-							});
+							public constructor(implementation: { shouldDelayBannerRendering(param0: java.lang.Runnable): boolean });
 							public constructor();
 							public shouldDelayBannerRendering(param0: java.lang.Runnable): boolean;
 						}
@@ -2094,9 +1989,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.formats.UnifiedNativeAd$OnUnifiedNativeAdLoadedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onUnifiedNativeAdLoaded(param0: com.google.android.gms.ads.formats.UnifiedNativeAd): void;
-								});
+								public constructor(implementation: { onUnifiedNativeAdLoaded(param0: com.google.android.gms.ads.formats.UnifiedNativeAd): void });
 								public constructor();
 								public onUnifiedNativeAdLoaded(param0: com.google.android.gms.ads.formats.UnifiedNativeAd): void;
 							}
@@ -2105,10 +1998,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.formats.UnifiedNativeAd$UnconfirmedClickListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onUnconfirmedClickReceived(param0: string): void;
-									onUnconfirmedClickCancelled(): void;
-								});
+								public constructor(implementation: { onUnconfirmedClickReceived(param0: string): void; onUnconfirmedClickCancelled(): void });
 								public constructor();
 								public onUnconfirmedClickReceived(param0: string): void;
 								public onUnconfirmedClickCancelled(): void;
@@ -2323,9 +2213,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.h5.OnH5AdsEventListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onH5AdsEvent(param0: string): void;
-							});
+							public constructor(implementation: { onH5AdsEvent(param0: string): void });
 							public constructor();
 							public onH5AdsEvent(param0: string): void;
 						}
@@ -2347,11 +2235,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.initialization.AdapterStatus interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getInitializationState(): com.google.android.gms.ads.initialization.AdapterStatus.State;
-								getDescription(): string;
-								getLatency(): number;
-							});
+							public constructor(implementation: { getInitializationState(): com.google.android.gms.ads.initialization.AdapterStatus.State; getDescription(): string; getLatency(): number });
 							public constructor();
 							public getLatency(): number;
 							public getInitializationState(): com.google.android.gms.ads.initialization.AdapterStatus.State;
@@ -2384,11 +2268,9 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.initialization.InitializationStatus interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getAdapterStatusMap(): java.util.Map<string,com.google.android.gms.ads.initialization.AdapterStatus>;
-							});
+							public constructor(implementation: { getAdapterStatusMap(): java.util.Map<string, com.google.android.gms.ads.initialization.AdapterStatus> });
 							public constructor();
-							public getAdapterStatusMap(): java.util.Map<string,com.google.android.gms.ads.initialization.AdapterStatus>;
+							public getAdapterStatusMap(): java.util.Map<string, com.google.android.gms.ads.initialization.AdapterStatus>;
 						}
 					}
 				}
@@ -2408,9 +2290,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.initialization.OnInitializationCompleteListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onInitializationComplete(param0: com.google.android.gms.ads.initialization.InitializationStatus): void;
-							});
+							public constructor(implementation: { onInitializationComplete(param0: com.google.android.gms.ads.initialization.InitializationStatus): void });
 							public constructor();
 							public onInitializationComplete(param0: com.google.android.gms.ads.initialization.InitializationStatus): void;
 						}
@@ -2834,14 +2714,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.internal.overlay.zzo interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									zzbJ(): void;
-									zzca(): void;
-									zzbE(): void;
-									zzbH(): void;
-									zzbI(): void;
-									zzbK(param0: number): void;
-								});
+								public constructor(implementation: { zzbJ(): void; zzca(): void; zzbE(): void; zzbH(): void; zzbI(): void; zzbK(param0: number): void });
 								public constructor();
 							}
 						}
@@ -2945,10 +2818,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.internal.overlay.zzt interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									zza(param0: boolean): void;
-									zzb(param0: number): void;
-								});
+								public constructor(implementation: { zza(param0: boolean): void; zzb(param0: number): void });
 								public constructor();
 							}
 						}
@@ -2992,9 +2862,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.internal.overlay.zzv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									zzg(): void;
-								});
+								public constructor(implementation: { zzg(): void });
 								public constructor();
 							}
 						}
@@ -3076,9 +2944,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.internal.overlay.zzz interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									zzd(): void;
-								});
+								public constructor(implementation: { zzd(): void });
 								public constructor();
 							}
 						}
@@ -3705,13 +3571,12 @@ declare module com {
 				export module ads {
 					export module internal {
 						export module util {
-							export class zzbd<T>  extends java.lang.Object {
+							export class zzbd<T> extends java.lang.Object {
 								public static class: java.lang.Class<com.google.android.gms.ads.internal.util.zzbd>;
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.internal.util.zzbd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 						}
@@ -3860,13 +3725,12 @@ declare module com {
 				export module ads {
 					export module internal {
 						export module util {
-							export class zzbl<T>  extends java.lang.Object {
+							export class zzbl<T> extends java.lang.Object {
 								public static class: java.lang.Class<com.google.android.gms.ads.internal.util.zzbl>;
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.internal.util.zzbl interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 						}
@@ -3884,7 +3748,7 @@ declare module com {
 				export module ads {
 					export module internal {
 						export module util {
-							export class zzbm<T>  extends java.lang.Object /* com.google.android.gms.internal.ads.zzchj<any>*/ implements any /* com.google.android.gms.internal.ads.zzah<any>*/  {
+							export class zzbm<T> extends java.lang.Object /* com.google.android.gms.internal.ads.zzchj<any>*/ implements any /* com.google.android.gms.internal.ads.zzah<any>*/ {
 								public static class: java.lang.Class<com.google.android.gms.ads.internal.util.zzbm>;
 							}
 						}
@@ -3922,7 +3786,7 @@ declare module com {
 						export module util {
 							export class zzbo extends java.lang.Object /* com.google.android.gms.internal.ads.zzac<com.google.android.gms.internal.ads.zzy>*/ {
 								public static class: java.lang.Class<com.google.android.gms.ads.internal.util.zzbo>;
-								public constructor(param0: string, param1: java.util.Map<string,string>, param2: any /* com.google.android.gms.internal.ads.zzchj<com.google.android.gms.internal.ads.zzy>*/);
+								public constructor(param0: string, param1: java.util.Map<string, string>, param2: any /* com.google.android.gms.internal.ads.zzchj<com.google.android.gms.internal.ads.zzy>*/);
 								public constructor(param0: number, param1: string, param2: any /* com.google.android.gms.internal.ads.zzag*/);
 							}
 						}
@@ -4002,10 +3866,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.internal.util.zzbs interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									zze(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: string, param2: string): boolean;
-									zzf(param0: com.google.android.gms.dynamic.IObjectWrapper): void;
-								});
+								public constructor(implementation: { zze(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: string, param2: string): boolean; zzf(param0: com.google.android.gms.dynamic.IObjectWrapper): void });
 								public constructor();
 							}
 						}
@@ -4023,7 +3884,7 @@ declare module com {
 				export module ads {
 					export module internal {
 						export module util {
-							export class zzbt extends com.google.android.gms.ads.internal.util.zzbu<java.util.Map<string,any>> {
+							export class zzbt extends com.google.android.gms.ads.internal.util.zzbu<java.util.Map<string, any>> {
 								public static class: java.lang.Class<com.google.android.gms.ads.internal.util.zzbt>;
 							}
 						}
@@ -4041,13 +3902,12 @@ declare module com {
 				export module ads {
 					export module internal {
 						export module util {
-							export class zzbu<T>  extends java.lang.Object {
+							export class zzbu<T> extends java.lang.Object {
 								public static class: java.lang.Class<com.google.android.gms.ads.internal.util.zzbu>;
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.internal.util.zzbu interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 						}
@@ -4196,7 +4056,7 @@ declare module com {
 				export module ads {
 					export module internal {
 						export module util {
-							export class zzcb<T>  extends java.lang.Object {
+							export class zzcb<T> extends java.lang.Object {
 								public static class: java.lang.Class<com.google.android.gms.ads.internal.util.zzcb>;
 								public constructor();
 							}
@@ -4873,7 +4733,7 @@ declare module com {
 			export module gms {
 				export module ads {
 					export module internal {
-						export abstract class zzc<T>  extends com.google.android.gms.common.internal.BaseGmsClient<any> {
+						export abstract class zzc<T> extends com.google.android.gms.common.internal.BaseGmsClient<any> {
 							public static class: java.lang.Class<com.google.android.gms.ads.internal.zzc>;
 							public constructor(param0: globalAndroid.content.Context, param1: globalAndroid.os.Looper, param2: number, param3: com.google.android.gms.common.internal.BaseGmsClient.BaseConnectionCallbacks, param4: com.google.android.gms.common.internal.BaseGmsClient.BaseOnConnectionFailedListener, param5: string);
 						}
@@ -4928,11 +4788,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.internal.zzf interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: globalAndroid.view.View): void;
-								zzb(): void;
-								zzc(): void;
-							});
+							public constructor(implementation: { zza(param0: globalAndroid.view.View): void; zzb(): void; zzc(): void });
 							public constructor();
 						}
 					}
@@ -5040,10 +4896,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.internal.zzl interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzbB(): void;
-								zzbC(): void;
-							});
+							public constructor(implementation: { zzbB(): void; zzbC(): void });
 							public constructor();
 						}
 					}
@@ -5110,7 +4963,7 @@ declare module com {
 			export module gms {
 				export module ads {
 					export module internal {
-						export class zzp extends globalAndroid.os.AsyncTask<java.lang.Void,java.lang.Void,string> {
+						export class zzp extends globalAndroid.os.AsyncTask<java.lang.Void, java.lang.Void, string> {
 							public static class: java.lang.Class<com.google.android.gms.ads.internal.zzp>;
 						}
 					}
@@ -5225,14 +5078,14 @@ declare module com {
 						export abstract class Adapter extends com.google.android.gms.ads.mediation.MediationExtrasReceiver {
 							public static class: java.lang.Class<com.google.android.gms.ads.mediation.Adapter>;
 							public constructor();
-							public loadBannerAd(param0: com.google.android.gms.ads.mediation.MediationBannerAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationBannerAd,com.google.android.gms.ads.mediation.MediationBannerAdCallback>): void;
-							public loadRewardedInterstitialAd(param0: com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationRewardedAd,com.google.android.gms.ads.mediation.MediationRewardedAdCallback>): void;
-							public loadRewardedAd(param0: com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationRewardedAd,com.google.android.gms.ads.mediation.MediationRewardedAdCallback>): void;
-							public loadInterscrollerAd(param0: com.google.android.gms.ads.mediation.MediationBannerAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationInterscrollerAd,com.google.android.gms.ads.mediation.MediationBannerAdCallback>): void;
+							public loadBannerAd(param0: com.google.android.gms.ads.mediation.MediationBannerAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationBannerAd, com.google.android.gms.ads.mediation.MediationBannerAdCallback>): void;
+							public loadRewardedInterstitialAd(param0: com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationRewardedAd, com.google.android.gms.ads.mediation.MediationRewardedAdCallback>): void;
+							public loadRewardedAd(param0: com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationRewardedAd, com.google.android.gms.ads.mediation.MediationRewardedAdCallback>): void;
+							public loadInterscrollerAd(param0: com.google.android.gms.ads.mediation.MediationBannerAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationInterscrollerAd, com.google.android.gms.ads.mediation.MediationBannerAdCallback>): void;
 							public initialize(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.InitializationCompleteCallback, param2: java.util.List<com.google.android.gms.ads.mediation.MediationConfiguration>): void;
-							public loadInterstitialAd(param0: com.google.android.gms.ads.mediation.MediationInterstitialAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationInterstitialAd,com.google.android.gms.ads.mediation.MediationInterstitialAdCallback>): void;
+							public loadInterstitialAd(param0: com.google.android.gms.ads.mediation.MediationInterstitialAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationInterstitialAd, com.google.android.gms.ads.mediation.MediationInterstitialAdCallback>): void;
 							public getSDKVersionInfo(): com.google.android.gms.ads.mediation.VersionInfo;
-							public loadNativeAd(param0: com.google.android.gms.ads.mediation.MediationNativeAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.UnifiedNativeAdMapper,com.google.android.gms.ads.mediation.MediationNativeAdCallback>): void;
+							public loadNativeAd(param0: com.google.android.gms.ads.mediation.MediationNativeAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.UnifiedNativeAdMapper, com.google.android.gms.ads.mediation.MediationNativeAdCallback>): void;
 							public getVersionInfo(): com.google.android.gms.ads.mediation.VersionInfo;
 						}
 					}
@@ -5253,10 +5106,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.InitializationCompleteCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onInitializationSucceeded(): void;
-								onInitializationFailed(param0: string): void;
-							});
+							public constructor(implementation: { onInitializationSucceeded(): void; onInitializationFailed(param0: string): void });
 							public constructor();
 							public onInitializationSucceeded(): void;
 							public onInitializationFailed(param0: string): void;
@@ -5279,12 +5129,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationAdCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								reportAdClicked(): void;
-								reportAdImpression(): void;
-								onAdOpened(): void;
-								onAdClosed(): void;
-							});
+							public constructor(implementation: { reportAdClicked(): void; reportAdImpression(): void; onAdOpened(): void; onAdClosed(): void });
 							public constructor();
 							public onAdOpened(): void;
 							public reportAdClicked(): void;
@@ -5327,8 +5172,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationAdConfiguration$TagForChildDirectedTreatment interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 						}
@@ -5345,16 +5189,12 @@ declare module com {
 			export module gms {
 				export module ads {
 					export module mediation {
-						export class MediationAdLoadCallback<MediationAdT, MediationAdCallbackT>  extends java.lang.Object {
+						export class MediationAdLoadCallback<MediationAdT, MediationAdCallbackT> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.ads.mediation.MediationAdLoadCallback>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationAdLoadCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onSuccess(param0: MediationAdT): MediationAdCallbackT;
-								onFailure(param0: string): void;
-								onFailure(param0: com.google.android.gms.ads.AdError): void;
-							});
+							public constructor(implementation: { onSuccess(param0: MediationAdT): MediationAdCallbackT; onFailure(param0: string): void; onFailure(param0: com.google.android.gms.ads.AdError): void });
 							public constructor();
 							public onFailure(param0: com.google.android.gms.ads.AdError): void;
 							/** @deprecated */
@@ -5379,15 +5219,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationAdRequest interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getBirthday(): java.util.Date;
-								getGender(): number;
-								getKeywords(): java.util.Set<string>;
-								getLocation(): globalAndroid.location.Location;
-								taggedForChildDirectedTreatment(): number;
-								isTesting(): boolean;
-								isDesignedForFamilies(): boolean;
-							});
+							public constructor(implementation: { getBirthday(): java.util.Date; getGender(): number; getKeywords(): java.util.Set<string>; getLocation(): globalAndroid.location.Location; taggedForChildDirectedTreatment(): number; isTesting(): boolean; isDesignedForFamilies(): boolean });
 							public constructor();
 							public static TAG_FOR_CHILD_DIRECTED_TREATMENT_FALSE: number;
 							public static TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE: number;
@@ -5421,11 +5253,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationAdapter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onDestroy(): void;
-								onPause(): void;
-								onResume(): void;
-							});
+							public constructor(implementation: { onDestroy(): void; onPause(): void; onResume(): void });
 							public constructor();
 							public onPause(): void;
 							public onDestroy(): void;
@@ -5449,9 +5277,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationBannerAd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getView(): globalAndroid.view.View;
-							});
+							public constructor(implementation: { getView(): globalAndroid.view.View });
 							public constructor();
 							public getView(): globalAndroid.view.View;
 						}
@@ -5473,13 +5299,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationBannerAdCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onAdLeftApplication(): void;
-								reportAdClicked(): void;
-								reportAdImpression(): void;
-								onAdOpened(): void;
-								onAdClosed(): void;
-							});
+							public constructor(implementation: { onAdLeftApplication(): void; reportAdClicked(): void; reportAdImpression(): void; onAdOpened(): void; onAdClosed(): void });
 							public constructor();
 							public onAdOpened(): void;
 							public reportAdClicked(): void;
@@ -5524,13 +5344,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationBannerAdapter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								requestBannerAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.MediationBannerListener, param2: globalAndroid.os.Bundle, param3: com.google.android.gms.ads.AdSize, param4: com.google.android.gms.ads.mediation.MediationAdRequest, param5: globalAndroid.os.Bundle): void;
-								getBannerView(): globalAndroid.view.View;
-								onDestroy(): void;
-								onPause(): void;
-								onResume(): void;
-							});
+							public constructor(implementation: { requestBannerAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.MediationBannerListener, param2: globalAndroid.os.Bundle, param3: com.google.android.gms.ads.AdSize, param4: com.google.android.gms.ads.mediation.MediationAdRequest, param5: globalAndroid.os.Bundle): void; getBannerView(): globalAndroid.view.View; onDestroy(): void; onPause(): void; onResume(): void });
 							public constructor();
 							public getBannerView(): globalAndroid.view.View;
 							public onPause(): void;
@@ -5613,8 +5427,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationExtrasReceiver interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -5635,10 +5448,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationInterscrollerAd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								shouldDelegateInterscrollerEffect(): boolean;
-								getView(): globalAndroid.view.View;
-							});
+							public constructor(implementation: { shouldDelegateInterscrollerEffect(): boolean; getView(): globalAndroid.view.View });
 							public constructor();
 							public shouldDelegateInterscrollerEffect(): boolean;
 							public getView(): globalAndroid.view.View;
@@ -5661,9 +5471,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationInterstitialAd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								showAd(param0: globalAndroid.content.Context): void;
-							});
+							public constructor(implementation: { showAd(param0: globalAndroid.content.Context): void });
 							public constructor();
 							public showAd(param0: globalAndroid.content.Context): void;
 						}
@@ -5685,15 +5493,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationInterstitialAdCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onAdLeftApplication(): void;
-								onAdFailedToShow(param0: string): void;
-								onAdFailedToShow(param0: com.google.android.gms.ads.AdError): void;
-								reportAdClicked(): void;
-								reportAdImpression(): void;
-								onAdOpened(): void;
-								onAdClosed(): void;
-							});
+							public constructor(implementation: { onAdLeftApplication(): void; onAdFailedToShow(param0: string): void; onAdFailedToShow(param0: com.google.android.gms.ads.AdError): void; reportAdClicked(): void; reportAdImpression(): void; onAdOpened(): void; onAdClosed(): void });
 							public constructor();
 							public onAdOpened(): void;
 							public reportAdClicked(): void;
@@ -5739,13 +5539,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationInterstitialAdapter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								requestInterstitialAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.MediationInterstitialListener, param2: globalAndroid.os.Bundle, param3: com.google.android.gms.ads.mediation.MediationAdRequest, param4: globalAndroid.os.Bundle): void;
-								showInterstitial(): void;
-								onDestroy(): void;
-								onPause(): void;
-								onResume(): void;
-							});
+							public constructor(implementation: { requestInterstitialAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.MediationInterstitialListener, param2: globalAndroid.os.Bundle, param3: com.google.android.gms.ads.mediation.MediationAdRequest, param4: globalAndroid.os.Bundle): void; showInterstitial(): void; onDestroy(): void; onPause(): void; onResume(): void });
 							public constructor();
 							public requestInterstitialAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.MediationInterstitialListener, param2: globalAndroid.os.Bundle, param3: com.google.android.gms.ads.mediation.MediationAdRequest, param4: globalAndroid.os.Bundle): void;
 							public onPause(): void;
@@ -5808,18 +5602,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationNativeAdCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onAdLeftApplication(): void;
-								onVideoPause(): void;
-								onVideoPlay(): void;
-								onVideoComplete(): void;
-								onVideoMute(): void;
-								onVideoUnmute(): void;
-								reportAdClicked(): void;
-								reportAdImpression(): void;
-								onAdOpened(): void;
-								onAdClosed(): void;
-							});
+							public constructor(implementation: { onAdLeftApplication(): void; onVideoPause(): void; onVideoPlay(): void; onVideoComplete(): void; onVideoMute(): void; onVideoUnmute(): void; reportAdClicked(): void; reportAdImpression(): void; onAdOpened(): void; onAdClosed(): void });
 							public constructor();
 							public onAdOpened(): void;
 							public onVideoPlay(): void;
@@ -5869,12 +5652,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationNativeAdapter interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								requestNativeAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.MediationNativeListener, param2: globalAndroid.os.Bundle, param3: com.google.android.gms.ads.mediation.NativeMediationAdRequest, param4: globalAndroid.os.Bundle): void;
-								onDestroy(): void;
-								onPause(): void;
-								onResume(): void;
-							});
+							public constructor(implementation: { requestNativeAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.MediationNativeListener, param2: globalAndroid.os.Bundle, param3: com.google.android.gms.ads.mediation.NativeMediationAdRequest, param4: globalAndroid.os.Bundle): void; onDestroy(): void; onPause(): void; onResume(): void });
 							public constructor();
 							public onPause(): void;
 							public requestNativeAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.MediationNativeListener, param2: globalAndroid.os.Bundle, param3: com.google.android.gms.ads.mediation.NativeMediationAdRequest, param4: globalAndroid.os.Bundle): void;
@@ -5942,9 +5720,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationRewardedAd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								showAd(param0: globalAndroid.content.Context): void;
-							});
+							public constructor(implementation: { showAd(param0: globalAndroid.content.Context): void });
 							public constructor();
 							public showAd(param0: globalAndroid.content.Context): void;
 						}
@@ -5966,17 +5742,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.MediationRewardedAdCallback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onUserEarnedReward(param0: com.google.android.gms.ads.rewarded.RewardItem): void;
-								onVideoStart(): void;
-								onVideoComplete(): void;
-								onAdFailedToShow(param0: string): void;
-								onAdFailedToShow(param0: com.google.android.gms.ads.AdError): void;
-								reportAdClicked(): void;
-								reportAdImpression(): void;
-								onAdOpened(): void;
-								onAdClosed(): void;
-							});
+							public constructor(implementation: { onUserEarnedReward(param0: com.google.android.gms.ads.rewarded.RewardItem): void; onVideoStart(): void; onVideoComplete(): void; onAdFailedToShow(param0: string): void; onAdFailedToShow(param0: com.google.android.gms.ads.AdError): void; reportAdClicked(): void; reportAdImpression(): void; onAdOpened(): void; onAdClosed(): void });
 							public constructor();
 							public onAdOpened(): void;
 							public reportAdClicked(): void;
@@ -6024,22 +5790,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.NativeMediationAdRequest interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getNativeAdOptions(): com.google.android.gms.ads.formats.NativeAdOptions;
-								getNativeAdRequestOptions(): com.google.android.gms.ads.nativead.NativeAdOptions;
-								isUnifiedNativeAdRequested(): boolean;
-								isAdMuted(): boolean;
-								getAdVolume(): number;
-								zza(): boolean;
-								zzb(): java.util.Map<string,java.lang.Boolean>;
-								getBirthday(): java.util.Date;
-								getGender(): number;
-								getKeywords(): java.util.Set<string>;
-								getLocation(): globalAndroid.location.Location;
-								taggedForChildDirectedTreatment(): number;
-								isTesting(): boolean;
-								isDesignedForFamilies(): boolean;
-							});
+							public constructor(implementation: { getNativeAdOptions(): com.google.android.gms.ads.formats.NativeAdOptions; getNativeAdRequestOptions(): com.google.android.gms.ads.nativead.NativeAdOptions; isUnifiedNativeAdRequested(): boolean; isAdMuted(): boolean; getAdVolume(): number; zza(): boolean; zzb(): java.util.Map<string, java.lang.Boolean>; getBirthday(): java.util.Date; getGender(): number; getKeywords(): java.util.Set<string>; getLocation(): globalAndroid.location.Location; taggedForChildDirectedTreatment(): number; isTesting(): boolean; isDesignedForFamilies(): boolean });
 							public constructor();
 							public static TAG_FOR_CHILD_DIRECTED_TREATMENT_FALSE: number;
 							public static TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE: number;
@@ -6079,8 +5830,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.NetworkExtras interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -6101,9 +5851,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.OnContextChangedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onContextChanged(param0: globalAndroid.content.Context): void;
-							});
+							public constructor(implementation: { onContextChanged(param0: globalAndroid.content.Context): void });
 							public constructor();
 							public onContextChanged(param0: globalAndroid.content.Context): void;
 						}
@@ -6125,9 +5873,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.OnImmersiveModeUpdatedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onImmersiveModeUpdated(param0: boolean): void;
-							});
+							public constructor(implementation: { onImmersiveModeUpdated(param0: boolean): void });
 							public constructor();
 							public onImmersiveModeUpdated(param0: boolean): void;
 						}
@@ -6156,7 +5902,7 @@ declare module com {
 							public getExtras(): globalAndroid.os.Bundle;
 							public getOverrideClickHandling(): boolean;
 							public getMediaContentAspectRatio(): number;
-							public trackViews(param0: globalAndroid.view.View, param1: java.util.Map<string,globalAndroid.view.View>, param2: java.util.Map<string,globalAndroid.view.View>): void;
+							public trackViews(param0: globalAndroid.view.View, param1: java.util.Map<string, globalAndroid.view.View>, param2: java.util.Map<string, globalAndroid.view.View>): void;
 							public setImages(param0: java.util.List<com.google.android.gms.ads.formats.NativeAd.Image>): void;
 							public getAdChoicesContent(): globalAndroid.view.View;
 							public getOverrideImpressionRecording(): boolean;
@@ -6244,11 +5990,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.customevent.CustomEvent interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onDestroy(): void;
-									onPause(): void;
-									onResume(): void;
-								});
+								public constructor(implementation: { onDestroy(): void; onPause(): void; onResume(): void });
 								public constructor();
 								public onPause(): void;
 								public onResume(): void;
@@ -6301,12 +6043,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.customevent.CustomEventBanner interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									requestBannerAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.customevent.CustomEventBannerListener, param2: string, param3: com.google.android.gms.ads.AdSize, param4: com.google.android.gms.ads.mediation.MediationAdRequest, param5: globalAndroid.os.Bundle): void;
-									onDestroy(): void;
-									onPause(): void;
-									onResume(): void;
-								});
+								public constructor(implementation: { requestBannerAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.customevent.CustomEventBannerListener, param2: string, param3: com.google.android.gms.ads.AdSize, param4: com.google.android.gms.ads.mediation.MediationAdRequest, param5: globalAndroid.os.Bundle): void; onDestroy(): void; onPause(): void; onResume(): void });
 								public constructor();
 								public onPause(): void;
 								public onResume(): void;
@@ -6333,15 +6070,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.customevent.CustomEventBannerListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onAdLoaded(param0: globalAndroid.view.View): void;
-									onAdFailedToLoad(param0: number): void;
-									onAdFailedToLoad(param0: com.google.android.gms.ads.AdError): void;
-									onAdOpened(): void;
-									onAdClicked(): void;
-									onAdClosed(): void;
-									onAdLeftApplication(): void;
-								});
+								public constructor(implementation: { onAdLoaded(param0: globalAndroid.view.View): void; onAdFailedToLoad(param0: number): void; onAdFailedToLoad(param0: com.google.android.gms.ads.AdError): void; onAdOpened(): void; onAdClicked(): void; onAdClosed(): void; onAdLeftApplication(): void });
 								public constructor();
 								public onAdClosed(): void;
 								public onAdClicked(): void;
@@ -6393,13 +6122,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.customevent.CustomEventInterstitial interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									requestInterstitialAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.customevent.CustomEventInterstitialListener, param2: string, param3: com.google.android.gms.ads.mediation.MediationAdRequest, param4: globalAndroid.os.Bundle): void;
-									showInterstitial(): void;
-									onDestroy(): void;
-									onPause(): void;
-									onResume(): void;
-								});
+								public constructor(implementation: { requestInterstitialAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.customevent.CustomEventInterstitialListener, param2: string, param3: com.google.android.gms.ads.mediation.MediationAdRequest, param4: globalAndroid.os.Bundle): void; showInterstitial(): void; onDestroy(): void; onPause(): void; onResume(): void });
 								public constructor();
 								public onPause(): void;
 								public requestInterstitialAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.customevent.CustomEventInterstitialListener, param2: string, param3: com.google.android.gms.ads.mediation.MediationAdRequest, param4: globalAndroid.os.Bundle): void;
@@ -6427,15 +6150,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.customevent.CustomEventInterstitialListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onAdLoaded(): void;
-									onAdFailedToLoad(param0: number): void;
-									onAdFailedToLoad(param0: com.google.android.gms.ads.AdError): void;
-									onAdOpened(): void;
-									onAdClicked(): void;
-									onAdClosed(): void;
-									onAdLeftApplication(): void;
-								});
+								public constructor(implementation: { onAdLoaded(): void; onAdFailedToLoad(param0: number): void; onAdFailedToLoad(param0: com.google.android.gms.ads.AdError): void; onAdOpened(): void; onAdClicked(): void; onAdClosed(): void; onAdLeftApplication(): void });
 								public constructor();
 								public onAdClosed(): void;
 								public onAdClicked(): void;
@@ -6466,14 +6181,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.customevent.CustomEventListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onAdFailedToLoad(param0: number): void;
-									onAdFailedToLoad(param0: com.google.android.gms.ads.AdError): void;
-									onAdOpened(): void;
-									onAdClicked(): void;
-									onAdClosed(): void;
-									onAdLeftApplication(): void;
-								});
+								public constructor(implementation: { onAdFailedToLoad(param0: number): void; onAdFailedToLoad(param0: com.google.android.gms.ads.AdError): void; onAdOpened(): void; onAdClicked(): void; onAdClosed(): void; onAdLeftApplication(): void });
 								public constructor();
 								public onAdClosed(): void;
 								public onAdClicked(): void;
@@ -6503,12 +6211,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.customevent.CustomEventNative interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									requestNativeAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.customevent.CustomEventNativeListener, param2: string, param3: com.google.android.gms.ads.mediation.NativeMediationAdRequest, param4: globalAndroid.os.Bundle): void;
-									onDestroy(): void;
-									onPause(): void;
-									onResume(): void;
-								});
+								public constructor(implementation: { requestNativeAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.customevent.CustomEventNativeListener, param2: string, param3: com.google.android.gms.ads.mediation.NativeMediationAdRequest, param4: globalAndroid.os.Bundle): void; onDestroy(): void; onPause(): void; onResume(): void });
 								public constructor();
 								public onPause(): void;
 								public requestNativeAd(param0: globalAndroid.content.Context, param1: com.google.android.gms.ads.mediation.customevent.CustomEventNativeListener, param2: string, param3: com.google.android.gms.ads.mediation.NativeMediationAdRequest, param4: globalAndroid.os.Bundle): void;
@@ -6535,16 +6238,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.customevent.CustomEventNativeListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onAdLoaded(param0: com.google.android.gms.ads.mediation.UnifiedNativeAdMapper): void;
-									onAdImpression(): void;
-									onAdFailedToLoad(param0: number): void;
-									onAdFailedToLoad(param0: com.google.android.gms.ads.AdError): void;
-									onAdOpened(): void;
-									onAdClicked(): void;
-									onAdClosed(): void;
-									onAdLeftApplication(): void;
-								});
+								public constructor(implementation: { onAdLoaded(param0: com.google.android.gms.ads.mediation.UnifiedNativeAdMapper): void; onAdImpression(): void; onAdFailedToLoad(param0: number): void; onAdFailedToLoad(param0: com.google.android.gms.ads.AdError): void; onAdOpened(): void; onAdClicked(): void; onAdClosed(): void; onAdLeftApplication(): void });
 								public constructor();
 								public onAdImpression(): void;
 								public onAdClosed(): void;
@@ -6658,14 +6352,14 @@ declare module com {
 						export module rtb {
 							export abstract class RtbAdapter extends com.google.android.gms.ads.mediation.Adapter {
 								public static class: java.lang.Class<com.google.android.gms.ads.mediation.rtb.RtbAdapter>;
-								public loadRtbBannerAd(param0: com.google.android.gms.ads.mediation.MediationBannerAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationBannerAd,com.google.android.gms.ads.mediation.MediationBannerAdCallback>): void;
+								public loadRtbBannerAd(param0: com.google.android.gms.ads.mediation.MediationBannerAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationBannerAd, com.google.android.gms.ads.mediation.MediationBannerAdCallback>): void;
 								public collectSignals(param0: com.google.android.gms.ads.mediation.rtb.RtbSignalData, param1: com.google.android.gms.ads.mediation.rtb.SignalCallbacks): void;
-								public loadRtbNativeAd(param0: com.google.android.gms.ads.mediation.MediationNativeAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.UnifiedNativeAdMapper,com.google.android.gms.ads.mediation.MediationNativeAdCallback>): void;
-								public loadRtbInterscrollerAd(param0: com.google.android.gms.ads.mediation.MediationBannerAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationInterscrollerAd,com.google.android.gms.ads.mediation.MediationBannerAdCallback>): void;
-								public loadRtbRewardedInterstitialAd(param0: com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationRewardedAd,com.google.android.gms.ads.mediation.MediationRewardedAdCallback>): void;
+								public loadRtbNativeAd(param0: com.google.android.gms.ads.mediation.MediationNativeAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.UnifiedNativeAdMapper, com.google.android.gms.ads.mediation.MediationNativeAdCallback>): void;
+								public loadRtbInterscrollerAd(param0: com.google.android.gms.ads.mediation.MediationBannerAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationInterscrollerAd, com.google.android.gms.ads.mediation.MediationBannerAdCallback>): void;
+								public loadRtbRewardedInterstitialAd(param0: com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationRewardedAd, com.google.android.gms.ads.mediation.MediationRewardedAdCallback>): void;
 								public constructor();
-								public loadRtbInterstitialAd(param0: com.google.android.gms.ads.mediation.MediationInterstitialAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationInterstitialAd,com.google.android.gms.ads.mediation.MediationInterstitialAdCallback>): void;
-								public loadRtbRewardedAd(param0: com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationRewardedAd,com.google.android.gms.ads.mediation.MediationRewardedAdCallback>): void;
+								public loadRtbInterstitialAd(param0: com.google.android.gms.ads.mediation.MediationInterstitialAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationInterstitialAd, com.google.android.gms.ads.mediation.MediationInterstitialAdCallback>): void;
+								public loadRtbRewardedAd(param0: com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration, param1: com.google.android.gms.ads.mediation.MediationAdLoadCallback<com.google.android.gms.ads.mediation.MediationRewardedAd, com.google.android.gms.ads.mediation.MediationRewardedAdCallback>): void;
 							}
 						}
 					}
@@ -6712,11 +6406,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.mediation.rtb.SignalCallbacks interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onSuccess(param0: string): void;
-									onFailure(param0: string): void;
-									onFailure(param0: com.google.android.gms.ads.AdError): void;
-								});
+								public constructor(implementation: { onSuccess(param0: string): void; onFailure(param0: string): void; onFailure(param0: com.google.android.gms.ads.AdError): void });
 								public constructor();
 								public onFailure(param0: com.google.android.gms.ads.AdError): void;
 								/** @deprecated */
@@ -6759,9 +6449,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.mediation.zzb interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getVideoController(): any /* com.google.android.gms.internal.ads.zzbhg*/;
-							});
+							public constructor(implementation: { getVideoController(): any /* com.google.android.gms.internal.ads.zzbhg*/ });
 							public constructor();
 							public getVideoController(): any /* com.google.android.gms.internal.ads.zzbhg*/;
 						}
@@ -6870,9 +6558,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.nativead.NativeAd$OnNativeAdLoadedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onNativeAdLoaded(param0: com.google.android.gms.ads.nativead.NativeAd): void;
-								});
+								public constructor(implementation: { onNativeAdLoaded(param0: com.google.android.gms.ads.nativead.NativeAd): void });
 								public constructor();
 								public onNativeAdLoaded(param0: com.google.android.gms.ads.nativead.NativeAd): void;
 							}
@@ -6881,10 +6567,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.nativead.NativeAd$UnconfirmedClickListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onUnconfirmedClickReceived(param0: string): void;
-									onUnconfirmedClickCancelled(): void;
-								});
+								public constructor(implementation: { onUnconfirmedClickReceived(param0: string): void; onUnconfirmedClickCancelled(): void });
 								public constructor();
 								public onUnconfirmedClickReceived(param0: string): void;
 								public onUnconfirmedClickCancelled(): void;
@@ -6953,8 +6636,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.nativead.NativeAdOptions$AdChoicesPlacement interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 							export class Builder {
@@ -6973,8 +6655,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.nativead.NativeAdOptions$NativeMediaAspectRatio interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-								});
+								public constructor(implementation: {});
 								public constructor();
 							}
 						}
@@ -7044,7 +6725,7 @@ declare module com {
 					export module nativead {
 						export class NativeAdViewHolder {
 							public static class: java.lang.Class<com.google.android.gms.ads.nativead.NativeAdViewHolder>;
-							public constructor(param0: globalAndroid.view.View, param1: java.util.Map<string,globalAndroid.view.View>, param2: java.util.Map<string,globalAndroid.view.View>);
+							public constructor(param0: globalAndroid.view.View, param1: java.util.Map<string, globalAndroid.view.View>, param2: java.util.Map<string, globalAndroid.view.View>);
 							public unregisterNativeAd(): void;
 							public setNativeAd(param0: com.google.android.gms.ads.nativead.NativeAd): void;
 							public setClickConfirmingView(param0: globalAndroid.view.View): void;
@@ -7067,18 +6748,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.nativead.NativeCustomFormatAd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getText(param0: string): string;
-								getImage(param0: string): com.google.android.gms.ads.nativead.NativeAd.Image;
-								getVideoController(): com.google.android.gms.ads.VideoController;
-								getVideoMediaView(): com.google.android.gms.ads.nativead.MediaView;
-								getAvailableAssetNames(): java.util.List<string>;
-								getCustomFormatId(): string;
-								performClick(param0: string): void;
-								recordImpression(): void;
-								getDisplayOpenMeasurement(): com.google.android.gms.ads.nativead.NativeCustomFormatAd.DisplayOpenMeasurement;
-								destroy(): void;
-							});
+							public constructor(implementation: { getText(param0: string): string; getImage(param0: string): com.google.android.gms.ads.nativead.NativeAd.Image; getVideoController(): com.google.android.gms.ads.VideoController; getVideoMediaView(): com.google.android.gms.ads.nativead.MediaView; getAvailableAssetNames(): java.util.List<string>; getCustomFormatId(): string; performClick(param0: string): void; recordImpression(): void; getDisplayOpenMeasurement(): com.google.android.gms.ads.nativead.NativeCustomFormatAd.DisplayOpenMeasurement; destroy(): void });
 							public constructor();
 							public static ASSET_NAME_VIDEO: string;
 							public getImage(param0: string): com.google.android.gms.ads.nativead.NativeAd.Image;
@@ -7098,10 +6768,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.nativead.NativeCustomFormatAd$DisplayOpenMeasurement interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									start(): boolean;
-									setView(param0: globalAndroid.view.View): void;
-								});
+								public constructor(implementation: { start(): boolean; setView(param0: globalAndroid.view.View): void });
 								public constructor();
 								public start(): boolean;
 								public setView(param0: globalAndroid.view.View): void;
@@ -7111,9 +6778,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.nativead.NativeCustomFormatAd$OnCustomClickListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onCustomClick(param0: com.google.android.gms.ads.nativead.NativeCustomFormatAd, param1: string): void;
-								});
+								public constructor(implementation: { onCustomClick(param0: com.google.android.gms.ads.nativead.NativeCustomFormatAd, param1: string): void });
 								public constructor();
 								public onCustomClick(param0: com.google.android.gms.ads.nativead.NativeCustomFormatAd, param1: string): void;
 							}
@@ -7122,9 +6787,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.nativead.NativeCustomFormatAd$OnCustomFormatAdLoadedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									onCustomFormatAdLoaded(param0: com.google.android.gms.ads.nativead.NativeCustomFormatAd): void;
-								});
+								public constructor(implementation: { onCustomFormatAdLoaded(param0: com.google.android.gms.ads.nativead.NativeCustomFormatAd): void });
 								public constructor();
 								public onCustomFormatAdLoaded(param0: com.google.android.gms.ads.nativead.NativeCustomFormatAd): void;
 							}
@@ -7213,9 +6876,9 @@ declare module com {
 				export module ads {
 					export module nonagon {
 						export module signalgeneration {
-							export class zza extends java.util.LinkedHashMap<string,globalAndroid.util.Pair<java.lang.Long,string>> {
+							export class zza extends java.util.LinkedHashMap<string, globalAndroid.util.Pair<java.lang.Long, string>> {
 								public static class: java.lang.Class<com.google.android.gms.ads.nonagon.signalgeneration.zza>;
-								public removeEldestEntry(param0: java.util.Map.Entry<string,globalAndroid.util.Pair<java.lang.Long,string>>): boolean;
+								public removeEldestEntry(param0: java.util.Map.Entry<string, globalAndroid.util.Pair<java.lang.Long, string>>): boolean;
 							}
 						}
 					}
@@ -7426,11 +7089,7 @@ declare module com {
 								/**
 								 * Constructs a new instance of the com.google.android.gms.ads.nonagon.signalgeneration.zze interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 								 */
-								public constructor(implementation: {
-									zzc(param0: any /* com.google.android.gms.internal.ads.zzdap*/): any /* com.google.android.gms.ads.nonagon.signalgeneration.zze*/;
-									zzb(param0: any /* com.google.android.gms.ads.nonagon.signalgeneration.zzx*/): any /* com.google.android.gms.ads.nonagon.signalgeneration.zze*/;
-									zza(): any /* com.google.android.gms.ads.nonagon.signalgeneration.zzf*/;
-								});
+								public constructor(implementation: { zzc(param0: any /* com.google.android.gms.internal.ads.zzdap*/): any /* com.google.android.gms.ads.nonagon.signalgeneration.zze*/; zzb(param0: any /* com.google.android.gms.ads.nonagon.signalgeneration.zzx*/): any /* com.google.android.gms.ads.nonagon.signalgeneration.zze*/; zza(): any /* com.google.android.gms.ads.nonagon.signalgeneration.zzf*/ });
 								public constructor();
 							}
 						}
@@ -7731,7 +7390,16 @@ declare module com {
 						export module signalgeneration {
 							export class zzu extends java.lang.Object /* com.google.android.gms.internal.ads.zzgjg<com.google.android.gms.ads.nonagon.signalgeneration.zzt>*/ {
 								public static class: java.lang.Class<com.google.android.gms.ads.nonagon.signalgeneration.zzu>;
-								public constructor(param0: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzcop>*/, param1: com.google.android.gms.internal.ads.zzgju<globalAndroid.content.Context>, param2: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzfb>*/, param3: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzezo<com.google.android.gms.internal.ads.zzdqu>>*/, param4: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzfqo>*/, param5: com.google.android.gms.internal.ads.zzgju<java.util.concurrent.ScheduledExecutorService>, param6: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzduu>*/, param7: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzfdh>*/);
+								public constructor(
+									param0: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzcop>*/,
+									param1: com.google.android.gms.internal.ads.zzgju<globalAndroid.content.Context>,
+									param2: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzfb>*/,
+									param3: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzezo<com.google.android.gms.internal.ads.zzdqu>>*/,
+									param4: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzfqo>*/,
+									param5: com.google.android.gms.internal.ads.zzgju<java.util.concurrent.ScheduledExecutorService>,
+									param6: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzduu>*/,
+									param7: any /* com.google.android.gms.internal.ads.zzgju<com.google.android.gms.internal.ads.zzfdh>*/
+								);
 							}
 						}
 					}
@@ -7911,7 +7579,7 @@ declare module com {
 								public static class: java.lang.Class<com.google.android.gms.ads.query.ReportingInfo.Builder>;
 								public build(): com.google.android.gms.ads.query.ReportingInfo;
 								public constructor(param0: globalAndroid.view.View);
-								public setAssetViews(param0: java.util.Map<string,globalAndroid.view.View>): com.google.android.gms.ads.query.ReportingInfo.Builder;
+								public setAssetViews(param0: java.util.Map<string, globalAndroid.view.View>): com.google.android.gms.ads.query.ReportingInfo.Builder;
 							}
 						}
 					}
@@ -7986,9 +7654,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.rewarded.OnAdMetadataChangedListener interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onAdMetadataChanged(): void;
-							});
+							public constructor(implementation: { onAdMetadataChanged(): void });
 							public constructor();
 							public onAdMetadataChanged(): void;
 						}
@@ -8010,11 +7676,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.ads.rewarded.RewardItem interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								getType(): string;
-								getAmount(): number;
-								<clinit>(): void;
-							});
+							public constructor(implementation: { getType(): string; getAmount(): number; <clinit>(): void });
 							public constructor();
 							public static DEFAULT_REWARD: com.google.android.gms.ads.rewarded.RewardItem;
 							public getAmount(): number;
@@ -8598,9 +8260,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaae interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								<clinit>(): void;
-							});
+							public constructor(implementation: { <clinit>(): void });
 							public constructor();
 						}
 					}
@@ -8621,9 +8281,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaaf interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzabb*/, param1: number, param2: number): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzabb*/, param1: number, param2: number): void });
 							public constructor();
 						}
 					}
@@ -8731,9 +8389,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaal interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								<clinit>(): void;
-							});
+							public constructor(implementation: { <clinit>(): void });
 							public constructor();
 						}
 					}
@@ -8870,13 +8526,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaat interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): number;
-								zzb(param0: number): globalAndroid.media.MediaCodecInfo;
-								zzc(): boolean;
-								zzd(param0: string, param1: string, param2: globalAndroid.media.MediaCodecInfo.CodecCapabilities): boolean;
-								zze(param0: string, param1: string, param2: globalAndroid.media.MediaCodecInfo.CodecCapabilities): boolean;
-							});
+							public constructor(implementation: { zza(): number; zzb(param0: number): globalAndroid.media.MediaCodecInfo; zzc(): boolean; zzd(param0: string, param1: string, param2: globalAndroid.media.MediaCodecInfo.CodecCapabilities): boolean; zze(param0: string, param1: string, param2: globalAndroid.media.MediaCodecInfo.CodecCapabilities): boolean });
 							public constructor();
 						}
 					}
@@ -8925,14 +8575,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzaaw<T>  extends java.lang.Object {
+						export class zzaaw<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzaaw>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaaw interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: T): number;
-							});
+							public constructor(implementation: { zza(param0: T): number });
 							public constructor();
 						}
 					}
@@ -9002,10 +8650,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzab interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzac<any>*/, param1: any /* com.google.android.gms.internal.ads.zzai<any>*/): void;
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzac<any>*/): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzac<any>*/, param1: any /* com.google.android.gms.internal.ads.zzai<any>*/): void; zzb(param0: any /* com.google.android.gms.internal.ads.zzac<any>*/): void });
 							public constructor();
 						}
 					}
@@ -9075,9 +8720,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzabd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzkt*/): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzkt*/): void });
 							public constructor();
 						}
 					}
@@ -9122,8 +8765,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzabf interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -9522,7 +9164,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export abstract class zzac<T>  extends java.lang.Object /* java.lang.Comparable<com.google.android.gms.internal.ads.zzac<any>>*/ {
+						export abstract class zzac<T> extends java.lang.Object /* java.lang.Comparable<com.google.android.gms.internal.ads.zzac<any>>*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzac>;
 							public constructor(param0: number, param1: string, param2: any /* com.google.android.gms.internal.ads.zzag*/);
 							public toString(): string;
@@ -9600,8 +9242,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzacd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -10036,9 +9677,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzad interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): void;
-							});
+							public constructor(implementation: { zza(): void });
 							public constructor();
 						}
 					}
@@ -10121,7 +9760,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzade<T>  extends java.lang.Object {
+						export class zzade<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzade>;
 							public constructor(param0: any /* com.google.android.gms.internal.ads.zzadx*/, param1: any /* com.google.android.gms.internal.ads.zzadw*/, param2: any /* com.google.android.gms.internal.ads.zzadd*/);
 						}
@@ -10138,7 +9777,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export abstract class zzadf<T>  extends java.lang.Object /* com.google.android.gms.internal.ads.zzacx*/ {
+						export abstract class zzadf<T> extends java.lang.Object /* com.google.android.gms.internal.ads.zzacx*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzadf>;
 							public constructor();
 						}
@@ -10229,9 +9868,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzadk interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzakr*/): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzakr*/): void });
 							public constructor();
 						}
 					}
@@ -10266,7 +9903,7 @@ declare module com {
 					export module ads {
 						export class zzadm {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzadm>;
-							public constructor(param0: number, param1: any /* com.google.android.gms.internal.ads.zzahx*/, param2: globalAndroid.net.Uri, param3: java.util.Map<string,java.util.List<string>>, param4: number, param5: number, param6: number);
+							public constructor(param0: number, param1: any /* com.google.android.gms.internal.ads.zzahx*/, param2: globalAndroid.net.Uri, param3: java.util.Map<string, java.util.List<string>>, param4: number, param5: number, param6: number);
 						}
 					}
 				}
@@ -10372,10 +10009,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzads interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzj(param0: any /* com.google.android.gms.internal.ads.zzadt*/): void;
-								zzm(param0: any): void;
-							});
+							public constructor(implementation: { zzj(param0: any /* com.google.android.gms.internal.ads.zzadt*/): void; zzm(param0: any): void });
 							public constructor();
 						}
 					}
@@ -10479,9 +10113,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzadw interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzadx*/, param1: any /* com.google.android.gms.internal.ads.zzmv*/): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzadx*/, param1: any /* com.google.android.gms.internal.ads.zzmv*/): void });
 							public constructor();
 						}
 					}
@@ -10567,14 +10199,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzae<T>  extends java.lang.Object {
+						export class zzae<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzae>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzae interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): void;
-							});
+							public constructor(implementation: { zza(): void });
 							public constructor();
 						}
 					}
@@ -10707,8 +10337,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaeg interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -10815,9 +10444,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaem interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): any /* com.google.android.gms.internal.ads.zzaen*/;
-							});
+							public constructor(implementation: { zza(): any /* com.google.android.gms.internal.ads.zzaen*/ });
 							public constructor();
 						}
 					}
@@ -10838,14 +10465,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaen interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzahq*/, param1: globalAndroid.net.Uri, param2: java.util.Map<string,java.util.List<string>>, param3: number, param4: number, param5: any /* com.google.android.gms.internal.ads.zztd*/): void;
-								zzb(): void;
-								zzc(): void;
-								zzd(): number;
-								zze(param0: number, param1: number): void;
-								zzf(param0: any /* com.google.android.gms.internal.ads.zzts*/): number;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzahq*/, param1: globalAndroid.net.Uri, param2: java.util.Map<string, java.util.List<string>>, param3: number, param4: number, param5: any /* com.google.android.gms.internal.ads.zztd*/): void; zzb(): void; zzc(): void; zzd(): number; zze(param0: number, param1: number): void; zzf(param0: any /* com.google.android.gms.internal.ads.zzts*/): number });
 							public constructor();
 						}
 					}
@@ -10934,9 +10554,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaes interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(param0: number, param1: boolean, param2: boolean): void;
-							});
+							public constructor(implementation: { zzb(param0: number, param1: boolean, param2: boolean): void });
 							public constructor();
 						}
 					}
@@ -11007,7 +10625,20 @@ declare module com {
 					export module ads {
 						export class zzaew extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzaew>;
-							public constructor(param0: globalAndroid.net.Uri, param1: any /* com.google.android.gms.internal.ads.zzaht*/, param2: any /* com.google.android.gms.internal.ads.zzaen*/, param3: any /* com.google.android.gms.internal.ads.zzsi*/, param4: any /* com.google.android.gms.internal.ads.zzsd*/, param5: any /* com.google.android.gms.internal.ads.zzaih*/, param6: any /* com.google.android.gms.internal.ads.zzaee*/, param7: any /* com.google.android.gms.internal.ads.zzaes*/, param8: any /* com.google.android.gms.internal.ads.zzahy*/, param9: string, param10: number, param11: native.Array<number>);
+							public constructor(
+								param0: globalAndroid.net.Uri,
+								param1: any /* com.google.android.gms.internal.ads.zzaht*/,
+								param2: any /* com.google.android.gms.internal.ads.zzaen*/,
+								param3: any /* com.google.android.gms.internal.ads.zzsi*/,
+								param4: any /* com.google.android.gms.internal.ads.zzsd*/,
+								param5: any /* com.google.android.gms.internal.ads.zzaih*/,
+								param6: any /* com.google.android.gms.internal.ads.zzaee*/,
+								param7: any /* com.google.android.gms.internal.ads.zzaes*/,
+								param8: any /* com.google.android.gms.internal.ads.zzahy*/,
+								param9: string,
+								param10: number,
+								param11: native.Array<number>
+							);
 						}
 					}
 				}
@@ -11207,9 +10838,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzafh interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzw(param0: any /* com.google.android.gms.internal.ads.zzkc*/): void;
-							});
+							public constructor(implementation: { zzw(param0: any /* com.google.android.gms.internal.ads.zzkc*/): void });
 							public constructor();
 						}
 					}
@@ -11247,12 +10876,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzafj interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): boolean;
-								zzc(): void;
-								zzd(param0: any /* com.google.android.gms.internal.ads.zzkd*/, param1: any /* com.google.android.gms.internal.ads.zzrr*/, param2: number): number;
-								zze(param0: number): number;
-							});
+							public constructor(implementation: { zzb(): boolean; zzc(): void; zzd(param0: any /* com.google.android.gms.internal.ads.zzkd*/, param1: any /* com.google.android.gms.internal.ads.zzrr*/, param2: number): number; zze(param0: number): number });
 							public constructor();
 						}
 					}
@@ -11268,14 +10892,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzafk<T>  extends java.lang.Object {
+						export class zzafk<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzafk>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzafk interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzm(param0: T): void;
-							});
+							public constructor(implementation: { zzm(param0: T): void });
 							public constructor();
 						}
 					}
@@ -11296,13 +10918,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzafl interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzh(): number;
-								zzl(): number;
-								zzn(param0: number): boolean;
-								zzo(): boolean;
-								zzf(param0: number): void;
-							});
+							public constructor(implementation: { zzh(): number; zzl(): number; zzn(param0: number): boolean; zzo(): boolean; zzf(param0: number): void });
 							public constructor();
 						}
 					}
@@ -11369,7 +10985,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzafp<V>  extends java.lang.Object {
+						export class zzafp<V> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzafp>;
 							public constructor();
 							public constructor(param0: any /* com.google.android.gms.internal.ads.zzajk<V>*/);
@@ -11559,8 +11175,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzafz interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -11581,9 +11196,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzag interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzal*/): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzal*/): void });
 							public constructor();
 						}
 					}
@@ -12059,14 +11672,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzah<T>  extends java.lang.Object {
+						export class zzah<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzah>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzah interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: T): void;
-							});
+							public constructor(implementation: { zza(param0: T): void });
 							public constructor();
 						}
 					}
@@ -12108,9 +11719,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzahb interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzk(): void;
-							});
+							public constructor(implementation: { zzk(): void });
 							public constructor();
 						}
 					}
@@ -12268,9 +11877,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzahk interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzV(param0: number, param1: number, param2: number): void;
-							});
+							public constructor(implementation: { zzV(param0: number, param1: number, param2: number): void });
 							public constructor();
 						}
 					}
@@ -12291,10 +11898,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzahl interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: globalAndroid.os.Handler, param1: any /* com.google.android.gms.internal.ads.zzahk*/): void;
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzahk*/): void;
-							});
+							public constructor(implementation: { zza(param0: globalAndroid.os.Handler, param1: any /* com.google.android.gms.internal.ads.zzahk*/): void; zzb(param0: any /* com.google.android.gms.internal.ads.zzahk*/): void });
 							public constructor();
 						}
 					}
@@ -12385,9 +11989,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzahq interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: native.Array<number>, param1: number, param2: number): number;
-							});
+							public constructor(implementation: { zza(param0: native.Array<number>, param1: number, param2: number): number });
 							public constructor();
 						}
 					}
@@ -12426,9 +12028,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzahs interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): any /* com.google.android.gms.internal.ads.zzaht*/;
-							});
+							public constructor(implementation: { zza(): any /* com.google.android.gms.internal.ads.zzaht*/ });
 							public constructor();
 						}
 					}
@@ -12449,14 +12049,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaht interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzajd*/): void;
-								zzc(param0: any /* com.google.android.gms.internal.ads.zzahx*/): number;
-								zzd(): globalAndroid.net.Uri;
-								zze(): java.util.Map<string,java.util.List<string>>;
-								zzf(): void;
-								zza(param0: native.Array<number>, param1: number, param2: number): number;
-							});
+							public constructor(implementation: { zzb(param0: any /* com.google.android.gms.internal.ads.zzajd*/): void; zzc(param0: any /* com.google.android.gms.internal.ads.zzahx*/): number; zzd(): globalAndroid.net.Uri; zze(): java.util.Map<string, java.util.List<string>>; zzf(): void; zza(param0: native.Array<number>, param1: number, param2: number): number });
 							public constructor();
 						}
 					}
@@ -12574,7 +12167,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzai<T>  extends java.lang.Object {
+						export class zzai<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzai>;
 						}
 					}
@@ -12821,7 +12414,7 @@ declare module com {
 					export module ads {
 						export class zzain extends com.google.android.gms.internal.ads.zzaim {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzain>;
-							public constructor(param0: number, param1: string, param2: java.util.Map<string,java.util.List<string>>, param3: any /* com.google.android.gms.internal.ads.zzahx*/, param4: native.Array<number>);
+							public constructor(param0: number, param1: string, param2: java.util.Map<string, java.util.List<string>>, param3: any /* com.google.android.gms.internal.ads.zzahx*/, param4: native.Array<number>);
 							public constructor(param0: java.io.IOException, param1: any /* com.google.android.gms.internal.ads.zzahx*/, param2: number);
 							public constructor(param0: string, param1: any /* com.google.android.gms.internal.ads.zzahx*/, param2: number);
 							public constructor(param0: string, param1: java.io.IOException, param2: any /* com.google.android.gms.internal.ads.zzahx*/, param3: number);
@@ -12861,16 +12454,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaip interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): java.util.Map<string,java.util.List<string>>;
-								<clinit>(): void;
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzajd*/): void;
-								zzc(param0: any /* com.google.android.gms.internal.ads.zzahx*/): number;
-								zzd(): globalAndroid.net.Uri;
-								zze(): java.util.Map<string,java.util.List<string>>;
-								zzf(): void;
-								zza(param0: native.Array<number>, param1: number, param2: number): number;
-							});
+							public constructor(implementation: { zze(): java.util.Map<string, java.util.List<string>>; <clinit>(): void; zzb(param0: any /* com.google.android.gms.internal.ads.zzajd*/): void; zzc(param0: any /* com.google.android.gms.internal.ads.zzahx*/): number; zzd(): globalAndroid.net.Uri; zze(): java.util.Map<string, java.util.List<string>>; zzf(): void; zza(param0: native.Array<number>, param1: number, param2: number): number });
 							public constructor();
 						}
 					}
@@ -12918,16 +12502,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzais<T>  extends java.lang.Object {
+						export class zzais<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzais>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzais interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzz(param0: T, param1: number, param2: number): void;
-								zzy(param0: T, param1: number, param2: number, param3: boolean): void;
-								zzx(param0: T, param1: number, param2: number, param3: java.io.IOException, param4: number): any /* com.google.android.gms.internal.ads.zzait*/;
-							});
+							public constructor(implementation: { zzz(param0: T, param1: number, param2: number): void; zzy(param0: T, param1: number, param2: number, param3: boolean): void; zzx(param0: T, param1: number, param2: number, param3: java.io.IOException, param4: number): any /* com.google.android.gms.internal.ads.zzait*/ });
 							public constructor();
 						}
 					}
@@ -12959,7 +12539,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzaiu<T>  extends globalAndroid.os.Handler implements java.lang.Runnable  {
+						export class zzaiu<T> extends globalAndroid.os.Handler implements java.lang.Runnable {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzaiu>;
 							public constructor(param0: globalAndroid.os.Looper, param1: any, param2: any /* com.google.android.gms.internal.ads.zzais<any>*/, param3: number, param4: number);
 							public handleMessage(param0: globalAndroid.os.Message): void;
@@ -12983,10 +12563,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaiv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): void;
-								zzc(): void;
-							});
+							public constructor(implementation: { zzb(): void; zzc(): void });
 							public constructor();
 						}
 					}
@@ -13007,9 +12584,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaiw interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzm(): void;
-							});
+							public constructor(implementation: { zzm(): void });
 							public constructor();
 						}
 					}
@@ -13234,10 +12809,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzajh interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: globalAndroid.os.Looper, param1: globalAndroid.os.Handler.Callback): any /* com.google.android.gms.internal.ads.zzajt*/;
-								<clinit>(): void;
-							});
+							public constructor(implementation: { zza(param0: globalAndroid.os.Looper, param1: globalAndroid.os.Handler.Callback): any /* com.google.android.gms.internal.ads.zzajt*/; <clinit>(): void });
 							public constructor();
 						}
 					}
@@ -13287,13 +12859,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzajk<T>  extends java.lang.Object {
+						export class zzajk<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzajk>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzajk interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -13346,8 +12917,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzajn interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -13438,9 +13008,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzajs interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): void;
-							});
+							public constructor(implementation: { zza(): void });
 							public constructor();
 						}
 					}
@@ -13523,14 +13091,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzajw<T>  extends java.lang.Object {
+						export class zzajw<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzajw>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzajw interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: T): void;
-							});
+							public constructor(implementation: { zza(param0: T): void });
 							public constructor();
 						}
 					}
@@ -13546,14 +13112,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzajx<T>  extends java.lang.Object {
+						export class zzajx<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzajx>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzajx interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: T, param1: any /* com.google.android.gms.internal.ads.zzajr*/): void;
-							});
+							public constructor(implementation: { zza(param0: T, param1: any /* com.google.android.gms.internal.ads.zzajr*/): void });
 							public constructor();
 						}
 					}
@@ -13569,7 +13133,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzajy<T>  extends java.lang.Object {
+						export class zzajy<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzajy>;
 							public hashCode(): number;
 							public constructor(param0: T);
@@ -13588,7 +13152,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzajz<T>  extends java.lang.Object {
+						export class zzajz<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzajz>;
 							public constructor(param0: globalAndroid.os.Looper, param1: any /* com.google.android.gms.internal.ads.zzajh*/, param2: any /* com.google.android.gms.internal.ads.zzajx<T>*/);
 						}
@@ -13664,11 +13228,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzakc interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzg(): number;
-								zzh(param0: any /* com.google.android.gms.internal.ads.zzll*/): void;
-								zzi(): any /* com.google.android.gms.internal.ads.zzll*/;
-							});
+							public constructor(implementation: { zzg(): number; zzh(param0: any /* com.google.android.gms.internal.ads.zzll*/): void; zzi(): any /* com.google.android.gms.internal.ads.zzll*/ });
 							public constructor();
 						}
 					}
@@ -13837,9 +13397,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzakm interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: number): void;
-							});
+							public constructor(implementation: { zza(param0: number): void });
 							public constructor();
 						}
 					}
@@ -14147,7 +13705,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzald<V>  extends java.lang.Object {
+						export class zzald<V> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzald>;
 							public constructor();
 							public constructor(param0: number);
@@ -14497,8 +14055,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzalx interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -14591,12 +14148,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzamb interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzv(param0: any /* com.google.android.gms.internal.ads.zzamp*/): void;
-								zzac(param0: number, param1: number, param2: number, param3: number): void;
-								zzU(param0: number, param1: number): void;
-								zzad(): void;
-							});
+							public constructor(implementation: { zzv(param0: any /* com.google.android.gms.internal.ads.zzamp*/): void; zzac(param0: number, param1: number, param2: number, param3: number): void; zzU(param0: number, param1: number): void; zzad(): void });
 							public constructor();
 						}
 					}
@@ -14904,14 +14456,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzams interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: string): void;
-								zzf(): void;
-								zzg(param0: native.Array<number>): void;
-								zzh(param0: native.Array<number>): void;
-								zzi(param0: number): void;
-								zzj(param0: number): void;
-							});
+							public constructor(implementation: { zze(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: string): void; zzf(): void; zzg(param0: native.Array<number>): void; zzh(param0: native.Array<number>): void; zzi(param0: number): void; zzj(param0: number): void });
 							public constructor();
 						}
 					}
@@ -14932,9 +14477,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzamt interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: string, param1: string): void;
-							});
+							public constructor(implementation: { zza(param0: string, param1: string): void });
 							public constructor();
 						}
 					}
@@ -15004,15 +14547,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzamx interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzanv*/, param1: any): void;
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzatc*/, param1: any /* com.google.android.gms.internal.ads.zzato*/): void;
-								zzc(param0: boolean): void;
-								zzd(param0: boolean, param1: number): void;
-								zze(param0: any /* com.google.android.gms.internal.ads.zzamw*/): void;
-								zzf(): void;
-								zzg(param0: any /* com.google.android.gms.internal.ads.zzano*/): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzanv*/, param1: any): void; zzb(param0: any /* com.google.android.gms.internal.ads.zzatc*/, param1: any /* com.google.android.gms.internal.ads.zzato*/): void; zzc(param0: boolean): void; zzd(param0: boolean, param1: number): void; zze(param0: any /* com.google.android.gms.internal.ads.zzamw*/): void; zzf(): void; zzg(param0: any /* com.google.android.gms.internal.ads.zzano*/): void });
 							public constructor();
 						}
 					}
@@ -15033,9 +14568,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzamy interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzr(param0: number, param1: any): void;
-							});
+							public constructor(implementation: { zzr(param0: number, param1: any): void });
 							public constructor();
 						}
 					}
@@ -15417,11 +14950,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzanq interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): number;
-								zzG(param0: any /* com.google.android.gms.internal.ads.zzank*/): number;
-								zzq(): number;
-							});
+							public constructor(implementation: { zza(): number; zzG(param0: any /* com.google.android.gms.internal.ads.zzank*/): number; zzq(): number });
 							public constructor();
 						}
 					}
@@ -15580,19 +15109,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzanz interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: number, param1: number, param2: number): boolean;
-								zzb(): boolean;
-								zzc(): number;
-								zzd(): number;
-								zze(param0: java.nio.ByteBuffer): void;
-								zzf(): void;
-								zzg(): java.nio.ByteBuffer;
-								zzh(): boolean;
-								zzi(): void;
-								zzj(): void;
-								<clinit>(): void;
-							});
+							public constructor(implementation: { zza(param0: number, param1: number, param2: number): boolean; zzb(): boolean; zzc(): number; zzd(): number; zze(param0: java.nio.ByteBuffer): void; zzf(): void; zzg(): java.nio.ByteBuffer; zzh(): boolean; zzi(): void; zzj(): void; <clinit>(): void });
 							public constructor();
 						}
 					}
@@ -15749,9 +15266,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaoh interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzh(param0: any /* com.google.android.gms.internal.ads.zzank*/): void;
-							});
+							public constructor(implementation: { zzh(param0: any /* com.google.android.gms.internal.ads.zzank*/): void });
 							public constructor();
 						}
 					}
@@ -15857,8 +15372,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaon interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -16237,13 +15751,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzapi<T>  extends java.lang.Object {
+						export class zzapi<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzapi>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzapi interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -16298,12 +15811,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzapl interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzd(param0: any /* com.google.android.gms.internal.ads.zzapm*/): void;
-								zze(param0: number, param1: number): void;
-								zzf(param0: any /* com.google.android.gms.internal.ads.zzapk*/): boolean;
-								zzg(param0: any /* com.google.android.gms.internal.ads.zzapk*/, param1: any /* com.google.android.gms.internal.ads.zzapq*/): number;
-							});
+							public constructor(implementation: { zzd(param0: any /* com.google.android.gms.internal.ads.zzapm*/): void; zze(param0: number, param1: number): void; zzf(param0: any /* com.google.android.gms.internal.ads.zzapk*/): boolean; zzg(param0: any /* com.google.android.gms.internal.ads.zzapk*/, param1: any /* com.google.android.gms.internal.ads.zzapq*/): number });
 							public constructor();
 						}
 					}
@@ -16324,11 +15832,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzapm interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzbn(param0: number, param1: number): any /* com.google.android.gms.internal.ads.zzapu*/;
-								zzbo(): void;
-								zzc(param0: any /* com.google.android.gms.internal.ads.zzaps*/): void;
-							});
+							public constructor(implementation: { zzbn(param0: number, param1: number): any /* com.google.android.gms.internal.ads.zzapu*/; zzbo(): void; zzc(param0: any /* com.google.android.gms.internal.ads.zzaps*/): void });
 							public constructor();
 						}
 					}
@@ -16349,9 +15853,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzapn interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): any /* native.Array<com.google.android.gms.internal.ads.zzapl>*/;
-							});
+							public constructor(implementation: { zza(): any /* native.Array<com.google.android.gms.internal.ads.zzapl>*/ });
 							public constructor();
 						}
 					}
@@ -16439,11 +15941,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaps interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): boolean;
-								zzb(): number;
-								zzc(param0: number): number;
-							});
+							public constructor(implementation: { zza(): boolean; zzb(): number; zzc(param0: number): number });
 							public constructor();
 						}
 					}
@@ -16483,12 +15981,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzapu interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzank*/): void;
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzaut*/, param1: number): void;
-								zzc(param0: number, param1: number, param2: number, param3: number, param4: any /* com.google.android.gms.internal.ads.zzapt*/): void;
-								zzd(param0: any /* com.google.android.gms.internal.ads.zzapk*/, param1: number, param2: boolean): number;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzank*/): void; zzb(param0: any /* com.google.android.gms.internal.ads.zzaut*/, param1: number): void; zzc(param0: number, param1: number, param2: number, param3: number, param4: any /* com.google.android.gms.internal.ads.zzapt*/): void; zzd(param0: any /* com.google.android.gms.internal.ads.zzapk*/, param1: number, param2: boolean): number });
 							public constructor();
 						}
 					}
@@ -16746,11 +16239,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaqi interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): number;
-								zzb(): number;
-								zzc(): boolean;
-							});
+							public constructor(implementation: { zza(): number; zzb(): number; zzc(): boolean });
 							public constructor();
 						}
 					}
@@ -17173,9 +16662,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzarg interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								<clinit>(): void;
-							});
+							public constructor(implementation: { <clinit>(): void });
 							public constructor();
 						}
 					}
@@ -17247,12 +16734,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzark interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): number;
-								zzb(param0: number): globalAndroid.media.MediaCodecInfo;
-								zzc(): boolean;
-								zzd(param0: string, param1: globalAndroid.media.MediaCodecInfo.CodecCapabilities): boolean;
-							});
+							public constructor(implementation: { zza(): number; zzb(param0: number): globalAndroid.media.MediaCodecInfo; zzc(): boolean; zzd(param0: string, param1: globalAndroid.media.MediaCodecInfo.CodecCapabilities): boolean });
 							public constructor();
 						}
 					}
@@ -17338,8 +16820,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzarp interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -17458,8 +16939,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzarv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -17705,9 +17185,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzasi interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzi(param0: java.io.IOException): void;
-							});
+							public constructor(implementation: { zzi(param0: java.io.IOException): void });
 							public constructor();
 						}
 					}
@@ -17745,10 +17223,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzask interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzbp(param0: any /* com.google.android.gms.internal.ads.zzasl*/): void;
-								zzn(param0: any): void;
-							});
+							public constructor(implementation: { zzbp(param0: any /* com.google.android.gms.internal.ads.zzasl*/): void; zzn(param0: any): void });
 							public constructor();
 						}
 					}
@@ -17803,9 +17278,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzasm interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzi(param0: any /* com.google.android.gms.internal.ads.zzanv*/, param1: any): void;
-							});
+							public constructor(implementation: { zzi(param0: any /* com.google.android.gms.internal.ads.zzanv*/, param1: any): void });
 							public constructor();
 						}
 					}
@@ -17826,13 +17299,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzasn interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzana*/, param1: boolean, param2: any /* com.google.android.gms.internal.ads.zzasm*/): void;
-								zzb(): void;
-								zzc(param0: any /* com.google.android.gms.internal.ads.zzasl*/): void;
-								zzd(): void;
-								zze(param0: number, param1: any /* com.google.android.gms.internal.ads.zzaty*/): any /* com.google.android.gms.internal.ads.zzasl*/;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzana*/, param1: boolean, param2: any /* com.google.android.gms.internal.ads.zzasm*/): void; zzb(): void; zzc(param0: any /* com.google.android.gms.internal.ads.zzasl*/): void; zzd(): void; zze(param0: number, param1: any /* com.google.android.gms.internal.ads.zzaty*/): any /* com.google.android.gms.internal.ads.zzasl*/ });
 							public constructor();
 						}
 					}
@@ -17971,9 +17438,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzasv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzp(param0: any /* com.google.android.gms.internal.ads.zzank*/): void;
-							});
+							public constructor(implementation: { zzp(param0: any /* com.google.android.gms.internal.ads.zzank*/): void });
 							public constructor();
 						}
 					}
@@ -18011,12 +17476,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzasx interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): boolean;
-								zzb(): void;
-								zzc(param0: any /* com.google.android.gms.internal.ads.zzanl*/, param1: any /* com.google.android.gms.internal.ads.zzapd*/, param2: boolean): number;
-								zzd(param0: number): void;
-							});
+							public constructor(implementation: { zza(): boolean; zzb(): void; zzc(param0: any /* com.google.android.gms.internal.ads.zzanl*/, param1: any /* com.google.android.gms.internal.ads.zzapd*/, param2: boolean): number; zzd(param0: number): void });
 							public constructor();
 						}
 					}
@@ -18032,14 +17492,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzasy<T>  extends java.lang.Object {
+						export class zzasy<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzasy>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzasy interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzn(param0: T): void;
-							});
+							public constructor(implementation: { zzn(param0: T): void });
 							public constructor();
 						}
 					}
@@ -18060,10 +17518,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzasz interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): number;
-								zzb(param0: number): boolean;
-							});
+							public constructor(implementation: { zza(): number; zzb(param0: number): boolean });
 							public constructor();
 						}
 					}
@@ -18332,8 +17787,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzatn interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -18373,9 +17827,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzatp interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzk(): void;
-							});
+							public constructor(implementation: { zzk(): void });
 							public constructor();
 						}
 					}
@@ -18464,9 +17916,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzatu interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): any /* com.google.android.gms.internal.ads.zzatv*/;
-							});
+							public constructor(implementation: { zza(): any /* com.google.android.gms.internal.ads.zzatv*/ });
 							public constructor();
 						}
 					}
@@ -18487,12 +17937,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzatv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzatx*/): number;
-								zzb(param0: native.Array<number>, param1: number, param2: number): number;
-								zzc(): globalAndroid.net.Uri;
-								zzd(): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzatx*/): number; zzb(param0: native.Array<number>, param1: number, param2: number): number; zzc(): globalAndroid.net.Uri; zzd(): void });
 							public constructor();
 						}
 					}
@@ -18630,7 +18075,7 @@ declare module com {
 					export module ads {
 						export class zzauc extends com.google.android.gms.internal.ads.zzaub {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzauc>;
-							public constructor(param0: number, param1: java.util.Map<string,java.util.List<string>>, param2: any /* com.google.android.gms.internal.ads.zzatx*/);
+							public constructor(param0: number, param1: java.util.Map<string, java.util.List<string>>, param2: any /* com.google.android.gms.internal.ads.zzatx*/);
 							public constructor(param0: java.io.IOException, param1: any /* com.google.android.gms.internal.ads.zzatx*/, param2: number);
 							public constructor(param0: string, param1: any /* com.google.android.gms.internal.ads.zzatx*/, param2: number);
 							public constructor(param0: string, param1: java.io.IOException, param2: any /* com.google.android.gms.internal.ads.zzatx*/, param3: number);
@@ -18670,14 +18115,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaue interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): java.util.Map<string,java.util.List<string>>;
-								<clinit>(): void;
-								zza(param0: any /* com.google.android.gms.internal.ads.zzatx*/): number;
-								zzb(param0: native.Array<number>, param1: number, param2: number): number;
-								zzc(): globalAndroid.net.Uri;
-								zzd(): void;
-							});
+							public constructor(implementation: { zze(): java.util.Map<string, java.util.List<string>>; <clinit>(): void; zza(param0: any /* com.google.android.gms.internal.ads.zzatx*/): number; zzb(param0: native.Array<number>, param1: number, param2: number): number; zzc(): globalAndroid.net.Uri; zzd(): void });
 							public constructor();
 						}
 					}
@@ -18693,16 +18131,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzauf<T>  extends java.lang.Object {
+						export class zzauf<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzauf>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzauf interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzs(param0: T, param1: number, param2: number): void;
-								zzr(param0: T, param1: number, param2: number, param3: boolean): void;
-								zzq(param0: T, param1: number, param2: number, param3: java.io.IOException): number;
-							});
+							public constructor(implementation: { zzs(param0: T, param1: number, param2: number): void; zzr(param0: T, param1: number, param2: number, param3: boolean): void; zzq(param0: T, param1: number, param2: number, param3: java.io.IOException): number });
 							public constructor();
 						}
 					}
@@ -18718,7 +18152,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzaug<T>  extends globalAndroid.os.Handler implements java.lang.Runnable  {
+						export class zzaug<T> extends globalAndroid.os.Handler implements java.lang.Runnable {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzaug>;
 							public handleMessage(param0: globalAndroid.os.Message): void;
 							public constructor(param0: globalAndroid.os.Looper, param1: any, param2: any /* com.google.android.gms.internal.ads.zzauf<any>*/, param3: number, param4: number);
@@ -18742,11 +18176,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzauh interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): void;
-								zzc(): boolean;
-								zzd(): void;
-							});
+							public constructor(implementation: { zzb(): void; zzc(): boolean; zzd(): void });
 							public constructor();
 						}
 					}
@@ -18796,15 +18226,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzauk<S>  extends java.lang.Object {
+						export class zzauk<S> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzauk>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzauk interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzj(param0: S, param1: any /* com.google.android.gms.internal.ads.zzatx*/): void;
-								zzk(param0: S, param1: number): void;
-							});
+							public constructor(implementation: { zzj(param0: S, param1: any /* com.google.android.gms.internal.ads.zzatx*/): void; zzk(param0: S, param1: number): void });
 							public constructor();
 						}
 					}
@@ -18892,11 +18319,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaup interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzN(): number;
-								zzO(param0: any /* com.google.android.gms.internal.ads.zzano*/): any /* com.google.android.gms.internal.ads.zzano*/;
-								zzP(): any /* com.google.android.gms.internal.ads.zzano*/;
-							});
+							public constructor(implementation: { zzN(): number; zzO(param0: any /* com.google.android.gms.internal.ads.zzano*/): any /* com.google.android.gms.internal.ads.zzano*/; zzP(): any /* com.google.android.gms.internal.ads.zzano*/ });
 							public constructor();
 						}
 					}
@@ -18998,13 +18421,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzauv<T>  extends java.lang.Object {
+						export class zzauv<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzauv>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzauv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -19454,12 +18876,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzavu interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzl(param0: any /* com.google.android.gms.internal.ads.zzank*/): void;
-								zzm(param0: number, param1: number): void;
-								zzn(param0: number, param1: number, param2: number, param3: number): void;
-								zzo(param0: globalAndroid.view.Surface): void;
-							});
+							public constructor(implementation: { zzl(param0: any /* com.google.android.gms.internal.ads.zzank*/): void; zzm(param0: number, param1: number): void; zzn(param0: number, param1: number, param2: number, param3: number): void; zzo(param0: globalAndroid.view.Surface): void });
 							public constructor();
 						}
 					}
@@ -19548,9 +18965,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzavz interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzc(param0: any /* com.google.android.gms.internal.ads.zzavy*/): void;
-							});
+							public constructor(implementation: { zzc(param0: any /* com.google.android.gms.internal.ads.zzavy*/): void });
 							public constructor();
 						}
 					}
@@ -19778,9 +19193,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzawl interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: globalAndroid.app.Application.ActivityLifecycleCallbacks): void;
-							});
+							public constructor(implementation: { zza(param0: globalAndroid.app.Application.ActivityLifecycleCallbacks): void });
 							public constructor();
 						}
 					}
@@ -19921,9 +19334,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaws interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: boolean): void;
-							});
+							public constructor(implementation: { zza(param0: boolean): void });
 							public constructor();
 						}
 					}
@@ -20062,9 +19473,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzax interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): java.io.File;
-							});
+							public constructor(implementation: { zza(): java.io.File });
 							public constructor();
 						}
 					}
@@ -20186,11 +19595,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaxg interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): boolean;
-								zzb(): void;
-								zzc(): void;
-							});
+							public constructor(implementation: { zza(): boolean; zzb(): void; zzc(): void });
 							public constructor();
 						}
 					}
@@ -20297,9 +19702,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaxm interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): void;
-							});
+							public constructor(implementation: { zza(): void });
 							public constructor();
 						}
 					}
@@ -20417,14 +19820,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaxs interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): any /* com.google.android.gms.internal.ads.zzbfr*/;
-								zzf(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: any /* com.google.android.gms.internal.ads.zzaxz*/): void;
-								zzg(): any /* com.google.android.gms.internal.ads.zzbhd*/;
-								zzh(param0: boolean): void;
-								zzi(param0: any /* com.google.android.gms.internal.ads.zzbha*/): void;
-								zzj(param0: any /* com.google.android.gms.internal.ads.zzaxw*/): void;
-							});
+							public constructor(implementation: { zze(): any /* com.google.android.gms.internal.ads.zzbfr*/; zzf(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: any /* com.google.android.gms.internal.ads.zzaxz*/): void; zzg(): any /* com.google.android.gms.internal.ads.zzbhd*/; zzh(param0: boolean): void; zzi(param0: any /* com.google.android.gms.internal.ads.zzbha*/): void; zzj(param0: any /* com.google.android.gms.internal.ads.zzaxw*/): void });
 							public constructor();
 						}
 					}
@@ -20479,11 +19875,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaxv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzaxs*/): void;
-								zzc(param0: number): void;
-								zzd(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void;
-							});
+							public constructor(implementation: { zzb(param0: any /* com.google.android.gms.internal.ads.zzaxs*/): void; zzc(param0: number): void; zzd(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void });
 							public constructor();
 						}
 					}
@@ -20554,12 +19946,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzaxz interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzc(): void;
-								zzd(): void;
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void;
-								zzf(): void;
-							});
+							public constructor(implementation: { zzc(): void; zzd(): void; zze(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void; zzf(): void });
 							public constructor();
 						}
 					}
@@ -20976,9 +20363,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzayw interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzbaq*/): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzbaq*/): void });
 							public constructor();
 						}
 					}
@@ -21193,7 +20578,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazi extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazj,com.google.android.gms.internal.ads.zzazi>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazi extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazj,com.google.android.gms.internal.ads.zzazi>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazi>;
 						}
 					}
@@ -21209,7 +20594,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazj extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazj,com.google.android.gms.internal.ads.zzazi>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazj extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazj,com.google.android.gms.internal.ads.zzazi>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazj>;
 						}
 					}
@@ -21225,7 +20610,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazk extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazl,com.google.android.gms.internal.ads.zzazk>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazk extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazl,com.google.android.gms.internal.ads.zzazk>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazk>;
 						}
 					}
@@ -21241,7 +20626,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazl extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazl,com.google.android.gms.internal.ads.zzazk>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazl extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazl,com.google.android.gms.internal.ads.zzazk>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazl>;
 						}
 					}
@@ -21257,7 +20642,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazm extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazu,com.google.android.gms.internal.ads.zzazm>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazm extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazu,com.google.android.gms.internal.ads.zzazm>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazm>;
 						}
 					}
@@ -21323,7 +20708,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazq extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazr,com.google.android.gms.internal.ads.zzazq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazq extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazr,com.google.android.gms.internal.ads.zzazq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazq>;
 						}
 					}
@@ -21339,7 +20724,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazr extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazr,com.google.android.gms.internal.ads.zzazq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazr extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazr,com.google.android.gms.internal.ads.zzazq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazr>;
 						}
 					}
@@ -21355,7 +20740,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazs extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazt,com.google.android.gms.internal.ads.zzazs>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazs extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazt,com.google.android.gms.internal.ads.zzazs>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazs>;
 						}
 					}
@@ -21371,7 +20756,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazt extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazt,com.google.android.gms.internal.ads.zzazs>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazt extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazt,com.google.android.gms.internal.ads.zzazs>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazt>;
 						}
 					}
@@ -21387,7 +20772,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazu extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazu,com.google.android.gms.internal.ads.zzazm>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazu extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazu,com.google.android.gms.internal.ads.zzazm>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazu>;
 						}
 					}
@@ -21453,7 +20838,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazy extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazz,com.google.android.gms.internal.ads.zzazy>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazy extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzazz,com.google.android.gms.internal.ads.zzazy>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazy>;
 						}
 					}
@@ -21469,7 +20854,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzazz extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazz,com.google.android.gms.internal.ads.zzazy>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzazz extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzazz,com.google.android.gms.internal.ads.zzazy>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzazz>;
 						}
 					}
@@ -21519,7 +20904,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbaa extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbab,com.google.android.gms.internal.ads.zzbaa>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbaa extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbab,com.google.android.gms.internal.ads.zzbaa>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbaa>;
 						}
 					}
@@ -21535,7 +20920,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbab extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbab,com.google.android.gms.internal.ads.zzbaa>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbab extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbab,com.google.android.gms.internal.ads.zzbaa>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbab>;
 						}
 					}
@@ -21551,7 +20936,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbac extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbad,com.google.android.gms.internal.ads.zzbac>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbac extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbad,com.google.android.gms.internal.ads.zzbac>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbac>;
 						}
 					}
@@ -21567,7 +20952,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbad extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbad,com.google.android.gms.internal.ads.zzbac>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbad extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbad,com.google.android.gms.internal.ads.zzbac>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbad>;
 						}
 					}
@@ -21583,7 +20968,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbae extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbaf,com.google.android.gms.internal.ads.zzbae>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbae extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbaf,com.google.android.gms.internal.ads.zzbae>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbae>;
 						}
 					}
@@ -21599,7 +20984,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbaf extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbaf,com.google.android.gms.internal.ads.zzbae>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbaf extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbaf,com.google.android.gms.internal.ads.zzbae>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbaf>;
 						}
 					}
@@ -21615,7 +21000,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbag extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbah,com.google.android.gms.internal.ads.zzbag>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbag extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbah,com.google.android.gms.internal.ads.zzbag>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbag>;
 						}
 					}
@@ -21631,7 +21016,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbah extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbah,com.google.android.gms.internal.ads.zzbag>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbah extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbah,com.google.android.gms.internal.ads.zzbag>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbah>;
 						}
 					}
@@ -21647,7 +21032,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbai extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbam,com.google.android.gms.internal.ads.zzbai>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbai extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbam,com.google.android.gms.internal.ads.zzbai>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbai>;
 						}
 					}
@@ -21713,7 +21098,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbam extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbam,com.google.android.gms.internal.ads.zzbai>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbam extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbam,com.google.android.gms.internal.ads.zzbai>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbam>;
 						}
 					}
@@ -21779,7 +21164,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbaq extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbar,com.google.android.gms.internal.ads.zzbaq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbaq extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbar,com.google.android.gms.internal.ads.zzbaq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbaq>;
 						}
 					}
@@ -21795,7 +21180,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbar extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbar,com.google.android.gms.internal.ads.zzbaq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbar extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbar,com.google.android.gms.internal.ads.zzbaq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbar>;
 						}
 					}
@@ -21811,7 +21196,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbas extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbat,com.google.android.gms.internal.ads.zzbas>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbas extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbat,com.google.android.gms.internal.ads.zzbas>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbas>;
 						}
 					}
@@ -21827,7 +21212,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbat extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbat,com.google.android.gms.internal.ads.zzbas>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbat extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbat,com.google.android.gms.internal.ads.zzbas>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbat>;
 						}
 					}
@@ -21843,7 +21228,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbau extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbav,com.google.android.gms.internal.ads.zzbau>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbau extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbav,com.google.android.gms.internal.ads.zzbau>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbau>;
 						}
 					}
@@ -21859,7 +21244,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbav extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbav,com.google.android.gms.internal.ads.zzbau>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbav extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbav,com.google.android.gms.internal.ads.zzbau>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbav>;
 						}
 					}
@@ -21875,7 +21260,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbaw extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbax,com.google.android.gms.internal.ads.zzbaw>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbaw extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbax,com.google.android.gms.internal.ads.zzbaw>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbaw>;
 						}
 					}
@@ -21891,7 +21276,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbax extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbax,com.google.android.gms.internal.ads.zzbaw>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbax extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbax,com.google.android.gms.internal.ads.zzbaw>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbax>;
 						}
 					}
@@ -21907,7 +21292,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbay extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbf,com.google.android.gms.internal.ads.zzbay>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbay extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbf,com.google.android.gms.internal.ads.zzbay>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbay>;
 						}
 					}
@@ -22040,7 +21425,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbf extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbf,com.google.android.gms.internal.ads.zzbay>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbf extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbf,com.google.android.gms.internal.ads.zzbay>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbf>;
 						}
 					}
@@ -22056,7 +21441,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbg extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbh,com.google.android.gms.internal.ads.zzbbg>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbg extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbh,com.google.android.gms.internal.ads.zzbbg>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbg>;
 						}
 					}
@@ -22072,7 +21457,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbh extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbh,com.google.android.gms.internal.ads.zzbbg>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbh extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbh,com.google.android.gms.internal.ads.zzbbg>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbh>;
 						}
 					}
@@ -22104,7 +21489,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbj extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbk,com.google.android.gms.internal.ads.zzbbj>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbj extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbk,com.google.android.gms.internal.ads.zzbbj>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbj>;
 						}
 					}
@@ -22120,7 +21505,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbk extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbk,com.google.android.gms.internal.ads.zzbbj>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbk extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbk,com.google.android.gms.internal.ads.zzbbj>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbk>;
 						}
 					}
@@ -22136,7 +21521,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbl extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbp,com.google.android.gms.internal.ads.zzbbl>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbl extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbp,com.google.android.gms.internal.ads.zzbbl>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbl>;
 						}
 					}
@@ -22202,7 +21587,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbp extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbp,com.google.android.gms.internal.ads.zzbbl>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbp extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbp,com.google.android.gms.internal.ads.zzbbl>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbp>;
 						}
 					}
@@ -22218,7 +21603,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbq extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbr,com.google.android.gms.internal.ads.zzbbq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbq extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbr,com.google.android.gms.internal.ads.zzbbq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbq>;
 						}
 					}
@@ -22234,7 +21619,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbr extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbr,com.google.android.gms.internal.ads.zzbbq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbr extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbr,com.google.android.gms.internal.ads.zzbbq>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbr>;
 						}
 					}
@@ -22250,7 +21635,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbs extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbt,com.google.android.gms.internal.ads.zzbbs>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbs extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbt,com.google.android.gms.internal.ads.zzbbs>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbs>;
 						}
 					}
@@ -22266,7 +21651,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbt extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbt,com.google.android.gms.internal.ads.zzbbs>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbt extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbt,com.google.android.gms.internal.ads.zzbbs>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbt>;
 						}
 					}
@@ -22282,7 +21667,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbu extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbv,com.google.android.gms.internal.ads.zzbbu>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbu extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbv,com.google.android.gms.internal.ads.zzbbu>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbu>;
 						}
 					}
@@ -22298,7 +21683,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbv extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbv,com.google.android.gms.internal.ads.zzbbu>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbv extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbv,com.google.android.gms.internal.ads.zzbbu>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbv>;
 						}
 					}
@@ -22314,7 +21699,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbw extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbx,com.google.android.gms.internal.ads.zzbbw>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbw extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbx,com.google.android.gms.internal.ads.zzbbw>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbw>;
 						}
 					}
@@ -22330,7 +21715,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbx extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbx,com.google.android.gms.internal.ads.zzbbw>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbx extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbx,com.google.android.gms.internal.ads.zzbbw>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbx>;
 						}
 					}
@@ -22346,7 +21731,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbby extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbz,com.google.android.gms.internal.ads.zzbby>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbby extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbbz,com.google.android.gms.internal.ads.zzbby>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbby>;
 						}
 					}
@@ -22362,7 +21747,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbbz extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbz,com.google.android.gms.internal.ads.zzbby>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbbz extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbbz,com.google.android.gms.internal.ads.zzbby>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbbz>;
 						}
 					}
@@ -22383,8 +21768,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbc interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -22400,7 +21784,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbca extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcb,com.google.android.gms.internal.ads.zzbca>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbca extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcb,com.google.android.gms.internal.ads.zzbca>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbca>;
 						}
 					}
@@ -22416,7 +21800,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcb extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcb,com.google.android.gms.internal.ads.zzbca>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcb extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcb,com.google.android.gms.internal.ads.zzbca>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcb>;
 						}
 					}
@@ -22432,7 +21816,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcc extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcd,com.google.android.gms.internal.ads.zzbcc>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcc extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcd,com.google.android.gms.internal.ads.zzbcc>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcc>;
 						}
 					}
@@ -22448,7 +21832,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcd extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcd,com.google.android.gms.internal.ads.zzbcc>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcd extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcd,com.google.android.gms.internal.ads.zzbcc>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcd>;
 						}
 					}
@@ -22464,7 +21848,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbce extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcf,com.google.android.gms.internal.ads.zzbce>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbce extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcf,com.google.android.gms.internal.ads.zzbce>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbce>;
 						}
 					}
@@ -22480,7 +21864,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcf extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcf,com.google.android.gms.internal.ads.zzbce>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcf extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcf,com.google.android.gms.internal.ads.zzbce>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcf>;
 						}
 					}
@@ -22496,7 +21880,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcg extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbck,com.google.android.gms.internal.ads.zzbcg>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcg extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbck,com.google.android.gms.internal.ads.zzbcg>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcg>;
 						}
 					}
@@ -22562,7 +21946,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbck extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbck,com.google.android.gms.internal.ads.zzbcg>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbck extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbck,com.google.android.gms.internal.ads.zzbcg>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbck>;
 						}
 					}
@@ -22578,7 +21962,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcl extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcm,com.google.android.gms.internal.ads.zzbcl>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcl extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcm,com.google.android.gms.internal.ads.zzbcl>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcl>;
 						}
 					}
@@ -22594,7 +21978,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcm extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcm,com.google.android.gms.internal.ads.zzbcl>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcm extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcm,com.google.android.gms.internal.ads.zzbcl>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcm>;
 						}
 					}
@@ -22610,7 +21994,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcn extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbco,com.google.android.gms.internal.ads.zzbcn>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcn extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbco,com.google.android.gms.internal.ads.zzbcn>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcn>;
 						}
 					}
@@ -22626,7 +22010,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbco extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbco,com.google.android.gms.internal.ads.zzbcn>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbco extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbco,com.google.android.gms.internal.ads.zzbcn>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbco>;
 						}
 					}
@@ -22642,7 +22026,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcp extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcq,com.google.android.gms.internal.ads.zzbcp>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcp extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcq,com.google.android.gms.internal.ads.zzbcp>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcp>;
 						}
 					}
@@ -22658,7 +22042,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcq extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcq,com.google.android.gms.internal.ads.zzbcp>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcq extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcq,com.google.android.gms.internal.ads.zzbcp>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcq>;
 						}
 					}
@@ -22674,7 +22058,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcr extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcs,com.google.android.gms.internal.ads.zzbcr>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcr extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcs,com.google.android.gms.internal.ads.zzbcr>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcr>;
 						}
 					}
@@ -22690,7 +22074,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcs extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcs,com.google.android.gms.internal.ads.zzbcr>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcs extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcs,com.google.android.gms.internal.ads.zzbcr>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcs>;
 						}
 					}
@@ -22706,7 +22090,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbct extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcu,com.google.android.gms.internal.ads.zzbct>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbct extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcu,com.google.android.gms.internal.ads.zzbct>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbct>;
 						}
 					}
@@ -22722,7 +22106,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcu extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcu,com.google.android.gms.internal.ads.zzbct>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcu extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcu,com.google.android.gms.internal.ads.zzbct>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcu>;
 						}
 					}
@@ -22738,7 +22122,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcv extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcw,com.google.android.gms.internal.ads.zzbcv>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcv extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcw,com.google.android.gms.internal.ads.zzbcv>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcv>;
 						}
 					}
@@ -22754,7 +22138,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcw extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcw,com.google.android.gms.internal.ads.zzbcv>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcw extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcw,com.google.android.gms.internal.ads.zzbcv>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcw>;
 						}
 					}
@@ -22770,7 +22154,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcx extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcy,com.google.android.gms.internal.ads.zzbcx>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcx extends java.lang.Object /* com.google.android.gms.internal.ads.zzgdy<com.google.android.gms.internal.ads.zzbcy,com.google.android.gms.internal.ads.zzbcx>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcx>;
 						}
 					}
@@ -22786,7 +22170,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbcy extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcy,com.google.android.gms.internal.ads.zzbcx>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/  {
+						export class zzbcy extends java.lang.Object /* com.google.android.gms.internal.ads.zzgec<com.google.android.gms.internal.ads.zzbcy,com.google.android.gms.internal.ads.zzbcx>*/ implements any /* com.google.android.gms.internal.ads.zzgfl*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbcy>;
 						}
 					}
@@ -22807,9 +22191,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbcz interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								onAdClicked(): void;
-							});
+							public constructor(implementation: { onAdClicked(): void });
 							public constructor();
 							public onAdClicked(): void;
 						}
@@ -22954,7 +22336,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbdg<AdT>  extends java.lang.Object /* com.google.android.gms.internal.ads.zzbfg*/ {
+						export class zzbdg<AdT> extends java.lang.Object /* com.google.android.gms.internal.ads.zzbfg*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbdg>;
 							public constructor();
 							public constructor(param0: com.google.android.gms.ads.AdLoadCallback<any>, param1: any);
@@ -23028,7 +22410,32 @@ declare module com {
 							public static CREATOR: any /* globalAndroid.os.Parcelable.Creator<com.google.android.gms.internal.ads.zzbdk>*/;
 							public writeToParcel(param0: globalAndroid.os.Parcel, param1: number): void;
 							public hashCode(): number;
-							public constructor(param0: number, param1: number, param2: globalAndroid.os.Bundle, param3: number, param4: java.util.List<string>, param5: boolean, param6: number, param7: boolean, param8: string, param9: any /* com.google.android.gms.internal.ads.zzbir*/, param10: globalAndroid.location.Location, param11: string, param12: globalAndroid.os.Bundle, param13: globalAndroid.os.Bundle, param14: java.util.List<string>, param15: string, param16: string, param17: boolean, param18: any /* com.google.android.gms.internal.ads.zzbdb*/, param19: number, param20: string, param21: java.util.List<string>, param22: number, param23: string);
+							public constructor(
+								param0: number,
+								param1: number,
+								param2: globalAndroid.os.Bundle,
+								param3: number,
+								param4: java.util.List<string>,
+								param5: boolean,
+								param6: number,
+								param7: boolean,
+								param8: string,
+								param9: any /* com.google.android.gms.internal.ads.zzbir*/,
+								param10: globalAndroid.location.Location,
+								param11: string,
+								param12: globalAndroid.os.Bundle,
+								param13: globalAndroid.os.Bundle,
+								param14: java.util.List<string>,
+								param15: string,
+								param16: string,
+								param17: boolean,
+								param18: any /* com.google.android.gms.internal.ads.zzbdb*/,
+								param19: number,
+								param20: string,
+								param21: java.util.List<string>,
+								param22: number,
+								param23: string
+							);
 							public equals(param0: any): boolean;
 						}
 					}
@@ -23644,7 +23051,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export abstract class zzbeu<T>  extends java.lang.Object {
+						export abstract class zzbeu<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbeu>;
 						}
 					}
@@ -23790,9 +23197,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbfb interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): void;
-							});
+							public constructor(implementation: { zzb(): void });
 							public constructor();
 						}
 					}
@@ -23847,16 +23252,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbfe interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): void;
-								zzc(param0: number): void;
-								zze(): void;
-								zzf(): void;
-								zzg(): void;
-								zzh(): void;
-								zzi(): void;
-								zzd(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void;
-							});
+							public constructor(implementation: { zzb(): void; zzc(param0: number): void; zze(): void; zzf(): void; zzg(): void; zzh(): void; zzi(): void; zzd(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void });
 							public constructor();
 						}
 					}
@@ -23911,10 +23307,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbfh interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): void;
-								zzc(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void;
-							});
+							public constructor(implementation: { zzb(): void; zzc(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void });
 							public constructor();
 						}
 					}
@@ -23969,13 +23362,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbfk interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbdk*/): void;
-								zzf(): string;
-								zzg(): boolean;
-								zzh(): string;
-								zzi(param0: any /* com.google.android.gms.internal.ads.zzbdk*/, param1: number): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbdk*/): void; zzf(): string; zzg(): boolean; zzh(): string; zzi(param0: any /* com.google.android.gms.internal.ads.zzbdk*/, param1: number): void });
 							public constructor();
 						}
 					}
@@ -24225,9 +23612,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbfv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): void;
-							});
+							public constructor(implementation: { zze(): void });
 							public constructor();
 						}
 					}
@@ -24282,9 +23667,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbfy interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(param0: string, param1: string): void;
-							});
+							public constructor(implementation: { zzb(param0: string, param1: string): void });
 							public constructor();
 						}
 					}
@@ -24446,12 +23829,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbgf interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void;
-								zzc(): void;
-								zzd(): void;
-								zze(): void;
-							});
+							public constructor(implementation: { zzb(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void; zzc(): void; zzd(): void; zze(): void });
 							public constructor();
 						}
 					}
@@ -24594,9 +23972,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbgm interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): void;
-							});
+							public constructor(implementation: { zze(): void });
 							public constructor();
 						}
 					}
@@ -24670,10 +24046,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbgq interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): string;
-								zzf(): string;
-							});
+							public constructor(implementation: { zze(): string; zzf(): string });
 							public constructor();
 						}
 					}
@@ -24747,9 +24120,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbgu interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbdd*/): void });
 							public constructor();
 						}
 					}
@@ -24804,9 +24175,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbgx interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): void;
-							});
+							public constructor(implementation: { zze(): void });
 							public constructor();
 						}
 					}
@@ -24879,9 +24248,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbha interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbdr*/): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbdr*/): void });
 							public constructor();
 						}
 					}
@@ -24936,11 +24303,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbhd interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): string;
-								zzf(): string;
-								zzg(): any /* java.util.List<com.google.android.gms.internal.ads.zzbdt>*/;
-							});
+							public constructor(implementation: { zze(): string; zzf(): string; zzg(): any /* java.util.List<com.google.android.gms.internal.ads.zzbdt>*/ });
 							public constructor();
 						}
 					}
@@ -24995,21 +24358,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbhg interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): void;
-								zzf(): void;
-								zzg(param0: boolean): void;
-								zzh(): boolean;
-								zzi(): number;
-								zzj(): number;
-								zzk(): number;
-								zzl(param0: any /* com.google.android.gms.internal.ads.zzbhj*/): void;
-								zzm(): number;
-								zzn(): boolean;
-								zzo(): any /* com.google.android.gms.internal.ads.zzbhj*/;
-								zzp(): boolean;
-								zzq(): void;
-							});
+							public constructor(implementation: { zze(): void; zzf(): void; zzg(param0: boolean): void; zzh(): boolean; zzi(): number; zzj(): number; zzk(): number; zzl(param0: any /* com.google.android.gms.internal.ads.zzbhj*/): void; zzm(): number; zzn(): boolean; zzo(): any /* com.google.android.gms.internal.ads.zzbhj*/; zzp(): boolean; zzq(): void });
 							public constructor();
 						}
 					}
@@ -25064,13 +24413,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbhj interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): void;
-								zzf(): void;
-								zzg(): void;
-								zzh(): void;
-								zzi(param0: boolean): void;
-							});
+							public constructor(implementation: { zze(): void; zzf(): void; zzg(): void; zzh(): void; zzi(param0: boolean): void });
 							public constructor();
 						}
 					}
@@ -25214,7 +24557,7 @@ declare module com {
 						export class zzbhr extends com.google.android.gms.ads.initialization.InitializationStatus {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbhr>;
 							public getAdapterStatusMap(): java.util.Map;
-							public getAdapterStatusMap(): java.util.Map<string,com.google.android.gms.ads.initialization.AdapterStatus>;
+							public getAdapterStatusMap(): java.util.Map<string, com.google.android.gms.ads.initialization.AdapterStatus>;
 						}
 					}
 				}
@@ -25953,7 +25296,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export abstract class zzbjf<T>  extends java.lang.Object {
+						export abstract class zzbjf<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbjf>;
 						}
 					}
@@ -26407,13 +25750,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbkf interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): string;
-								zzc(): string;
-								zzd(param0: com.google.android.gms.dynamic.IObjectWrapper): void;
-								zze(): void;
-								zzf(): void;
-							});
+							public constructor(implementation: { zzb(): string; zzc(): string; zzd(param0: com.google.android.gms.dynamic.IObjectWrapper): void; zze(): void; zzf(): void });
 							public constructor();
 						}
 					}
@@ -26466,9 +25803,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbki interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbkf*/): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbkf*/): void });
 							public constructor();
 						}
 					}
@@ -26489,9 +25824,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbkj interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): void;
-							});
+							public constructor(implementation: { zza(): void });
 							public constructor();
 						}
 					}
@@ -26591,7 +25924,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbkp<T>  extends java.lang.Object {
+						export class zzbkp<T> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbkp>;
 							public constructor(param0: string, param1: T, param2: number);
 						}
@@ -26608,7 +25941,7 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbkq<T>  extends java.lang.Object /* com.google.android.gms.internal.ads.zzbkp<any>*/ {
+						export class zzbkq<T> extends java.lang.Object /* com.google.android.gms.internal.ads.zzbkp<any>*/ {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbkq>;
 							public constructor(param0: string, param1: any, param2: number);
 						}
@@ -26999,12 +26332,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbln interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: string, param1: boolean): java.lang.Boolean;
-								zzb(param0: string, param1: number): java.lang.Long;
-								zzc(param0: string, param1: number): java.lang.Double;
-								zzd(param0: string, param1: string): string;
-							});
+							public constructor(implementation: { zza(param0: string, param1: boolean): java.lang.Boolean; zzb(param0: string, param1: number): java.lang.Long; zzc(param0: string, param1: number): java.lang.Double; zzd(param0: string, param1: string): string });
 							public constructor();
 						}
 					}
@@ -27078,9 +26406,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzblr interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): void;
-							});
+							public constructor(implementation: { zza(): void });
 							public constructor();
 						}
 					}
@@ -27120,9 +26446,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzblt interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: com.google.android.gms.ads.MediaContent): void;
-							});
+							public constructor(implementation: { zza(param0: com.google.android.gms.ads.MediaContent): void });
 							public constructor();
 						}
 					}
@@ -27143,12 +26467,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzblu interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): void;
-								zzb(param0: globalAndroid.view.MotionEvent): void;
-								zzc(): org.json.JSONObject;
-								zzd(): org.json.JSONObject;
-							});
+							public constructor(implementation: { zza(): void; zzb(param0: globalAndroid.view.MotionEvent): void; zzc(): org.json.JSONObject; zzd(): org.json.JSONObject });
 							public constructor();
 						}
 					}
@@ -27169,9 +26488,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzblv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: globalAndroid.widget.ImageView.ScaleType): void;
-							});
+							public constructor(implementation: { zza(param0: globalAndroid.widget.ImageView.ScaleType): void });
 							public constructor();
 						}
 					}
@@ -27263,9 +26580,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbm interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(param0: any /* com.google.android.gms.internal.ads.zzgis*/, param1: any /* com.google.android.gms.internal.ads.zzbq*/): any /* com.google.android.gms.internal.ads.zzbp*/;
-							});
+							public constructor(implementation: { zzb(param0: any /* com.google.android.gms.internal.ads.zzgis*/, param1: any /* com.google.android.gms.internal.ads.zzbq*/): any /* com.google.android.gms.internal.ads.zzbp*/ });
 							public constructor();
 						}
 					}
@@ -27286,10 +26601,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbma interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): string;
-								zzc(): any /* java.util.List<com.google.android.gms.internal.ads.zzbmi>*/;
-							});
+							public constructor(implementation: { zzb(): string; zzc(): any /* java.util.List<com.google.android.gms.internal.ads.zzbmi>*/ });
 							public constructor();
 						}
 					}
@@ -27383,16 +26695,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbmf interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(): number;
-								zzf(param0: com.google.android.gms.dynamic.IObjectWrapper): void;
-								zzg(): com.google.android.gms.dynamic.IObjectWrapper;
-								zzh(): number;
-								zzi(): number;
-								zzj(): any /* com.google.android.gms.internal.ads.zzbhg*/;
-								zzk(): boolean;
-								zzl(param0: any /* com.google.android.gms.internal.ads.zzbnq*/): void;
-							});
+							public constructor(implementation: { zze(): number; zzf(param0: com.google.android.gms.dynamic.IObjectWrapper): void; zzg(): com.google.android.gms.dynamic.IObjectWrapper; zzh(): number; zzi(): number; zzj(): any /* com.google.android.gms.internal.ads.zzbhg*/; zzk(): boolean; zzl(param0: any /* com.google.android.gms.internal.ads.zzbnq*/): void });
 							public constructor();
 						}
 					}
@@ -27447,13 +26750,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbmi interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(): com.google.android.gms.dynamic.IObjectWrapper;
-								zzc(): globalAndroid.net.Uri;
-								zzd(): number;
-								zze(): number;
-								zzf(): number;
-							});
+							public constructor(implementation: { zzb(): com.google.android.gms.dynamic.IObjectWrapper; zzc(): globalAndroid.net.Uri; zzd(): number; zze(): number; zzf(): number });
 							public constructor();
 						}
 					}
@@ -27592,9 +26889,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbmp interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: com.google.android.gms.dynamic.IObjectWrapper, param2: com.google.android.gms.dynamic.IObjectWrapper, param3: number): globalAndroid.os.IBinder;
-							});
+							public constructor(implementation: { zze(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: com.google.android.gms.dynamic.IObjectWrapper, param2: com.google.android.gms.dynamic.IObjectWrapper, param3: number): globalAndroid.os.IBinder });
 							public constructor();
 						}
 					}
@@ -27649,11 +26944,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbms interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(param0: com.google.android.gms.dynamic.IObjectWrapper): void;
-								zzc(): void;
-								zzd(param0: com.google.android.gms.dynamic.IObjectWrapper): void;
-							});
+							public constructor(implementation: { zzb(param0: com.google.android.gms.dynamic.IObjectWrapper): void; zzc(): void; zzd(param0: com.google.android.gms.dynamic.IObjectWrapper): void });
 							public constructor();
 						}
 					}
@@ -27706,9 +26997,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbmv interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: com.google.android.gms.dynamic.IObjectWrapper, param2: com.google.android.gms.dynamic.IObjectWrapper): globalAndroid.os.IBinder;
-							});
+							public constructor(implementation: { zze(param0: com.google.android.gms.dynamic.IObjectWrapper, param1: com.google.android.gms.dynamic.IObjectWrapper, param2: com.google.android.gms.dynamic.IObjectWrapper): globalAndroid.os.IBinder });
 							public constructor();
 						}
 					}
@@ -27897,22 +27186,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbnc interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: string): string;
-								zzf(param0: string): any /* com.google.android.gms.internal.ads.zzbmi*/;
-								zzg(): java.util.List<string>;
-								zzh(): string;
-								zzi(param0: string): void;
-								zzj(): void;
-								zzk(): any /* com.google.android.gms.internal.ads.zzbhg*/;
-								zzl(): void;
-								zzm(): com.google.android.gms.dynamic.IObjectWrapper;
-								zzn(param0: com.google.android.gms.dynamic.IObjectWrapper): boolean;
-								zzo(): boolean;
-								zzp(): boolean;
-								zzq(param0: com.google.android.gms.dynamic.IObjectWrapper): void;
-								zzr(): void;
-							});
+							public constructor(implementation: { zze(param0: string): string; zzf(param0: string): any /* com.google.android.gms.internal.ads.zzbmi*/; zzg(): java.util.List<string>; zzh(): string; zzi(param0: string): void; zzj(): void; zzk(): any /* com.google.android.gms.internal.ads.zzbhg*/; zzl(): void; zzm(): com.google.android.gms.dynamic.IObjectWrapper; zzn(param0: com.google.android.gms.dynamic.IObjectWrapper): boolean; zzo(): boolean; zzp(): boolean; zzq(param0: com.google.android.gms.dynamic.IObjectWrapper): void; zzr(): void });
 							public constructor();
 						}
 					}
@@ -27992,9 +27266,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbng interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbmx*/): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbmx*/): void });
 							public constructor();
 						}
 					}
@@ -28047,9 +27319,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbnj interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbmz*/): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbmz*/): void });
 							public constructor();
 						}
 					}
@@ -28104,9 +27374,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbnm interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbnc*/, param1: string): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbnc*/, param1: string): void });
 							public constructor();
 						}
 					}
@@ -28161,9 +27429,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbnp interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbnc*/): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbnc*/): void });
 							public constructor();
 						}
 					}
@@ -28234,9 +27500,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbnt interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbfr*/, param1: com.google.android.gms.dynamic.IObjectWrapper): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbfr*/, param1: com.google.android.gms.dynamic.IObjectWrapper): void });
 							public constructor();
 						}
 					}
@@ -28291,9 +27555,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbnw interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: any /* com.google.android.gms.internal.ads.zzbof*/): void;
-							});
+							public constructor(implementation: { zze(param0: any /* com.google.android.gms.internal.ads.zzbof*/): void });
 							public constructor();
 						}
 					}
@@ -28348,9 +27610,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbnz interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzb(param0: com.google.android.gms.dynamic.IObjectWrapper): boolean;
-							});
+							public constructor(implementation: { zzb(param0: com.google.android.gms.dynamic.IObjectWrapper): boolean });
 							public constructor();
 						}
 					}
@@ -28421,10 +27681,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzboc interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zze(param0: string): void;
-								zzf(): void;
-							});
+							public constructor(implementation: { zze(param0: string): void; zzf(): void });
 							public constructor();
 						}
 					}
@@ -28773,9 +28030,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbos interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: string, param1: globalAndroid.os.Bundle): void;
-							});
+							public constructor(implementation: { zza(param0: string, param1: globalAndroid.os.Bundle): void });
 							public constructor();
 						}
 					}
@@ -28813,9 +28068,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbou interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zzbS(param0: string, param1: string): void;
-							});
+							public constructor(implementation: { zzbS(param0: string, param1: string): void });
 							public constructor();
 						}
 					}
@@ -28918,11 +28171,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbp interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: any /* com.google.android.gms.internal.ads.zzbq*/): void;
-								zzb(): string;
-								zzc(param0: any /* com.google.android.gms.internal.ads.zzgis*/, param1: java.nio.ByteBuffer, param2: number, param3: any /* com.google.android.gms.internal.ads.zzbm*/): void;
-							});
+							public constructor(implementation: { zza(param0: any /* com.google.android.gms.internal.ads.zzbq*/): void; zzb(): string; zzc(param0: any /* com.google.android.gms.internal.ads.zzgis*/, param1: java.nio.ByteBuffer, param2: number, param3: any /* com.google.android.gms.internal.ads.zzbm*/): void });
 							public constructor();
 						}
 					}
@@ -29228,14 +28477,12 @@ declare module com {
 			export module gms {
 				export module internal {
 					export module ads {
-						export class zzbps<ContextT>  extends java.lang.Object {
+						export class zzbps<ContextT> extends java.lang.Object {
 							public static class: java.lang.Class<com.google.android.gms.internal.ads.zzbps>;
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbps interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(param0: ContextT, param1: java.util.Map<string,string>): void;
-							});
+							public constructor(implementation: { zza(param0: ContextT, param1: java.util.Map<string, string>): void });
 							public constructor();
 						}
 					}
@@ -29374,8 +28621,7 @@ declare module com {
 							/**
 							 * Constructs a new instance of the com.google.android.gms.internal.ads.zzbq interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-							});
+							public constructor(implementation: {});
 							public constructor();
 						}
 					}
@@ -29432,4 +28678,3 @@ declare module com {
 		}
 	}
 }
-

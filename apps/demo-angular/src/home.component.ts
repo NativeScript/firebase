@@ -60,5 +60,8 @@ export class HomeComponent {
 		{
 			name: 'firebase-storage',
 		},
+		{
+			name: 'firebase-ui',
+		},
 	];
 }

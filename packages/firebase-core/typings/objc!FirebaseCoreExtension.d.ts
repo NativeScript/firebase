@@ -55,12 +55,10 @@ declare const enum FIRConfigType {
 	SDK = 2,
 }
 
-declare class FIRCoreDiagnosticsConnector extends NSObject {
-	static alloc(): FIRCoreDiagnosticsConnector; // inherited from NSObject
+declare const enum FIRDailyHeartbeatCode {
+	None = 0,
 
-	static logCoreTelemetryWithOptions(options: FIROptions): void;
-
-	static new(): FIRCoreDiagnosticsConnector; // inherited from NSObject
+	Some = 2,
 }
 
 declare class FIRDependency extends NSObject {
@@ -78,24 +76,6 @@ declare class FIRDependency extends NSObject {
 }
 
 declare function FIRHeaderValueFromHeartbeatsPayload(heartbeatsPayload: FIRHeartbeatsPayload): string;
-
-declare class FIRHeartbeatInfo extends NSObject {
-	static alloc(): FIRHeartbeatInfo; // inherited from NSObject
-
-	static heartbeatCodeForTag(heartbeatTag: string): FIRHeartbeatInfoCode;
-
-	static new(): FIRHeartbeatInfo; // inherited from NSObject
-}
-
-declare const enum FIRHeartbeatInfoCode {
-	None = 0,
-
-	SDK = 1,
-
-	Global = 2,
-
-	Combined = 3,
-}
 
 declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerProtocol {
 	static alloc(): FIRHeartbeatLogger; // inherited from NSObject
@@ -122,7 +102,7 @@ declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerP
 
 	flushHeartbeatsIntoPayload(): FIRHeartbeatsPayload;
 
-	heartbeatCodeForToday(): FIRHeartbeatInfoCode;
+	heartbeatCodeForToday(): FIRDailyHeartbeatCode;
 
 	initWithAppID(appID: string): this;
 
@@ -150,7 +130,7 @@ declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerP
 interface FIRHeartbeatLoggerProtocol extends NSObjectProtocol {
 	flushHeartbeatsIntoPayload(): FIRHeartbeatsPayload;
 
-	heartbeatCodeForToday(): FIRHeartbeatInfoCode;
+	heartbeatCodeForToday(): FIRDailyHeartbeatCode;
 
 	log(): void;
 }
@@ -177,8 +157,14 @@ declare var FIRLibrary: {
 	configureWithApp?(app: FIRApp): void;
 };
 
+declare function FIRLogDebugSwift(service: string, messageCode: string, message: string): void;
+
+declare function FIRLogWarningSwift(service: string, messageCode: string, message: string): void;
+
 declare class FIRLoggerWrapper extends NSObject {
 	static alloc(): FIRLoggerWrapper; // inherited from NSObject
+
+	static logWithLevelServiceCodeMessage(level: FIRLoggerLevel, service: string, code: string, message: string): void;
 
 	static new(): FIRLoggerWrapper; // inherited from NSObject
 }

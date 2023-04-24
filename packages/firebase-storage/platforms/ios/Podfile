@@ -1,1 +1,2 @@
-pod 'Firebase/Storage', '~> 9.6'
+platform :ios, '12.0'
+pod 'Firebase/Storage', '~>10.7.0'
