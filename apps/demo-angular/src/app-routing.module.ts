@@ -25,6 +25,7 @@ const routes: Routes = [
 	{ path: 'firebase-performance', loadChildren: () => import('./plugin-demos/firebase-performance.module').then((m) => m.FirebasePerformanceModule) },
 	{ path: 'firebase-remote-config', loadChildren: () => import('./plugin-demos/firebase-remote-config.module').then((m) => m.FirebaseRemoteConfigModule) },
 	{ path: 'firebase-storage', loadChildren: () => import('./plugin-demos/firebase-storage.module').then((m) => m.FirebaseStorageModule) },
+	{ path: 'firebase-ui', loadChildren: () => import('./plugin-demos/firebase-ui.module').then((m) => m.FirebaseUiModule) },
 ];
 
 @NgModule({

@@ -2,7 +2,7 @@
 
 A plugin to initialize [FirebaseApp](https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp) in your app.
 
-Use this plugin with any of:
+Use this plugin with any of the following plugins:
 
 - [@nativescript/firebase-admob](../firebase-admob/)
 - [@nativescript/firebase-analytics](../firebase-admob/)

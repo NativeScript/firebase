@@ -17,3 +17,4 @@ export * from './firebase-messaging-core';
 export * from './firebase-performance';
 export * from './firebase-remote-config';
 export * from './firebase-storage';
+export * from './firebase-ui';

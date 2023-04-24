@@ -49,6 +49,10 @@ export interface IMessagingCore {
 export declare class MessagingCore implements IMessagingCore {
 	static getInstance(): MessagingCore;
 
+	static readonly inForeground: boolean;
+
+	static readonly appDidLaunch: boolean;
+
 	getCurrentToken(): Promise<string>;
 
 	hasPermission(): Promise<AuthorizationStatus>;

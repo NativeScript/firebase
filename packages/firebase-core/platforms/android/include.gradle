@@ -1,8 +1,10 @@
-apply plugin: 'com.google.gms.google-services'
+if (!project.hasProperty("tempBuild")) {
+	apply plugin: 'com.google.gms.google-services'
+}
 dependencies {
     def computeKotlinVersion = { -> project.hasProperty("kotlinVersion") ? kotlinVersion : "1.4.32" }
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$computeKotlinVersion"
     
-    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "30.5.0" }
+    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "31.2.3" }
     implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
 }
