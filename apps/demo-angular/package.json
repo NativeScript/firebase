@@ -19,7 +19,8 @@
 		"@nativescript/firebase-messaging": "file:../../dist/packages/firebase-messaging",
 		"@nativescript/firebase-functions": "file:../../dist/packages/firebase-functions",
 		"@nativescript/firebase-app-check-debug": "file:../../dist/packages/firebase-app-check-debug",
-		"@nativescript/firebase-messaging-core": "file:../../dist/packages/firebase-messaging-core"
+		"@nativescript/firebase-messaging-core": "file:../../dist/packages/firebase-messaging-core",
+		"@nativescript/firebase-ui": "file:../../dist/packages/firebase-ui"
 	},
 	"devDependencies": {
 		"@nativescript/android": "~8.4.0",
