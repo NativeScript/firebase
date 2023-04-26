@@ -26,7 +26,7 @@ import '@nativescript/firebase-ui';
 
 ## Present the auth UI to authenticate users
 
-To present the auth UI that allows authenticating users, call the [show]() method on the [UI]() object - returned by `firebase().ui()`- with an object of type [Config](). The Config object specifies the auth providers you want to authenticate your users with.
+To present the auth UI that allows authenticating users, call the [show](#show) method on the [UI](#ui-object) object - returned by `firebase().ui()`- with an object of type [Config](). The Config object specifies the auth providers you want to authenticate your users with.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -56,7 +56,7 @@ firebase()
 
 ### Sign out a user
 
-To sign out a user, call the [signOut]() method on the [UI]() object returned by `firebase().ui()`.
+To sign out a user, call the [signOut](#signout) method on the [UI](#ui-object) object returned by `firebase().ui()`.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -75,7 +75,7 @@ firebase()
 ```
 
 ## API
-### UI class
+### UI object
 #### android
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -131,11 +131,11 @@ firebase()
     });
 ```
 Presents auth UI with a list of federated identity providers (IDPs) that a user can choose from to sign in or sign up with. If the user chooses to sign in with a federated IDP, the sign-in flow will be completed using the IDP's sign-in SDK and the returned IDP credential will be linked to the current user.
-This method returns a Promise that resolves with an object of type [IIdpResponse]().
+This method returns a Promise that resolves with an [IIdpResponse](#iidpresponse-object) object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| `config` | [Config]() | The `config` parameter specifies auth options such as federated identity providers,  |
+| `config` | [Config](https://github.com/Ombuweb/firebase/blob/main/packages/firebase-ui/index.d.ts#L111-L124) | The `config` parameter specifies auth options such as federated identity providers list to use for user auth and more.  |
 
 
 ---
@@ -173,7 +173,209 @@ firebase()
 Asynchronously signs out the current user.
 
 ---
+### IIdpResponse object
 
+#### android
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        responseAndroid: com.firebase.ui.auth.IdpResponse = result.android;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### ios
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        responseIOS: com.firebase.ui.auth.IdpResponse = result.ios;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### isNewUser
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        isNewUser: boolean = result.isNewUser;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### hasCredentialForLinking
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        hasCredentialForLinking: boolean = result.hasCredentialForLinking;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### email
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        email: string = result.email;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### idpSecret
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        idpSecret: boolean = result.idpSecret;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### idpToken
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        idpToken: boolean = result.idpToken;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### phoneNumber
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        phoneNumber: string = result.phoneNumber;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### providerType
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        providerType: string = result.providerType;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+
+---
+#### user
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase()
+    .ui()
+    .show(config)
+    .then((result: IIdpResponse) => {
+        user: User = result.user;
+    })
+    .catch((error) => {
+        console.error('show error:', error);
+    });
+```
+### User object
+#### android
+```ts
+userAndroid: com.firebase.ui.auth.data.model.User = user.android;
+```
+
+---
+#### ios
+```ts
+userIOS: FIRUser = user.ios;
+```
+
+---
+#### name
+```ts
+name: string = user.name;
+```
+
+---
+#### email
+```ts
+email: string = user.email;
+```
+
+---
+#### phoneNumber
+```ts
+phoneNumber: string = user.phoneNumber;
+```
+
+---
+#### photoUri
+```ts
+photoUri: string = user.photoUri;
+```
+
+---
+#### providerId
+```ts
+providerId: string = user.providerId;
+```
+
+---
 ## License
 
 Apache License Version 2.0
