@@ -2,7 +2,7 @@
 
 ## Intro
 
-With this plugin, you can use the [FirebaseUI](https://github.com/firebase/FirebaseUI-iOS/blob/master/README.md) library in your NativeScript app. FirebaseUI is a library that provides a drop-in auth solution that handles the UI flows for signing up and signing in users with email and password, phone number, Google, Facebook, Twitter, and more.
+With this plugin, you can use the [FirebaseUI for Auth](https://github.com/firebase/FirebaseUI-iOS/blob/master/README.md) library in your NativeScript app. FirebaseUI is a library that provides a drop-in auth solution that handles the UI flows for signing up and signing in users with email and password, phone number, Google, Facebook, Twitter, and more.
 
 ## Set up your app for Firebase
 
@@ -23,6 +23,10 @@ npm install @nativescript/firebase-ui
 ```ts
 import '@nativescript/firebase-ui';
 ```
+
+## Enable sign-in methods in the Firebase console
+
+Just like with [@nativescript/firebase-auth](../firebase-auth/), you need to go to the Firebase console and enable the sign-in methods you want to offer to your users. For more information on how to do that, see [Set up sign-in methods](https://firebase.google.com/docs/auth/web/firebaseui#set_up_sign-in_methods).
 
 ## Present the auth UI to authenticate users
 
@@ -56,7 +60,7 @@ firebase()
 
 ### Sign out a user
 
-To sign out a user, call the [signOut](#signout) method on the [UI](#ui-object) object returned by `firebase().ui()`.
+To sign out a user, call the [signOut](#signout) method on the [UI](#ui-class) object returned by `firebase().ui()`.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -82,6 +86,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 uiAndroid: com.firebase.ui.auth.AuthUI = firebase().ui().android;
 ```
+A `readonly` property that returns the UI object for Android.
 
 ---
 #### ios
@@ -90,6 +95,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 uiIOS: FUIAuth = firebase().ui().ios;
 ```
+A `readonly` property that returns the UI object for iOS.
 
 ---
 #### app
@@ -98,6 +104,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 app: FirebaseApp = firebase().ui().app;
 ```
+A `readonly` property that returns the [FirebaseApp]() instance for your app.
 
 ---
 #### useEmulator()
@@ -108,6 +115,8 @@ firebase()
     .ui()
     .useEmulator(host, port);
 ```
+Allows you to point a `com.firebase.ui.auth.AuthUI` instance to an emulator at a specific host and port.
+
 | Param | Type | Description |
 | --- | --- | --- |
 | `host` | `string` | The host of the emulator. |
@@ -175,6 +184,8 @@ Asynchronously signs out the current user.
 ---
 ### IIdpResponse object
 
+When the [show](#show) method of the [UI object](#ui-object) resolves successfully it returns the `IIdpResponse` object which has the following members.
+
 #### android
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -189,6 +200,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+A `read-only` property that returns the `IdpResponse` instance for Android.
 
 ---
 #### ios
@@ -205,6 +217,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+A `read-only` property that returns the `IdpResponse` instance for iOS.
 
 ---
 #### isNewUser
@@ -221,6 +234,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+Returns `true` if the user has just signed up for the first time, otherwise `false`.
 
 ---
 #### hasCredentialForLinking
@@ -237,6 +251,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+Returns `true` if any of the federated identity providers (IDPs) has credentials for the user to link Firebase account with, otherwise `false`.
 
 ---
 #### email
@@ -253,6 +268,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+Returns the emails the user used to sign in.
 
 ---
 #### idpSecret
@@ -269,6 +285,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+(`Twitter only`)Returns the token secret received as a result of logging in with Twitter.
 
 ---
 #### idpToken
@@ -285,6 +302,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+Gets the token received as a result of logging in with the specified IDP.
 
 ---
 #### phoneNumber
@@ -301,6 +319,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+Gets the phone number used to sign in.
 
 ---
 #### providerType
@@ -317,6 +336,7 @@ firebase()
         console.error('show error:', error);
     });
 ```
+Gets the type of provider. e.g. `{@link GoogleAuthProvider#PROVIDER_ID}`.
 
 ---
 #### user
@@ -333,47 +353,60 @@ firebase()
         console.error('show error:', error);
     });
 ```
+Returns the [user data object](#user-object).
+
+---
 ### User object
+
+This object represents the user data provided by a federated identity provider (IDP).
+
 #### android
 ```ts
 userAndroid: com.firebase.ui.auth.data.model.User = user.android;
 ```
+A `read-only` property that returns the `User` instance for Android.
 
 ---
 #### ios
 ```ts
 userIOS: FIRUser = user.ios;
 ```
+A `read-only` property that returns the `FIRUser` instance for iOS.
 
 ---
 #### name
 ```ts
 name: string = user.name;
 ```
+A `read-only` property that returns the user's display name.
 
 ---
 #### email
 ```ts
 email: string = user.email;
 ```
+A `read-only` property that returns the email of the user.
 
 ---
 #### phoneNumber
 ```ts
 phoneNumber: string = user.phoneNumber;
 ```
+A `read-only` property that returns the phone number of the user.
 
 ---
 #### photoUri
 ```ts
 photoUri: string = user.photoUri;
 ```
+A `read-only` property that returns the user's profile photo URL.
 
 ---
 #### providerId
 ```ts
 providerId: string = user.providerId;
 ```
+A `read-only` property that returns a string that uniquely identifies the identity provider providing the current user's data.
 
 ---
 ## License
