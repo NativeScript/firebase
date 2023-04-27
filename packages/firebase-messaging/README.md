@@ -153,13 +153,13 @@ The following table shows how the notification messages are delivered to the use
 <tr>
 <td>Notification only</td>
 <td>Displayed to the user by the FCM SDK</td>
-<td> Passed to the onMessage handler for the app code to handle</td>
+<td>Passed to the onMessage handler for the app code to handle</td>
 </tr>
 
 <tr>
 <td>Notification + optional data</td>
-<td> App receives a message object with both payloads available.</td>
-<td>App receives the notification payload in the notification tray, and when the user taps on the notification, the data payload is passed to the <a href="#onmessage"> onMessage handler</a</td>
+<td>App receives a message object with both payloads available.</td>
+<td>App receives the notification payload in the notification tray, and when the user taps on the notification, the data payload is passed to the <a href="#onmessage">onMessage handler</a></td>
 </tr>
 </tbody>
 </table>
