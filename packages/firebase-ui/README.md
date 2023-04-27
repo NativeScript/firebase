@@ -5,10 +5,37 @@
 * [Set up your app for Firebase](#set-up-your-app-for-firebase)
 * [Add the FirebaseUI for Auth SDK to your app](#add-the-firebaseui-for-auth-sdk-to-your-app)
 * [Enable sign-in methods in the Firebase console](#enable-sign-in-methods-in-the-firebase-console)
-* [Present the auth UI to authenticate users](#present-the-auth-ui-to-authenticate-users)
+* [Invoke the FirebaseUI auth flow](#invoke-the-firebaseui-auth-flow)
     * [Sign out a user](#sign-out-a-user)
 * [API](#api)
-
+    * [UI object](#ui-object)
+        * [android](#android)
+        * [ios](#ios)
+        * [app](#app)
+        * [useEmulator()](#useemulator)
+        * [show()](#show)
+        * [delete()](#delete)
+        * [signOut()](#signout)
+    * [Config interface](#config-interface)
+    * [IIdpResponse object](#iidpresponse-object)
+        * [android](#android-1)
+        * [ios](#ios-1)
+        * [isNewUser](#isnewuser)
+        * [hasCredentialForLinking](#hascredentialforlinking)
+        * [email](#email)
+        * [idpSecret](#idpsecret)
+        * [idpToken](#idptoken)
+        * [phoneNumber](#phonenumber)
+        * [providerType](#providertype)
+        * [user](#user)
+    * [User object](#user-object)
+        * [android](#android-2)
+        * [ios](#ios-2)
+        * [name](#name)
+        * [email](#email-1)
+        * [phoneNumber](#phonenumber-1)
+        * [photoURI](#photouri)
+        * [providerId](#providerid)
 
 ## Intro
 
@@ -38,9 +65,9 @@ import '@nativescript/firebase-ui';
 
 Just like with [@nativescript/firebase-auth](../firebase-auth/), you need to go to the Firebase console and enable the sign-in methods you want to offer to your users. For more information on how to do that, see [Set up sign-in methods](https://firebase.google.com/docs/auth/web/firebaseui#set_up_sign-in_methods).
 
-## Present the auth UI to authenticate users
+## Invoke the FirebaseUI auth flow
 
-To present the auth UI that allows authenticating users, call the [show](#show) method on the [UI](#ui-object) object - returned by `firebase().ui()`- with an object of type [Config](). The Config object specifies the auth providers you want to authenticate your users with.
+To present the auth UI that allows authenticating users, call the [show](#show) method on the [UI](#ui-object) object - returned by `firebase().ui()`- with an object of type [Config](). 
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -159,7 +186,6 @@ This method returns a Promise that resolves with an [IIdpResponse](#iidpresponse
 | --- | --- | --- |
 | `config` | [Config](https://github.com/Ombuweb/firebase/blob/main/packages/firebase-ui/index.d.ts#L111-L124) | The `config` parameter specifies auth options such as federated identity providers list to use for user auth and more.  |
 
-
 ---
 #### delete()
 ```ts
@@ -195,9 +221,29 @@ firebase()
 Asynchronously signs out the current user.
 
 ---
+### Config interface
+The Config object specifies the auth flow options such as the available identity providers, email link, the UI theme and other options.
+
+```ts
+export interface Config {
+	providers: IProvider[];
+	anonymousUsersAutoUpgrade?: boolean;
+	emailLink?: string;
+	resetPasswordSettings?: IActionCodeSettings;
+	theme?: number; // Android only
+	lockOrientation?: boolean;
+	tosAndPrivacyPolicy?: {
+		tos: string;
+		privacyPolicy: string;
+	};
+
+	alwaysShowSignInMethodScreen?: boolean;
+}
+```
+---
 ### IIdpResponse object
 
-When the [show](#show) method of the [UI object](#ui-object) resolves successfully it returns the `IIdpResponse` object which has the following members.
+When the [show](#show) method of the [UI object](#ui-object) resolves successfully, it returns the `IIdpResponse` object which has the following members.
 
 #### android
 ```ts
