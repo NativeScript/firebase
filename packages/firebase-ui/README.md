@@ -1,14 +1,24 @@
 # @nativescript/firebase-ui
 
+## Contents
+* [Intro](#intro)
+* [Set up your app for Firebase](#set-up-your-app-for-firebase)
+* [Add the FirebaseUI for Auth SDK to your app](#add-the-firebaseui-for-auth-sdk-to-your-app)
+* [Enable sign-in methods in the Firebase console](#enable-sign-in-methods-in-the-firebase-console)
+* [Present the auth UI to authenticate users](#present-the-auth-ui-to-authenticate-users)
+    * [Sign out a user](#sign-out-a-user)
+* [API](#api)
+
+
 ## Intro
 
-With this plugin, you can use the [FirebaseUI for Auth](https://github.com/firebase/FirebaseUI-iOS/blob/master/README.md) library in your NativeScript app. FirebaseUI is a library that provides a drop-in auth solution that handles the UI flows for signing up and signing in users with email and password, phone number, Google, Facebook, Twitter, and more.
+With this plugin, you can use the [FirebaseUI for Auth](https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#firebaseui-for-auth) library in your NativeScript app. FirebaseUI for Auth is a library that provides a drop-in auth solution that handles the UI flows for signing up and signing in users with email and password, phone number, Google, Facebook, Twitter, and more.
 
 ## Set up your app for Firebase
 
 You need to set up your app for Firebase before you can enable FirebaseUI. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
 
-## Add the FirebaseUI SDK to your app
+## Add the FirebaseUI for Auth SDK to your app
 
 To add the FirebaseUI SDK to your app follow these steps:
 
@@ -60,7 +70,7 @@ firebase()
 
 ### Sign out a user
 
-To sign out a user, call the [signOut](#signout) method on the [UI](#ui-class) object returned by `firebase().ui()`.
+To sign out a user, call the [signOut](#signout) method on the [UI](#ui-object) object returned by `firebase().ui()`.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -80,6 +90,9 @@ firebase()
 
 ## API
 ### UI object
+
+The `UI` object provides the API for the FirebaseUI for Auth library and has the following members.
+
 #### android
 ```ts
 import { firebase } from '@nativescript/firebase-core';
