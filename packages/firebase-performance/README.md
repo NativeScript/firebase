@@ -89,7 +89,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 performanceAndroid: com.google.firebase.perf.FirebasePerformance = firebase().perf().android;
 ```
-A `read-only` property that returns the Permormance Monitoring instance for Android.
+A `read-only` property that returns the Performance Monitoring instance for Android.
 
 ---
 #### ios
@@ -98,7 +98,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 performanceIOS: FIRPerformance = firebase().perf().ios;
 ```
-A `read-only` property that returns the Permormance Monitoring instance for iOS.
+A `read-only` property that returns the Performance Monitoring instance for iOS.
 
 ---
 #### app
@@ -124,7 +124,7 @@ firebase().perf().isPerformanceCollectionEnabled = true;
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 
-firebase().perf().newHttpMetric(url, httpMethod);
+httpMetric: HttpMetric = firebase().perf().newHttpMetric(url, httpMethod);
 ```
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
@@ -155,9 +155,185 @@ trace: Trace = firebase().perf().startTrace(identifier);
 
 ---
 ### HttpMetric class
+#### android
+```ts
+import { firebase } from '@nativescript/firebase-core';
 
+httpMetricAndroid: com.google.firebase.perf.metrics.HttpMetric = httpMetric.android;
+```
+A `read-only` property that returns the HttpMetrics instance for Android.
 
+---
+#### ios
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+httpMetricIOS: FIRHTTPMetric = httpMetric.ios;
+
+```
+A `read-only` property that returns the HttpMetric instance for iOS.
+
+---
+#### getAttribute()
+```ts
+someAttribute: string = httpMetric.getAttribute(attribute);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `attribute` | `string` |
+
+---
+#### getAttributes()
+```ts
+attributes: { [key: string]: string } = httpMetric.getAttributes();
+```
+
+---
+#### putAttribute()
+```ts
+httpMetric.putAttribute(attribute, value);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `attribute` | `string` |
+| `value` | `string` |
+
+---
+#### removeAttribute()
+```ts
+httpMetric.removeAttribute(attribute);
+```
+
+---
+#### setHttpResponseCode()
+```ts
+httpMetric.setHttpResponseCode(code);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `code` | `number` |
+
+---
+#### setRequestPayloadSize()
+```ts
+httpMetric.setRequestPayloadSize(bytes);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `bytes` | `number` |
+
+---
+#### setResponseContentType()
+```ts
+httpMetric.setResponseContentType(contentType);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `contentType` | `string` |
+
+---
+#### start()
+```ts
+httpMetric.start();
+```
+
+---
+#### stop()
+```ts
+httpMetric.stop();
+```
+
+---
 ### Trace class
+#### android
+```ts
+traceAndroid: com.google.firebase.perf.metrics.Trace = trace.android;
+```
+A `read-only` property that returns the Trace instance for Android.
+
+---
+#### ios
+```ts
+traceIOS: FIRTrace = trace.ios;
+```
+A `read-only` property that returns the Trace instance for iOS.
+
+---
+#### getAttribute()
+```ts
+someAttribute: string = trace.getAttribute(attribute);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `attribute` | `string` |
+
+---
+#### getMetric()
+```ts
+someMetric: number = trace.getMetric(metricName);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `metricName` | `string` |
+
+---
+#### getMetrics()
+```ts
+metrics: { [key: string]: number } = trace.getMetrics();
+```
+
+---
+#### incrementMetric()
+```ts
+trace.incrementMetric(metricName, incrementBy);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `metricName` | `string` |
+| `incrementBy` | `number` |
+
+---
+#### putAttribute()
+```ts
+trace.putAttribute(attribute, value);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `attribute` | `string` |
+| `value` | `string` |
+
+---
+#### putMetric()
+```ts
+trace.putMetric(metricName, value);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `metricName` | `string` |
+| `value` | `number` |
+
+---
+#### removeMetric()
+```ts
+trace.removeMetric(metricName);
+```
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `metricName` | `string` |
+
+---
+#### start()
+```ts
+trace.start();
+```
+
+---
+#### stop()
+```ts
+trace.stop();
+```
+
+---
 ## License
 
 Apache License Version 2.0
