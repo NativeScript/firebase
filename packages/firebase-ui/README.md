@@ -43,7 +43,7 @@ With this plugin, you can use the [FirebaseUI for Auth](https://github.com/fireb
 
 ## Set up your app for Firebase
 
-You need to set up your app for Firebase before you can enable FirebaseUI. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+You need to set up your app for Firebase before you can enable FirebaseUI for Auth. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
 
 ## Add the FirebaseUI for Auth SDK to your app
 
@@ -67,7 +67,7 @@ Just like with [@nativescript/firebase-auth](../firebase-auth/), you need to go 
 
 ## Invoke the FirebaseUI auth flow
 
-To invoke the FirebaseUI auth flow, call the [show](#show) method on the [UI](#ui-object) object - returned by `firebase().ui()`- with an object of type [Config](). 
+To invoke the FirebaseUI auth flow, call the [show](#show) method on the [UI](#ui-object) object - returned by `firebase().ui()`- with an object of type [Config](#config-interface) specifying the auth options. 
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
