@@ -1,26 +1,45 @@
 # @nativescript/firebase-remote-config
 
+## Intro
+
+This plugin allows you to use the [Firebase Remote Config](https://firebase.google.com/docs/remote-config/) API in your NativeScript app.
+
+[![image](https://img.youtube.com/vi/_CXXVFPO6f0/hqdefault.jpg)](https://www.youtube.com/watch?v=_CXXVFPO6f0)
+
+## Set up your app for Firebase
+
+You need to set up your app for Firebase before you can enable Firebase Remote Config. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+
+## Add the Firebase Remote Config SDK to your app
+
+To add the Firebase Remote Config to your app, follow these steps:
+
+1. Install the `@nativescript/firebase-remote-config` plugin by running the following command in the root directory of your project.
+
 ```cli
 npm install @nativescript/firebase-remote-config
 ```
 
-### What does it do
+2. Add the SDK by importing the `@nativescript/firebase-remote-config` module. You should import this module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`).
 
-Remote Config allows you to change the appearance and/or functionality of your app without requiring an app update. Remote Config values are input into the Firebase console and accessible via a JavaScript API. This gives you full control over when and how these Remote Config values are applied and affect your application.
+```ts
+import '@nativescript/firebase-remote-config';
+```
 
-[![image](https://img.youtube.com/vi/_CXXVFPO6f0/hqdefault.jpg)](https://www.youtube.com/watch?v=_CXXVFPO6f0)
+## Create default parameters
 
-## Usage
+To create default Remote Config parameters, follow the steps:
 
-To get started, you need to define some parameters over on the [Firebase Console](https://console.firebase.google.com/project/_/config).
+1. [Firebase Console](https://console.firebase.google.com/project/_/config) and select your project.
+2. On the **Remote Config** page, click **Create configuration** to create a parameter.
 
-## Default values
+### Set default values
 
 Before fetching the parameters from Firebase, it is first important to set some default values. Default values help ensure that your application code runs as expected in scenarios where the device has not yet retrieved the values.
 
-An example of this is having no network or you have not yet fetched them within your own code.
+An example of this is having no network or you have not yet fetched them within your code.
 
-Setting default values helps to ensure that both the local device & Firebase servers are both in sync. Call the setDefaults method early on in your application:
+Setting default values helps to ensure that both the local device & Firebase servers are both in sync. Call the [setDefaults](#setdefaults) method early on in your application:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -138,6 +157,252 @@ import { firebase } from '@nativescript/firebase-core';
 remoteConfig().settings.minimumFetchIntervalMillis = 30000;
 ```
 
+## API
+
+### RemoteConfig class
+
+#### android
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+remoteConfigAndroid: com.google.firebase.remoteconfig.FirebaseRemoteConfig = firebase().remoteConfig().android;
+```
+A `read-only` property that returns the naive object for Android wrapped by the instance of the RemoteConfig class.
+
+---
+#### ios
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+remoteConfigIos: FIRRemoteConfig = firebase().remoteConfig().ios;
+```
+A `read-only` property that returns the naive object for iOS wrapped by the instance of the RemoteConfig class.
+
+---
+#### app
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+remoteConfigApp: FirebaseApp = firebase().remoteConfig().app;
+```
+A `read-only` property that returns the FirebaseApp instance for the current app.
+
+---
+#### fetchTimeMillis
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+remoteConfigFetchTimeMillis: number = firebase().remoteConfig().fetchTimeMillis;
+```
+A `read-only` property that returns the timestamp (milliseconds since epoch) of the last successful fetch, regardless of whether the fetch was activated or not.
+
+---
+#### lastFetchStatus
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+remoteConfigLastFetchStatus: 'success' | 'failure' | 'no_fetch_yet' | 'throttled' = firebase().remoteConfig().lastFetchStatus;
+```
+A `read-only` property that returns the status of the most recent fetch attempt.
+
+---
+#### settings
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+remoteConfigSettings: ConfigSettings = firebase().remoteConfig().settings;
+// or
+firebase().remoteConfig().settings = {
+	minimumFetchIntervalMillis: 30000,
+};
+```
+
+---
+#### activate()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+activated: boolean = await firebase().remoteConfig().activate();
+```
+
+---
+#### ensureInitialized()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+await firebase().remoteConfig().ensureInitialized();
+```
+
+---
+#### fetch()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+await firebase().remoteConfig().fetch(expirationDurationSeconds);
+```
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `expirationDurationSeconds` | `number` |
+
+---
+#### fetchAndActivate()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+activated: boolean = await firebase().remoteConfig().fetchAndActivate();
+```
+
+---
+#### getAll()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+parameters: Record<string, ConfigValue> = firebase().remoteConfig().getAll();
+```
+
+---
+#### getBoolean()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+value: boolean = firebase().remoteConfig().getBoolean(key);
+```
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `key` | `string` |
+
+---
+#### getNumber()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+value: number = firebase().remoteConfig().getNumber(key);
+```
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `key` | `string` |
+
+---
+#### getString()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+value: string = firebase().remoteConfig().getString(key);
+```
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `key` | `string` |
+
+---
+#### getValue()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+value: ConfigValue = firebase().remoteConfig().getValue(key);
+```
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `key` | `string` |
+
+---
+#### reset()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+await firebase().remoteConfig().reset();
+```
+
+---
+#### setDefaults()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+await firebase().remoteConfig().setDefaults(defaults);
+```
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `defaults` | `ConfigDefaults` |
+
+
+---
+#### setDefaultsFromResource()
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+await firebase().remoteConfig().setDefaultsFromResource(resourceName);
+```
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `resourceName` | `string` |
+
+
+
+```ts
+export class RemoteConfig implements IRemoteConfig {
+	constructor(app?: FirebaseApp);
+
+	readonly native;
+	readonly ios;
+	readonly android;
+
+	readonly app: FirebaseApp;
+
+	readonly fetchTimeMillis: number;
+
+	readonly lastFetchStatus: 'success' | 'failure' | 'no_fetch_yet' | 'throttled';
+
+	settings: ConfigSettings;
+
+	activate(): Promise<boolean>;
+
+	ensureInitialized(): Promise<void>;
+
+	fetch(expirationDurationSeconds?: number): Promise<void>;
+
+	fetchAndActivate(): Promise<boolean>;
+
+	getAll(): Record<string, ConfigValue>;
+
+	getBoolean(key: string): boolean;
+
+	getNumber(key: string): number;
+
+	getString(key: string): string;
+
+	getValue(key: string): ConfigValue;
+
+	reset(): Promise<void>;
+
+	setDefaults(defaults: ConfigDefaults): Promise<void>;
+
+	setDefaultsFromResource(resourceName: string): Promise<void>;
+}
+```
 ## License
 
 Apache License Version 2.0
