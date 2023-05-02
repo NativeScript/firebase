@@ -366,6 +366,8 @@ Returns the value for the specified attribute of the trace.
 ```ts
 someMetric: number = trace.getMetric(metricName);
 ```
+Gets the value of the metric with the given name in the current trace. For more, information see [getMetric()](https://firebase.google.com/docs/reference/android/com/google/firebase/perf/metrics/Trace#getLongMetric(java.lang.String)) on the Firebase documentation.
+
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `metricName` | `string` | The name of the metric to retrieve the value for. |
