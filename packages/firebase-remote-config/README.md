@@ -26,24 +26,26 @@ npm install @nativescript/firebase-remote-config
 import '@nativescript/firebase-remote-config';
 ```
 
-## Create default parameters
+## Create in-app default parameters
 
-To create default Remote Config parameters, follow the steps:
+Default values help ensure that your application code runs as expected in scenarios where the device has not yet retrieved the values from the remote server.
+
+To create default in-app Remote Config parameters, follow the steps:
 
 1. [Firebase Console](https://console.firebase.google.com/project/_/config) and select your project.
 2. On the **Remote Config** page, click **Create configuration** to create a parameter.
+3. Download the `.xml` file with the parameter values by following the instructions [Firebase Console](https://firebase.google.com/docs/remote-config/get-started?platform=android#firebase-console). 
+4. Add the `.xml` file to your app in an `App_Resources/Android/res/xml` folder.
+5. Send the in-app default parameters to the Remote Config backend by calling the [setDefaultsFromResource](#setdefaultsfromresource) method in your bootstrap file (e.g. `app.ts` or `main.ts`).
 
-### Set default values
+```ts
 
-Before fetching the parameters from Firebase, it is first important to set some default values. Default values help ensure that your application code runs as expected in scenarios where the device has not yet retrieved the values.
+### Set parameter values in the Remote Config backend
 
-An example of this is having no network or you have not yet fetched them within your code.
-
-Setting default values helps to ensure that both the local device & Firebase servers are both in sync. Call the [setDefaults](#setdefaults) method early on in your application:
+To add values to the Remote Config backend, call the [setDefaults](#setdefaults) method with an object specifying the name of the parameters and their values, in the bootstrap file before the app starts.:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-remote-config'; // only needs to be imported 1x
 
 firebase()
 	.remoteConfig()
@@ -55,9 +57,9 @@ firebase()
 	});
 ```
 
-### Fetch & Activate
+### Fetch and activate values
 
-Before reading the values from Firebase, we first need to pull them from Firebase (fetching) & then enable them on the device (activating). The fetchAndActivate API combines both tasks into a single flow:
+Before reading the values from Firebase, we first need to pull them from Firebase (fetching) & then enable them on the device (activating). The [fetchAndActivate](#fetchandactivate) method combines both tasks into a single flow:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -79,7 +81,7 @@ firebase()
 
 ### Reading values
 
-With the defaults set and the remote values fetched from Firebase, we can now use the getValue method to get the value and use a number of methods to retrieve the value (same API as Firebase Remote Config web SDK)
+With the defaults set and the remote values fetched from Firebase, we can now use the [getValue](#getvalue) method to get the value and use several methods to retrieve the value (same API as Firebase Remote Config web SDK)
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -103,7 +105,7 @@ if (awesomeNewFeature.asBoolean() === true) {
 }
 ```
 
-The API also provides a getAll method to read all parameters at once rather than by key:
+The API also provides a [getAll](#getall) method to read all parameters at once rather than by key:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -120,7 +122,7 @@ Object.entries(parameters).forEach((item) => {
 
 ### Value source
 
-When a value is read, it contains source data about the parameter. As explained above, if a value is read before it has been fetched & activated then the value will fallback to the default value set. If you need to validate whether the value returned from the module was local or remote, the getSource() method can be conditionally checked:
+When a value is read, it contains source data about the parameter. As explained above, if a value is read before it has been fetched & activated then the value will fall back to the default value set. If you need to validate whether the value returned from the module was local or remote, the getSource() method can be conditionally checked:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -219,9 +221,11 @@ import { firebase } from '@nativescript/firebase-core';
 remoteConfigSettings: ConfigSettings = firebase().remoteConfig().settings;
 // or
 firebase().remoteConfig().settings = {
+	fetchTimeMillis: 43200000,
 	minimumFetchIntervalMillis: 30000,
 };
 ```
+Gets or sets the settings for this RemoteConfig instance.
 
 ---
 #### activate()
@@ -231,6 +235,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 activated: boolean = await firebase().remoteConfig().activate();
 ```
+Asynchronously activates the most recently fetched configs, so that the fetched key-value pairs take effect. For more information, see [activate()](https://firebase.google.com/docs/reference/android/com/google/firebase/remoteconfig/FirebaseRemoteConfig#activate()) on the Firebase website.
 
 ---
 #### ensureInitialized()
@@ -249,10 +254,11 @@ import { firebase } from '@nativescript/firebase-core';
 
 await firebase().remoteConfig().fetch(expirationDurationSeconds);
 ```
+Fetches configs, adhering to the default or specified minimum fetch interval. For more information, see [fetch()](https://firebase.google.com/docs/reference/android/com/google/firebase/remoteconfig/FirebaseRemoteConfig#fetch(long)) on the Firebase website.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `expirationDurationSeconds` | `number` |
+| `expirationDurationSeconds` | `number` | 
 
 ---
 #### fetchAndActivate()
@@ -262,6 +268,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 activated: boolean = await firebase().remoteConfig().fetchAndActivate();
 ```
+Asynchronously fetches and then activates the fetched configs. For more information, see [fetchAndActivate()](https://firebase.google.com/docs/reference/android/com/google/firebase/remoteconfig/FirebaseRemoteConfig#fetchAndActivate()) on the Firebase website.
 
 ---
 #### getAll()
@@ -271,6 +278,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 parameters: Record<string, ConfigValue> = firebase().remoteConfig().getAll();
 ```
+Returns an object with all the parameters in the Remote Config.
 
 ---
 #### getBoolean()
@@ -280,10 +288,11 @@ import { firebase } from '@nativescript/firebase-core';
 
 value: boolean = firebase().remoteConfig().getBoolean(key);
 ```
+Returns the parameter value for the given key as a boolean.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `key` | `string` |
+| `key` | `string` | The key of the parameter to get. |
 
 ---
 #### getNumber()
@@ -293,10 +302,11 @@ import { firebase } from '@nativescript/firebase-core';
 
 value: number = firebase().remoteConfig().getNumber(key);
 ```
+Returns the parameter value for the given key as a number.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `key` | `string` |
+| `key` | `string` | The key of the parameter to get. |
 
 ---
 #### getString()
@@ -306,10 +316,11 @@ import { firebase } from '@nativescript/firebase-core';
 
 value: string = firebase().remoteConfig().getString(key);
 ```
+Returns the parameter value for the given key as a string.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `key` | `string` |
+| `key` | `string` | The key of the parameter to get. |
 
 ---
 #### getValue()
@@ -319,10 +330,11 @@ import { firebase } from '@nativescript/firebase-core';
 
 value: ConfigValue = firebase().remoteConfig().getValue(key);
 ```
+Returns the parameter value for the given key as a [ConfigValue]().
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `key` | `string` |
+| `key` | `string` | The key of the parameter to get. |
 
 ---
 #### reset()
@@ -332,6 +344,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 await firebase().remoteConfig().reset();
 ```
+Deletes all activated, fetched and default configurations and resets all Firebase Remote Config settings.
 
 ---
 #### setDefaults()
@@ -342,10 +355,18 @@ import { firebase } from '@nativescript/firebase-core';
 await firebase().remoteConfig().setDefaults(defaults);
 ```
 
+Sets default configs from a [ConfigDefaults](#configdefaults) object.
+
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `defaults` | `ConfigDefaults` |
+| `defaults` | [ConfigDefaults](#configdefaults) | The default configs object to set. |
 
+#### ConfigDefaults
+```ts
+interface ConfigDefaults {
+	[key: string]: number | string | boolean;
+}
+```
 
 ---
 #### setDefaultsFromResource()
@@ -355,54 +376,12 @@ import { firebase } from '@nativescript/firebase-core';
 
 await firebase().remoteConfig().setDefaultsFromResource(resourceName);
 ```
+Sets default configs using an `XML` resource.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `resourceName` | `string` |
+| `resourceName` | `string` | The resource name of the XML resource in the package's res folder. |
 
-
-
-```ts
-export class RemoteConfig implements IRemoteConfig {
-	constructor(app?: FirebaseApp);
-
-	readonly native;
-	readonly ios;
-	readonly android;
-
-	readonly app: FirebaseApp;
-
-	readonly fetchTimeMillis: number;
-
-	readonly lastFetchStatus: 'success' | 'failure' | 'no_fetch_yet' | 'throttled';
-
-	settings: ConfigSettings;
-
-	activate(): Promise<boolean>;
-
-	ensureInitialized(): Promise<void>;
-
-	fetch(expirationDurationSeconds?: number): Promise<void>;
-
-	fetchAndActivate(): Promise<boolean>;
-
-	getAll(): Record<string, ConfigValue>;
-
-	getBoolean(key: string): boolean;
-
-	getNumber(key: string): number;
-
-	getString(key: string): string;
-
-	getValue(key: string): ConfigValue;
-
-	reset(): Promise<void>;
-
-	setDefaults(defaults: ConfigDefaults): Promise<void>;
-
-	setDefaultsFromResource(resourceName: string): Promise<void>;
-}
-```
 ## License
 
 Apache License Version 2.0
