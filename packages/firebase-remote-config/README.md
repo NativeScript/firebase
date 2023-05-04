@@ -8,7 +8,7 @@
 * [Set parameter values in the Remote Config backend](#set-parameter-values-in-the-remote-config-backend)
 * [Fetch and activate values](#fetch-and-activate-values)
 * [Reading values](#reading-values)
-* [Determine the source of a parameter's value](#determine-the-source-of-a-parameters-value)
+* [Get the source of a parameter's value](#get-the-source-of-a-parameters-value)
 * [Set a minimum fetch interval](#set-a-minimum-fetch-interval)
 * [API](#api)
 	* [RemoteConfig class](#remoteconfig-class)
@@ -30,6 +30,14 @@
 		* [reset()](#reset)
 		* [setDefaults()](#setdefaults)
 		* [setDefaultsFromResource()](#setdefaultsfromresource)
+	* [ConfigValue object](#configvalue-object)
+		* [android](#android-1)
+		* [ios](#ios-1)
+		* [asBoolean()](#asboolean)
+		* [asNumber()](#asnumber)
+		* [asString()](#asstring)
+		* [getSource()](#getsource)
+		
 
 * [License](#license)
 
@@ -163,9 +171,9 @@ Object.entries(parameters).forEach((item) => {
 });
 ```
 
-### Determine the source of a parameter's value
+### Get the source of a parameter's value
 
-When a value is read, it contains source data about the parameter. If a value is read before it has been fetched & activated then the value will fall back to the default in-app value set. If you need to validate whether the value returned from the module was local or remote, call the [getSource]() method on the [ConfigValue]() object:
+When a value is read, it contains source data about the parameter. If a value is read before it has been fetched & activated then the value will fall back to the default in-app value set. If you need to validate whether the value returned from the module was local or remote, call the [getSource](#getsource) method on the [ConfigValue](#configvalue-object) object:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -374,7 +382,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 value: ConfigValue = firebase().remoteConfig().getValue(key);
 ```
-Returns the parameter value for the given key as a [ConfigValue]().
+Returns the parameter value for the given key as a [ConfigValue](#configvalue-object).
 
 | Parameter | Type | Description |
 | --- | --- | --- |
@@ -426,6 +434,69 @@ Sets default configs using an `XML` resource.
 | --- | --- | --- |
 | `resourceName` | `string` | The resource name of the XML resource in the package's res folder. |
 
+---
+### ConfigValue object
+
+This object is returned by the [getValue()](#getvalue) method and represents a parameter value for a given key. It provides several methods to get the value as a boolean, number or string.
+
+#### android
+```ts
+configValue: ConfigValue = firebase().remoteConfig().getValue(key)
+
+configValueAndroid: com.google.firebase.remoteconfig.FirebaseRemoteConfigValue = configValue.android;
+```
+Returns an instance of ConfigValue for Android.
+
+---
+#### ios
+```ts
+configValue: ConfigValue = firebase().remoteConfig().getValue(key)
+
+configValueIOS: FIRRemoteConfigValue = configValue.ios;
+```
+Returns an instance of ConfigValue for iOS.
+
+---
+#### asBoolean()
+
+```ts
+configValue: ConfigValue = firebase().remoteConfig().getValue(key)
+
+value: boolean = configValue.asBoolean();
+```
+Gets the parameter value as a boolean.
+
+---
+#### asNumber()
+
+```ts
+configValue: ConfigValue = firebase().remoteConfig().getValue(key)
+
+value: number = configValue.asNumber();
+```
+Gets the parameter value as a number.
+
+---
+#### asString()
+
+```ts
+configValue: ConfigValue = firebase().remoteConfig().getValue(key)
+
+value: string = configValue.asString();
+```
+Gets the parameter value as a string.
+
+---
+#### getSource()
+
+```ts
+configValue: ConfigValue = firebase().remoteConfig().getValue(key)
+
+source: 'default' | 'static' | 'remote' = configValue.getSource();
+```
+Gets the source of the parameter value.
+
+---
 ## License
 
 Apache License Version 2.0
