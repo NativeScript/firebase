@@ -7,7 +7,10 @@
 * [Create in-app default parameters](#create-in-app-default-parameters)
 * [Set parameter values in the Remote Config backend](#set-parameter-values-in-the-remote-config-backend)
 * [Fetch and activate values](#fetch-and-activate-values)
-* [Reading values](#reading-values)
+	* [Set a minimum fetch interval](#set-a-minimum-fetch-interval)
+* [Reading parameters values](#reading-parameters-values)
+	* [Read a single parameter](#read-a-single-parameter)
+	* [Read all parameters at once](#read-all-parameters-at-once)
 * [Get the source of a parameter's value](#get-the-source-of-a-parameters-value)
 * [Set a minimum fetch interval](#set-a-minimum-fetch-interval)
 * [API](#api)
@@ -76,41 +79,40 @@ To create default in-app Remote Config parameters, follow the steps:
 
 1. [Firebase Console](https://console.firebase.google.com/project/_/config) and select your project.
 2. On the **Remote Config** dashboard, click **Create configuration** to create a parameter.
-3. Download the `.xml` file with the parameter values by following the instructions [Firebase Console](https://firebase.google.com/docs/remote-config/get-started?platform=android#firebase-console). 
-4. Add the `.xml` file to your app in an `App_Resources/Android/res/xml` folder.
-5. Send the in-app default parameters in the `.xml` file to the Remote Config backend by calling the [setDefaultsFromResource](#setdefaultsfromresource) method in your bootstrap file (e.g. `app.ts` or `main.ts`).
+3. You can add default in-app parameter values through either of the two options below. In both options, add the values to the Remote Config object early in your app's lifecycle, ideally in your bootstrap file (e.g. `app.ts` or `main.ts`)
+	1. Download and add the `.xml` file with the parameter values to your app.
+		* Add the in-app default parameters in the `.xml` file to the Remote Config object by calling the [setDefaultsFromResource](#setdefaultsfromresource) method.
+		```ts
+		import { firebase } from '@nativescript/firebase-core';
 
-```ts
-import { firebase } from '@nativescript/firebase-core';
+		firebase()
+			.remoteConfig()
+			.setDefaultsFromResource("remote_config_defaults")
+			.then(() => {
+				console.log('Default values set.');
+			});
+		```
+	2. Add the in-app parameter values to the Remote Config object by passing them in an object to the [setDefaults](#setdefaults) method.
+		```ts
+		import { firebase } from '@nativescript/firebase-core';
 
-firebase()
-	.remoteConfig()
-	.setDefaultsFromResource("remote_config_defaults")
-	.then(() => {
-		console.log('Default values set.');
-	});
-```
+		firebase()
+			.remoteConfig()
+			.setDefaults({
+				awesome_new_feature: 'disabled',
+			})
+			.then(() => {
+				console.log('Default values set.');
+			});
+		```
 
-### Set parameter values in the Remote Config backend
+## Set parameter values in the Remote Config backend
 
-To add values to the Remote Config backend programmatically, call the [setDefaults](#setdefaults) method with an object specifying the name of the parameters and their values, in the bootstrap file before the app starts:
+To create new server-side default values that override the in-app values, see [Set parameter values in the Remote Config backend](https://firebase.google.com/docs/remote-config/get-started?platform=android#set-backend-par-values)
 
-```ts
-import { firebase } from '@nativescript/firebase-core';
+## Fetch and activate values
 
-firebase()
-	.remoteConfig()
-	.setDefaults({
-		awesome_new_feature: 'disabled',
-	})
-	.then(() => {
-		console.log('Default values set.');
-	});
-```
-
-### Fetch and activate values
-
-Before reading the values from Firebase, you need to pull them from Firebase (fetching) & then enable them on the device (activating). The [fetchAndActivate](#fetchandactivate) method combines both tasks into a single flow:
+Once you've created your parameters in the Remote Config backend, you can fetch them from the server and activate them in your app. You can first fetch the values from the server and then activate them, or you can combine the two tasks into a single flow with the [fetchAndActivate](#fetchandactivate) method.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -130,9 +132,35 @@ firebase()
 	});
 ```
 
-### Reading values
+### Set a minimum fetch interval
 
-With the defaults set and the remote values fetched from Firebase, we can now use the [getValue](#getvalue) method to get the value and use several methods to retrieve the value.
+Although Remote Config is a data storage, it is not designed for frequent reads. By default, Firebase caches the parameters for 12 hours. By design, this prevents the values from being able to change frequently and potentially causes users confusion.
+
+- To set a different minimum fetch interval, pass it, in seconds, to the [fetch](#fetch) method:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+// Fetch and cache for 5 minutes
+await firebase().remoteConfig().fetch(300);
+```
+
+- To bypass caching fully, you can pass a value of `0`. 
+> **Note** Be warned Firebase may start to reject your requests if values are requested too frequently.
+
+- You can also apply a global cache frequency by setting the `minimumFetchIntervalMillis` property of the `RemoteConfigSettings` object to the number of milliseconds to cache the values for. This can be done in the bootstrap file before the app starts:
+
+```ts
+import { firebase } from '@nativescript/firebase-core';
+remoteConfig().settings.minimumFetchIntervalMillis = 30000;
+```
+
+## Reading parameters values
+
+To read the fetched and activated parameters in your app, you can [Read a single parameter](#read-a-single-parameter) or [Read all parameters at once](#read-all-parameters-at-once).
+
+### Read a single parameter
+
+To read a single parameter value from the activated parameter values, call the [getValue](#getvalue) method on the Remote Config object. The [getValue](#getvalue) method returns a [ConfigValue](#configvalue-object) object, which you can use to get the value as a specific type (e.g. string, number, boolean, etc).
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -156,7 +184,9 @@ if (awesomeNewFeature.asBoolean() === true) {
 }
 ```
 
-The API also provides a [getAll](#getall) method to read all parameters at once rather than by key:
+### Read all parameters at once
+
+To read all the parameters from the Remote Config object at once, call the [getAll](#getall) method. The [getAll](#getall) method returns an object with the parameter keys as the object keys and the [ConfigValue](#configvalue-object) objects as the object values.
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -188,29 +218,6 @@ if (awesomeNewFeature.getSource() === 'remote') {
 	console.log('Parameter value was from a locally cached value.');
 }
 ```
-
-### Set a minimum fetch interval
-
-Although Remote Config is a data storage, it is not designed for frequent reads. By default, Firebase caches the parameters for 12 hours. By design, this prevents the values from being able to change frequently and potentially causes users confusion.
-
-- To set a different minimum fetch interval, pass it, in seconds, to the [fetch](#fetch) method:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-// Fetch and cache for 5 minutes
-await firebase().remoteConfig().fetch(300);
-```
-
-- To bypass caching fully, you can pass a value of `0`. 
-> **Note** Be warned Firebase may start to reject your requests if values are requested too frequently.
-
-- You can also apply a global cache frequency by setting the `minimumFetchIntervalMillis` property of the `RemoteConfigSettings` object to the number of milliseconds to cache the values for. This can be done in the bootstrap file before the app starts:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-remoteConfig().settings.minimumFetchIntervalMillis = 30000;
-```
-
 ## API
 
 ### RemoteConfig class
@@ -306,7 +313,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 await firebase().remoteConfig().fetch(expirationDurationSeconds);
 ```
-Fetches configs, adhering to the default or specified minimum fetch interval. For more information, see [fetch()](https://firebase.google.com/docs/reference/android/com/google/firebase/remoteconfig/FirebaseRemoteConfig#fetch(long)) on the Firebase website.
+Fetches parameter values from the Remote Config backend, adhering to the default or specified minimum fetch interval. For more information, see [fetch()](https://firebase.google.com/docs/reference/android/com/google/firebase/remoteconfig/FirebaseRemoteConfig#fetch(long)) on the Firebase website.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
