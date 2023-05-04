@@ -161,6 +161,126 @@ const secondaryApp = firebase.app(config, 'SECONDARY_APP');
 const secondaryStorageBucket = firebase().storage(secondaryApp);
 ```
 
+## API
+
+### Storage class
+#### android
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+storageAndroid: com.google.firebase.storage.FirebaseStorage = firebase().storage().android;
+```
+
+---
+#### ios
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+storageIOS: FIRStorage = firebase().storage().ios;
+```
+
+---
+#### app
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+storageApp: FirebaseApp = firebase().storage().app;
+```
+
+---
+#### maxDownloadRetryTime
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+maxDownloadRetryTime: number = firebase().storage().maxDownloadRetryTime;
+// or
+
+```
+
+---
+#### maxOperationRetryTime
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+maxOperationRetryTime: number = firebase().storage().maxOperationRetryTime;
+```
+
+---
+#### maxUploadRetryTime
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+maxUploadRetryTime: number = firebase().storage().maxUploadRetryTime;
+```
+
+---
+#### constructor()
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+new Storage(app);
+```
+
+---
+#### useEmulator()
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+firebase().storage().useEmulator(host, port);
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `host` | `string` |
+| `port` | `number` |
+
+
+---
+#### ref()
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+reference: Reference = firebase().storage().ref(path);
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `path` | `string` |
+
+---
+#### refFromURL()
+```ts
+import { firebase } from '@nativescript/firebase-core';
+
+reference: Reference = firebase().storage().refFromURL(url);
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `url` | `string` |
+
+---
+
+```ts
+export declare class Storage implements IStorage {
+	readonly native;
+	readonly android;
+	readonly ios;
+	readonly app: FirebaseApp;
+
+	maxDownloadRetryTime: number;
+	maxOperationRetryTime: number;
+	maxUploadRetryTime: number;
+
+	constructor(app?: FirebaseApp);
+
+	useEmulator(host: string, port: number);
+
+	ref(path?: string): Reference;
+
+	refFromURL(url: string): Reference;
+}
+```
 ## License
 
 Apache License Version 2.0
