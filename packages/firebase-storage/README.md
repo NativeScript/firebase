@@ -402,7 +402,7 @@ Uploads data to this reference's location. For more information, see [putBytes](
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `data` | `Blob \| Uint8Array \| ArrayBuffer` | The data to upload. |
-| `metadata` | [Metadata](#metadata-object) | _Optional_ : The metadata to associate with this upload. |
+| `metadata` | [Metadata](https://github.com/NativeScript/firebase/blob/main/packages/firebase-storage/index.d.ts#L131-L157) | _Optional_ : The metadata to associate with this upload. |
 
 
 ---
@@ -416,7 +416,7 @@ Uploads bytes data from a string to this reference's location.
 | :--- | :--- | :--- |
 | `data` | `string` | The base64 string to upload . |
 | `format` | [StringFormat](#stringformat-enum) | The format of the string to upload. |
-| `metadata` | [Metadata](#metadata-object) | _Optional_ : The metadata to associate with this upload. |
+| `metadata` | [Metadata](https://github.com/NativeScript/firebase/blob/main/packages/firebase-storage/index.d.ts#L131-L157) | _Optional_ : The metadata to associate with this upload. |
 
 #### StringFormat enum
 
@@ -439,7 +439,7 @@ Uploads a file to this reference's location.
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `path` | `string` | The path to the file to upload. |
-| `metadata` | [Metadata](#metadata-object) | _Optional_ : The metadata to associate with this upload. |
+| `metadata` | [Metadata](https://github.com/NativeScript/firebase/blob/main/packages/firebase-storage/index.d.ts#L131-L157) | _Optional_ : The metadata to associate with this upload. |
 
 ---
 #### updateMetadata()
@@ -450,7 +450,7 @@ Updates the specified metadata associated with this reference. For more informat
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `metadata` | [Metadata](#metadata-object) | The metadata to update. |
+| `metadata` | [Metadata](https://github.com/NativeScript/firebase/blob/main/packages/firebase-storage/index.d.ts#L131-L157) | The metadata to update. |
 
 ---
 #### writeToFile()
