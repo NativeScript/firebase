@@ -1,31 +1,41 @@
 # @nativescript/firebase-storage
 
+## Intro 
+
+This plugin allows you to use the native Firebase SDKs for [Cloud Storage](https://firebase.google.com/docs/storage) in your Nativescript app.
+
+[![image](https://img.youtube.com/vi/_tyjqozrEPY/hqdefault.jpg)](https://www.youtube.com/watch?v=_tyjqozrEPY)
+
+## Set up and initialize Firebase for your app
+To use Firebase Cloud Storage, you initialize Firebase first. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+
+## Create a default Cloud Storage bucket
+
+To create a default Cloud Storage bucket, follow the instructions at [Create a default Cloud Storage bucket](https://firebase.google.com/docs/storage/ios/start#create_a_default_storage_bucket).
+
+## Add the Firebase Cloud Storage SDK to your app
+
+To add the Cloud Storage SDK to your app, install and import the `@nativescript/firebase-storage` plugin.
+
+1. Install the plugin by running the following command in the root directory of your project.
+
 ```cli
 npm install @nativescript/firebase-storage
 ```
 
-## What does it do
+2. To add the Firestore SDK, import the `@nativescript/firebase-storage` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrapping file( `app.ts`, `main.ts`, etc).
 
-Storage is built for app developers who need to store and serve user-generated content, such as photos or videos.
+## Create a Firebase Storage instance
 
-[![image](https://img.youtube.com/vi/_tyjqozrEPY/hqdefault.jpg)](https://www.youtube.com/watch?v=_tyjqozrEPY)
-
-Your data is stored in a Google Cloud Storage bucket, an exabyte scale object storage solution with high availability and global redundancy. Storage lets you securely upload these files directly from mobile devices, handling spotty networks with ease.
-
-## Usage
-
-Before using Storage, you must first have ensured you have initialized Firebase.
-
-To create a new Storage instance, call the instance getter on FirebaseStorage:
+To create a new Storage instance, call the instance getter, `storage()`, method on the FirebaseApp instance.:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-storage'; // only needs to be imported 1x
 
 const storage = firebase().storage();
 ```
 
-By default, this allows you to interact with Firebase Storage using the default Firebase App used whilst installing Firebase on your platform. If however you'd like to use a secondary Firebase App, pass the secondary app instance when calling the auth method:
+By default, this allows you to interact with Firebase Storage using the default Firebase App used whilst installing Firebase on your platform. However, if you'd like to use a secondary Firebase App, pass the secondary app instance when calling the `storage` method:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -38,7 +48,7 @@ const secondaryApp = firebase.initializeApp(config, 'SECONDARY_APP');
 const storage = firebase().storage(secondaryApp);
 ```
 
-Your files are stored in a Google Cloud Storage bucket. The files in this bucket are presented in a hierarchical structure, just like a file system. By creating a reference to a file, your app gains access to it. These references can then be used to upload or download data, get or update metadata or delete the file. A reference can either point to a specific file or to a higher level node in the hierarchy.
+Your files are stored in a Google Cloud Storage bucket. The files in this bucket are presented in a hierarchical structure, just like a file system. By creating a reference to a file, your app gains access to it. These references can then be used to upload or download data, get or update metadata or delete the file. A reference can either point to a specific file or a higher-level node in the hierarchy.
 
 The Storage module also provides support for multiple buckets.
 
@@ -46,7 +56,9 @@ You can view your buckets on the [Firebase Console](https://console.firebase.goo
 
 ### Creating a reference
 
-A reference is a local pointer to some file on your bucket. This can either be a file which already exists, or one which does not exist yet. To create a reference, use the ref method:
+A reference is a local pointer to some file on your bucket. This can either be a file that already exists or one which does not exist yet. 
+
+- To create a reference, call the [ref](#ref) method passing it the file name, with extension, on the [Storage](#storage-class) instance:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -55,7 +67,7 @@ import '@nativescript/firebase-storage';
 const reference = firebase().storage().ref('black-t-shirt-sm.png');
 ```
 
-You can also specify a file located in a deeply nested directory:
+- You can also specify a file located in a deeply nested directory:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -64,16 +76,26 @@ const reference = firebase().storage().ref('/images/t-shirts/black-t-shirt-sm.pn
 
 ### Upload a file
 
-To upload a file directly from the users device, the putFile method on a reference accepts a string path to the file on the users device. For example, you may be creating an app which uploads users photos.
+To upload a file directly from the user's device, follow these steps:
 
+1. Create a reference to the file you want to upload.
 ```ts
 import { firebase } from '@nativescript/firebase-core';
-import { knownfolders } from '@nativescript/core';
+
 const reference = firebase().storage().ref('black-t-shirt-sm.png');
+```
+
+-2.  Get the path to the file on the users device. For example, 
+```ts
+import { knownfolders } from '@nativescript/core';
 
 const pathToFile = knownFolders.documents().getFile('black-t-shirt-sm.png');
-// uploads file
-await reference.putFile(pathToFile.path);
+const filePath = pathToFile.path;
+```
+- Call the [putFile](#putfile) method on the reference, passing it the path to the local file.
+
+```ts
+await reference.putFile(filePath);
 ```
 
 ### Tasks
@@ -465,6 +487,85 @@ Downloads the object at this reference's location to the specified system file p
 
 ---
 
+### Task class
+
+#### android
+```ts
+taskAndroid: com.google.firebase.storage.FileDownloadTask.TaskSnapshot | com.google.firebase.storage.UploadTask.TaskSnapshot = task.android;
+```
+
+---
+#### ios
+```ts
+taskIOS: FIRStorageUploadTask | FIRStorageDownloadTask = task.ios;
+```
+
+---
+#### snapshot
+```ts
+taskSnapshot: TaskSnapshot = task.snapshot;
+```
+
+---
+#### on()
+```ts
+task.on(event, nextOrObserver, error, complete);
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `event` | [TaskEvent](#taskevent-enum) | The event name. |
+| `nextOrObserver` | `((a: TaskSnapshot) => any) \| TaskSnapshotObserver` | _Optional_ : The observer object or a function to be called on each event. |
+| `error` | `(a: FirebaseError) => any` | _Optional_ : The function to be called on error. |
+| `complete` | `() => void` | _Optional_ : The function to be called on completion. |
+
+#### TaskEvent enum
+
+```ts
+enum TaskEvent {
+	STATE_CHANGED = 'state_changed',
+}
+```
+
+#### cancel()
+```ts
+cancelled: boolean = task.cancel();
+```
+Cancels the current upload or download task.
+
+---
+#### pause()
+```ts
+paused: boolean = task.pause();
+```
+Pauses the current upload or download task.
+
+
+---
+#### resume()
+```ts
+resumed: boolean = task.resume();
+```
+Resumes the current upload or download task.
+
+---
+
+```ts
+export declare class Task implements ITask {
+	readonly native;
+	readonly android;
+	readonly ios;
+	readonly snapshot: TaskSnapshot;
+
+	cancel(): boolean;
+
+	on(event: TaskEvent, nextOrObserver?: TaskSnapshotObserver | ((a: TaskSnapshot) => any), error?: (a: FirebaseError) => any, complete?: () => void);
+
+	pause(): boolean;
+
+	resume(): boolean;
+}
+```
 ## License
 
 Apache License Version 2.0
