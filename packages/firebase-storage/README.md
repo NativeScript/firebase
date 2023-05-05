@@ -170,6 +170,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 storageAndroid: com.google.firebase.storage.FirebaseStorage = firebase().storage().android;
 ```
+A `read-only` property that returns the underlying native Android object.
 
 ---
 #### ios
@@ -178,6 +179,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 storageIOS: FIRStorage = firebase().storage().ios;
 ```
+A `read-only` property that returns the underlying native iOS object.
 
 ---
 #### app
@@ -186,6 +188,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 storageApp: FirebaseApp = firebase().storage().app;
 ```
+A `read-only` property that returns the FirebaseApp instance to which this Storage belongs.
 
 ---
 #### maxDownloadRetryTime
@@ -196,6 +199,7 @@ maxDownloadRetryTime: number = firebase().storage().maxDownloadRetryTime;
 // or
 
 ```
+Returns or sets the maximum time, in milliseconds, to retry downloads in the case of a failure.
 
 ---
 #### maxOperationRetryTime
@@ -204,6 +208,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 maxOperationRetryTime: number = firebase().storage().maxOperationRetryTime;
 ```
+Returns or sets the maximum time, in milliseconds, to retry operations other than uploads or downloads in the case of a failure.
 
 ---
 #### maxUploadRetryTime
@@ -212,6 +217,7 @@ import { firebase } from '@nativescript/firebase-core';
 
 maxUploadRetryTime: number = firebase().storage().maxUploadRetryTime;
 ```
+Gets or sets the maximum time, in milliseconds, to retry uploads in the case of a failure.
 
 ---
 #### constructor()
@@ -221,6 +227,10 @@ import { firebase } from '@nativescript/firebase-core';
 new Storage(app);
 ```
 
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `app` | `FirebaseApp` | _Optional_ : The FirebaseApp instance to which this Storage belongs. |
+
 ---
 #### useEmulator()
 ```ts
@@ -228,11 +238,12 @@ import { firebase } from '@nativescript/firebase-core';
 
 firebase().storage().useEmulator(host, port);
 ```
+Attempts to connect to the Storage emulator running locally on the given host and port.
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `host` | `string` |
-| `port` | `number` |
+| `host` | `string` | The emulator host. |
+| `port` | `number` | The emulator port. |
 
 
 ---
@@ -242,10 +253,11 @@ import { firebase } from '@nativescript/firebase-core';
 
 reference: Reference = firebase().storage().ref(path);
 ```
+Creates a new storage [reference]() initialized at the root Firebase Storage location, if no path argument is provided, or at the given path if a path argument is provided.
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `path` | `string` |
+| `path` | `string` | _Optional_ : The path to initialize the reference at. |
 
 ---
 #### refFromURL()
@@ -254,33 +266,205 @@ import { firebase } from '@nativescript/firebase-core';
 
 reference: Reference = firebase().storage().refFromURL(url);
 ```
+Creates a new storage [reference]() initialized from the specific URL.
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `url` | `string` |
+| `url` | `string` | The URL to initialize the reference from. |
+
+---
+### Reference object
+
+#### android
+```ts
+referenceAndroid: com.google.firebase.storage.StorageReference = reference.android;
+```
+
+A `read-only` property that returns the underlying native StorageReference object for Android.
+
+---
+#### ios
+```ts
+referenceIOS: FIRStorageReference = reference.ios;
+```
+A `read-only` property that returns the underlying native StorageReference object for iOS.
+
+---
+#### bucket
+```ts
+bucket: string = reference.bucket;
+```
+A `read-only` property that returns the name of the bucket containing this reference's object.
+
+---
+#### fullPath
+```ts
+fullPath: string = reference.fullPath;
+```
+
+A `read-only` property that returns the full path to this object, not including the Google Cloud Storage bucket.
+
+---
+#### name
+```ts
+name: string = reference.name;
+```
+A `read-only` property that returns the short name of this object's path, which is the last component of the full path.
+
+---
+#### parent
+```ts
+parent: Reference = reference.parent;
+```
+A `read-only` property that returns a reference to the parent of the current reference, or null if the current reference is the root.
+
+---
+#### root
+```ts
+root: Reference = reference.root;
+```
+A `read-only` property that returns a reference to the root of the current reference's bucket.
+
+---
+#### storage
+```ts
+storage: Storage = reference.storage;
+```
+A `read-only` property that returns the [Storage](#storage-class) instance associated with the reference.
+
+---
+#### child()
+```ts
+reference: Reference = reference.child(path);
+```
+Returns a reference to a relative path from the current reference. For more information, see [child](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#child(java.lang.String)) on the Firebase website.
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `path` | `string` | The child path. |
+
+---
+#### delete()
+```ts
+reference.delete();
+```
+Deletes the object at the current reference's location.
+
+---
+#### getDownloadURL()
+```ts
+downloadURL: string = await reference.getDownloadURL();
+```
+Asynchronously retrieves a long-lived download URL with a revokable token. For more information, see [getDownloadUrl](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#getDownloadUrl()) on the Firebase website.
+
+---
+#### getMetadata()
+```ts
+metadata: FullMetadata = await reference.getMetadata();
+```
+Asynchronously retrieves metadata associated with an object at the current reference's location. For more information, see [getMetadata](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#getMetadata()) on the Firebase website.
+
+---
+#### list()
+```ts
+listResult: ListResult = await reference.list(options);
+```
+Returns items (files) and prefixes (folders) under this StorageReference.
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `options` | [ListOptions](#listoptions-interface) | _Optional_ : An object to configure the listing operation. The `ListOptions` properties are described in the [list](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#list(int,java.lang.String)) method on the Firebase docs.| 
+
+#### ListOptions interface
+
+```ts
+interface ListOptions {
+	maxResults: undefined | number;
+	pageToken: undefined | string;
+}
+```
+
+---
+#### listAll()
+```ts
+listResult: ListResult = await reference.listAll();
+```
+
+Asynchronously returns a list of all items (files) and prefixes (folders) under this StorageReference. For more information, see [listAll](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#listAll()) on the Firebase website.
+
+---
+#### put()
+```ts
+task: Task = reference.put(data, metadata);
+```
+Uploads data to this reference's location. For more information, see [putBytes](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#putBytes(byte[],com.google.firebase.storage.StorageMetadata)) on the Firebase website.
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `data` | `Blob \| Uint8Array \| ArrayBuffer` | The data to upload. |
+| `metadata` | [Metadata](#metadata-object) | _Optional_ : The metadata to associate with this upload. |
+
+
+---
+#### putString()
+```ts
+stringTask: Task = reference.putString(data, format, metadata);
+```
+Uploads bytes data from a string to this reference's location.
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `data` | `string` | The base64 string to upload . |
+| `format` | [StringFormat](#stringformat-enum) | The format of the string to upload. |
+| `metadata` | [Metadata](#metadata-object) | _Optional_ : The metadata to associate with this upload. |
+
+#### StringFormat enum
+
+```ts
+enum StringFormat {
+	RAW = 'raw',
+	BASE64 = 'base64',
+	BASE64URL = 'base64url',
+	DATA_URL = 'data_url',
+}
+```
+
+---
+#### putFile()
+```ts
+fileTask: Task = reference.putFile(path, metadata);
+```
+Uploads a file to this reference's location.
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `path` | `string` | The path to the file to upload. |
+| `metadata` | [Metadata](#metadata-object) | _Optional_ : The metadata to associate with this upload. |
+
+---
+#### updateMetadata()
+```ts
+updatedMetadata: FullMetadata = await reference.updateMetadata(metadata);
+```
+Updates the specified metadata associated with this reference. For more information, see [updateMetadata](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#updateMetadata(com.google.firebase.storage.StorageMetadata)) on the Firebase website.
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `metadata` | [Metadata](#metadata-object) | The metadata to update. |
+
+---
+#### writeToFile()
+```ts
+fileWriteTask: Task = reference.writeToFile(localFilePath);
+```
+Downloads the object at this reference's location to the specified system file path. For more information, see [writeToFile](https://firebase.google.com/docs/reference/ios/firebasestorage/api/reference/Classes/FIRStorageReference#-writetofile:) on the Firebase website.
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `localFilePath` | `string` | The path to which the file should be downloaded. |
 
 ---
 
-```ts
-export declare class Storage implements IStorage {
-	readonly native;
-	readonly android;
-	readonly ios;
-	readonly app: FirebaseApp;
-
-	maxDownloadRetryTime: number;
-	maxOperationRetryTime: number;
-	maxUploadRetryTime: number;
-
-	constructor(app?: FirebaseApp);
-
-	useEmulator(host: string, port: number);
-
-	ref(path?: string): Reference;
-
-	refFromURL(url: string): Reference;
-}
-```
 ## License
 
 Apache License Version 2.0
