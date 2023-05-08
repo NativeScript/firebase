@@ -1,5 +1,64 @@
 # @nativescript/firebase-storage
 
+## Contents
+
+- [Intro](#intro)
+- [Set up and initialize Firebase for your app](#set-up-and-initialize-firebase-for-your-app)
+- [Create a default Cloud Storage bucket](#create-a-default-cloud-storage-bucket)
+- [Add the Firebase Cloud Storage SDK to your app](#add-the-firebase-cloud-storage-sdk-to-your-app)
+- [Create a Firebase Storage instance](#create-a-firebase-storage-instance)
+- [Creating a file reference](#creating-a-file-reference)
+- [Upload a file](#upload-a-file)
+- [Dealing with tasks](#dealing-with-tasks)
+	- [Checking upload/download task progress](#checking-uploaddownload-task-progress)
+	- [Pausing & resuming tasks](#pausing--resuming-tasks)
+- [Generate a new download URL](#generate-a-new-download-url)
+- [List files and directories in  bucket reference](#list-files-and-directories-in-bucket-reference)
+- [Customizing security rules](#customizing-security-rules)
+- [Switching storage buckets](#switching-storage-buckets)
+- [API](#api)
+	- [Storage class](#storage-class)
+		- [android](#android)
+		- [ios](#ios)
+		- [app](#app)
+		- [maxDownloadRetryTime](#maxdownloadretrytime)
+		- [maxOperationRetryTime](#maxoperationretrytime)
+		- [maxUploadRetryTime](#maxuploadretrytime)
+		- [constructor()](#constructor)
+		- [useEmulator()](#useemulator)
+		- [ref()](#ref)
+		- [refFromURL()](#reffromurl)
+	- [Reference object](#reference-object)
+		- [android](#android-1)
+		- [ios](#ios-1)
+		- [bucket](#bucket)
+		- [fullPath](#fullpath)
+		- [name](#name)
+		- [parent](#parent)
+		- [root](#root)
+		- [storage](#storage)
+		- [child()](#child)
+		- [delete()](#delete)
+		- [getDownloadURL()](#getdownloadurl)
+		- [getMetadata()](#getmetadata)
+		- [list()](#list)
+		- [listAll()](#listall)
+		- [put()](#put)
+		- [putFile()](#putfile)
+		- [putString()](#putstring)
+		- [updateMetadata()](#updatemetadata)
+		- [writeToFile()](#writetofile)
+	- [Task object](#task-object)
+		- [android](#android-2)
+		- [ios](#ios-2)
+		- [snapshot](#snapshot)
+		- [on()](#on)
+		- [pause()](#pause)
+		- [resume()](#resume)
+		- [cancel()](#cancel)
+		
+
+
 ## Intro 
 
 This plugin allows you to use the native Firebase SDKs for [Cloud Storage](https://firebase.google.com/docs/storage) in your Nativescript app.
@@ -7,6 +66,7 @@ This plugin allows you to use the native Firebase SDKs for [Cloud Storage](https
 [![image](https://img.youtube.com/vi/_tyjqozrEPY/hqdefault.jpg)](https://www.youtube.com/watch?v=_tyjqozrEPY)
 
 ## Set up and initialize Firebase for your app
+
 To use Firebase Cloud Storage, you initialize Firebase first. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
 
 ## Create a default Cloud Storage bucket
@@ -48,13 +108,9 @@ const secondaryApp = firebase.initializeApp(config, 'SECONDARY_APP');
 const storage = firebase().storage(secondaryApp);
 ```
 
-Your files are stored in a Google Cloud Storage bucket. The files in this bucket are presented in a hierarchical structure, just like a file system. By creating a reference to a file, your app gains access to it. These references can then be used to upload or download data, get or update metadata or delete the file. A reference can either point to a specific file or a higher-level node in the hierarchy.
-
-The Storage module also provides support for multiple buckets.
-
 You can view your buckets on the [Firebase Console](https://console.firebase.google.com/project/_/storage/files).
 
-### Creating a reference
+### Creating a file reference
 
 A reference is a local pointer to some file on your bucket. This can either be a file that already exists or one which does not exist yet. 
 
@@ -131,7 +187,7 @@ task.pause();
 task.resume();
 ```
 
-### Generate a new download URL
+## Generate a new download URL
 
 A common use case for Cloud Storage is to use it as a global Content Delivery Network (CDN) for your images. When uploading files to a bucket, they are not automatically available for consumption via an HTTP URL. To generate a new Download URL, you need to call the `getDownloadURL` method on a reference:
 
@@ -141,7 +197,7 @@ import { firebase } from '@nativescript/firebase-core';
 const url = firebase().storage().ref('images/profile-1.png').getDownloadURL();
 ```
 
-### Listing files and directories in bucket reference
+## List files and directories in bucket reference
 
 To view a full list of the current files & directories within a particular bucket reference, call [list](#list) on a [reference](#reference-object) instance. The results are paginated, and if more results are available you can pass a page token into the request:
 
@@ -170,13 +226,13 @@ listFilesAndDirectories(reference).then(() => {
 });
 ```
 
-### Security rules
+### Customizing security rules
 
 By default your bucket will come with rules which allow only authenticated users on your project to access it. You can, however, fully customize the security rules to your application's requirements.
 
 To learn more, see [Get started with Firebase Security Rules](https://firebase.google.com/docs/storage/security/get-started) documentation on the Firebase website.
 
-### Multiple Buckets
+### Switching storage buckets
 
 A single Firebase project can have multiple storage buckets. The module will use the default bucket if no bucket argument is passed to the storage instance. To switch buckets, provide the module with the gs:// bucket URL found on the Firebase Console, under `Storage > Files`.
 
@@ -301,6 +357,7 @@ Creates a new storage [reference]() initialized from the specific URL.
 | `url` | `string` | The URL to initialize the reference from. |
 
 ---
+
 ### Reference object
 
 #### android
@@ -388,9 +445,11 @@ Asynchronously retrieves a long-lived download URL with a revokable token. For m
 ---
 #### getMetadata()
 ```ts
-metadata: FullMetadata = await reference.getMetadata();
+metadata: Metadata = await reference.getMetadata();
 ```
-Asynchronously retrieves metadata associated with an object at the current reference's location. For more information, see [getMetadata](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#getMetadata()) on the Firebase website.
+Asynchronously retrieves metadata associated with an object at the current reference's location. For more information description about this method, see [getMetadata](https://firebase.google.com/docs/reference/android/com/google/firebase/storage/StorageReference#getMetadata()) on the Firebase website.
+
+You can find the properties of the Metadata object [here](https://github.com/NativeScript/firebase/blob/main/packages/firebase-storage/index.d.ts#L131-L157).
 
 ---
 #### list()
@@ -482,6 +541,7 @@ Updates the specified metadata associated with this reference. For more informat
 
 ---
 #### writeToFile()
+
 ```ts
 fileWriteTask: Task = reference.writeToFile(localFilePath);
 ```
@@ -493,18 +553,20 @@ Downloads the object at this reference's location to the specified system file p
 
 ---
 
-### Task class
+### Task object
 
 #### android
 ```ts
 taskAndroid: com.google.firebase.storage.FileDownloadTask.TaskSnapshot | com.google.firebase.storage.UploadTask.TaskSnapshot = task.android;
 ```
+A `read-only` property that returns the native Android object.
 
 ---
 #### ios
 ```ts
 taskIOS: FIRStorageUploadTask | FIRStorageDownloadTask = task.ios;
 ```
+A `read-only` property that returns the native iOS object.
 
 ---
 #### snapshot
@@ -556,22 +618,6 @@ Resumes the current upload or download task.
 
 ---
 
-```ts
-export declare class Task implements ITask {
-	readonly native;
-	readonly android;
-	readonly ios;
-	readonly snapshot: TaskSnapshot;
-
-	cancel(): boolean;
-
-	on(event: TaskEvent, nextOrObserver?: TaskSnapshotObserver | ((a: TaskSnapshot) => any), error?: (a: FirebaseError) => any, complete?: () => void);
-
-	pause(): boolean;
-
-	resume(): boolean;
-}
-```
 ## License
 
 Apache License Version 2.0
