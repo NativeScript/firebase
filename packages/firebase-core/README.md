@@ -1,7 +1,8 @@
 # @nativescript/firebase-core
 
 A plugin to initialize [FirebaseApp](https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp) in your app.
-It should be used with any of:
+
+Use this plugin with any of the following plugins:
 
 - [@nativescript/firebase-admob](../firebase-admob/)
 - [@nativescript/firebase-analytics](../firebase-admob/)
@@ -23,12 +24,14 @@ It should be used with any of:
 
 ## Installation
 
+Install the plugin by running the following command in the root directory of your project.
+
 ```cli
 npm install @nativescript/firebase-core
 ```
 ## Configure Firebase for Android
 
-To configure Firebase for Android, visit [Add Firebase to your Android project](https://firebase.google.com/docs/android/setup) and follow the steps below. 
+To configure Firebase for Android, see [Add Firebase to your Android project](https://firebase.google.com/docs/android/setup) and follow the steps below. 
 
 - [Create a Firebase project](https://firebase.google.com/docs/android/setup#create-firebase-project)
 
@@ -38,7 +41,7 @@ To configure Firebase for Android, visit [Add Firebase to your Android project](
 
 ## Configure Firebase for iOS
 
-To set up Firebase for iOS, visit [Add Firebase to your Apple project](https://firebase.google.com/docs/ios/setup) and follow the steps below:
+To set up Firebase for iOS, see [Add Firebase to your Apple project](https://firebase.google.com/docs/ios/setup) and follow the steps below:
 - [Create a Firebase project](https://firebase.google.com/docs/ios/setup#create-firebase-project)
 - [Register your app with Firebase](https://firebase.google.com/docs/ios/setup#register-app)
 -  [Add a Firebase configuration file](https://firebase.google.com/docs/ios/setup#add-config-file): Download the `GoogleService-Info.plist` file and add it to `App_Resources/iOS/`.

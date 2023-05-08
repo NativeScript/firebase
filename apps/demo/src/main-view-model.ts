@@ -47,6 +47,9 @@ export class MainViewModel extends Observable {
 		{
 			name: 'firebase-firestore',
 		},
+		{
+			name: 'firebase-ui',
+		},
 	];
 
 	viewDemo(args) {

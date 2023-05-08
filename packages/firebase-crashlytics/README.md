@@ -1,3 +1,4 @@
+
 # @nativescript/firebase-crashlytics
 
 * [Intro](#Intro)
@@ -14,7 +15,6 @@
 		* [Methods](#Methods)
 * [License](#License)
 
-## Intro
 
 A plugin that allows you to add [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics) to your NativeScript app.
 
@@ -28,6 +28,7 @@ Crashlytics helps you to collect analytics and details about crashes and errors 
 
 [![image](https://img.youtube.com/vi/k_mdNRZzd30/hqdefault.jpg)](https://www.youtube.com/watch?v=k_mdNRZzd30)
 
+
 ##  Installation
 
 Install the plugin by running the following command in the root directory of your project.
@@ -36,9 +37,11 @@ Install the plugin by running the following command in the root directory of you
 npm install @nativescript/firebase-crashlytics
 ```
 
+
 ##  Use @nativescript/firebase-crashlytics
 
 ###  Log a crash context
+
 Use the `log` method throughout your app to accumulate extra context for possible crashes that can happen. 
 
 ```ts
@@ -139,14 +142,15 @@ firebase().crashlytics().setCrashlyticsCollectionEnabled(false);
 The Crashlytics class has the following members.
 
 ####  Properties
+
 | Property | Type | Description
 |----------|------|------------
 | `ios` | | _readonly_
 | `android` | _readonly_
 | `app` | [FirebaseApp]()| _readonly_
 
-
 ####  Methods
+
 | Method | Returns | Description
 |----------|------|------------
 | `checkForUnsentReports()` | `Promise<boolean>` 

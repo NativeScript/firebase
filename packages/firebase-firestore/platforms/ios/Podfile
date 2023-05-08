@@ -1,1 +1,2 @@
-pod 'FirebaseFirestore', :git => 'https://github.com/invertase/firestore-ios-sdk-frameworks.git', :tag => '9.6.0'
+platform :ios, '12.0'
+pod 'Firebase/Firestore', '~>10.7.0'

@@ -72,7 +72,7 @@ export class UserInfo implements IUserInfo {
 	}
 
 	get native() {
-		return this._native;
+		return this._native as any;
 	}
 
 	get ios() {
@@ -80,27 +80,27 @@ export class UserInfo implements IUserInfo {
 	}
 
 	get uid(): string {
-		return this.native?.valueForKey("uid");
+		return this.native?.valueForKey('uid');
 	}
 
 	get displayName(): string {
-		return this.native?.valueForKey("displayName");
+		return this.native?.valueForKey('displayName');
 	}
 
 	get email(): string {
-		return this.native?.valueForKey("email");
+		return this.native?.valueForKey('email');
 	}
 
 	get phoneNumber(): string {
-		return this.native?.valueForKey("phoneNumber");
+		return this.native?.valueForKey('phoneNumber');
 	}
 
 	get photoURL(): string {
-		return this.native?.valueForKey("photoURL")?.absoluteString;
+		return this.native?.valueForKey('photoURL')?.absoluteString;
 	}
 
 	get providerId(): string {
-		return this.native?.valueForKey("providerID");
+		return this.native?.valueForKey('providerID');
 	}
 
 	toJSON() {
@@ -1237,8 +1237,8 @@ export class Auth implements IAuth {
 		});
 	}
 
-	async signOut(): Promise<boolean> {
-		return await this.native?.signOut?.();
+	signOut(): Promise<boolean> {
+		return Promise.resolve(this.native?.signOut?.());
 	}
 
 	get native() {
