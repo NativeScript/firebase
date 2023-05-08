@@ -98,9 +98,13 @@ const filePath = pathToFile.path;
 await reference.putFile(filePath);
 ```
 
-### Tasks
+## Dealing with tasks
 
-The putFile method returns a Task, which if required, allows you to hook into information such as the current upload progress:
+The [putFile](#putfile) method in the preceding example returns a [Task](#task-class) object, that allows you to hook into information such as the current upload progress.
+
+### Checking upload/download task progress
+
+To check the current task progress, you can listen to the `state_changed` event on the task:
 
 ```ts
 const task = reference.putFile(pathToFile);
@@ -114,7 +118,9 @@ task.then(() => {
 });
 ```
 
-A task also provides the ability to pause & resume on-going operations:
+### Pausing & resuming tasks
+
+A task also provides the ability to pause and resume ongoing operations.  To pause a task, call the [pause](#pause) method and to resume, call the [resume](#resume) method:
 
 ```ts
 const task = reference.putFile(pathToFile);
@@ -125,9 +131,9 @@ task.pause();
 task.resume();
 ```
 
-### Download URLs
+### Generate a new download URL
 
-A common use-case for Cloud Storage is to use it as a global Content Delivery Network (CDN) for your images. When uploading files to a bucket, they are not automatically available for consumption via a HTTP URL. To generate a new Download URL, you need to call the getDownloadURL method on a reference:
+A common use case for Cloud Storage is to use it as a global Content Delivery Network (CDN) for your images. When uploading files to a bucket, they are not automatically available for consumption via an HTTP URL. To generate a new Download URL, you need to call the `getDownloadURL` method on a reference:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -135,9 +141,9 @@ import { firebase } from '@nativescript/firebase-core';
 const url = firebase().storage().ref('images/profile-1.png').getDownloadURL();
 ```
 
-### Listing files & directories
+### Listing files and directories in bucket reference
 
-If you wish to view a full list of the current files & directories within a particular bucket reference, you can use the list method. The results are however paginated, and if more results are available you can pass a page token into the request:
+To view a full list of the current files & directories within a particular bucket reference, call [list](#list) on a [reference](#reference-object) instance. The results are paginated, and if more results are available you can pass a page token into the request:
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
@@ -164,15 +170,15 @@ listFilesAndDirectories(reference).then(() => {
 });
 ```
 
-### Security
+### Security rules
 
-By default your bucket will come with rules which allows only authenticated users on your project to access it. You can however fully customize the security rules to your own applications requirements.
+By default your bucket will come with rules which allow only authenticated users on your project to access it. You can, however, fully customize the security rules to your application's requirements.
 
-To learn more, view the [Storage Security](https://firebase.google.com/docs/storage/security/start) documentation on the Firebase website.
+To learn more, see [Get started with Firebase Security Rules](https://firebase.google.com/docs/storage/security/get-started) documentation on the Firebase website.
 
 ### Multiple Buckets
 
-A single Firebase project can have multiple storage buckets. The module will use the default bucket if no bucket argument is passed to the storage instance. To switch buckets, provide the module with the gs:// bucket URL found on the Firebase Console, under Storage > Files.
+A single Firebase project can have multiple storage buckets. The module will use the default bucket if no bucket argument is passed to the storage instance. To switch buckets, provide the module with the gs:// bucket URL found on the Firebase Console, under `Storage > Files`.
 
 ```ts
 import { firebase, FirebaseOptions } from '@nativescript/firebase-core';
