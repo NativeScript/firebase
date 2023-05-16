@@ -48,6 +48,8 @@ To set up Firebase for iOS, see [Add Firebase to your Apple project](https://fir
 
 ## Use @nativescript/firebase-core
 
+ 🚨 Plugin requires both `@nativescript/firebase-core` and any other `@nativescript/firebase-*` plugin to successfully initialize.
+
 ### Instantiate Firebase and initialize a default app
 
 Import the `firebase` function and call it to create a NativeScript Firebase instance. Next, call the `initializeApp` method on the Firebase instance to instantiate the native [FirebaseApp](https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp).
