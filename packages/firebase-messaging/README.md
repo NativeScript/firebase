@@ -97,7 +97,8 @@ iOS prevents messages containing notification (or 'alert') payloads from being d
 To request permission, call the [requestPermission](#requestpermission) method on the [Messaging class](#messaging-class) instance returned by `firebase().messaging()`. This method triggers a native permission dialog requesting the user's permission. The user can choose to allow or deny the request.
 
 ```ts
-import { firebase, AuthorizationStatus } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript/firebase-core';
+import { AuthorizationStatus } from '@nativescript/firebase-messaging-core';
 
 async function requestUserPermission() {
 	const authStatus = await firebase()
