@@ -516,15 +516,15 @@ const payload = {
 		title: 'FCM Notification',
 	},
 	apns: {
-		payload: {
-			aps: {
-				'mutable-content': 1, // 1 or true
-			},
-		},
-		fcm_options: {
-			image: 'image-url',
-		},
-	},
+    payload: {
+      aps: {
+        'mutable-content': 1,
+      },
+    },
+    fcmOptions: {
+      imageUrl: 'image-url',
+    },
+  },
 };
 ```
 
@@ -568,20 +568,20 @@ const message = {
 		title: 'FCM Notification',
 	},
 	apns: {
-		payload: {
-			aps: {
-				'mutable-content': 1,
-			},
-		},
-		fcm_options: {
-			image: 'image-url',
-		},
-	},
-	android: {
-		notification: {
-			image: 'image-url',
-		},
-	},
+    payload: {
+      aps: {
+        'mutable-content': 1,
+      },
+    },
+    fcmOptions: {
+      imageUrl: 'image-url',
+    },
+  },
+  android: {
+    notification: {
+      imageUrl: 'image-url',
+    },
+  },
 };
 
 admin
