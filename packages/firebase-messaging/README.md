@@ -97,7 +97,8 @@ iOS prevents messages containing notification (or 'alert') payloads from being d
 To request permission, call the [requestPermission](#requestpermission) method on the [Messaging class](#messaging-class) instance returned by `firebase().messaging()`. This method triggers a native permission dialog requesting the user's permission. The user can choose to allow or deny the request.
 
 ```ts
-import { firebase, AuthorizationStatus } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript/firebase-core';
+import { AuthorizationStatus } from '@nativescript/firebase-messaging-core';
 
 async function requestUserPermission() {
 	const authStatus = await firebase()
@@ -153,13 +154,13 @@ The following table shows how the notification messages are delivered to the use
 <tr>
 <td>Notification only</td>
 <td>Displayed to the user by the FCM SDK</td>
-<td> Passed to the onMessage handler for the app code to handle</td>
+<td>Passed to the onMessage handler for the app code to handle</td>
 </tr>
 
 <tr>
 <td>Notification + optional data</td>
-<td> App receives a message object with both payloads available.</td>
-<td>App receives the notification payload in the notification tray, and when the user taps on the notification, the data payload is passed to the <a href="#onmessage"> onMessage handler</a</td>
+<td>App receives a message object with both payloads available.</td>
+<td>App receives the notification payload in the notification tray, and when the user taps on the notification, the data payload is passed to the <a href="#onmessage">onMessage handler</a></td>
 </tr>
 </tbody>
 </table>
