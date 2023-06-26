@@ -328,7 +328,7 @@ export class DynamicLinkSocialParameters implements IDynamicLinkSocialParameters
 	}
 
 	set descriptionText(value) {
-		this._builder?.getDescription?.();
+		this._builder?.setDescription?.(value);
 	}
 
 	get imageUrl(): string {
