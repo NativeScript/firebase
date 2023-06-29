@@ -1,6 +1,6 @@
 {
 	"name": "plugins",
-	"version": "3.1.1",
+	"version": "3.1.2",
 	"license": "MIT",
 	"scripts": {
 		"postinstall": "husky install && npx ts-patch install",
