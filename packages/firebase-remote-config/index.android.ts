@@ -295,7 +295,7 @@ export class RemoteConfig implements IRemoteConfig {
 		return new Promise((resolve, reject) => {
 			NSRemoteConfig().setDefaults(
 				this.native,
-				serialize(defaults),
+				serialize(defaults, true),
 				new org.nativescript.firebase.remote_config.FirebaseRemoteConfig.Callback({
 					onSuccess(params) {
 						resolve();
