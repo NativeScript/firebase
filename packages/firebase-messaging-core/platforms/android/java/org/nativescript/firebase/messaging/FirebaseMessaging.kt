@@ -100,6 +100,9 @@ class FirebaseMessaging {
       message.put("from", remoteMessage.from)
       message.put("messageId", remoteMessage.messageId)
       message.put("messageType", remoteMessage.messageType)
+      message.put("collapseKey", remoteMessage.collapseKey)
+      message.put("priority", remoteMessage.priority)
+      message.put("originalPriority", remoteMessage.originalPriority)
 
       remoteMessage.notification?.let { notif ->
 
