@@ -175,7 +175,7 @@ firebase().messaging().showNotificationsWhenInForeground = true;
 ```
 #### Listen to notification messages in the foreground
 
-Since notification messages are displayed automatically(see [Notifications messages delivery and app state](#notifications-messages-delivery-and-app-state)) when the app is in the foreground, sometimes you may want to handle the display of the message manually. To listen to a message in the foreground and handle their display manually, call the [onMessage](#onmessage) method on the instance of [Messaging class](#messaging-class). Code executed via this handler can interact with your application (e.g. updating the state or UI).
+Since notification messages are displayed automatically(see [Notifications messages delivery and app state](#notifications-messages-delivery-and-app-state)) when the app is in the background, sometimes you may want to handle the display of the message manually. To listen to a message being received when the app is in the foreground or manually handle the display of the message when the app is in the background, pass a callback function to the [onMessage](#onmessage) method of the instance of [Messaging class](#messaging-class). The callback will. Code executed via this handler can interact with your application (e.g. updating the state or UI).
 
 For example, you could display a new Alert each time a message is delivered:
 
