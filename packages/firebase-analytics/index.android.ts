@@ -15,9 +15,11 @@ Object.defineProperty(fb, 'analytics', {
 	writable: false,
 });
 
-function serialize(data) {
-	let store;
+function numberHasDecimals(item: number) {
+	return !(item % 1 === 0);
+}
 
+function serialize(data) {
 	switch (typeof data) {
 		case 'string':
 		case 'boolean':
@@ -31,7 +33,7 @@ function serialize(data) {
 			}
 
 			if (Array.isArray(data)) {
-				store = new java.util.ArrayList();
+				const store = new java.util.ArrayList();
 				data.forEach((item) => {
 					const value = serialize(item);
 					switch (typeof value) {
@@ -49,7 +51,7 @@ function serialize(data) {
 				return store;
 			}
 
-			store = new android.os.Bundle();
+			const store = new android.os.Bundle();
 			Object.keys(data).forEach((key) => {
 				const value = serialize(data[key]);
 				switch (typeof value) {
@@ -57,7 +59,11 @@ function serialize(data) {
 						store.putBoolean(key, value);
 						break;
 					case 'number':
-						store.putInt(key, value);
+						if (numberHasDecimals(value)) {
+							store.putDouble(key, value);
+						} else {
+							store.putLong(key, value);
+						}
 						break;
 					case 'string':
 						store.putString(key, value);
