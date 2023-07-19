@@ -1,3 +1,13 @@
+## [3.1.3](https://github.com/NativeScript/firebase/compare/3.1.2...3.1.3) (2023-07-19)
+
+
+### Bug Fixes
+
+* **analytics:** long/double handling for android ([#225](https://github.com/NativeScript/firebase/issues/225)) ([14c26bb](https://github.com/NativeScript/firebase/commit/14c26bba35fab3c42645e0e29f2b8e9f2997dfac))
+* **analytics:** typings ([9251d5c](https://github.com/NativeScript/firebase/commit/9251d5cb87d012444539597d3b39f76caa3925f4))
+
+
+
 # [3.0.0-alpha.0](https://github.com/nativescript/firebase/compare/2.5.2...3.0.0-alpha.0) (2023-03-23)
 
 
