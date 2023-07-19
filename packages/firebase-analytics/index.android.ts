@@ -132,7 +132,7 @@ export class Analytics implements IAnalytics {
 	}
 
 	logEvent(name: string, parameters: EventParameter): void {
-		this._native.logEvent(name, serialize(parameters));
+		this._native.logEvent(name, serialize(parameters) as android.os.Bundle);
 	}
 
 	resetAnalyticsData(): void {
@@ -140,7 +140,7 @@ export class Analytics implements IAnalytics {
 	}
 
 	setDefaultEventParameters(parameters: EventParameter): void {
-		this._native.setDefaultEventParameters(serialize(parameters));
+		this._native.setDefaultEventParameters(serialize(parameters) as android.os.Bundle);
 	}
 
 	setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {
