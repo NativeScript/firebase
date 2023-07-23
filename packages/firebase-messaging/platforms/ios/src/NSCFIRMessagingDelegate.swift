@@ -4,6 +4,7 @@ import GoogleUtilities
 #if canImport(NSCFirebaseMessagingCore)
 import NSCFirebaseMessagingCore
 #endif
+@available(iOS 10.0, *)
 @objc(NSCFIRMessagingDelegate)
 public class NSCFIRMessagingDelegate: NSObject, MessagingDelegate {
     public static let sharedInstance = NSCFIRMessagingDelegate()

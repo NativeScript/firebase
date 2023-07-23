@@ -12,6 +12,7 @@ import FirebaseAuthUI
 #endif
 import NSCFirebaseMessagingCore
 
+@available(iOS 10.0, *)
 @objc(NSCUIApplicationDelegate)
 public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
     

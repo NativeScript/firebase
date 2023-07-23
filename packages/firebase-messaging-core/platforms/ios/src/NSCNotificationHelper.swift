@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 
+@available(iOS 10.0, *)
 @objc(NSCNotificationHelper)
 public class NSCNotificationHelper: NSObject {
     static let REMOTE_NOTIFICATIONS_REGISTRATION_STATUS = "org.nativescript.firebase.notifications.status"
