@@ -21,13 +21,13 @@
 		"@nativescript/firebase-performance": "file:../../packages/firebase-performance",
 		"@nativescript/firebase-remote-config": "file:../../packages/firebase-remote-config",
 		"@nativescript/firebase-storage": "file:../../packages/firebase-storage",
-		"@nativescript/google-signin": "^1.0.0-alpha.9",
+		"@nativescript/google-signin": "^1.0.0",
 		"@nativescript/firebase-app-check-debug": "file:../../packages/firebase-app-check-debug",
 		"@nativescript/firebase-messaging-core": "file:../../packages/firebase-messaging-core",
 		"@nativescript/firebase-ui": "file:../../packages/firebase-ui"
 	},
 	"devDependencies": {
-		"@nativescript/android": "~8.4.0",
-		"@nativescript/ios": "~8.4.0"
+		"@nativescript/android": "~8.5.0",
+		"@nativescript/ios": "~8.5.0"
 	}
 }

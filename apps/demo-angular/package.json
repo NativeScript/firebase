@@ -23,7 +23,7 @@
 		"@nativescript/firebase-ui": "file:../../dist/packages/firebase-ui"
 	},
 	"devDependencies": {
-		"@nativescript/android": "~8.4.0",
-		"@nativescript/ios": "~8.4.0"
+		"@nativescript/android": "~8.5.0",
+		"@nativescript/ios": "~8.5.0"
 	}
 }
