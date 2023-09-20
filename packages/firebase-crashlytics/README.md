@@ -145,7 +145,7 @@ The Crashlytics class has the following members.
 | --------- | --------------- | ----------- |
 | `ios`     |                 | _readonly_  |
 | `android` | _readonly_      |
-| `app`     | [FirebaseApp]() | _readonly_  |
+| `app`     | [FirebaseApp](https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp) | _readonly_  |
 
 #### Methods
 
