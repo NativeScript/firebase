@@ -19,7 +19,14 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Remote",
+		"Configuration",
+		"Config",
+		"Feature",
+		"Switch",
+		"Toggle"
 	],
 	"author": {
 		"name": "NativeScript",

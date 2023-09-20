@@ -19,7 +19,14 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Crashlytics",
+		"Crash",
+		"Error",
+		"Logging",
+		"Tracking",
+		"Reporting"
 	],
 	"author": {
 		"name": "NativeScript",

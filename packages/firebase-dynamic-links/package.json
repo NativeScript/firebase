@@ -19,7 +19,11 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Dynamic Links",
+		"Deep Links",
+		"Routing"
 	],
 	"author": {
 		"name": "NativeScript",

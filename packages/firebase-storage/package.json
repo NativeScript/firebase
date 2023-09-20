@@ -19,7 +19,19 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"File",
+		"Storage",
+		"Cloud",
+		"Server",
+		"Object Storage",
+		"Upload",
+		"Download",
+		"Image",
+		"Audio",
+		"Video",
+		"Files"
 	],
 	"author": {
 		"name": "NativeScript",

@@ -26,7 +26,11 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Analytics",
+		"Tracking",
+		"Events"
 	],
 	"author": {
 		"name": "NativeScript",

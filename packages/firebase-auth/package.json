@@ -19,7 +19,21 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Auth",
+		"Authentication",
+		"Login",
+		"Log-in",
+		"Sign in",
+		"Sign-in",
+		"User",
+		"Apple",
+		"Facebook",
+		"Twitter",
+		"GitHub",
+		"Google",
+		"Phone Number"
 	],
 	"author": {
 		"name": "NativeScript",

@@ -19,7 +19,10 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Ads",
+		"AdMob"
 	],
 	"author": {
 		"name": "NativeScript",
