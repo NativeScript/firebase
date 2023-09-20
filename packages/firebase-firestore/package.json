@@ -19,7 +19,17 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Firestore",
+		"Database",
+		"Realtime",
+		"Offline",
+		"NoSQL",
+		"Query",
+		"Sync",
+		"Document",
+		"Collection"
 	],
 	"author": {
 		"name": "NativeScript",

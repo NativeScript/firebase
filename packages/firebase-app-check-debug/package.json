@@ -19,7 +19,12 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"AppCheck",
+		"Attestation",
+		"Security",
+		"Tamper"
 	],
 	"author": {
 		"name": "NativeScript",

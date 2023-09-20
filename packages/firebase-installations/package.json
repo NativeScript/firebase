@@ -19,7 +19,9 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Installations"
 	],
 	"author": {
 		"name": "NativeScript",

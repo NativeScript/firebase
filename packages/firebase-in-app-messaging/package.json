@@ -19,7 +19,12 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Messaging",
+		"In App Messaging",
+		"Campaigns",
+		"Contextual"
 	],
 	"author": {
 		"name": "NativeScript",

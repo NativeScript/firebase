@@ -19,7 +19,11 @@
 		"JavaScript",
 		"TypeScript",
 		"iOS",
-		"Android"
+		"Android",
+		"Firebase",
+		"Push Notifications",
+		"Notifications",
+		"Messaging"
 	],
 	"author": {
 		"name": "NativeScript",
