@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-firestore",
-	"version": "3.1.3",
+	"version": "3.2.0",
 	"description": "NativeScript Firebase - Firestore",
 	"main": "index",
 	"typings": "index.d.ts",

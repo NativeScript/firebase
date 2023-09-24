@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-ui",
-	"version": "3.1.3",
+	"version": "3.2.0",
 	"description": "NativeScript Firebase - UI",
 	"main": "index",
 	"typings": "index.d.ts",
