@@ -130,7 +130,7 @@ export class AppCheck implements IAppCheck {
 		if (customProvider) {
 			this.native.installAppCheckProviderFactory(customProvider.native);
 		} else {
-			this.native.installAppCheckProviderFactory(com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory.getInstance());
+			this.native.installAppCheckProviderFactory(com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory.getInstance());
 		}
 	}
 
