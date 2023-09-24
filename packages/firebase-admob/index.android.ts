@@ -590,7 +590,7 @@ export class BannerAdSize extends BannerAdSizeBase {
 		}
 	}
 
-	static createInLineAdaptiveBanner(width: number, maxHeight: number = 0, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
+	static createInLineAdaptiveBanner(width: number, maxHeight = 0, orientation: 'portrait' | 'landscape' | 'device' = 'device'): BannerAdSize {
 		if (maxHeight > 0) {
 			BannerAdSize.fromNative(com.google.android.gms.ads.AdSize.getInlineAdaptiveBannerAdSize(width, maxHeight));
 		}
@@ -676,7 +676,7 @@ export class Admob implements IAdmob {
 		if (defaultAdmob) {
 			return defaultAdmob;
 		}
-		defaultAdmob = this;
+		defaultAdmob = this as Admob;
 	}
 
 	static init(): Promise<{ [key: string]: AdapterStatus }> {
@@ -719,7 +719,7 @@ export class Admob implements IAdmob {
 	}
 
 	get requestConfiguration(): RequestConfiguration {
-		let ret: RequestConfiguration = {};
+		const ret: RequestConfiguration = {};
 		const config = com.google.android.gms.ads.MobileAds.getRequestConfiguration();
 
 		switch (config.getTagForChildDirectedTreatment()) {
