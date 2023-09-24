@@ -1,3 +1,13 @@
+# [3.2.0](https://github.com/NativeScript/firebase/compare/3.1.3...3.2.0) (2023-09-24)
+
+
+### Features
+
+* add npm keywords ([#237](https://github.com/NativeScript/firebase/issues/237)) ([663fcf0](https://github.com/NativeScript/firebase/commit/663fcf00be65f86c2a15086e71f124526f3398c8))
+* switch to playintegrity ([095083c](https://github.com/NativeScript/firebase/commit/095083c6ebf6682c123b1cdf4c45a94813255041))
+
+
+
 ## [3.1.3](https://github.com/NativeScript/firebase/compare/3.1.2...3.1.3) (2023-07-19)
 
 
