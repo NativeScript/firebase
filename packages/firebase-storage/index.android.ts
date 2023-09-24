@@ -239,16 +239,16 @@ export class Metadata implements IMetadata {
 		return this.native.getBucket?.();
 	}
 
-	get cacheControl(): string {
-		return this.native.getCacheControl?.();
-	}
-
 	private _createBuilder() {
 		if (this._native) {
 			this._builder = new com.google.firebase.storage.StorageMetadata.Builder(this._native);
 		} else {
 			this._builder = new com.google.firebase.storage.StorageMetadata.Builder();
 		}
+	}
+
+	get cacheControl(): string {
+		return this.native.getCacheControl?.();
 	}
 
 	set cacheControl(value) {
@@ -510,16 +510,18 @@ export class Reference implements IReference {
 	putString(data: string, format: StringFormat = StringFormat.RAW, metadata?: Metadata): Task {
 		switch (format) {
 			case StringFormat.DATA_URL:
-				const base64 = b64WithoutPrefix(data);
-				const mime = getMIMEforBase64String(data);
+				{
+					const base64 = b64WithoutPrefix(data);
+					const mime = getMIMEforBase64String(data);
 
-				const meta = metadata || new Metadata();
-				if (!metadata.contentType) {
-					meta.contentType = mime;
+					const meta = metadata || new Metadata();
+					if (!metadata.contentType) {
+						meta.contentType = mime;
+					}
+
+					org.nativescript.firebase.storage.FirebaseStorage.StorageReference.putString(this.native, base64, format, meta.native);
 				}
-
-				org.nativescript.firebase.storage.FirebaseStorage.StorageReference.putString(this.native, base64, format, meta.native);
-
+				break;
 			default:
 				return Task.fromNative(org.nativescript.firebase.storage.FirebaseStorage.StorageReference.putString(this.native, data, format, metadata?.native || null));
 		}

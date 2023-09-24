@@ -185,9 +185,10 @@ export class EmailProvider extends ProviderBase {
 
 	actionCodeSettings: ActionCodeSettings = null;
 
-	requireName: boolean = true;
+	requireName = true;
 
-	_forceSameDevice: boolean = false;
+	_forceSameDevice = false;
+
 	forceSameDevice() {
 		this._forceSameDevice = true;
 		return this;
@@ -199,9 +200,9 @@ export class EmailProvider extends ProviderBase {
 		return this;
 	}
 
-	defaultEmail: string = '';
+	defaultEmail = '';
 
-	allowNewAccounts: boolean = true;
+	allowNewAccounts = true;
 
 	getNative(ui: UI) {
 		if (this.requireName) {
@@ -216,9 +217,9 @@ export class PhoneProvider extends ProviderBase {
 		super();
 	}
 
-	defaultNumber: string = '';
+	defaultNumber = '';
 
-	defaultCountryIso: string = '';
+	defaultCountryIso = '';
 
 	blacklistedCountries: string[] = [];
 

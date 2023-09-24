@@ -489,14 +489,16 @@ export class Reference implements IReference {
 				nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
 				break;
 			case StringFormat.BASE64URL:
-				let base64Encoded = data.replace(/-/g, '+').replace(/_/g, '/');
+				{
+					let base64Encoded = data.replace(/-/g, '+').replace(/_/g, '/');
 
-				while (base64Encoded.length % 4 != 0) {
-					base64Encoded = base64Encoded + '=';
+					while (base64Encoded.length % 4 != 0) {
+						base64Encoded = base64Encoded + '=';
+					}
+					nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
 				}
-				nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
 				break;
-			case StringFormat.DATA_URL:
+			case StringFormat.DATA_URL: {
 				const base64 = b64WithoutPrefix(data);
 				const mime = getMIMEforBase64String(data);
 
@@ -505,12 +507,14 @@ export class Reference implements IReference {
 					meta.contentType = mime;
 				}
 				return Task.fromNative(this.native.putDataMetadata(NSData.alloc().initWithBase64EncodedStringOptions(base64, 0), meta.native));
-			default:
+			}
+			default: {
 				const text = NSString.stringWithString(data);
 				const nativeData = text.dataUsingEncoding(NSUTF8StringEncoding);
 				const encodedString = nativeData.base64EncodedStringWithOptions(0);
 				nsData = NSData.alloc().initWithBase64EncodedStringOptions(encodedString, 0);
 				break;
+			}
 		}
 
 		if (metadata) {

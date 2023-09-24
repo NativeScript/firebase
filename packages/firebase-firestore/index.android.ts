@@ -86,7 +86,7 @@ function deserializeField(value) {
 	}
 
 	if (value instanceof java.util.Map) {
-		let dict = {};
+		const dict = {};
 		const keys = value.keySet().toArray();
 		const size = keys.length;
 		for (let i = 0, n = size; i < n; i++) {
@@ -1145,7 +1145,7 @@ export class FieldValue implements IFieldValue {
 export class GeoPoint implements IGeoPoint {
 	_native: com.google.firebase.firestore.GeoPoint;
 
-	constructor(latitude: number, longitude: number, native: boolean = false) {
+	constructor(latitude: number, longitude: number, native = false) {
 		if (!native) {
 			this._native = new com.google.firebase.firestore.GeoPoint(latitude, longitude);
 		}

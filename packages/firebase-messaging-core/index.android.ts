@@ -51,7 +51,7 @@ const onNotificationTapCallbacks: Set<(message: any) => void> = new Set();
 
 let lastActivity: WeakRef<androidx.appcompat.app.AppCompatActivity>;
 let requestPermissionLauncher: androidx.activity.result.ActivityResultLauncher<any>;
-let _permissionQueue: { resolve: Function; reject: Function }[] = [];
+const _permissionQueue: { resolve: Function; reject: Function }[] = [];
 
 function register(args: any) {
 	if (!lastActivity) {

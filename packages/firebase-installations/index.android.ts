@@ -60,7 +60,7 @@ export class Installations implements IInstallations {
 			);
 		});
 	}
-	getToken(forceRefresh: boolean = false): Promise<string> {
+	getToken(forceRefresh = false): Promise<string> {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.installations.FirebaseInstallations.getToken(
 				this.native,

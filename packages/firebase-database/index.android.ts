@@ -661,7 +661,7 @@ export class Database implements IDatabase {
 			this._persistenceCacheSizeBytes = bytes;
 		} catch (e) {}
 	}
-	_persistenceEnabled: boolean = false;
+	_persistenceEnabled = false;
 	get persistenceEnabled(): boolean {
 		return this._persistenceEnabled;
 	}
