@@ -1,7 +1,6 @@
 dependencies {
-    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "31.2.3" }
+    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "32.3.1" }
     implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
-    
     implementation 'com.google.firebase:firebase-inappmessaging-display'
     implementation 'com.google.firebase:firebase-analytics'
 }
