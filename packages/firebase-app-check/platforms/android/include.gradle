@@ -1,6 +1,6 @@
 dependencies {
-    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "31.2.3" }
+    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "32.2.2" }
     implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
-    
+    implementation "com.google.firebase:firebase-appcheck-ktx"
     implementation 'com.google.firebase:firebase-appcheck-safetynet'
 }
