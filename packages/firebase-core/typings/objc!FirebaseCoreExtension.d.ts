@@ -75,6 +75,8 @@ declare class FIRDependency extends NSObject {
 	readonly protocol: any /* Protocol */;
 }
 
+declare function FIRGetLoggerLevel(): FIRLoggerLevel;
+
 declare function FIRHeaderValueFromHeartbeatsPayload(heartbeatsPayload: FIRHeartbeatsPayload): string;
 
 declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerProtocol {

@@ -167,8 +167,6 @@ export class MessagingCore implements IMessagingCore {
 		}
 		defaultInstance = this;
 
-		this._native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
-
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
 		ensureCallback();
 
@@ -204,6 +202,13 @@ export class MessagingCore implements IMessagingCore {
 			return defaultInstance;
 		}
 		return new MessagingCore();
+	}
+
+	get native() {
+		if (!this._native) {
+			this._native = com.google.firebase.messaging.FirebaseMessaging.getInstance();
+		}
+		return this._native;
 	}
 
 	_newIntentCallback(args: AndroidActivityNewIntentEventData) {

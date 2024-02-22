@@ -13,8 +13,6 @@ declare class FIRStorage extends NSObject {
 
 	readonly app: FIRApp;
 
-	callbackQueue: NSObject;
-
 	maxDownloadRetryTime: number;
 
 	maxOperationRetryTime: number;
@@ -32,10 +30,12 @@ declare class FIRStorage extends NSObject {
 	useEmulatorWithHostPort(host: string, port: number): void;
 }
 
-declare class FIRStorageDownloadTask extends FIRStorageObservableTask implements FIRStorageTaskManagement {
+declare class FIRStorageDownloadTask extends FIRStorageObservableTask implements FIRStorageTaskManagement, SDWebImageOperation {
 	static alloc(): FIRStorageDownloadTask; // inherited from NSObject
 
 	static new(): FIRStorageDownloadTask; // inherited from NSObject
+
+	readonly cancelled: boolean; // inherited from SDWebImageOperation
 
 	readonly debugDescription: string; // inherited from NSObjectProtocol
 

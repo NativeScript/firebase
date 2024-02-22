@@ -313,7 +313,7 @@ export class Firebase {
 					app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext(), nativeOptions.build(), name);
 				} else {
 					if (defaultApp) {
-						defaultApp;
+						return defaultApp;
 					}
 					isDefault = true;
 					if (nativeOptions) {
@@ -323,10 +323,11 @@ export class Firebase {
 					}
 				}
 
+				console.log(app);
+
 				if (app && typeof configOrName === 'object' && typeof configOrName.automaticResourceManagement === 'boolean') {
 					app.setAutomaticResourceManagementEnabled(configOrName.automaticDataCollectionEnabled);
 				}
-
 				const fbApp = FirebaseApp.fromNative(app);
 
 				if (isDefault) {

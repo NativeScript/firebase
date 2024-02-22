@@ -1,6 +1,4 @@
-
 declare class FIRAppAttestProvider extends NSObject implements FIRAppCheckProvider {
-
 	static alloc(): FIRAppAttestProvider; // inherited from NSObject
 
 	static new(): FIRAppAttestProvider; // inherited from NSObject
@@ -15,13 +13,15 @@ declare class FIRAppAttestProvider extends NSObject implements FIRAppCheckProvid
 
 	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
 
-	readonly  // inherited from NSObjectProtocol
+	readonly; // inherited from NSObjectProtocol
 
-	constructor(o: { app: FIRApp; });
+	constructor(o: { app: FIRApp });
 
 	class(): typeof NSObject;
 
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
+
+	getLimitedUseTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 
 	getTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 
@@ -46,8 +46,7 @@ declare class FIRAppAttestProvider extends NSObject implements FIRAppCheckProvid
 	self(): this;
 }
 
-declare class FIRAppCheck extends NSObject {
-
+declare class FIRAppCheck extends NSObject implements FIRAppCheckProtocol {
 	static alloc(): FIRAppCheck; // inherited from NSObject
 
 	static appCheck(): FIRAppCheck;
@@ -60,13 +59,48 @@ declare class FIRAppCheck extends NSObject {
 
 	isTokenAutoRefreshEnabled: boolean;
 
+	readonly debugDescription: string; // inherited from NSObjectProtocol
+
+	readonly description: string; // inherited from NSObjectProtocol
+
+	readonly hash: number; // inherited from NSObjectProtocol
+
+	readonly isProxy: boolean; // inherited from NSObjectProtocol
+
+	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
+
+	readonly; // inherited from NSObjectProtocol
+
+	class(): typeof NSObject;
+
+	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
+
+	isEqual(object: any): boolean;
+
+	isKindOfClass(aClass: typeof NSObject): boolean;
+
+	isMemberOfClass(aClass: typeof NSObject): boolean;
+
+	limitedUseTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
+
+	performSelector(aSelector: string): any;
+
+	performSelectorWithObject(aSelector: string, object: any): any;
+
+	performSelectorWithObjectWithObject(aSelector: string, object1: any, object2: any): any;
+
+	respondsToSelector(aSelector: string): boolean;
+
+	retainCount(): number;
+
+	self(): this;
+
 	tokenForcingRefreshCompletion(forcingRefresh: boolean, handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 }
 
 declare var FIRAppCheckAppCheckTokenDidChangeNotification: string;
 
 declare class FIRAppCheckDebugProvider extends NSObject implements FIRAppCheckProvider {
-
 	static alloc(): FIRAppCheckDebugProvider; // inherited from NSObject
 
 	static new(): FIRAppCheckDebugProvider; // inherited from NSObject
@@ -81,15 +115,17 @@ declare class FIRAppCheckDebugProvider extends NSObject implements FIRAppCheckPr
 
 	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
 
-	readonly  // inherited from NSObjectProtocol
+	readonly; // inherited from NSObjectProtocol
 
-	constructor(o: { app: FIRApp; });
+	constructor(o: { app: FIRApp });
 
 	class(): typeof NSObject;
 
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
 
 	currentDebugToken(): string;
+
+	getLimitedUseTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 
 	getTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 
@@ -117,7 +153,6 @@ declare class FIRAppCheckDebugProvider extends NSObject implements FIRAppCheckPr
 }
 
 declare class FIRAppCheckDebugProviderFactory extends NSObject implements FIRAppCheckProviderFactory {
-
 	static alloc(): FIRAppCheckDebugProviderFactory; // inherited from NSObject
 
 	static new(): FIRAppCheckDebugProviderFactory; // inherited from NSObject
@@ -132,7 +167,7 @@ declare class FIRAppCheckDebugProviderFactory extends NSObject implements FIRApp
 
 	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
 
-	readonly  // inherited from NSObjectProtocol
+	readonly; // inherited from NSObjectProtocol
 
 	class(): typeof NSObject;
 
@@ -160,7 +195,6 @@ declare class FIRAppCheckDebugProviderFactory extends NSObject implements FIRApp
 }
 
 declare const enum FIRAppCheckErrorCode {
-
 	Unknown = 0,
 
 	ServerUnreachable = 1,
@@ -169,31 +203,28 @@ declare const enum FIRAppCheckErrorCode {
 
 	Keychain = 3,
 
-	Unsupported = 4
+	Unsupported = 4,
 }
 
 declare var FIRAppCheckErrorDomain: string;
 
 interface FIRAppCheckProvider extends NSObjectProtocol {
+	getLimitedUseTokenWithCompletion?(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 
 	getTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 }
 declare var FIRAppCheckProvider: {
-
 	prototype: FIRAppCheckProvider;
 };
 
 interface FIRAppCheckProviderFactory extends NSObjectProtocol {
-
 	createProviderWithApp(app: FIRApp): FIRAppCheckProvider;
 }
 declare var FIRAppCheckProviderFactory: {
-
 	prototype: FIRAppCheckProviderFactory;
 };
 
 declare class FIRAppCheckToken extends NSObject {
-
 	static alloc(): FIRAppCheckToken; // inherited from NSObject
 
 	static new(): FIRAppCheckToken; // inherited from NSObject
@@ -202,13 +233,12 @@ declare class FIRAppCheckToken extends NSObject {
 
 	readonly token: string;
 
-	constructor(o: { token: string; expirationDate: Date; });
+	constructor(o: { token: string; expirationDate: Date });
 
 	initWithTokenExpirationDate(token: string, expirationDate: Date): this;
 }
 
 declare class FIRDeviceCheckProvider extends NSObject implements FIRAppCheckProvider {
-
 	static alloc(): FIRDeviceCheckProvider; // inherited from NSObject
 
 	static new(): FIRDeviceCheckProvider; // inherited from NSObject
@@ -223,13 +253,15 @@ declare class FIRDeviceCheckProvider extends NSObject implements FIRAppCheckProv
 
 	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
 
-	readonly  // inherited from NSObjectProtocol
+	readonly; // inherited from NSObjectProtocol
 
-	constructor(o: { app: FIRApp; });
+	constructor(o: { app: FIRApp });
 
 	class(): typeof NSObject;
 
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
+
+	getLimitedUseTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 
 	getTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 
@@ -255,7 +287,6 @@ declare class FIRDeviceCheckProvider extends NSObject implements FIRAppCheckProv
 }
 
 declare class FIRDeviceCheckProviderFactory extends NSObject implements FIRAppCheckProviderFactory {
-
 	static alloc(): FIRDeviceCheckProviderFactory; // inherited from NSObject
 
 	static new(): FIRDeviceCheckProviderFactory; // inherited from NSObject
@@ -270,7 +301,7 @@ declare class FIRDeviceCheckProviderFactory extends NSObject implements FIRAppCh
 
 	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
 
-	readonly  // inherited from NSObjectProtocol
+	readonly; // inherited from NSObjectProtocol
 
 	class(): typeof NSObject;
 

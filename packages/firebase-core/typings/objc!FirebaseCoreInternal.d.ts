@@ -14,6 +14,22 @@ declare class FIRHeartbeatController extends NSObject {
 	log(agent: string): void;
 }
 
+declare class FIRHeartbeatLoggingTestUtils extends NSObject {
+	static alloc(): FIRHeartbeatLoggingTestUtils; // inherited from NSObject
+
+	static assertEncodedPayloadStringIsEqualToLiteralStringWithError(encoded: string, literal: string): boolean;
+
+	static new(): FIRHeartbeatLoggingTestUtils; // inherited from NSObject
+
+	static removeUnderlyingHeartbeatStorageContainersAndReturnError(): boolean;
+
+	static readonly dateFormatter: NSDateFormatter;
+
+	static readonly emptyHeartbeatsPayload: FIRHeartbeatsPayload;
+
+	static readonly nonEmptyHeartbeatsPayload: FIRHeartbeatsPayload;
+}
+
 declare class FIRHeartbeatsPayload extends NSObject {
 	static alloc(): FIRHeartbeatsPayload; // inherited from NSObject
 

@@ -968,7 +968,6 @@ export class Auth implements IAuth {
 				return defaultAuth;
 			}
 			defaultAuth = this;
-			this._native = com.google.firebase.auth.FirebaseAuth.getInstance();
 		}
 	}
 
@@ -1413,6 +1412,9 @@ export class Auth implements IAuth {
 	}
 
 	get native() {
+		if (!this._native) {
+			this._native = com.google.firebase.auth.FirebaseAuth.getInstance();
+		}
 		return this._native;
 	}
 

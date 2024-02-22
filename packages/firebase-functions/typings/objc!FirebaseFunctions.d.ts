@@ -17,7 +17,11 @@ declare class FIRFunctions extends NSObject {
 
 	HTTPSCallableWithName(name: string): FIRHTTPSCallable;
 
+	HTTPSCallableWithNameOptions(name: string, options: FIRHTTPSCallableOptions): FIRHTTPSCallable;
+
 	HTTPSCallableWithURL(url: NSURL): FIRHTTPSCallable;
+
+	HTTPSCallableWithURLOptions(url: NSURL, options: FIRHTTPSCallableOptions): FIRHTTPSCallable;
 
 	useEmulatorWithHostPort(host: string, port: number): void;
 }
@@ -68,6 +72,18 @@ declare class FIRHTTPSCallable extends NSObject {
 	callWithCompletion(completion: (p1: FIRHTTPSCallableResult, p2: NSError) => void): void;
 
 	callWithObjectCompletion(data: any, completion: (p1: FIRHTTPSCallableResult, p2: NSError) => void): void;
+}
+
+declare class FIRHTTPSCallableOptions extends NSObject {
+	static alloc(): FIRHTTPSCallableOptions; // inherited from NSObject
+
+	static new(): FIRHTTPSCallableOptions; // inherited from NSObject
+
+	readonly requireLimitedUseAppCheckTokens: boolean;
+
+	constructor(o: { requireLimitedUseAppCheckTokens: boolean });
+
+	initWithRequireLimitedUseAppCheckTokens(requireLimitedUseAppCheckTokens: boolean): this;
 }
 
 declare class FIRHTTPSCallableResult extends NSObject {

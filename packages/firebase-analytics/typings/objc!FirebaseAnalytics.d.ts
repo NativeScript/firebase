@@ -11,6 +11,8 @@ declare class FIRAnalytics extends NSObject {
 
 	static initiateOnDeviceConversionMeasurementWithEmailAddress(emailAddress: string): void;
 
+	static initiateOnDeviceConversionMeasurementWithPhoneNumber(phoneNumber: string): void;
+
 	static logEventWithNameParameters(name: string, parameters: NSDictionary<string, any>): void;
 
 	static new(): FIRAnalytics; // inherited from NSObject
@@ -36,7 +38,11 @@ declare var FIRConsentStatusDenied: string;
 
 declare var FIRConsentStatusGranted: string;
 
+declare var FIRConsentTypeAdPersonalization: string;
+
 declare var FIRConsentTypeAdStorage: string;
+
+declare var FIRConsentTypeAdUserData: string;
 
 declare var FIRConsentTypeAnalyticsStorage: string;
 

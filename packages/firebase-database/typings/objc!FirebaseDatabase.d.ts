@@ -57,8 +57,6 @@ declare class FIRDatabase extends NSObject {
 
 	readonly app: FIRApp;
 
-	callbackQueue: NSObject;
-
 	persistenceCacheSizeBytes: number;
 
 	persistenceEnabled: boolean;
@@ -78,14 +76,38 @@ declare class FIRDatabase extends NSObject {
 	useEmulatorWithHostPort(host: string, port: number): void;
 }
 
-declare class FIRDatabaseQuery extends NSObject {
+declare class FIRDatabaseQuery extends NSObject implements FUIDataObservable {
 	static alloc(): FIRDatabaseQuery; // inherited from NSObject
 
 	static new(): FIRDatabaseQuery; // inherited from NSObject
 
 	readonly ref: FIRDatabaseReference;
 
+	readonly debugDescription: string; // inherited from NSObjectProtocol
+
+	readonly description: string; // inherited from NSObjectProtocol
+
+	readonly hash: number; // inherited from NSObjectProtocol
+
+	readonly isProxy: boolean; // inherited from NSObjectProtocol
+
+	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
+
+	readonly; // inherited from NSObjectProtocol
+
+	child(path: string): FUIDataObservable;
+
+	class(): typeof NSObject;
+
+	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
+
 	getDataWithCompletionBlock(block: (p1: NSError, p2: FIRDataSnapshot) => void): void;
+
+	isEqual(object: any): boolean;
+
+	isKindOfClass(aClass: typeof NSObject): boolean;
+
+	isMemberOfClass(aClass: typeof NSObject): boolean;
 
 	keepSynced(keepSynced: boolean): void;
 
@@ -104,6 +126,12 @@ declare class FIRDatabaseQuery extends NSObject {
 	observeSingleEventOfTypeWithBlock(eventType: FIRDataEventType, block: (p1: FIRDataSnapshot) => void): void;
 
 	observeSingleEventOfTypeWithBlockWithCancelBlock(eventType: FIRDataEventType, block: (p1: FIRDataSnapshot) => void, cancelBlock: (p1: NSError) => void): void;
+
+	performSelector(aSelector: string): any;
+
+	performSelectorWithObject(aSelector: string, object: any): any;
+
+	performSelectorWithObjectWithObject(aSelector: string, object1: any, object2: any): any;
 
 	queryEndingAtValue(endValue: any): FIRDatabaseQuery;
 
@@ -140,6 +168,12 @@ declare class FIRDatabaseQuery extends NSObject {
 	removeAllObservers(): void;
 
 	removeObserverWithHandle(handle: number): void;
+
+	respondsToSelector(aSelector: string): boolean;
+
+	retainCount(): number;
+
+	self(): this;
 }
 
 declare class FIRDatabaseReference extends FIRDatabaseQuery {

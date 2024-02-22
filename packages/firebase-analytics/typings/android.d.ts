@@ -1,39 +1,63 @@
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export class ConsentBuilder {
+					public static class: java.lang.Class<com.google.firebase.analytics.ConsentBuilder>;
+					public getAdPersonalization(): com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
+					public asMap(): java.util.Map<com.google.firebase.analytics.FirebaseAnalytics.ConsentType, com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus>;
+					public setAdPersonalization(param0: com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus): void;
+					public setAdStorage(param0: com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus): void;
+					public constructor();
+					public setAdUserData(param0: com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus): void;
+					public getAdStorage(): com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
+					public getAdUserData(): com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
+					public setAnalyticsStorage(param0: com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus): void;
+					public getAnalyticsStorage(): com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
+				}
+			}
+		}
+	}
+}
+
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
 				export class FirebaseAnalytics {
 					public static class: java.lang.Class<com.google.firebase.analytics.FirebaseAnalytics>;
-					public setConsent(param0: java.util.Map<com.google.firebase.analytics.FirebaseAnalytics.ConsentType,com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus>): void;
 					public getAppInstanceId(): com.google.android.gms.tasks.Task<string>;
+					public setConsent(param0: java.util.Map<com.google.firebase.analytics.FirebaseAnalytics.ConsentType, com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus>): void;
 					public logEvent(param0: string, param1: globalAndroid.os.Bundle): void;
 					public setDefaultEventParameters(param0: globalAndroid.os.Bundle): void;
-					public constructor(param0: any /* com.google.android.gms.internal.measurement.zzee*/);
+					public getSessionId(): com.google.android.gms.tasks.Task<java.lang.Long>;
 					public resetAnalyticsData(): void;
 					public setUserProperty(param0: string, param1: string): void;
 					public static getInstance(param0: globalAndroid.content.Context): com.google.firebase.analytics.FirebaseAnalytics;
-					public static getScionFrontendApiImplementation(param0: globalAndroid.content.Context, param1: globalAndroid.os.Bundle): any /* com.google.android.gms.measurement.internal.zzhx*/;
+					public getFirebaseInstanceId(): string;
 					/** @deprecated */
 					public setCurrentScreen(param0: globalAndroid.app.Activity, param1: string, param2: string): void;
-					public getFirebaseInstanceId(): string;
 					public setAnalyticsCollectionEnabled(param0: boolean): void;
+					public static getScionFrontendApiImplementation(param0: globalAndroid.content.Context, param1: globalAndroid.os.Bundle): any /* com.google.android.gms.measurement.internal.zzjz*/;
 					public setUserId(param0: string): void;
 					public setSessionTimeoutDuration(param0: number): void;
 				}
-				export module FirebaseAnalytics {
+				export namespace FirebaseAnalytics {
 					export class ConsentStatus {
 						public static class: java.lang.Class<com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus>;
 						public static GRANTED: com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
 						public static DENIED: com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
+						public static values(): androidNative.Array<com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus>;
 						public static valueOf(param0: string): com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
-						public static values(): native.Array<com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus>;
 					}
 					export class ConsentType {
 						public static class: java.lang.Class<com.google.firebase.analytics.FirebaseAnalytics.ConsentType>;
 						public static AD_STORAGE: com.google.firebase.analytics.FirebaseAnalytics.ConsentType;
 						public static ANALYTICS_STORAGE: com.google.firebase.analytics.FirebaseAnalytics.ConsentType;
+						public static AD_USER_DATA: com.google.firebase.analytics.FirebaseAnalytics.ConsentType;
+						public static AD_PERSONALIZATION: com.google.firebase.analytics.FirebaseAnalytics.ConsentType;
 						public static valueOf(param0: string): com.google.firebase.analytics.FirebaseAnalytics.ConsentType;
-						public static values(): native.Array<com.google.firebase.analytics.FirebaseAnalytics.ConsentType>;
+						public static values(): androidNative.Array<com.google.firebase.analytics.FirebaseAnalytics.ConsentType>;
 					}
 					export class Event {
 						public static class: java.lang.Class<com.google.firebase.analytics.FirebaseAnalytics.Event>;
@@ -44,7 +68,6 @@ declare module com {
 						public static APP_OPEN: string;
 						public static BEGIN_CHECKOUT: string;
 						public static CAMPAIGN_DETAILS: string;
-						public static ECOMMERCE_PURCHASE: string;
 						public static GENERATE_LEAD: string;
 						public static JOIN_GROUP: string;
 						public static LEVEL_END: string;
@@ -52,8 +75,6 @@ declare module com {
 						public static LEVEL_UP: string;
 						public static LOGIN: string;
 						public static POST_SCORE: string;
-						public static PRESENT_OFFER: string;
-						public static PURCHASE_REFUND: string;
 						public static SEARCH: string;
 						public static SELECT_CONTENT: string;
 						public static SHARE: string;
@@ -68,8 +89,6 @@ declare module com {
 						public static EARN_VIRTUAL_CURRENCY: string;
 						public static SCREEN_VIEW: string;
 						public static REMOVE_FROM_CART: string;
-						public static CHECKOUT_PROGRESS: string;
-						public static SET_CHECKOUT_OPTION: string;
 						public static ADD_SHIPPING_INFO: string;
 						public static PURCHASE: string;
 						public static REFUND: string;
@@ -98,12 +117,10 @@ declare module com {
 						public static GROUP_ID: string;
 						public static ITEM_CATEGORY: string;
 						public static ITEM_ID: string;
-						public static ITEM_LOCATION_ID: string;
 						public static ITEM_NAME: string;
 						public static LOCATION: string;
 						public static LEVEL: string;
 						public static LEVEL_NAME: string;
-						public static SIGN_UP_METHOD: string;
 						public static METHOD: string;
 						public static NUMBER_OF_NIGHTS: string;
 						public static NUMBER_OF_PASSENGERS: string;
@@ -127,11 +144,12 @@ declare module com {
 						public static CONTENT: string;
 						public static ACLID: string;
 						public static CP1: string;
+						public static CAMPAIGN_ID: string;
+						public static SOURCE_PLATFORM: string;
+						public static CREATIVE_FORMAT: string;
+						public static MARKETING_TACTIC: string;
 						public static ITEM_BRAND: string;
 						public static ITEM_VARIANT: string;
-						public static ITEM_LIST: string;
-						public static CHECKOUT_STEP: string;
-						public static CHECKOUT_OPTION: string;
 						public static CREATIVE_NAME: string;
 						public static CREATIVE_SLOT: string;
 						public static AFFILIATION: string;
@@ -165,24 +183,44 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export class ParametersBuilder {
+					public static class: java.lang.Class<com.google.firebase.analytics.ParametersBuilder>;
+					public constructor();
+					public param(param0: string, param1: number): void;
+					public getBundle(): globalAndroid.os.Bundle;
+					// eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
+					public param(param0: string, param1: string): void;
+					public param(param0: string, param1: androidNative.Array<globalAndroid.os.Bundle>): void;
+					public param(param0: string, param1: globalAndroid.os.Bundle): void;
+				}
+			}
+		}
+	}
+}
+
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
 					export class AnalyticsConnectorImpl {
 						public static class: java.lang.Class<com.google.firebase.analytics.connector.AnalyticsConnectorImpl>;
 						public static getInstance(param0: com.google.firebase.FirebaseApp, param1: globalAndroid.content.Context, param2: com.google.firebase.events.Subscriber): com.google.firebase.analytics.connector.AnalyticsConnector;
-						public setUserProperty(param0: string, param1: string, param2: any): void;
 						public getMaxUserProperties(param0: string): number;
+						public setUserProperty(param0: string, param1: string, param2: any): void;
 						public clearConditionalUserProperty(param0: string, param1: string, param2: globalAndroid.os.Bundle): void;
+						// eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
 						public static getInstance(): com.google.firebase.analytics.connector.AnalyticsConnector;
 						public static getInstance(param0: com.google.firebase.FirebaseApp): com.google.firebase.analytics.connector.AnalyticsConnector;
 						public logEvent(param0: string, param1: string, param2: globalAndroid.os.Bundle): void;
 						public registerAnalyticsConnectorListener(param0: string, param1: com.google.firebase.analytics.connector.AnalyticsConnector.AnalyticsConnectorListener): com.google.firebase.analytics.connector.AnalyticsConnector.AnalyticsConnectorHandle;
-						public setConditionalUserProperty(param0: com.google.firebase.analytics.connector.AnalyticsConnector.ConditionalUserProperty): void;
 						public getConditionalUserProperties(param0: string, param1: string): java.util.List<com.google.firebase.analytics.connector.AnalyticsConnector.ConditionalUserProperty>;
-						public getUserProperties(param0: boolean): java.util.Map<string,any>;
+						public setConditionalUserProperty(param0: com.google.firebase.analytics.connector.AnalyticsConnector.ConditionalUserProperty): void;
+						public getUserProperties(param0: boolean): java.util.Map<string, any>;
 					}
 				}
 			}
@@ -190,12 +228,12 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
-					export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
+					export namespace internal {
 						export class AnalyticsConnectorRegistrar {
 							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar>;
 							public constructor();
@@ -208,22 +246,18 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
-					export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
+					export namespace internal {
 						export class zza {
 							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.zza>;
 							/**
 							 * Constructs a new instance of the com.google.firebase.analytics.connector.internal.zza interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
 							 */
-							public constructor(implementation: {
-								zza(): com.google.firebase.analytics.connector.AnalyticsConnector.AnalyticsConnectorListener;
-								zzb(param0: java.util.Set<string>): void;
-								zzc(): void;
-							});
+							public constructor(implementation: { zza(): com.google.firebase.analytics.connector.AnalyticsConnector.AnalyticsConnectorListener; zza(param0: java.util.Set<string>): void; zzb(): void });
 							public constructor();
 						}
 					}
@@ -233,14 +267,30 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
-					export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
+					export namespace internal {
 						export class zzb {
 							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.zzb>;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
+					export namespace internal {
+						export class zzc {
+							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.zzc>;
 							public create(param0: com.google.firebase.components.ComponentContainer): any;
 						}
 					}
@@ -250,28 +300,12 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
-					export module internal {
-						export class zzc {
-							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.zzc>;
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
-					export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
+					export namespace internal {
 						export class zzd {
 							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.zzd>;
 							public constructor(param0: any /* com.google.firebase.analytics.connector.internal.zze*/);
@@ -284,12 +318,12 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
-					export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
+					export namespace internal {
 						export class zze extends com.google.firebase.analytics.connector.internal.zza {
 							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.zze>;
 							public constructor(param0: com.google.android.gms.measurement.api.AppMeasurementSdk, param1: com.google.firebase.analytics.connector.AnalyticsConnector.AnalyticsConnectorListener);
@@ -301,12 +335,12 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
-					export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
+					export namespace internal {
 						export class zzf {
 							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.zzf>;
 							public constructor(param0: any /* com.google.firebase.analytics.connector.internal.zzg*/);
@@ -319,12 +353,12 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
-					export module internal {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
+					export namespace internal {
 						export class zzg extends com.google.firebase.analytics.connector.internal.zza {
 							public static class: java.lang.Class<com.google.firebase.analytics.connector.internal.zzg>;
 							public constructor(param0: com.google.android.gms.measurement.api.AppMeasurementSdk, param1: com.google.firebase.analytics.connector.AnalyticsConnector.AnalyticsConnectorListener);
@@ -336,11 +370,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
 					export class zza {
 						public static class: java.lang.Class<com.google.firebase.analytics.connector.zza>;
 						public execute(param0: java.lang.Runnable): void;
@@ -351,11 +385,11 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export module connector {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace connector {
 					export class zzb {
 						public static class: java.lang.Class<com.google.firebase.analytics.connector.zzb>;
 						public handle(param0: com.google.firebase.events.Event): void;
@@ -366,11 +400,57 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export class zza {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace ktx {
+					export class ConsentBuilder {
+						public static class: java.lang.Class<com.google.firebase.analytics.ktx.ConsentBuilder>;
+						public getAnalyticsStorage(): com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
+						public constructor();
+						public getAdStorage(): com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus;
+						public setAdStorage(param0: com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus): void;
+						public asMap(): java.util.Map<com.google.firebase.analytics.FirebaseAnalytics.ConsentType, com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus>;
+						public setAnalyticsStorage(param0: com.google.firebase.analytics.FirebaseAnalytics.ConsentStatus): void;
+					}
+				}
+			}
+		}
+	}
+}
+
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export namespace ktx {
+					export class ParametersBuilder {
+						public static class: java.lang.Class<com.google.firebase.analytics.ktx.ParametersBuilder>;
+						/** @deprecated */
+						public param(param0: string, param1: globalAndroid.os.Bundle): void;
+						public constructor();
+						/** @deprecated */
+						// eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
+						public param(param0: string, param1: number): void;
+						public getBundle(): globalAndroid.os.Bundle;
+						/** @deprecated */
+						// eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
+						public param(param0: string, param1: string): void;
+						/** @deprecated */
+						public param(param0: string, param1: androidNative.Array<globalAndroid.os.Bundle>): void;
+					}
+				}
+			}
+		}
+	}
+}
+
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export class zza extends java.util.concurrent.Callable<string> {
 					public static class: java.lang.Class<com.google.firebase.analytics.zza>;
 				}
 			}
@@ -378,22 +458,23 @@ declare module com {
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
-				export class zzb extends java.util.concurrent.Callable<string> {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export class zzb {
 					public static class: java.lang.Class<com.google.firebase.analytics.zzb>;
+					public execute(param0: java.lang.Runnable): void;
 				}
 			}
 		}
 	}
 }
 
-declare module com {
-	export module google {
-		export module firebase {
-			export module analytics {
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
 				export class zzc {
 					public static class: java.lang.Class<com.google.firebase.analytics.zzc>;
 				}
@@ -402,5 +483,16 @@ declare module com {
 	}
 }
 
-//Generics information:
+declare namespace com {
+	export namespace google {
+		export namespace firebase {
+			export namespace analytics {
+				export class zzd extends java.util.concurrent.Callable<java.lang.Long> {
+					public static class: java.lang.Class<com.google.firebase.analytics.zzd>;
+				}
+			}
+		}
+	}
+}
 
+//Generics information:

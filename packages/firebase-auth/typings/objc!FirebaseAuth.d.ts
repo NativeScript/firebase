@@ -97,6 +97,8 @@ declare class FIRAuth extends NSObject {
 
 	readonly currentUser: FIRUser;
 
+	customAuthDomain: string;
+
 	languageCode: string;
 
 	settings: FIRAuthSettings;
@@ -127,11 +129,15 @@ declare class FIRAuth extends NSObject {
 
 	getStoredUserForAccessGroupError(accessGroup: string): FIRUser;
 
+	initializeRecaptchaConfigWithCompletion(completion: (p1: NSError) => void): void;
+
 	isSignInWithEmailLink(link: string): boolean;
 
 	removeAuthStateDidChangeListener(listenerHandle: NSObjectProtocol): void;
 
 	removeIDTokenDidChangeListener(listenerHandle: NSObjectProtocol): void;
+
+	revokeTokenWithAuthorizationCodeCompletion(authorizationCode: string, completion: (p1: NSError) => void): void;
 
 	sendPasswordResetWithEmailActionCodeSettingsCompletion(email: string, actionCodeSettings: FIRActionCodeSettings, completion: (p1: NSError) => void): void;
 
@@ -343,11 +349,29 @@ declare const enum FIRAuthErrorCode {
 
 	EmailChangeNeedsVerification = 17090,
 
+	MissingClientIdentifier = 17093,
+
 	MissingOrInvalidNonce = 17094,
 
 	BlockingCloudFunctionError = 17105,
 
-	MissingClientIdentifier = 17993,
+	RecaptchaNotEnabled = 17200,
+
+	MissingRecaptchaToken = 17201,
+
+	InvalidRecaptchaToken = 17202,
+
+	InvalidRecaptchaAction = 17203,
+
+	MissingClientType = 17204,
+
+	MissingRecaptchaVersion = 17205,
+
+	InvalidRecaptchaVersion = 17206,
+
+	InvalidReqType = 17207,
+
+	RecaptchaSDKNotLinked = 17208,
 
 	KeychainError = 17995,
 
@@ -678,6 +702,38 @@ declare class FIRPhoneMultiFactorInfo extends FIRMultiFactorInfo {
 	static new(): FIRPhoneMultiFactorInfo; // inherited from NSObject
 
 	readonly phoneNumber: string;
+}
+
+declare class FIRTOTPMultiFactorAssertion extends FIRMultiFactorAssertion {
+	static alloc(): FIRTOTPMultiFactorAssertion; // inherited from NSObject
+
+	static new(): FIRTOTPMultiFactorAssertion; // inherited from NSObject
+}
+
+declare class FIRTOTPMultiFactorGenerator extends NSObject {
+	static alloc(): FIRTOTPMultiFactorGenerator; // inherited from NSObject
+
+	static assertionForEnrollmentWithSecretOneTimePassword(secret: FIRTOTPSecret, oneTimePassword: string): FIRTOTPMultiFactorAssertion;
+
+	static assertionForSignInWithEnrollmentIDOneTimePassword(enrollmentID: string, oneTimePassword: string): FIRTOTPMultiFactorAssertion;
+
+	static generateSecretWithMultiFactorSessionCompletion(session: FIRMultiFactorSession, completion: (p1: FIRTOTPSecret, p2: NSError) => void): void;
+
+	static new(): FIRTOTPMultiFactorGenerator; // inherited from NSObject
+}
+
+declare var FIRTOTPMultiFactorID: string;
+
+declare class FIRTOTPSecret extends NSObject {
+	static alloc(): FIRTOTPSecret; // inherited from NSObject
+
+	static new(): FIRTOTPSecret; // inherited from NSObject
+
+	generateQRCodeURLWithAccountNameIssuer(accountName: string, issuer: string): string;
+
+	openInOTPAppWithQRCodeURL(QRCodeURL: string): void;
+
+	sharedSecretKey(): string;
 }
 
 declare class FIRTwitterAuthProvider extends NSObject {

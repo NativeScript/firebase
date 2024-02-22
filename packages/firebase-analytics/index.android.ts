@@ -144,7 +144,7 @@ export class Analytics implements IAnalytics {
 	}
 
 	setConsent(consentSettings: Map<ConsentType, ConsentStatus>): void {
-		const nativeMap = new java.util.HashMap();
+		const nativeMap = new java.util.HashMap(consentSettings?.size ?? 0);
 
 		consentSettings.forEach((value, key) => {
 			let nativeKey;
