@@ -132,7 +132,7 @@ export class Analytics implements IAnalytics {
 	}
 
 	logEvent(name: string, parameters: EventParameter): void {
-		this._native.logEvent(name, serialize(parameters) as android.os.Bundle);
+		(<any>org).nativescript.firebase.analytics.FirebaseAnalytics.logEvent(this._native, name, serialize(parameters));
 	}
 
 	resetAnalyticsData(): void {
@@ -155,6 +155,12 @@ export class Analytics implements IAnalytics {
 					break;
 				case ConsentType.Analytics_Storage:
 					nativeKey = com.google.firebase.analytics.FirebaseAnalytics.ConsentType.ANALYTICS_STORAGE;
+					break;
+				case ConsentType.Ad_User_Data:
+					nativeKey = com.google.firebase.analytics.FirebaseAnalytics.ConsentType.AD_USER_DATA;
+					break;
+				case ConsentType.Ad_Personalization:
+					nativeKey = com.google.firebase.analytics.FirebaseAnalytics.ConsentType.AD_PERSONALIZATION;
 					break;
 			}
 

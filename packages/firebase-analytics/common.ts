@@ -19,6 +19,8 @@ export interface EventParameter {
 export enum ConsentType {
 	Ad_Storage,
 	Analytics_Storage,
+	Ad_User_Data,
+	Ad_Personalization,
 }
 
 export enum ConsentStatus {

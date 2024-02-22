@@ -91,6 +91,12 @@ export class Analytics implements IAnalytics {
 				case ConsentType.Analytics_Storage:
 					nativeKey = FIRConsentTypeAnalyticsStorage;
 					break;
+				case ConsentType.Ad_User_Data:
+					nativeKey = FIRConsentTypeAdUserData;
+					break;
+				case ConsentType.Ad_Personalization:
+					nativeKey = FIRConsentTypeAdPersonalization;
+					break;
 			}
 
 			switch (value) {
