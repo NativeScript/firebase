@@ -1,2 +1,3 @@
 platform :ios, '12.0'
+
 pod 'Firebase/Database', '~>10.23.0'
