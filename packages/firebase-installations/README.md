@@ -1,7 +1,7 @@
-# @nativescript/firebase-installations
+# @nativescript-asharghi/firebase-installations
 
 ```cli
-npm install @nativescript/firebase-installations
+npm install @nativescript-asharghi/firebase-installations
 ```
 
 ## What does it do

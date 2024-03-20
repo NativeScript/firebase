@@ -1,5 +1,5 @@
 import { IRemoteConfig, IConfigSettings, IConfigValue, ConfigDefaults } from './common';
-import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript-asharghi/firebase-core';
 
 let defaultRemoteConfig: RemoteConfig;
 

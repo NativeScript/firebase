@@ -16,6 +16,6 @@ export * from './media-view-directive';
 // @ts-ignore
 export class AdmobModule {}
 
-registerElement('NativeAdView', () => require('@nativescript/firebase-admob').NativeAdView);
-registerElement('BannerAd', () => require('@nativescript/firebase-admob').BannerAd);
-registerElement('MediaView', () => require('@nativescript/firebase-admob').MediaView);
+registerElement('NativeAdView', () => require('@nativescript-asharghi/firebase-admob').NativeAdView);
+registerElement('BannerAd', () => require('@nativescript-asharghi/firebase-admob').BannerAd);
+registerElement('MediaView', () => require('@nativescript-asharghi/firebase-admob').MediaView);

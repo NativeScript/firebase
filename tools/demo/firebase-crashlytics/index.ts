@@ -1,9 +1,8 @@
 import { DemoSharedBase } from '../utils';
-import {  } from '@nativescript/firebase-crashlytics';
+import {} from '@nativescript-asharghi/firebase-crashlytics';
 
 export class DemoSharedFirebaseCrashlytics extends DemoSharedBase {
-
-  testIt() {
-    console.log('test firebase-crashlytics!');
-  }
+	testIt() {
+		console.log('test firebase-crashlytics!');
+	}
 }

@@ -1,4 +1,4 @@
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp } from '@nativescript-asharghi/firebase-core';
 export interface IInstallations {
 	app: FirebaseApp;
 	delete(): Promise<void>;

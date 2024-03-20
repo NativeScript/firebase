@@ -1,5 +1,5 @@
 import { IAppCheck, IAppCheckToken } from './common';
-import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 import lazy from '@nativescript/core/utils/lazy';
 
 let defaultAppCheck: AppCheck;

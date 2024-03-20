@@ -1,7 +1,7 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseRemoteConfig } from '@demo/shared';
-import { firebase } from '@nativescript/firebase-core';
-import { RemoteConfig } from '@nativescript/firebase-remote-config';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { RemoteConfig } from '@nativescript-asharghi/firebase-remote-config';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;

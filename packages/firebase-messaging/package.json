@@ -1,6 +1,6 @@
 {
-	"name": "@nativescript/firebase-messaging",
-	"version": "3.2.3",
+	"name": "@nativescript-asharghi/firebase-messaging",
+	"version": "3.2.9",
 	"description": "NativeScript Firebase - Messaging",
 	"main": "index",
 	"typings": "index.d.ts",
@@ -37,6 +37,6 @@
 	"readmeFilename": "README.md",
 	"bootstrapper": "@nativescript/plugin-seed",
 	"dependencies": {
-		"@nativescript/firebase-messaging-core": "*"
+		"@nativescript-asharghi/firebase-messaging-core": "*"
 	}
 }

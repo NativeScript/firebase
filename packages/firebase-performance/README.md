@@ -1,4 +1,4 @@
-# @nativescript/firebase-performance
+# @nativescript-asharghi/firebase-performance
 
 ## Contents
 * [Intro](#intro)
@@ -50,22 +50,22 @@ This plugin allows you to use the [Firebase Performance Monitoring](https://fire
 
 ## Set up your app for Firebase
 
-You need to set up your app for Firebase before you can enable Firebase Performance Monitoring. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+You need to set up your app for Firebase before you can enable Firebase Performance Monitoring. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin.
 
 ## Add the Firebase Performance Monitoring SDK to your app
 
 To add the Firebase Performance Monitoring to your app, follow these steps:
 
-1. Install the `@nativescript/firebase-performance` plugin by running the following command in the root directory of your project.
+1. Install the `@nativescript-asharghi/firebase-performance` plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-performance
+npm install @nativescript-asharghi/firebase-performance
 ```
 
-2. Add the SDK by importing the `@nativescript/firebase-performance` module. You should import this module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`).
+2. Add the SDK by importing the `@nativescript-asharghi/firebase-performance` module. You should import this module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`).
 
 ```ts
-import '@nativescript/firebase-performance';
+import '@nativescript-asharghi/firebase-performance';
 ```
 
 ## Add custom tracing
@@ -75,8 +75,8 @@ You can use custom traces to measure the amount of time it takes for your app to
 You start your custom trace by calling the [startTrace](#starttrace) method with a string to identify the trace. You can then add custom attributes and metrics to the trace. Finally, you stop the trace by calling the [stop](#stop-1) method.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-performance';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-performance';
 async function customTrace() {
 	// Define & start a trace
 	const trace = await firebase().perf().startTrace('custom_trace');
@@ -122,8 +122,8 @@ await metric.stop();
 The above steps combined would look as follows:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-performance';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-performance';
 
 async function getRequest(url) {
 	// Define the network metric
@@ -156,7 +156,7 @@ getRequest('https://api.com').then((json) => {
 ### Performance class
 #### android
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 performanceAndroid: com.google.firebase.perf.FirebasePerformance = firebase().perf().android;
 ```
@@ -165,7 +165,7 @@ A `read-only` property that returns the Performance Monitoring instance for Andr
 ---
 #### ios
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 performanceIOS: FIRPerformance = firebase().perf().ios;
 ```
@@ -174,7 +174,7 @@ A `read-only` property that returns the Performance Monitoring instance for iOS.
 ---
 #### app
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 performanceApp: FirebaseApp = firebase().perf().app;
 ```
@@ -183,7 +183,7 @@ A `read-only` property that returns the FirebaseApp instance for the current app
 ---
 #### isPerformanceCollectionEnabled
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 isPerformanceCollectionEnabled: boolean = firebase().perf().isPerformanceCollectionEnabled;
 // or
@@ -194,7 +194,7 @@ A `read-write` property that returns `true` or `false` depending on whether perf
 ---
 #### newHttpMetric()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 httpMetric: HttpMetric = firebase().perf().newHttpMetric(url, httpMethod);
 ```
@@ -209,7 +209,7 @@ Creates a new HttpMetric instance, used to represent an HTTP request tracing, wi
 ---
 #### newTrace()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 trace: Trace = firebase().perf().newTrace(identifier);
 ```
@@ -222,7 +222,7 @@ Creates a new Trace instance with the given identifier.
 ---
 #### startTrace()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 trace: Trace = firebase().perf().startTrace(identifier);
 ```
@@ -237,7 +237,7 @@ Creates and starts a new Trace instance with the given identifier.
 ### HttpMetric class
 #### android
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 httpMetricAndroid: com.google.firebase.perf.metrics.HttpMetric = httpMetric.android;
 ```
@@ -246,7 +246,7 @@ A `read-only` property that returns the HttpMetrics instance for Android.
 ---
 #### ios
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 httpMetricIOS: FIRHTTPMetric = httpMetric.ios;
 

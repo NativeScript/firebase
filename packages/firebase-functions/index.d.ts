@@ -1,5 +1,5 @@
 import { FunctionsErrorCode, HttpsCallable, HttpsCallableOptions, HttpsErrorCode, IFunctions } from './common';
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp } from '@nativescript-asharghi/firebase-core';
 
 export { FunctionsErrorCode, HttpsErrorCode, HttpsCallableOptions, HttpsCallable };
 
@@ -25,8 +25,7 @@ export declare class Functions implements IFunctions {
 	readonly app: FirebaseApp;
 }
 
-declare module '@nativescript/firebase-core' {
-
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseFunctions {}
 	// Add 'functions' method to FirebaseApp
 	export interface FirebaseApp extends FirebaseFunctionsApp {}

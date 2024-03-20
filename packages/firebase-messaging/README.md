@@ -1,4 +1,4 @@
-# @nativescript/firebase-messaging
+# @nativescript-asharghi/firebase-messaging
 
 ## Contents
 * [Intro](#intro)
@@ -72,22 +72,22 @@ Common use cases for handling messages could be:
 
 ## Set up your app for Firebase
 
-You need to set up your app for Firebase before you can enable Firebase Messaging. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+You need to set up your app for Firebase before you can enable Firebase Messaging. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin.
 
 ## Add the Firebase Cloud Messaging SDK to your app
 
 To add the Firebase Cloud Messaging SDK to your app follow these steps:
 
-1. Install the `@nativescript/firebase-messaging` plugin by running the following command in the root directory of your project.
+1. Install the `@nativescript-asharghi/firebase-messaging` plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-messaging
+npm install @nativescript-asharghi/firebase-messaging
 ```
 
-2. Add the SDK by importing the `@nativescript/firebase-messaging` module. You should import this module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`).
+2. Add the SDK by importing the `@nativescript-asharghi/firebase-messaging` module. You should import this module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`).
 
 ```ts
-import '@nativescript/firebase-messaging';
+import '@nativescript-asharghi/firebase-messaging';
 ```
 
 ## iOS: Requesting permissions
@@ -97,8 +97,8 @@ iOS prevents messages containing notification (or 'alert') payloads from being d
 To request permission, call the [requestPermission](#requestpermission) method on the [Messaging class](#messaging-class) instance returned by `firebase().messaging()`. This method triggers a native permission dialog requesting the user's permission. The user can choose to allow or deny the request.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { AuthorizationStatus } from '@nativescript/firebase-messaging-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { AuthorizationStatus } from '@nativescript-asharghi/firebase-messaging-core';
 
 async function requestUserPermission() {
 	const authStatus = await firebase()
@@ -170,7 +170,7 @@ The following table shows how the notification messages are delivered to the use
 If you want to always display notifications while the application is in the foreground without sending additional parameters/data when sending the push notification, set the [showNotificationsWhenInForeground](#shownotificationswheninforeground) property of the `Messaging` instance to `true`:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().showNotificationsWhenInForeground = true;
 ```
 #### Listen to notification messages in the foreground
@@ -181,7 +181,7 @@ For example, you could display a new Alert each time a message is delivered:
 
 ```ts
 import { alert } from '@nativescript/core';
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.messaging()
@@ -263,10 +263,10 @@ The examples below use a Cloud Firestore database to store and manage the tokens
 Once your application has started, you can call the [getToken](#gettoken) method on the [Messaging](#messaging-class) instance to get the unique device token. If you are using a different push notification provider, such as Amazon SNS, you will need to call [getAPNSToken](#getapnstoken) on iOS:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-messaging';
-import { FieldValue } from '@nativescript/firebase-auth';
-import '@nativescript/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-messaging';
+import { FieldValue } from '@nativescript-asharghi/firebase-auth';
+import '@nativescript-asharghi/firebase-firestore';
 
 async function saveTokenToDatabase(token) {
   // Assume user is already signed in
@@ -382,7 +382,7 @@ To learn more about how to send messages to devices subscribed to topics, see [T
 To subscribe a device to a topic, call the [subscribeToTopic](#subscribetotopic) method on the [Messsaging](#messaging-class) instance with the topic name (must not include ´/´):
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.messaging()
@@ -395,7 +395,7 @@ firebase()
 To unsubscribe from a topic, call the [unsubscribeFromTopic](#unsubscribefromtopic) method with the topic name:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.messaging()
@@ -423,7 +423,7 @@ To learn more about how to send messages to devices subscribed to topics, see [T
 To subscribe a device to a topic, call the [subscribeToTopic](#subscribetotopic) method on the [Messaging](#messaging-class) instance with the topic name (must not include `/`):
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.messaging()
@@ -436,7 +436,7 @@ firebase()
 To unsubscribe from a topic, call the [unsubscribeFromTopic](#unsubscribefromtopic) method with the topic name:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.messaging()
@@ -642,7 +642,7 @@ Follow [this guide](https://firebase.google.com/docs/cloud-messaging/ios/certs) 
 ### Messaging class
 #### android
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 messagingAndroid: com.google.firebase.messaging.FirebaseMessaging = firebase().messaging().android;
 ```
@@ -651,7 +651,7 @@ A `read-only` property that returns the instance of the Messaging class for Andr
 ---
 #### ios
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 messagingIos: MessagingCore = firebase().messaging().ios;
 ```
@@ -660,7 +660,7 @@ A `read-only` property that returns the instance of the Messaging class for iOS.
 ---
 #### app
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 messageApp: FirebaseApp = firebase().messaging().app;
 ```
 A `read-only` property that returns the instance of the FirebaseApp class associated with this Cloud Messaging instance.
@@ -668,7 +668,7 @@ A `read-only` property that returns the instance of the FirebaseApp class associ
 ---
 #### isAutoInitEnabled
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 isAutoInitEnabled: boolean = firebase().messaging().isAutoInitEnabled;
 // or
 firebase().messaging().isAutoInitEnabled = true;
@@ -679,7 +679,7 @@ Determines whether to enable or disable auto-initialization of Firebase Cloud Me
 ---
 #### showNotificationsWhenInForeground
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 showNotificationsWhenInForeground: boolean = firebase().messaging().showNotificationsWhenInForeground;
 // or
 firebase().messaging().showNotificationsWhenInForeground = true;
@@ -689,7 +689,7 @@ Allows you to always display notifications while the application is in the foreg
 ---
 #### isDeviceRegisteredForRemoteMessages
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 isDeviceRegisteredForRemoteMessages: boolean = firebase().messaging().isDeviceRegisteredForRemoteMessages;
 ```
 A property that returns a boolean value indicating whether the app is registered to receive remote notifications or not.
@@ -697,7 +697,7 @@ A property that returns a boolean value indicating whether the app is registered
 ---
 #### getToken()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().getToken()
 	.then((token: string) => {
 		console.log('Token: ', token);
@@ -710,7 +710,7 @@ Gets the user's device token. For more information, see [getToken()](https://fir
 ---
 #### getAPNSToken()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 aPNSToken: string | null = firebase().messaging().getAPNSToken()
 ```
 Returns an Apple Push Notification service (APNs) token for the app’s current device. For more information, see [apnsToken](https://firebase.google.com/docs/reference/ios/firebasemessaging/api/reference/Classes/FIRMessaging#apnstoken).
@@ -718,7 +718,7 @@ Returns an Apple Push Notification service (APNs) token for the app’s current 
 ---
 #### hasPermission()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().hasPermission()
 	.then((status: AuthorizationStatus) => {
 		console.log('Authorization status: ', status);
@@ -731,7 +731,7 @@ Checks if the app, on iOS, has permission to send notifications to the user.
 ---
 #### onMessage()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().onMessage(listener);
 ```
 Registers a callback function that is invoked when a new message is received.
@@ -743,7 +743,7 @@ Registers a callback function that is invoked when a new message is received.
 ---
 #### onNotificationTap()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().onNotificationTap(listener);
 ```
 Registers a callback function that is invoked when a user taps on a notification.
@@ -755,7 +755,7 @@ Registers a callback function that is invoked when a user taps on a notification
 ---
 #### onToken()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().onToken(listener);
 ```
 Registers a callback function that is invoked when a user's device changes its registration token.
@@ -767,7 +767,7 @@ Registers a callback function that is invoked when a user's device changes its r
 ---
 #### registerDeviceForRemoteMessages()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().registerDeviceForRemoteMessages()
 	.then(() => {
 		console.log('Device registered for remote messages');
@@ -779,7 +779,7 @@ firebase().messaging().registerDeviceForRemoteMessages()
 ---
 #### requestPermission()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().requestPermission(permissions)
 	.then((status: AuthorizationStatus) => {
 		console.log('Authorization status: ', status);
@@ -795,7 +795,7 @@ firebase().messaging().requestPermission(permissions)
 #### subscribeToTopic()
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().subscribeToTopic(topic)
 	.then(() => {
 		console.log('Subscribed to topic');
@@ -812,7 +812,7 @@ For the description of this method, visit [subscribeToTopic()](https://firebase.
 ---
 #### unsubscribeFromTopic()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().unsubscribeFromTopic(topic)
 	.then(() => {
 		console.log('Unsubscribed from topic');
@@ -829,7 +829,7 @@ For the description of this method, visit [unsubscribeToTopic()](https://firebas
 ---
 #### unregisterDeviceForRemoteMessages()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().unregisterDeviceForRemoteMessages()
 	.then(() => {
 		console.log('Device unregistered for remote messages');
@@ -841,7 +841,7 @@ firebase().messaging().unregisterDeviceForRemoteMessages()
 ---
 #### deleteToken()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().messaging().deleteToken()
 	.then(() => {
 		console.log('Token deleted');

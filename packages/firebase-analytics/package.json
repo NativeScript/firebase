@@ -1,6 +1,6 @@
 {
-	"name": "@nativescript/firebase-analytics",
-	"version": "3.2.3",
+	"name": "@nativescript-asharghi/firebase-analytics",
+	"version": "3.2.8",
 	"description": "NativeScript Firebase - Analytics",
 	"main": "index",
 	"typings": "index.d.ts",
@@ -46,5 +46,8 @@
 	"scripts": {
 		"preuninstall": "node preuninstall",
 		"postinstall": "node postinstall"
+	},
+	"devDependencies": {
+		"@nativescript/hook": "^2.0.0"
 	}
 }

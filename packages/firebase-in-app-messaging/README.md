@@ -1,4 +1,4 @@
-# @nativescript/firebase-in-app-messaging
+# @nativescript-asharghi/firebase-in-app-messaging
 
 ## Contents
 
@@ -24,21 +24,21 @@ This plugin allows you to use the [Firebase In-App Messaging SDK](https://fireba
 
 ## Set up your app for Firebase
 
-You need to set up your app for Firebase before you can use the Firebase in-app messaging. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+You need to set up your app for Firebase before you can use the Firebase in-app messaging. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin.
 
 
 ## Add the Firebase In-App Messaging SDK to your app
 
 To add the Firebase In-App Messaging SDK to your app follow these steps:
 
-1. Install the `@nativescript/firebase-in-app-messaging` plugin by running the following command in the root directory of your project.
+1. Install the `@nativescript-asharghi/firebase-in-app-messaging` plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-in-app-messaging
+npm install @nativescript-asharghi/firebase-in-app-messaging
 ```
-2. Add the SDK by importing the `@nativescript/firebase-in-app-messaging` module in your app's main file (e.g. `app.ts` or `main.ts`).
+2. Add the SDK by importing the `@nativescript-asharghi/firebase-in-app-messaging` module in your app's main file (e.g. `app.ts` or `main.ts`).
 ```ts
-import '@nativescript/firebase-in-app-messaging';
+import '@nativescript-asharghi/firebase-in-app-messaging';
 ```
 
 ## Firebase In-App Messaging limitations
@@ -56,8 +56,8 @@ Any published campaigns from the Firebase Console are automatically handled and 
 To control whether to display messages or not, set the `isMessagesDisplaySuppressed` property of the `InAppMessaging` instance to `true` or `false`. The `InAppMessaging` instance is returneb calling the `inAppMessaging()` on the FirebaseApp instance. By default, `isMessagesDisplaySuppressed` is set to `false` which means messages will be displayed.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-in-app-messaging';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-in-app-messaging';
 
 async function bootstrap() {
   firebase().inAppMessaging().isMessagesDisplaySuppressed = true;
@@ -75,7 +75,7 @@ async function onSetup(user) {
 
 To trigger contextual messages, call the `triggerEvent()` method of the `InAppMessaging` instance with the event name as a parameter. This triggers the display of any messages that are configured on the Firebase Console.
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().inAppMessaging().triggerEvent('purchase');
 ```

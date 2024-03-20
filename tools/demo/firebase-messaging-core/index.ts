@@ -1,5 +1,5 @@
 import { DemoSharedBase } from '../utils';
-import {} from '@nativescript/firebase-messaging-core';
+import {} from '@nativescript-asharghi/firebase-messaging-core';
 
 export class DemoSharedFirebaseMessagingCore extends DemoSharedBase {
 	testIt() {

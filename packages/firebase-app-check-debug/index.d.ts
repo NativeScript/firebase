@@ -1,4 +1,4 @@
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp } from '@nativescript-asharghi/firebase-core';
 
 declare class AppCheck {
 	readonly ios: any;
@@ -8,7 +8,7 @@ declare class AppCheck {
 
 	constructor(app?: FirebaseApp);
 
-    static setProviderFactory();
+	static setProviderFactory();
 
 	activate(isTokenAutoRefreshEnabled: boolean);
 
@@ -25,7 +25,7 @@ declare class AppCheckToken {
 	readonly expireTimeMillis: number;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseAppCheck {}
 }
 

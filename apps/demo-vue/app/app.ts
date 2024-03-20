@@ -6,24 +6,24 @@ declare let __DEV__: boolean;
 // Prints Vue logs when --env.production is *NOT* set while building
 Vue.config.silent = !__DEV__;
 
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-analytics';
-import '@nativescript/firebase-auth';
-import '@nativescript/firebase-crashlytics';
-import '@nativescript/firebase-database';
-import '@nativescript/firebase-dynamic-links';
-import '@nativescript/firebase-firestore';
-import '@nativescript/firebase-functions';
-import '@nativescript/firebase-in-app-messaging';
-import '@nativescript/firebase-installations';
-import '@nativescript/firebase-messaging';
-import '@nativescript/firebase-performance';
-import '@nativescript/firebase-remote-config';
-import '@nativescript/firebase-storage';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-analytics';
+import '@nativescript-asharghi/firebase-auth';
+import '@nativescript-asharghi/firebase-crashlytics';
+import '@nativescript-asharghi/firebase-database';
+import '@nativescript-asharghi/firebase-dynamic-links';
+import '@nativescript-asharghi/firebase-firestore';
+import '@nativescript-asharghi/firebase-functions';
+import '@nativescript-asharghi/firebase-in-app-messaging';
+import '@nativescript-asharghi/firebase-installations';
+import '@nativescript-asharghi/firebase-messaging';
+import '@nativescript-asharghi/firebase-performance';
+import '@nativescript-asharghi/firebase-remote-config';
+import '@nativescript-asharghi/firebase-storage';
 
-import { Admob } from '@nativescript/firebase-admob';
+import { Admob } from '@nativescript-asharghi/firebase-admob';
 
-import { AppCheck } from '@nativescript/firebase-app-check-debug';
+import { AppCheck } from '@nativescript-asharghi/firebase-app-check-debug';
 import { Application } from '@nativescript/core';
 
 AppCheck.setProviderFactory();

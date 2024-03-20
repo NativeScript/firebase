@@ -1,8 +1,8 @@
 import { Observable, EventData, Page, fromObject, Application } from '@nativescript/core';
 import { DemoSharedFirebaseAuth } from '@demo/shared';
-import { firebase, Firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-auth';
-import { Auth, User, OAuthProvider, PhoneAuthProvider, GoogleAuthProvider } from '@nativescript/firebase-auth';
+import { firebase, Firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-auth';
+import { Auth, User, OAuthProvider, PhoneAuthProvider, GoogleAuthProvider } from '@nativescript-asharghi/firebase-auth';
 import { GoogleSignin } from '@nativescript/google-signin';
 
 export function navigatingTo(args: EventData) {

@@ -1,8 +1,8 @@
 import { Application, Utils } from '@nativescript/core';
-import { FirebaseApp, FirebaseError, firebase } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError, firebase } from '@nativescript-asharghi/firebase-core';
 import { ProviderBase } from './common';
 import { Config, IActionCodeSettings, IIdpResponse, IUI } from '.';
-import { Auth } from '@nativescript/firebase-auth';
+import { Auth } from '@nativescript-asharghi/firebase-auth';
 declare const org;
 let defaultUI: UI;
 const fb = firebase();

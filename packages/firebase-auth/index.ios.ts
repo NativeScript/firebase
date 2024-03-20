@@ -1,4 +1,4 @@
-import { FirebaseApp, firebase, deserialize, FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseApp, firebase, deserialize, FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { ActionCodeInfoOperation } from './common';
 
 import { ActionCodeInfo, IUserCredential, IActionCodeSettings, IAuth, IAuthCredential, IAuthSettings, IAuthTokenResult, IOAuthCredential, IPhoneAuthCredential, IUser, IUserInfo, IUserMetadata, OAuthCredentialOptions, UserProfileChangeRequest, IOAuthProvider } from '.';

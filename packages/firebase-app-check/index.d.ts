@@ -1,4 +1,4 @@
-import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 
 declare class AppCheck {
 	readonly ios: any;
@@ -35,7 +35,6 @@ declare abstract class AppCheckProvider {
 	readonly native;
 }
 
-
 declare class AppCheckToken {
 	readonly ios: any;
 	readonly android: any;
@@ -44,7 +43,7 @@ declare class AppCheckToken {
 	readonly expireTimeMillis: number;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseAppCheck {}
 }
 

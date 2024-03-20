@@ -1,8 +1,8 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseDynamicLinks } from '@demo/shared';
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-dynamic-links';
-import { DynamicLinkSocialParameters } from '@nativescript/firebase-dynamic-links';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-dynamic-links';
+import { DynamicLinkSocialParameters } from '@nativescript-asharghi/firebase-dynamic-links';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;

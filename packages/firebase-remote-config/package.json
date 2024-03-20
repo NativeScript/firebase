@@ -1,5 +1,5 @@
 {
-	"name": "@nativescript/firebase-remote-config",
+	"name": "@nativescript-asharghi/firebase-remote-config",
 	"version": "3.2.3",
 	"description": "NativeScript Firebase - Remote Config",
 	"main": "index",

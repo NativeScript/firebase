@@ -4,7 +4,7 @@
 		"types": ["node"],
 		"baseUrl": ".",
 		"paths": {
-			"@nativescript/firebase-admob": ["../../../dist/packages/firebase-admob"]
+			"@nativescript-asharghi/firebase-admob": ["../../../dist/packages/firebase-admob"]
 		},
 		"outDir": "../../../dist/out-tsc",
 		"declarationDir": "../../../dist/out-tsc"

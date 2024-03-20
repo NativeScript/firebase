@@ -1,7 +1,7 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseUi } from '@demo/shared';
-import { firebase } from '@nativescript/firebase-core';
-import { AppleProvider, EmailProvider, GithubProvider, GoogleProvider, MicrosoftProvider, TwitterProvider, YahooProvider } from '@nativescript/firebase-ui';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { AppleProvider, EmailProvider, GithubProvider, GoogleProvider, MicrosoftProvider, TwitterProvider, YahooProvider } from '@nativescript-asharghi/firebase-ui';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;

@@ -1,9 +1,8 @@
 import { DemoSharedBase } from '../utils';
-import {  } from '@nativescript/firebase-messaging';
+import {} from '@nativescript-asharghi/firebase-messaging';
 
 export class DemoSharedFirebaseMessaging extends DemoSharedBase {
-
-  testIt() {
-    console.log('test firebase-messaging!');
-  }
+	testIt() {
+		console.log('test firebase-messaging!');
+	}
 }

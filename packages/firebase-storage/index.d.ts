@@ -1,4 +1,4 @@
-import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { TaskEvent, StringFormat } from './common';
 
 export { StringFormat, TaskEvent };
@@ -209,7 +209,7 @@ export declare class Storage implements IStorage {
 	refFromURL(url: string): Reference;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseStorage {}
 }
 

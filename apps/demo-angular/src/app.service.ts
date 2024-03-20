@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-messaging';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-messaging';
 
 @Injectable()
 export class AppService {
@@ -16,6 +16,5 @@ export class AppService {
 		messaging.onNotificationTap((message) => {
 			console.log('Firebase onNotificationTap', message);
 		});
-
 	}
 }

@@ -1,7 +1,7 @@
-# @nativescript/firebase-auth
+# @nativescript-asharghi/firebase-auth
 * [Intro](#intro)
 * [Installation](#installation)
-* [Use @nativescript/firebase-auth](#use-nativescriptfirebase-auth)
+* [Use @nativescript-asharghi/firebase-auth](#use-nativescriptfirebase-auth)
 	* [Listen to the authentication state change](#listen-to-the-authentication-state-change)
 	* [Sign a user in anonymously](#sign-a-user-in-anonymously)
 	* [Create a user account with email and password](#create-a-user-account-with-email-and-password)
@@ -33,7 +33,7 @@ A plugin that allows you to add [Firebase Authentification](https://firebase.goo
 
 [![image](https://img.youtube.com/vi/8sGY55yxicA/hqdefault.jpg)](https://www.youtube.com/watch?v=8sGY55yxicA)
 
-> **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
+> **Note:** Use this plugin with the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
 
 
 ## Installation
@@ -41,18 +41,18 @@ A plugin that allows you to add [Firebase Authentification](https://firebase.goo
 Install the plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-auth
+npm install @nativescript-asharghi/firebase-auth
 ```
 
-## Use @nativescript/firebase-auth
+## Use @nativescript-asharghi/firebase-auth
 
 Before using Firebase Auth, ensure to initialize Firebase.
 
 To create a new Firebase Auth instance, call the `auth` method on the firebase instance as follow:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-auth'; // only needs to be imported 1x
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-auth'; // only needs to be imported 1x
 
 const auth = firebase().auth();
 ```
@@ -60,8 +60,8 @@ const auth = firebase().auth();
 By default, this allows you to interact with Firebase Auth using the default Firebase App used whilst installing Firebase on your platform. If, however, you'd like to use a secondary Firebase App, call the `auth` method with the `FirebaseApp` instance.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-auth';
 
 // create secondary app instance
 const config = new FirebaseOptions();
@@ -75,8 +75,8 @@ const auth = firebase().auth(secondaryApp);
 To subscribe to auth state change event, call the `addAuthStateChangeListener` method on your FirebaseAuth class returned by `firebase().auth()`:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-auth';
 
 firebase().auth()
   .addAuthStateChangeListener((user) => {
@@ -93,8 +93,8 @@ firebase().auth()
 To sign a user in anonymously, call the `signInAnonymously` method on the instance of the FirebaseAuth class returned by `firebase().auth()`.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-auth';
 
 firebase()
 	.auth()
@@ -110,8 +110,8 @@ firebase()
 Next, to create a user account with an email and password, call the `createUserWithEmailAndPassword` method on the FirebaseAuth instance(`firebase().auth()`) passing it the user's email and secure password.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-auth';
 
 firebase()
 	.auth()
@@ -125,8 +125,8 @@ firebase()
 To sign in a user with their registered email and password, call `signInWithEmailAndPassword` method, with the email and password, on `firebase().auth()`
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-auth';
 
 firebase()
 	.auth()
@@ -178,8 +178,8 @@ Apple announced that any applications using 3rd party login services (such as Fa
 - Create an AuthCredential instance from the user's credentials. Call the `signInWithCredential` method passing it the Apple credentials. 
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { AppleAuthProvider } from '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { AppleAuthProvider } from '@nativescript-asharghi/firebase-auth';
 import { signIn, User } from "@nativescript/apple-sign-in";
 
 signIn(
@@ -210,8 +210,8 @@ signIn(
 - Install the `@nativescript/facebook` plugin and call the `logInWithPermissions` method on the `LoginManager` class to get the user's credentials from Facabook that you pass to Firebase.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { FacebookAuthProvider } from '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { FacebookAuthProvider } from '@nativescript-asharghi/firebase-auth';
 import { LoginManager, AccessToken } from '@nativescript/facebook';
 
 
@@ -238,8 +238,8 @@ LoginManager.logInWithPermissions(['public_profile', 'email']).then((result) => 
 - Install the `@nativescript/twitter` plugin and call the `logIn` method on the `TwitterSignIn` class to get the user's credentials from Twitter, as shown below, that you pass to Firebase.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { TwitterAuthProvider } from '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { TwitterAuthProvider } from '@nativescript-asharghi/firebase-auth';
 import { Twitter, TwitterSignIn } from '@nativescript/twitter';
 
 Twitter.init('TWITTER_CONSUMER_KEY', 'TWITTER_CONSUMER_SECRET'); // called earlier in the app
@@ -262,8 +262,8 @@ A 3rd party library is required to both install the GitHub SDK and trigger the a
 - Call the `signInWithCredential` method on `firebase().auth()` passing it the GitHub credentials.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { GithubAuthProvider } from '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { GithubAuthProvider } from '@nativescript-asharghi/firebase-auth';
 const githubAuthCredential = GithubAuthProvider.credential(token);
 
 firebase().auth().signInWithCredential(githubAuthCredential);
@@ -275,8 +275,8 @@ Most configuration is already set up when using Google Sign-In with Firebase. Ho
 
 - Install the `nativescript/google-signin` plugin, configure Google Sign-in by calling the `configure` method, sign in the user to their Google account to obtain the ID and access tokens. Pass the obtained tokens to Firebase.
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { GoogleAuthProvider } from '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { GoogleAuthProvider } from '@nativescript-asharghi/firebase-auth';
 import { GoogleSignin } from '@nativescript/google-signin';
 
 GoogleSignin.configure(); // called earlier in the app
@@ -312,7 +312,7 @@ Before starting with Phone Authentication, ensure you have followed these steps:
 The user's phone number must be first verified before the user can either sign in or link their account with a PhoneAuthCredential. Verify the phone number by calling the `verifyPhoneNumber` method with the number. Once the number is verified, pass the verification id and code to Firebase.
 
 ```ts
-import { PhoneAuthProvider } from '@nativescript/firebase-auth';
+import { PhoneAuthProvider } from '@nativescript-asharghi/firebase-auth';
 PhoneAuthProvider.provider()
 	.verifyPhoneNumber('+44 7123 123 456')
 	.then((verificationId) => {

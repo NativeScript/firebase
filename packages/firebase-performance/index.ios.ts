@@ -1,4 +1,4 @@
-import { deserialize, firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp } from '@nativescript-asharghi/firebase-core';
 import { HttpMethod, IHttpMetric, IPerformance, ITrace } from './common';
 
 let defaultPerformance: Performance;

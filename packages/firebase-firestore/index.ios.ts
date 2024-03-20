@@ -6,7 +6,7 @@ import { WhereFilterOp, ICollectionReference, IDocumentReference, IFieldPath, IF
 
 const main_queue = dispatch_get_current_queue();
 
-import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript-asharghi/firebase-core';
 
 import '@nativescript/core';
 

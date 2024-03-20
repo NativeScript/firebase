@@ -81,137 +81,137 @@ module.exports = {
 		// packages
 		// build output is always in dist/packages
 		'@nativescript': {
-			// @nativescript/firebase-core
+			// @nativescript-asharghi/firebase-core
 			'firebase-core': {
 				build: {
 					script: 'nx run firebase-core:build.all',
-					description: '@nativescript/firebase-core: Build',
+					description: '@nativescript-asharghi/firebase-core: Build',
 				},
 			},
-			// @nativescript/firebase-auth
+			// @nativescript-asharghi/firebase-auth
 			'firebase-auth': {
 				build: {
 					script: 'nx run firebase-auth:build.all',
-					description: '@nativescript/firebase-auth: Build',
+					description: '@nativescript-asharghi/firebase-auth: Build',
 				},
 			},
-			// @nativescript/firebase-database
+			// @nativescript-asharghi/firebase-database
 			'firebase-database': {
 				build: {
 					script: 'nx run firebase-database:build.all',
-					description: '@nativescript/firebase-database: Build',
+					description: '@nativescript-asharghi/firebase-database: Build',
 				},
 			},
-			// @nativescript/firebase-firestore
+			// @nativescript-asharghi/firebase-firestore
 			'firebase-firestore': {
 				build: {
 					script: 'nx run firebase-firestore:build.all',
-					description: '@nativescript/firebase-firestore: Build',
+					description: '@nativescript-asharghi/firebase-firestore: Build',
 				},
 			},
-			// @nativescript/firebase-analytics
+			// @nativescript-asharghi/firebase-analytics
 			'firebase-analytics': {
 				build: {
 					script: 'nx run firebase-analytics:build.all',
-					description: '@nativescript/firebase-analytics: Build',
+					description: '@nativescript-asharghi/firebase-analytics: Build',
 				},
 			},
-			// @nativescript/firebase-admob
+			// @nativescript-asharghi/firebase-admob
 			'firebase-admob': {
 				build: {
 					script: 'nx run firebase-admob:build.all',
-					description: '@nativescript/firebase-admob: Build',
+					description: '@nativescript-asharghi/firebase-admob: Build',
 				},
 			},
-			// @nativescript/firebase-crashlytics
+			// @nativescript-asharghi/firebase-crashlytics
 			'firebase-crashlytics': {
 				build: {
 					script: 'nx run firebase-crashlytics:build.all',
-					description: '@nativescript/firebase-crashlytics: Build',
+					description: '@nativescript-asharghi/firebase-crashlytics: Build',
 				},
 			},
-			// @nativescript/firebase-app-check
+			// @nativescript-asharghi/firebase-app-check
 			'firebase-app-check': {
 				build: {
 					script: 'nx run firebase-app-check:build.all',
-					description: '@nativescript/firebase-app-check: Build',
+					description: '@nativescript-asharghi/firebase-app-check: Build',
 				},
 			},
-			// @nativescript/firebase-remote-config
+			// @nativescript-asharghi/firebase-remote-config
 			'firebase-remote-config': {
 				build: {
 					script: 'nx run firebase-remote-config:build.all',
-					description: '@nativescript/firebase-remote-config: Build',
+					description: '@nativescript-asharghi/firebase-remote-config: Build',
 				},
 			},
-			// @nativescript/firebase-storage
+			// @nativescript-asharghi/firebase-storage
 			'firebase-storage': {
 				build: {
 					script: 'nx run firebase-storage:build.all',
-					description: '@nativescript/firebase-storage: Build',
+					description: '@nativescript-asharghi/firebase-storage: Build',
 				},
 			},
-			// @nativescript/firebase-in-app-messaging
+			// @nativescript-asharghi/firebase-in-app-messaging
 			'firebase-in-app-messaging': {
 				build: {
 					script: 'nx run firebase-in-app-messaging:build.all',
-					description: '@nativescript/firebase-in-app-messaging: Build',
+					description: '@nativescript-asharghi/firebase-in-app-messaging: Build',
 				},
 			},
-			// @nativescript/firebase-performance
+			// @nativescript-asharghi/firebase-performance
 			'firebase-performance': {
 				build: {
 					script: 'nx run firebase-performance:build.all',
-					description: '@nativescript/firebase-performance: Build',
+					description: '@nativescript-asharghi/firebase-performance: Build',
 				},
 			},
-			// @nativescript/firebase-installations
+			// @nativescript-asharghi/firebase-installations
 			'firebase-installations': {
 				build: {
 					script: 'nx run firebase-installations:build.all',
-					description: '@nativescript/firebase-installations: Build',
+					description: '@nativescript-asharghi/firebase-installations: Build',
 				},
 			},
-			// @nativescript/firebase-dynamic-links
+			// @nativescript-asharghi/firebase-dynamic-links
 			'firebase-dynamic-links': {
 				build: {
 					script: 'nx run firebase-dynamic-links:build.all',
-					description: '@nativescript/firebase-dynamic-links: Build',
+					description: '@nativescript-asharghi/firebase-dynamic-links: Build',
 				},
 			},
-			// @nativescript/firebase-messaging
+			// @nativescript-asharghi/firebase-messaging
 			'firebase-messaging': {
 				build: {
 					script: 'nx run firebase-messaging:build.all',
-					description: '@nativescript/firebase-messaging: Build',
+					description: '@nativescript-asharghi/firebase-messaging: Build',
 				},
 			},
-			// @nativescript/firebase-functions
+			// @nativescript-asharghi/firebase-functions
 			'firebase-functions': {
 				build: {
 					script: 'nx run firebase-functions:build.all',
-					description: '@nativescript/firebase-functions: Build',
+					description: '@nativescript-asharghi/firebase-functions: Build',
 				},
 			},
-			// @nativescript/firebase-app-check-debug
+			// @nativescript-asharghi/firebase-app-check-debug
 			'firebase-app-check-debug': {
 				build: {
 					script: 'nx run firebase-app-check-debug:build.all',
-					description: '@nativescript/firebase-app-check-debug: Build',
+					description: '@nativescript-asharghi/firebase-app-check-debug: Build',
 				},
 			},
-			// @nativescript/firebase-messaging-core
+			// @nativescript-asharghi/firebase-messaging-core
 			'firebase-messaging-core': {
 				build: {
 					script: 'nx run firebase-messaging-core:build.all',
-					description: '@nativescript/firebase-messaging-core: Build',
+					description: '@nativescript-asharghi/firebase-messaging-core: Build',
 				},
 			},
-			// @nativescript/firebase-ui
+			// @nativescript-asharghi/firebase-ui
 			'firebase-ui': {
 				build: {
 					script: 'nx run firebase-ui:build.all',
-					description: '@nativescript/firebase-ui: Build',
+					description: '@nativescript-asharghi/firebase-ui: Build',
 				},
 			},
 			'build-all': {
@@ -226,79 +226,79 @@ module.exports = {
 		focus: {
 			'firebase-core': {
 				script: 'nx run firebase-core:focus',
-				description: 'Focus on @nativescript/firebase-core',
+				description: 'Focus on @nativescript-asharghi/firebase-core',
 			},
 			'firebase-auth': {
 				script: 'nx run firebase-auth:focus',
-				description: 'Focus on @nativescript/firebase-auth',
+				description: 'Focus on @nativescript-asharghi/firebase-auth',
 			},
 			'firebase-database': {
 				script: 'nx run firebase-database:focus',
-				description: 'Focus on @nativescript/firebase-database',
+				description: 'Focus on @nativescript-asharghi/firebase-database',
 			},
 			'firebase-firestore': {
 				script: 'nx run firebase-firestore:focus',
-				description: 'Focus on @nativescript/firebase-firestore',
+				description: 'Focus on @nativescript-asharghi/firebase-firestore',
 			},
 			'firebase-analytics': {
 				script: 'nx run firebase-analytics:focus',
-				description: 'Focus on @nativescript/firebase-analytics',
+				description: 'Focus on @nativescript-asharghi/firebase-analytics',
 			},
 			'firebase-admob': {
 				script: 'nx run firebase-admob:focus',
-				description: 'Focus on @nativescript/firebase-admob',
+				description: 'Focus on @nativescript-asharghi/firebase-admob',
 			},
 			'firebase-crashlytics': {
 				script: 'nx run firebase-crashlytics:focus',
-				description: 'Focus on @nativescript/firebase-crashlytics',
+				description: 'Focus on @nativescript-asharghi/firebase-crashlytics',
 			},
 			'firebase-app-check': {
 				script: 'nx run firebase-app-check:focus',
-				description: 'Focus on @nativescript/firebase-app-check',
+				description: 'Focus on @nativescript-asharghi/firebase-app-check',
 			},
 			'firebase-remote-config': {
 				script: 'nx run firebase-remote-config:focus',
-				description: 'Focus on @nativescript/firebase-remote-config',
+				description: 'Focus on @nativescript-asharghi/firebase-remote-config',
 			},
 			'firebase-storage': {
 				script: 'nx run firebase-storage:focus',
-				description: 'Focus on @nativescript/firebase-storage',
+				description: 'Focus on @nativescript-asharghi/firebase-storage',
 			},
 			'firebase-in-app-messaging': {
 				script: 'nx run firebase-in-app-messaging:focus',
-				description: 'Focus on @nativescript/firebase-in-app-messaging',
+				description: 'Focus on @nativescript-asharghi/firebase-in-app-messaging',
 			},
 			'firebase-performance': {
 				script: 'nx run firebase-performance:focus',
-				description: 'Focus on @nativescript/firebase-performance',
+				description: 'Focus on @nativescript-asharghi/firebase-performance',
 			},
 			'firebase-installations': {
 				script: 'nx run firebase-installations:focus',
-				description: 'Focus on @nativescript/firebase-installations',
+				description: 'Focus on @nativescript-asharghi/firebase-installations',
 			},
 			'firebase-dynamic-links': {
 				script: 'nx run firebase-dynamic-links:focus',
-				description: 'Focus on @nativescript/firebase-dynamic-links',
+				description: 'Focus on @nativescript-asharghi/firebase-dynamic-links',
 			},
 			'firebase-messaging': {
 				script: 'nx run firebase-messaging:focus',
-				description: 'Focus on @nativescript/firebase-messaging',
+				description: 'Focus on @nativescript-asharghi/firebase-messaging',
 			},
 			'firebase-functions': {
 				script: 'nx run firebase-functions:focus',
-				description: 'Focus on @nativescript/firebase-functions',
+				description: 'Focus on @nativescript-asharghi/firebase-functions',
 			},
 			'firebase-app-check-debug': {
 				script: 'nx run firebase-app-check-debug:focus',
-				description: 'Focus on @nativescript/firebase-app-check-debug',
+				description: 'Focus on @nativescript-asharghi/firebase-app-check-debug',
 			},
 			'firebase-messaging-core': {
 				script: 'nx run firebase-messaging-core:focus',
-				description: 'Focus on @nativescript/firebase-messaging-core',
+				description: 'Focus on @nativescript-asharghi/firebase-messaging-core',
 			},
 			'firebase-ui': {
 				script: 'nx run firebase-ui:focus',
-				description: 'Focus on @nativescript/firebase-ui',
+				description: 'Focus on @nativescript-asharghi/firebase-ui',
 			},
 			reset: {
 				script: 'nx g @nativescript/plugin-tools:focus-packages',

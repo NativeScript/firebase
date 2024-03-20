@@ -1,11 +1,11 @@
 
-# @nativescript/firebase-admob
+# @nativescript-asharghi/firebase-admob
 
 A plugin that allows you to monetize your NativeScript app by integrating the [Google Mobile Ads SDK](https://developers.google.com/admob/android/sdk) into the app. 
 
-> **Note:** Before you use this plugin, if you haven't already, setup your app for Firebase by following the instructions at [@nativescript/firebase-core](../firebase-core/).
+> **Note:** Before you use this plugin, if you haven't already, setup your app for Firebase by following the instructions at [@nativescript-asharghi/firebase-core](../firebase-core/).
 
-The `@nativescript/firebase-admob` plugin currently supports loading and displaying the following ad types:
+The `@nativescript-asharghi/firebase-admob` plugin currently supports loading and displaying the following ad types:
 
 - [Banner](#banner-ads)
 - [Interstitial (full-screen)](#interstitial-ad)
@@ -16,7 +16,7 @@ The `@nativescript/firebase-admob` plugin currently supports loading and display
 * [Installation](#installation)
 * [Setup Admob for iOS](#setup-admob-for-ios)
 * [Setup Admob for Android](#setup-admob-for-android)
-* [Use @nativescript/firebase-admob](#use-nativescriptfirebase-admob)
+* [Use @nativescript-asharghi/firebase-admob](#use-nativescriptfirebase-admob)
   * [Initialize the Mobile Ads SDK](#1-initialize-the-mobile-ads-sdk)
   * [Add your preferred ad format to the app](#2-add-your-preferred-ad-format-to-the-app)
   * [Banner ads](#banner-ads)
@@ -51,10 +51,10 @@ If you are interested in creating and loading an ad with Ad Manager, follow the 
 <!-- WHERE are the instructions for Ad Manager? -->
 ## Installation
 
-To install `@nativescript/firebase-admob`, run the following command in the root directory of the project:
+To install `@nativescript-asharghi/firebase-admob`, run the following command in the root directory of the project:
 
 ```cli
-npm install @nativescript/firebase-admob
+npm install @nativescript-asharghi/firebase-admob
 ```
 
 ## Setup Admob for iOS
@@ -84,16 +84,16 @@ Add AdMob App ID ([identified in the AdMob UI](https://support.google.com/admob/
 
 See step 3. of [Configure your app](https://developers.google.com/admob/android/quick-start#import_the_mobile_ads_sdk) for more information about configuring AndroidManifest.xml and setting up the App ID.
 
-## Use @nativescript/firebase-admob
+## Use @nativescript-asharghi/firebase-admob
 
-To use the `@nativescript/firebase-admob` plugin, follow the steps below:
+To use the `@nativescript-asharghi/firebase-admob` plugin, follow the steps below:
 
 ### 1. Initialize the Mobile Ads SDK
 
 Before loading ads, initialize the Mobile Ads SDK by calling the static [init](#init) method on the Admob class. Call this method once, ideally right before the app boots, in the `main.ts` file.
 
 ```ts
-import { Admob } from '@nativescript/firebase-admob'
+import { Admob } from '@nativescript-asharghi/firebase-admob'
 
 Admob.init()
 ```
@@ -136,7 +136,7 @@ The `BannerAd` requires the following attributes to be set:
 - `BannerAdListener` -->
 
 ```xml
-<Page xmlns:ui="@nativescript/firebase-admob" >
+<Page xmlns:ui="@nativescript-asharghi/firebase-admob" >
 
   <StackLayout>
     <ui:BannerAd
@@ -154,7 +154,7 @@ The `BannerAd` requires the following attributes to be set:
 Register the `BannerAd` view by adding its `AdmobModule` to the `imports` array of the `@NgModule` decorator of the component where you want to use the view.
 
 ```ts
-import { AdmobModule } from '@nativescript/firebase-admob/angular';
+import { AdmobModule } from '@nativescript-asharghi/firebase-admob/angular';
 
 @NgModule({
     imports: [
@@ -185,7 +185,7 @@ Register the `BannerAd` view in the `app.ts` file as follows:
 
 ```ts
 import { createApp } from 'nativescript-vue';
-import Admob from '@nativescript/firebase-admob/vue'
+import Admob from '@nativescript-asharghi/firebase-admob/vue'
 import Home from './components/Home.vue';
 
 const app = createApp(Home)
@@ -211,7 +211,7 @@ To define a custom banner size, you have 2 options:
 
 - Instantiate the `BannerAdSize` class with the desired width and height and set it to the `size` attribute of `BannerAd`.
 ```ts
-import { BannerAdSize } from "@nativescript/firebase-admob"
+import { BannerAdSize } from "@nativescript-asharghi/firebase-admob"
 
 const adSize = new BannerAdSize(300, 50)
 
@@ -292,16 +292,16 @@ To enable dedicated test ad unit ID, visit the links below:
 
 To display an Interstitial ad to the user, follow the steps below:
 
-1. Import the `InterstitialAd` class from `@nativescript/firebase-admob`.
+1. Import the `InterstitialAd` class from `@nativescript-asharghi/firebase-admob`.
 ```ts
-import { InterstitialAd } from '@nativescript/firebase-admob'
+import { InterstitialAd } from '@nativescript-asharghi/firebase-admob'
 ```
 2. Create an Interstitial ad instance.
 
 Create an Interstitial ad instance by calling the static `createForAdRequest` on the class. The `createForAdRequest` method requires an adUnitId and you can optionally pass a [RequestOptions]() object.
 
 ```ts
-import { InterstitialAd } from '@nativescript/firebase-admob'
+import { InterstitialAd } from '@nativescript-asharghi/firebase-admob'
 const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/4411468910')
 ```
 3. Listen to the ad lifecycle events
@@ -309,7 +309,7 @@ const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/441146
 To listen for the ad lifecycle events, such as when the ad is display or dismissed, call the `onAdEvent` method on the ad instance, before displaying the ad, passing it a callback function to handle the events.
 
 ```ts
-import { InterstitialAd } from '@nativescript/firebase-admob'
+import { InterstitialAd } from '@nativescript-asharghi/firebase-admob'
 const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/4411468910')
 
 ad.onAdEvent((event, error, data) => {
@@ -331,7 +331,7 @@ ad.onAdEvent((event, error, data) => {
 You load the ad by calling the `load` method on the ad instance.
 
 ```ts
-import { InterstitialAd } from '@nativescript/firebase-admob'
+import { InterstitialAd } from '@nativescript-asharghi/firebase-admob'
 const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/4411468910')
 
 ad.onAdEvent((event, error, data) => {
@@ -357,7 +357,7 @@ ad.load()
 To display the ad, call the `show` method on the ad instance. This method is called after the `load` method.
 
 ```ts
-import { InterstitialAd } from '@nativescript/firebase-admob'
+import { InterstitialAd } from '@nativescript-asharghi/firebase-admob'
 const ad = InterstitialAd.createForAdRequest('ca-app-pub-3940256099942544/4411468910')
 
 ad.onAdEvent((event, error, data) => {
@@ -396,14 +396,14 @@ To add a Native ad to your {N} Core app, follow these steps:
 1. Register the plugin namespace under a prefix, `ui` (this can be any name), with the Page element.
 
 ```xml
-<Page xmlns:ui="@nativescript/firebase-admob" >
+<Page xmlns:ui="@nativescript-asharghi/firebase-admob" >
 
 </Page>
 ```
 2. Use the prefix to access the `NativeAdView` and add it to markup.
 
 ```xml
-<Page xmlns:ui="@nativescript/firebase-admob" >
+<Page xmlns:ui="@nativescript-asharghi/firebase-admob" >
 <ActionBar title="Admob" />
 <StackLayout>
 
@@ -422,10 +422,10 @@ To enable dedicated test ad unit ID, visit the links below:
 - [Android demo units](https://developers.google.com/admob/android/test-ads#demo_ad_units)
 - [iOS demo units](https://developers.google.com/admob/ios/test-ads#demo_ad_units)
 
-3. Import the `NativeAdLoader` class from `@nativescript/firebase-admob` in the view model file.
+3. Import the `NativeAdLoader` class from `@nativescript-asharghi/firebase-admob` in the view model file.
 
 ```ts
-import { NativeAdLoader } from '@nativescript/firebase-admob'
+import { NativeAdLoader } from '@nativescript-asharghi/firebase-admob'
 ```
 The `NativeAdLoader` class is an interface for managing the the Native ad.
 
@@ -553,23 +553,23 @@ To enable dedicated test ad unit ID, visit the links below:
 
 Follow these steps to display a Rewarded ad:
 
-1. Import the `RewardedAd` class from `@nativescript/firebase-admob`.
+1. Import the `RewardedAd` class from `@nativescript-asharghi/firebase-admob`.
 ```ts
-import { RewardedAd } from '@nativescript/firebase-admob'
+import { RewardedAd } from '@nativescript-asharghi/firebase-admob'
 ```
 2. Create a `RewardedAd` instance
 
 Create a Rewarded ad instance by calling the `createForAdRequest` static method on the `RewardedAd` class and passing it the ad unit id.
 
 ```ts
-import { RewardedAd } from '@nativescript/firebase-admob'
+import { RewardedAd } from '@nativescript-asharghi/firebase-admob'
 const ad = RewardedAd.createForAdRequest('ca-app-pub-3940256099942544/1712485313')
 ```
 3. Listen to the ad lifecycle events
 Before you call the `load` method to load the ad, call the `onAdEvent` method passing it a callback function to handle the ad events.
 
 ```ts
-import { RewardedAd } from '@nativescript/firebase-admob'
+import { RewardedAd } from '@nativescript-asharghi/firebase-admob'
 const ad = RewardedAd.createForAdRequest('ca-app-pub-3940256099942544/1712485313')
 
 ad.onAdEvent((event, error, data) => {
@@ -584,7 +584,7 @@ ad.onAdEvent((event, error, data) => {
 To load the ad, call the `load` method on the `RewardAd` instance.
 
 ```ts
-import { RewardedAd } from '@nativescript/firebase-admob'
+import { RewardedAd } from '@nativescript-asharghi/firebase-admob'
 const ad = RewardedAd.createForAdRequest('ca-app-pub-3940256099942544/1712485313')
 
 ad.onAdEvent((event, error, data) => {
@@ -601,7 +601,7 @@ ad.load()
 To show the ad on the screen, call the `show()` method on the ad instance. 
 
 ```ts
-import { RewardedAd } from '@nativescript/firebase-admob'
+import { RewardedAd } from '@nativescript-asharghi/firebase-admob'
 const ad = RewardedAd.createForAdRequest('ca-app-pub-3940256099942544/1712485313')
 
 ad.onAdEvent((event, error, data) => {
@@ -646,7 +646,7 @@ For child-directed ads setting, read [Child-directed setting](https://developers
 The following example indicates that you want your content treated as child-directed for purposes of COPPA:
 
 ```ts
-import { Admob, RequestConfiguration } from '@nativescript/firebase-admob';
+import { Admob, RequestConfiguration } from '@nativescript-asharghi/firebase-admob';
 const requestConfiguration: RequestConfiguration = {
   tagForChildDirectedTreatment: true
 }
@@ -659,7 +659,7 @@ To handle ads requests for users under the age of consent, read [Users under the
 
 The following example indicates that you want TFUA included in your ad request. 
 ```ts
-import { Admob, RequestConfiguration } from '@nativescript/firebase-admob';
+import { Admob, RequestConfiguration } from '@nativescript-asharghi/firebase-admob';
 const requestConfiguration: RequestConfiguration = {
   tagForUnderAgeOfConsent: true
 }
@@ -682,7 +682,7 @@ AdMob ads returned for these requests have a content rating at or below that lev
 The following code configures a `RequestConfiguration` object to specify that an ad content returned should correspond to a digital content label designation no higher than G:
 
 ```ts
-import { Admob, MaxAdContentRating, RequestConfiguration } from '@nativescript/firebase-admob';
+import { Admob, MaxAdContentRating, RequestConfiguration } from '@nativescript-asharghi/firebase-admob';
 const requestConfiguration: RequestConfiguration = {
   maxAdContentRating: MaxAdContentRating.G
 }

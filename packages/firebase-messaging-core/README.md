@@ -1,7 +1,7 @@
-# @nativescript/firebase-messaging-core
+# @nativescript-asharghi/firebase-messaging-core
 
 ```cli
-ns plugin add @nativescript/firebase-messaging-core
+ns plugin add @nativescript-asharghi/firebase-messaging-core
 ```
 
 ## What does it do?
@@ -19,7 +19,7 @@ iOS prevents messages containing notification (or 'alert') payloads from being d
 This module provides a requestPermission method which triggers a native permission dialog requesting the user's permission:
 
 ```ts
-import { MessagingCore, AuthorizationStatus } from '@nativescript/firebase-messaging-core';
+import { MessagingCore, AuthorizationStatus } from '@nativescript-asharghi/firebase-messaging-core';
 
 async function requestUserPermission() {
 	const authStatus = await MessagingCore.getInstance().requestPermission({
@@ -49,7 +49,7 @@ For example, the Alert API could be used to display a new Alert each time a mess
 
 ```ts
 import { alert } from '@nativescript/core';
-import { MessagingCore } from '@nativescript/firebase-messaging-core';
+import { MessagingCore } from '@nativescript-asharghi/firebase-messaging-core';
 
 MessagingCore.getInstance().addOnMessage(async (remoteMessage) => {
 	if(MessagingCore.inForeground){
@@ -65,7 +65,7 @@ MessagingCore.getInstance().addOnMessage(async (remoteMessage) => {
 If you always want to display notifications while the application is in the foreground without sending additional parameters/data when sending the push notification, you need to set the showNotificationsWhenInForeground option to true:
 
 ```ts
-import { MessagingCore } from '@nativescript/firebase-messaging-core';
+import { MessagingCore } from '@nativescript-asharghi/firebase-messaging-core';
 MessagingCore.getInstance().showNotificationsWhenInForeground = true;
 ```
 
@@ -83,7 +83,7 @@ Once your application has started, you can call the getToken method on the Cloud
 
 ```ts
 import { ApplicationSettings } from '@nativescript/core';
-import { MessagingCore } from '@nativescript/firebase-messaging-core';
+import { MessagingCore } from '@nativescript-asharghi/firebase-messaging-core';
 
 async function saveTokenToDatabase(token) {
 	ApplicationSettings.setString(token);

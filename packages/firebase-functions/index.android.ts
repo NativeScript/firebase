@@ -1,5 +1,5 @@
 import { FunctionsErrorCode, HttpsCallable, HttpsCallableOptions, HttpsErrorCode, IFunctions } from './common';
-import { deserialize, firebase, FirebaseApp, serialize } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, serialize } from '@nativescript-asharghi/firebase-core';
 
 let defaultFunctions: Functions;
 

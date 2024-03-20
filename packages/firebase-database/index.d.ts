@@ -1,4 +1,4 @@
-import { Firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { Firebase, FirebaseApp } from '@nativescript-asharghi/firebase-core';
 import { IDataSnapshot, IDatabase, IOnDisconnect, EventType, IQuery, IReference, IThenableReference, TransactionResult } from './common';
 
 export { EventType };
@@ -143,7 +143,7 @@ export declare class Database implements IDatabase {
 	goOnline();
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseDatabase {}
 }
 

@@ -1,8 +1,8 @@
-# @nativescript/firebase-analytics
+# @nativescript-asharghi/firebase-analytics
 
 * [Intro](#intro)
 * [Installation](#installation)
-* [Use @nativescript/firebase-analytics](#use-nativescriptfirebase-analytics)
+* [Use @nativescript-asharghi/firebase-analytics](#use-nativescriptfirebase-analytics)
 	* [Log custom events](#log-custom-events)
 	* [Log Predefined Events](#log-predefined-events)
 	* [Reserved Events](#reserved-events)
@@ -19,7 +19,7 @@
 This plugin allows you to add [Google Analytics for Firebase](https://firebase.google.com/docs/analytics)
  to your app. 
 
-> **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
+> **Note:** Use this plugin with the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin to initialize Firebase in your app.
 
 Analytics collects usage and behavior data for your app. Its two primary concerns are:
 
@@ -33,12 +33,12 @@ Analytics collects usage and behavior data for your app. Its two primary concern
 Install the plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-analytics
+npm install @nativescript-asharghi/firebase-analytics
 ```
 
-## Use @nativescript/firebase-analytics
+## Use @nativescript-asharghi/firebase-analytics
 
-The examples below show you how to use `@nativescript/firebase-analytics` to log custom and predefined events.
+The examples below show you how to use `@nativescript-asharghi/firebase-analytics` to log custom and predefined events.
 
 ### Log custom events
 
@@ -49,8 +49,8 @@ To log a custom event to Analytics, call the `logEvent` method on an instance of
 Please be aware that primitive data types or arrays of primitive data types are logged in your Firebase Analytics console.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-analytics';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-analytics';
 
 firebase()
 	.analytics()
@@ -72,7 +72,7 @@ To log a predefined event, call the `logEvent` method on the `Analytics` class i
 The following example demonstrates logging the [select_content](https://developers.google.com/analytics/devguides/collection/ga4/reference/events#select_content) event.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 // Logs in the firebase analytics console as "select_content" event
 // only accepts the two object properties which accept strings.
@@ -105,7 +105,7 @@ For more Reserved event names, visit [Event naming rules](https://support.google
 To get the app instance id of the application, call the `getAppInstanceId` method. This returns `null` on Android if `ConsentType.Analytics_Storage = ConsentStatus.Denied`.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const appInstanceId = firebase().analytics().getAppInstanceId();
 ```

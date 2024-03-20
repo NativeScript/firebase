@@ -1,5 +1,5 @@
 import { IInstallations } from './common';
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp } from '@nativescript-asharghi/firebase-core';
 
 export declare class Installations implements IInstallations {
 	readonly native;
@@ -16,7 +16,7 @@ export declare class Installations implements IInstallations {
 	getToken(forceRefresh: boolean = false): Promise<string>;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseInstallations {}
 }
 

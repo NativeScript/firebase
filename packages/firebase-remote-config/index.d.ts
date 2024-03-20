@@ -1,4 +1,4 @@
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp } from '@nativescript-asharghi/firebase-core';
 import { IConfigSettings, IConfigValue, IRemoteConfig } from './common';
 
 declare class ConfigValue implements IConfigValue {
@@ -64,7 +64,7 @@ export class RemoteConfig implements IRemoteConfig {
 	setDefaultsFromResource(resourceName: string): Promise<void>;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseRemoteConfig {}
 }
 

@@ -1,4 +1,4 @@
-import { FirebaseApp, FirebaseError, deserialize, serialize, firebase } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError, deserialize, serialize, firebase } from '@nativescript-asharghi/firebase-core';
 import { TaskState, TaskEvent, StringFormat } from './common';
 
 import { IMetadata, IListResult, IReference, IStorage, ITask, ITaskSnapshot, TaskSnapshotObserver, ListOptions } from '.';

@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { DemoSharedFirebaseUi } from '@demo/shared';
-import {} from '@nativescript/firebase-ui';
+import {} from '@nativescript-asharghi/firebase-ui';
 
 @Component({
 	selector: 'demo-firebase-ui',

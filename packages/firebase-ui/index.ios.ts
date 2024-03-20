@@ -1,6 +1,6 @@
 import { Utils } from '@nativescript/core';
-import { FirebaseApp, FirebaseError, firebase } from '@nativescript/firebase-core';
-import { Auth } from '@nativescript/firebase-auth';
+import { FirebaseApp, FirebaseError, firebase } from '@nativescript-asharghi/firebase-core';
+import { Auth } from '@nativescript-asharghi/firebase-auth';
 import { ProviderBase } from './common';
 import { Config, IActionCodeSettings, IIdpResponse, IUI } from '.';
 let defaultUI: UI;

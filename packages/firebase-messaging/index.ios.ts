@@ -1,6 +1,6 @@
-import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { IMessaging, RemoteMessage } from '.';
-import { MessagingCore, AuthorizationStatus } from '@nativescript/firebase-messaging-core';
+import { MessagingCore, AuthorizationStatus } from '@nativescript-asharghi/firebase-messaging-core';
 
 export { AuthorizationStatus };
 

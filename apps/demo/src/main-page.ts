@@ -1,5 +1,5 @@
 import { EventData, Page } from '@nativescript/core';
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 import { MainViewModel } from './main-view-model';
 
 let didFire = false;

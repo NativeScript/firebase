@@ -1,5 +1,5 @@
 {
-	"name": "@nativescript/firebase-app-check-debug",
+	"name": "@nativescript-asharghi/firebase-app-check-debug",
 	"version": "3.2.3",
 	"description": "NativeScript Firebase - App Check",
 	"main": "index",

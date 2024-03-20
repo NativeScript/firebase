@@ -1,8 +1,8 @@
-# @nativescript/firebase-database
+# @nativescript-asharghi/firebase-database
 
 *  [Intro](#Intro)
 *  [Installation](#Installation)
-*  [Use @nativescript/firebase-database](#Use-nativescriptfirebase-database)  	
+*  [Use @nativescript-asharghi/firebase-database](#Use-nativescriptfirebase-database)  	
 	*  [Import the plugin](#import-the-plugin)
 	*  [Create a database instance](#create-a-database-instance)
 	*  [Get or create a reference](#get-or-create-a-reference)
@@ -41,7 +41,7 @@
 ## Intro
 
 A plugin that allows you to add [Firebase Realtime Databse](https://firebase.google.com/docs/database) to your NativeScript app.
-> **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase.
+> **Note:** Use this plugin with the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin to initialize Firebase.
  NativeScript Firebase provides integration with the Android & iOS Firebase SDKs, supporting both realtime data sync and offline capabilities.
 
 [![image](https://img.youtube.com/vi/U5aeM5dvUpA/hqdefault.jpg)](https://www.youtube.com/watch?v=U5aeM5dvUpA)
@@ -51,10 +51,10 @@ A plugin that allows you to add [Firebase Realtime Databse](https://firebase.goo
 Install the plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-database
+npm install @nativescript-asharghi/firebase-database
 ```
 
-## Use @nativescript/firebase-database
+## Use @nativescript-asharghi/firebase-database
 
 >**Note** The [Firebase documentation](https://firebase.google.com/docs/database/web/structure-data) provides great examples of best practices on how to structure your data. We highly recommend reading the guide before building out your database.
 
@@ -63,7 +63,7 @@ npm install @nativescript/firebase-database
 Make the Realtime Database SDK available to your app by importing it once, in the `app.ts` file.
 
 ```ts
-import '@nativescript/firebase-database'; // only needs to be imported 1x
+import '@nativescript-asharghi/firebase-database'; // only needs to be imported 1x
 ```
 
 ### Create a database instance
@@ -71,7 +71,7 @@ import '@nativescript/firebase-database'; // only needs to be imported 1x
 To create a new Firebase Database instance, call the `database` method on the firebase instance as follows:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const database = firebase().database();
 ```
@@ -79,8 +79,8 @@ const database = firebase().database();
 By default, this allows you to interact with Firebase Database using the default Firebase App used whilst installing Firebase on your platform. If however you'd like to use a secondary Firebase App, pass the secondary app instance when calling the database method:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-database';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-database';
 
 // create secondary app instance
 const config = new FirebaseOptions();
@@ -96,7 +96,7 @@ A core concept to understanding Realtime Database is references - a reference to
 To create a [Reference](#reference), call the `ref` method on the database instance passing it the path of the reference:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const reference = firebase().database().ref('/users/123');
 ```
@@ -110,7 +110,7 @@ You can read a reference data in two ways: once or whenever there is a change in
 To read the value once, call the `once` method on a reference passing it the `value` event name:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.database()
@@ -126,7 +126,7 @@ firebase()
 To set up an active listener to react to any changes to the node and its children, call the `on` method passing it the `value` event as the first parameter and the event handler as the second paramater:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.database()
@@ -151,7 +151,7 @@ _ `child_moved`
 If you are listening to a node with many children, only listening to data you care about helps reduce network bandwidth and speeds up your application.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const onChildAdd = firebase()
 	.database()
@@ -168,7 +168,7 @@ firebase().database().ref('/users').off('child_added', onChildAdd);
  To unsubscribe from an event, call the `off` method on the reference passing it the event name and the function that the `on` method returned. This can be used within any useEffect hooks to automatically unsubscribe when the hook needs to unsubscribe itself.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const onValueChange = firebase()
 	.database()
@@ -194,7 +194,7 @@ By default, results are ordered based on the node keys. However, if you are usin
 For example, if all of the children nodes are scalar values (string, number or boolean) you can use the `orderByValue` method, and Firebase will automatically order the results. The example below would return the `def` node before the `abc` node:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 /*
  * {
@@ -220,7 +220,7 @@ scores.forEach((snapShot)=>{
 You can limit the number of results returned from a query by using one of the `limitTo*` methods. For example, to limit to the first 10 results, you call the `limitToFirst(10)` on the reference:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const users = firebase().database().ref('users').limitToFirst(10).once('value');
 ```
@@ -230,7 +230,7 @@ Firebase also provides the ability to return the last set of results in a query 
 Instead of limiting to a specific number of documents, you can also start from, or end at a specific reference node value:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 await firebase().database().ref('users').orderByChild('age').startAt(21).once('value');
 ```
@@ -244,7 +244,7 @@ You write data to a reference using either the `set` or `update` method.
 Calling the `set` method on a Reference overwrites all of the existing data at that reference node. The value can be anything; a string, number, object etc:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.database()
@@ -263,7 +263,7 @@ If you set the value to `null`, Firebase will automatically class the node as re
 Rather than overwriting all existing data, the `update` method updates any existing data on the reference node. Firebase automatically merges the data depending on what currently exists.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.database()
@@ -280,7 +280,7 @@ To generate a new child reference for a reference, call the `push` on the refere
 The `push` method automatically generates a new key. To store a value in the child reference, call the `set` method passing the value to store.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const newReference = firebase().database().ref('/users').push();
 
@@ -300,7 +300,7 @@ The keys generated are ordered to the current time, so the list of items returne
 To remove data from a reference, call the `remove` method on the reference:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 await firebase().database().ref('/users/123').remove();
 ```
@@ -308,7 +308,7 @@ await firebase().database().ref('/users/123').remove();
 Optionally, you can also set the value of a reference node to null to remove it from the database:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 await firebase().database().ref('/users/123').set(null);
 ```
@@ -326,7 +326,7 @@ Transactions remove this issue by atomically updating the value on the server. I
 To execute a new transaction, call the `transaction` method on a reference:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 function onPostLike(postId) {
 	const reference = firebase().database().ref(`/likes/${postId}`);

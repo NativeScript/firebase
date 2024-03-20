@@ -1,10 +1,10 @@
-import {  FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp } from '@nativescript-asharghi/firebase-core';
 
 export interface IInAppMessagingBannerDisplay {}
 
 export interface IInAppMessaging {
-    readonly app: FirebaseApp;
-    isAutomaticDataCollectionEnabled: boolean;
-    isMessagesDisplaySuppressed: boolean;
-    triggerEvent(eventId: string);
+	readonly app: FirebaseApp;
+	isAutomaticDataCollectionEnabled: boolean;
+	isMessagesDisplaySuppressed: boolean;
+	triggerEvent(eventId: string);
 }

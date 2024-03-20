@@ -1,6 +1,6 @@
 import { Observable, EventData, Page, View, Label } from '@nativescript/core';
 import { DemoSharedFirebaseAdmob } from '@demo/shared';
-import { AdChoicesPlacement, NativeAdEventType, AdEventType, InterstitialAd, RewardedInterstitialAd, RewardedAd, BannerAd, BannerAdSize, Admob, AdsConsent, NativeAd, NativeAdLoader, NativeAdView } from '@nativescript/firebase-admob';
+import { AdChoicesPlacement, NativeAdEventType, AdEventType, InterstitialAd, RewardedInterstitialAd, RewardedAd, BannerAd, BannerAdSize, Admob, AdsConsent, NativeAd, NativeAdLoader, NativeAdView } from '@nativescript-asharghi/firebase-admob';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;

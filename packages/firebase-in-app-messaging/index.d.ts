@@ -1,4 +1,4 @@
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp } from '@nativescript-asharghi/firebase-core';
 import { IInAppMessaging } from './common';
 
 export declare class InAppMessaging implements IInAppMessaging {
@@ -9,7 +9,7 @@ export declare class InAppMessaging implements IInAppMessaging {
 	triggerEvent(eventId: string);
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseInAppMessaging {}
 }
 

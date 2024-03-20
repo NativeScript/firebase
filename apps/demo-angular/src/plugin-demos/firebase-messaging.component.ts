@@ -1,19 +1,17 @@
 import { Component, NgZone } from '@angular/core';
 import { DemoSharedFirebaseMessaging } from '@demo/shared';
-import { } from '@nativescript/firebase-messaging';
+import {} from '@nativescript-asharghi/firebase-messaging';
 
 @Component({
 	selector: 'demo-firebase-messaging',
 	templateUrl: 'firebase-messaging.component.html',
 })
 export class FirebaseMessagingComponent {
-  
-  demoShared: DemoSharedFirebaseMessaging;
-  
+	demoShared: DemoSharedFirebaseMessaging;
+
 	constructor(private _ngZone: NgZone) {}
 
-  ngOnInit() {
-    this.demoShared = new DemoSharedFirebaseMessaging();
-  }
-
+	ngOnInit() {
+		this.demoShared = new DemoSharedFirebaseMessaging();
+	}
 }

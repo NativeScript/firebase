@@ -1,7 +1,7 @@
 import { EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseAnalytics } from '@demo/shared';
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-analytics';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-analytics';
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
 	page.bindingContext = new DemoModel();

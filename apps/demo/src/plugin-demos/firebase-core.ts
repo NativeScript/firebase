@@ -1,12 +1,10 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseCore } from '@demo/shared';
-import { } from '@nativescript/firebase-core';
+import {} from '@nativescript-asharghi/firebase-core';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
 	page.bindingContext = new DemoModel();
 }
 
-export class DemoModel extends DemoSharedFirebaseCore {
-	
-}
+export class DemoModel extends DemoSharedFirebaseCore {}

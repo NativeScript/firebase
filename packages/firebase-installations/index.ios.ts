@@ -1,4 +1,4 @@
-import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { IInstallations } from './common';
 
 let defaultInstallations: Installations;

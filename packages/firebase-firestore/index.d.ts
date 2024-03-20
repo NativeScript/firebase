@@ -6,7 +6,7 @@ export type DocumentFieldType = string | number | boolean | { [key: string]: Doc
 
 export { GetOptions, DocumentChangeType };
 
-import { FirebaseApp } from '@nativescript/firebase-core';
+import { FirebaseApp } from '@nativescript-asharghi/firebase-core';
 
 export interface IQuery<T extends DocumentData = DocumentData> {
 	endAt(snapshot: IDocumentSnapshot<T>): IQuery<T>;
@@ -539,7 +539,7 @@ export declare class Firestore implements IFirestore {
 	readonly app: FirebaseApp;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseFirestore {}
 }
 

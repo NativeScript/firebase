@@ -1,7 +1,7 @@
-import { FirebaseApp, Firebase } from '@nativescript/firebase-core';
+import { FirebaseApp, Firebase } from '@nativescript-asharghi/firebase-core';
 
-export { AndroidPermissions, IOSPermissions } from '@nativescript/firebase-messaging-core';
-import { Permissions, AuthorizationStatus } from '@nativescript/firebase-messaging-core';
+export { AndroidPermissions, IOSPermissions } from '@nativescript-asharghi/firebase-messaging-core';
+import { Permissions, AuthorizationStatus } from '@nativescript-asharghi/firebase-messaging-core';
 export { Permissions, AuthorizationStatus };
 
 export enum NotificationAndroidVisibility {
@@ -120,7 +120,7 @@ export declare class Messaging implements IMessaging {
 	readonly android;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseMessaging {}
 }
 

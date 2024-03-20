@@ -1,4 +1,4 @@
-import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { ShortLinkType, IDynamicLink } from './common';
 
 export { ShortLinkType };
@@ -112,7 +112,7 @@ export declare class DynamicLinks implements IDynamicLinks {
 	readonly app: FirebaseApp;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseDynamicLinks {}
 }
 

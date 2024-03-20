@@ -1,5 +1,5 @@
 import { EventParameter, IAnalytics } from './common';
-import { firebase, FirebaseApp, serialize } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, serialize } from '@nativescript-asharghi/firebase-core';
 import { ConsentStatus, ConsentType } from '.';
 
 export * from './common';

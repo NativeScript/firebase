@@ -1,4 +1,4 @@
-import { FirebaseApp, Firebase } from '@nativescript/firebase-core';
+import { FirebaseApp, Firebase } from '@nativescript-asharghi/firebase-core';
 import { ICrashlytics } from './common';
 
 declare class Crashlytics implements ICrashlytics {
@@ -30,7 +30,7 @@ declare class Crashlytics implements ICrashlytics {
 	setUserId(userId: string);
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseCrashlytics {}
 }
 

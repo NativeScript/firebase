@@ -1,10 +1,10 @@
-# @nativescript/firebase-functions
+# @nativescript-asharghi/firebase-functions
 
 ## Contents
 * [Intro](#intro)
 * [Set up your app for Firebase](#set-up-your-app-for-firebase)
 * [Add the Firebase Functions SDK to your app](#add-the-firebase-functions-sdk-to-your-app)
-* [Use @nativescript/firebase-functions](#use-nativescriptfirebase-functions)
+* [Use @nativescript-asharghi/firebase-functions](#use-nativescriptfirebase-functions)
 	* [Calling an endpoint](#calling-an-endpoint)
 	* [Set and access regional Cloud Functions endpoints](#set-and-access-regional-cloud-functions-endpoints)
 		* [Set regional function endpoint](#set-regional-function-endpoint)
@@ -26,7 +26,7 @@ This plugin allows you to use [Firebase Cloud Functions](https://firebase.google
 
 ## Set up your app for Firebase
 
-- To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+- To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin.
 
 <!-- ## Create your Firestore database
 
@@ -34,13 +34,13 @@ To create your Firestore database, follow the instructions at [Create a Cloud Fi
 
 ## Add the Firebase Functions SDK to your app
 
-To add the Cloud Firebase Functions SDK to your app, install the `@nativescript/firebase-functions` plugin by running the following command in the root directory of your project.
+To add the Cloud Firebase Functions SDK to your app, install the `@nativescript-asharghi/firebase-functions` plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-functions
+npm install @nativescript-asharghi/firebase-functions
 ```
 
-## Use @nativescript/firebase-functions
+## Use @nativescript-asharghi/firebase-functions
 
 The Cloud Functions module provides the functionality to directly trigger deployed HTTPS callable functions, without worrying about security or implementing an HTTP request library.
 
@@ -63,8 +63,8 @@ exports.listProducts = functions.https.onCall(() => {
 Within the application, the list of products returned can be directly accessed by passing the name of the endpoint to the `httpsCallable` method:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-functions';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-functions';
 firebase()
 	.functions()
 	.httpsCallable('listProducts')()
@@ -99,8 +99,8 @@ exports.listProducts = functions.region("europe-west2").https.onCall(() => {
 
 To access a regional function endpoint, call the `firebase().app().functions(region)` method on the Firebase App instance:
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-functions';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-functions';
 
 firebase().initializeApp();
 firebase().app().functions("europe-west2");
@@ -121,7 +121,7 @@ Whilst developing your application with Cloud Functions, you can run the functio
 To call the emulated functions, connect the Cloud Functions to a local emulator by calling the [useEmulator](#useemulator) method on the `Functions` instance with the host and port of the emulator.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().functions().useEmulator('localhost', 5000);
 ```
 

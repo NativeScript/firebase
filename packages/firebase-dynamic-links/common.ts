@@ -1,4 +1,4 @@
-import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 
 export enum ShortLinkType {
 	DEFAULT = 'default',

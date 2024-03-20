@@ -1,4 +1,4 @@
-import { firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp } from '@nativescript-asharghi/firebase-core';
 import { ICrashlytics } from './common';
 import StackTrace from 'stacktrace-js';
 

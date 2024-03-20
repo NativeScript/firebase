@@ -1,4 +1,4 @@
-import { FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { topViewController } from '../utils';
 import { AdsConsentBase, AdsConsentDebugGeography, AdsConsentStatus } from './common';
 

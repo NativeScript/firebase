@@ -1,5 +1,5 @@
 import { DemoSharedBase } from '../utils';
-import {} from '@nativescript/firebase-ui';
+import {} from '@nativescript-asharghi/firebase-ui';
 
 export class DemoSharedFirebaseUi extends DemoSharedBase {
 	testIt() {

@@ -1,7 +1,7 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseFirestore } from '@demo/shared';
-import { FieldPath, FieldValue, Firestore, GeoPoint, Timestamp } from '@nativescript/firebase-firestore';
-import { firebase } from '@nativescript/firebase-core';
+import { FieldPath, FieldValue, Firestore, GeoPoint, Timestamp } from '@nativescript-asharghi/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;

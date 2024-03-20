@@ -1,19 +1,17 @@
 import { Component, NgZone } from '@angular/core';
 import { DemoSharedFirebaseAdmob } from '@demo/shared';
-import { } from '@nativescript/firebase-admob';
+import {} from '@nativescript-asharghi/firebase-admob';
 
 @Component({
 	selector: 'demo-firebase-admob',
 	templateUrl: 'firebase-admob.component.html',
 })
 export class FirebaseAdmobComponent {
-  
-  demoShared: DemoSharedFirebaseAdmob;
-  
+	demoShared: DemoSharedFirebaseAdmob;
+
 	constructor(private _ngZone: NgZone) {}
 
-  ngOnInit() {
-    this.demoShared = new DemoSharedFirebaseAdmob();
-  }
-
+	ngOnInit() {
+		this.demoShared = new DemoSharedFirebaseAdmob();
+	}
 }

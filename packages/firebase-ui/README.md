@@ -1,4 +1,4 @@
-# @nativescript/firebase-ui
+# @nativescript-asharghi/firebase-ui
 
 ## Contents
 * [Intro](#intro)
@@ -43,35 +43,35 @@ With this plugin, you can use the [FirebaseUI for Auth](https://github.com/fireb
 
 ## Set up your app for Firebase
 
-You need to set up your app for Firebase before you can enable FirebaseUI for Auth. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+You need to set up your app for Firebase before you can enable FirebaseUI for Auth. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin.
 
 ## Add the FirebaseUI for Auth SDK to your app
 
 To add the FirebaseUI SDK to your app follow these steps:
 
-1. Install the `npm install @nativescript/firebase-ui` plugin by running the following command in the root directory of your project.
+1. Install the `npm install @nativescript-asharghi/firebase-ui` plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-ui
+npm install @nativescript-asharghi/firebase-ui
 ```
 
-2. Add the SDK by importing the `@nativescript/firebase-messaging` module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`).
+2. Add the SDK by importing the `@nativescript-asharghi/firebase-messaging` module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`).
 
 ```ts
-import '@nativescript/firebase-ui';
+import '@nativescript-asharghi/firebase-ui';
 ```
 
 ## Enable sign-in methods in the Firebase console
 
-Just like with [@nativescript/firebase-auth](../firebase-auth/), you need to go to the Firebase console and enable the sign-in methods you want to offer to your users. For more information on how to do that, see [Set up sign-in methods](https://firebase.google.com/docs/auth/web/firebaseui#set_up_sign-in_methods).
+Just like with [@nativescript-asharghi/firebase-auth](../firebase-auth/), you need to go to the Firebase console and enable the sign-in methods you want to offer to your users. For more information on how to do that, see [Set up sign-in methods](https://firebase.google.com/docs/auth/web/firebaseui#set_up_sign-in_methods).
 
 ## Invoke the FirebaseUI auth flow
 
 To invoke the FirebaseUI auth flow, call the [show](#show) method on the [UI](#ui-object) object - returned by `firebase().ui()`- with an object of type [Config](#config-interface) specifying the auth options. 
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { AppleProvider, EmailProvider, GithubProvider, GoogleProvider, MicrosoftProvider, TwitterProvider, YahooProvider } from '@nativescript/firebase-ui';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { AppleProvider, EmailProvider, GithubProvider, GoogleProvider, MicrosoftProvider, TwitterProvider, YahooProvider } from '@nativescript-asharghi/firebase-ui';
 
 firebase()
     .ui()
@@ -100,7 +100,7 @@ firebase()
 To sign out a user, call the [signOut](#signout) method on the [UI](#ui-object) object returned by `firebase().ui()`.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 
 firebase()
@@ -122,7 +122,7 @@ The `UI` object provides the API for the FirebaseUI for Auth library and has the
 
 #### android
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 uiAndroid: com.firebase.ui.auth.AuthUI = firebase().ui().android;
 ```
@@ -131,7 +131,7 @@ A `readonly` property that returns the UI object for Android.
 ---
 #### ios
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 uiIOS: FUIAuth = firebase().ui().ios;
 ```
@@ -140,7 +140,7 @@ A `readonly` property that returns the UI object for iOS.
 ---
 #### app
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 app: FirebaseApp = firebase().ui().app;
 ```
@@ -149,7 +149,7 @@ A `readonly` property that returns the [FirebaseApp]() instance for your app.
 ---
 #### useEmulator()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -165,7 +165,7 @@ Allows you to point a `com.firebase.ui.auth.AuthUI` instance to an emulator at a
 ---
 #### show()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -189,7 +189,7 @@ This method returns a Promise that resolves with an [IIdpResponse](#iidpresponse
 ---
 #### delete()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -206,7 +206,7 @@ Asynchronously deletes the current user's account.
 ---
 #### signOut()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -247,7 +247,7 @@ When the [show](#show) method of the [UI object](#ui-object) resolves successful
 
 #### android
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -264,7 +264,7 @@ A `read-only` property that returns the `IdpResponse` instance for Android.
 ---
 #### ios
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -281,7 +281,7 @@ A `read-only` property that returns the `IdpResponse` instance for iOS.
 ---
 #### isNewUser
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -298,7 +298,7 @@ Returns `true` if the user has just signed up for the first time, otherwise `fal
 ---
 #### hasCredentialForLinking
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -315,7 +315,7 @@ Returns `true` if any of the federated identity providers (IDPs) has credentials
 ---
 #### email
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -332,7 +332,7 @@ Returns the emails the user used to sign in.
 ---
 #### idpSecret
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -349,7 +349,7 @@ firebase()
 ---
 #### idpToken
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -366,7 +366,7 @@ Gets the token received as a result of logging in with the specified IDP.
 ---
 #### phoneNumber
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -383,7 +383,7 @@ Gets the phone number used to sign in.
 ---
 #### providerType
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()
@@ -400,7 +400,7 @@ Gets the type of provider. e.g. `{@link GoogleAuthProvider#PROVIDER_ID}`.
 ---
 #### user
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
     .ui()

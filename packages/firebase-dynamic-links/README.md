@@ -1,9 +1,9 @@
-# @nativescript/firebase-dynamic-links
+# @nativescript-asharghi/firebase-dynamic-links
 
 * [Intro](#intro)
 * [Set up Firebase and the Dynamic Links SDK](#set-up-firebase-and-the-dynamic-links-sdk)
 	* [iOS: Confirm that your Firebase project is properly configured](#ios-confirm-that-your-firebase-project-is-properly-configured)
-* [Use @nativescript/firebase-dynamic-links to create and receive dynamic links](#use-nativescriptfirebase-dynamic-links-to-create-and-receive-dynamic-links)
+* [Use @nativescript-asharghi/firebase-dynamic-links to create and receive dynamic links](#use-nativescriptfirebase-dynamic-links-to-create-and-receive-dynamic-links)
 	* [Create a dynamic link from parameters](#create-a-dynamic-link-from-parameters)
 	* [Create the parameters of a dynamic link](#create-the-parameters-of-a-dynamic-link)
 * [Receive Dynamic Links](#receive-dynamic-links)
@@ -50,19 +50,19 @@ This plugin allows you to add the  [Firebase Dynamic Links SDK](https://firebase
 [![image](https://img.youtube.com/vi/LvY1JMcrPF8/hqdefault.jpg)](https://www.youtube.com/watch?v=LvY1JMcrPF8)
 
 ## Set up Firebase and the Dynamic Links SDK
-- To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+- To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin.
 
-- Install and import the `@nativescript/firebase-dynamic-links` to add the Dynamic Links SDK.
+- Install and import the `@nativescript-asharghi/firebase-dynamic-links` to add the Dynamic Links SDK.
 
 	1. Install the plugin by running the following command in the root directory of your project.
 
 		```cli
-		npm install @nativescript/firebase-dynamic-links
+		npm install @nativescript-asharghi/firebase-dynamic-links
 		```
 
-	2. To add the Dynamic Links SDK, import the `@nativescript/firebase-dynamic-links` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrapping file( `app.ts`, `main.ts`, etc).
+	2. To add the Dynamic Links SDK, import the `@nativescript-asharghi/firebase-dynamic-links` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrapping file( `app.ts`, `main.ts`, etc).
 
->**Tip** For an optimal experience with Dynamic Links, the Firebase Dynamic Links documentation recommends you to enable Google Analytics by adding the Firebase SDK for Google Analytics to your app. To add and use Firebase SDK for Google Analytics in your NativeScript app, see the [@nativescript/firebase-analytics](../firebase-analytics) plugin documentation.
+>**Tip** For an optimal experience with Dynamic Links, the Firebase Dynamic Links documentation recommends you to enable Google Analytics by adding the Firebase SDK for Google Analytics to your app. To add and use Firebase SDK for Google Analytics in your NativeScript app, see the [@nativescript-asharghi/firebase-analytics](../firebase-analytics) plugin documentation.
 
 - Add a URL prefix for your Dynamic Links with the following steps:
 	- Go to the Firebase Console
@@ -75,7 +75,7 @@ This plugin allows you to add the  [Firebase Dynamic Links SDK](https://firebase
 
 For instructions to confirm that your Firebase project is properly configured to use Dynamic Links for iOS, see [configuration step 4](https://firebase.google.com/docs/dynamic-links/ios/create#set-up-firebase-and-the-dynamic-links-sdk).
 
-## Use @nativescript/firebase-dynamic-links to create and receive dynamic links
+## Use @nativescript-asharghi/firebase-dynamic-links to create and receive dynamic links
 
 ### Create a dynamic link from parameters
 

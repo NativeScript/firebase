@@ -65,7 +65,7 @@ export class Performance implements IPerformance {
 	startTrace(identifier: string): Trace;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebasePerformance {}
 }
 

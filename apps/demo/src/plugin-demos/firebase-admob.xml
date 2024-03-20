@@ -1,5 +1,5 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" class="page"
-xmlns:ui="@nativescript/firebase-admob"
+xmlns:ui="@nativescript-asharghi/firebase-admob"
 >
     <Page.actionBar>
         <ActionBar title="firebase-admob" icon="" class="action-bar">

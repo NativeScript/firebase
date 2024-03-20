@@ -1,5 +1,5 @@
 {
-	"name": "@nativescript/firebase-functions",
+	"name": "@nativescript-asharghi/firebase-functions",
 	"version": "3.2.3",
 	"description": "NativeScript Firebase - Functions",
 	"main": "index",

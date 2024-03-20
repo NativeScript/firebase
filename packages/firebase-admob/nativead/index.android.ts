@@ -1,5 +1,5 @@
 import { AddChildFromBuilder, Application, ImageSource, View } from '@nativescript/core';
-import { FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { ManagerRequestOptions, RequestOptions, AdEventListener } from '..';
 import { AdEventType } from '../common';
 import { NativeAdEventListener, NativeAdViewBase, MediaViewBase, mediaContentProperty, stretchProperty, MediaAspectRatio, AdChoicesPlacement, VideoStatus, NativeAdEventType } from './common';

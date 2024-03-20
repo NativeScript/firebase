@@ -1,4 +1,4 @@
-import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 export type EventType = 'value' | 'child_added' | 'child_changed' | 'child_moved' | 'child_removed';
 
 export interface TransactionResult {
@@ -69,8 +69,8 @@ export interface IDatabase {
 	readonly app: FirebaseApp;
 	persistenceCacheSizeBytes: number;
 	persistenceEnabled: boolean;
-  useEmulator(host: string, port: number);
-  setLoggingEnabled(enabled: boolean);
+	useEmulator(host: string, port: number);
+	setLoggingEnabled(enabled: boolean);
 	goOffline();
 	goOnline();
 	ref(path?: undefined | string): IReference;

@@ -1,8 +1,8 @@
-# @nativescript/firebase-crashlytics
+# @nativescript-asharghi/firebase-crashlytics
 
 - [Intro](#Intro)
 - [Installation](#Installation)
-- [Use @nativescript/firebase-crashlytics](#use-nativescriptfirebase-crashlytics)
+- [Use @nativescript-asharghi/firebase-crashlytics](#use-nativescriptfirebase-crashlytics)
   - [Log a crash context](#log-a-crash-context)
   - [Set crash attributes for more context data](#set-crash-attributes-for-more-context-data)
   - [Test crashlytics](#test-crashlytics)
@@ -16,7 +16,7 @@
 
 A plugin that allows you to add [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics) to your NativeScript app.
 
-> **Note:** Use this plugin with the [@nativescript/firebase-core](../firebase-core/) plugin to initialize Firebase.
+> **Note:** Use this plugin with the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin to initialize Firebase.
 
 Crashlytics helps you to collect analytics and details about crashes and errors that occur in your app. It does this through three aspects:
 
@@ -31,18 +31,18 @@ Crashlytics helps you to collect analytics and details about crashes and errors 
 Install the plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-crashlytics
+npm install @nativescript-asharghi/firebase-crashlytics
 ```
 
-## Use @nativescript/firebase-crashlytics
+## Use @nativescript-asharghi/firebase-crashlytics
 
 ### Log a crash context
 
 Use the `log` method throughout your app to accumulate extra context for possible crashes that can happen.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-crashlytics'; // only needs to be imported 1x
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-crashlytics'; // only needs to be imported 1x
 
 const crashlytics = firebase().crashlytics();
 crashlytics.log('User signed in.');
@@ -55,8 +55,8 @@ For additional context, Crashlytics also offers various methods to set attribute
 - To set a single attribute, call the `setAttribute` method passing it the attribute name as the first argument and its value as the second argument.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-crashlytics'; // only needs to be imported 1x
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-crashlytics'; // only needs to be imported 1x
 
 const crashlytics = firebase().crashlytics();
 
@@ -66,8 +66,8 @@ crashlytics().setAttribute('credits', String(user.credits));
 - To set multiple attributes at once, call the `setAttributes` method with an object containing the attributes.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-crashlytics'; // only needs to be imported 1x
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-crashlytics'; // only needs to be imported 1x
 
 const crashlytics = firebase().crashlytics();
 
@@ -84,8 +84,8 @@ You can use set methods to set predefined attributes, but you can also set your 
 - You can also set the user ID. To do that call the `setUserId` method on `firebase().crashlytics()`
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-crashlytics'; // only needs to be imported 1x
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-crashlytics'; // only needs to be imported 1x
 
 const crashlytics = firebase().crashlytics();
 
@@ -109,7 +109,7 @@ To send a stack trace, pass a JavaScript Error to the `recordError` method.
 Even if you catch unexpected errors, for your app to recover and behave smoothly you can still report them through Crashlytics using the `recordError` method. This will also provide you with the associated stack trace.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().crashlytics().log('Updating user count.');
 
@@ -128,7 +128,7 @@ try {
 As Crashlytics will be sending certain information regarding the user, users may want to opt out of the crash reporting. To disable crashlytics collection, call the `setCrashlyticsCollectionEnabled` method on `firebase().crashlytics()` passing it `false` This can be done throughout the app with a simple method call to setCrashlyticsCollectionEnabled:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().crashlytics().setCrashlyticsCollectionEnabled(false);
 ```

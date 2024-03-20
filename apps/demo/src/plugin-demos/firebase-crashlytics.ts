@@ -1,8 +1,8 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseCrashlytics } from '@demo/shared';
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-crashlytics';
-import { Crashlytics } from '@nativescript/firebase-crashlytics';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-crashlytics';
+import { Crashlytics } from '@nativescript-asharghi/firebase-crashlytics';
 
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;

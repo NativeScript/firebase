@@ -1,4 +1,4 @@
-# @nativescript/firebase-storage
+# @nativescript-asharghi/firebase-storage
 
 ## Contents
 
@@ -67,7 +67,7 @@ This plugin allows you to use the native Firebase SDKs for [Cloud Storage](https
 
 ## Set up and initialize Firebase for your app
 
-To use Firebase Cloud Storage, you initialize Firebase first. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+To use Firebase Cloud Storage, you initialize Firebase first. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin.
 
 ## Create a default Cloud Storage bucket
 
@@ -75,22 +75,22 @@ To create a default Cloud Storage bucket, follow the instructions at [Create a d
 
 ## Add the Firebase Cloud Storage SDK to your app
 
-To add the Cloud Storage SDK to your app, install and import the `@nativescript/firebase-storage` plugin.
+To add the Cloud Storage SDK to your app, install and import the `@nativescript-asharghi/firebase-storage` plugin.
 
 1. Install the plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-storage
+npm install @nativescript-asharghi/firebase-storage
 ```
 
-2. To add the Firestore SDK, import the `@nativescript/firebase-storage` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrapping file( `app.ts`, `main.ts`, etc).
+2. To add the Firestore SDK, import the `@nativescript-asharghi/firebase-storage` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrapping file( `app.ts`, `main.ts`, etc).
 
 ## Create a Firebase Storage instance
 
 To create a new Storage instance, call the instance getter, `storage()`, method on the FirebaseApp instance.:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const storage = firebase().storage();
 ```
@@ -98,8 +98,8 @@ const storage = firebase().storage();
 By default, this allows you to interact with Firebase Storage using the default Firebase App used whilst installing Firebase on your platform. However, if you'd like to use a secondary Firebase App, pass the secondary app instance when calling the `storage` method:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-storage';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-storage';
 
 // create secondary app instance
 const config = new FirebaseOptions();
@@ -117,8 +117,8 @@ A reference is a local pointer to some file on your bucket. This can either be a
 - To create a reference, call the [ref](#ref) method passing it the file name, with extension, on the [Storage](#storage-class) instance:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-storage';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-storage';
 
 const reference = firebase().storage().ref('black-t-shirt-sm.png');
 ```
@@ -126,7 +126,7 @@ const reference = firebase().storage().ref('black-t-shirt-sm.png');
 - You can also specify a file located in a deeply nested directory:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 const reference = firebase().storage().ref('/images/t-shirts/black-t-shirt-sm.png');
 ```
 
@@ -136,7 +136,7 @@ To upload a file directly from the user's device, follow these steps:
 
 1. Create a reference to the file you want to upload.
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const reference = firebase().storage().ref('black-t-shirt-sm.png');
 ```
@@ -192,7 +192,7 @@ task.resume();
 A common use case for Cloud Storage is to use it as a global Content Delivery Network (CDN) for your images. When uploading files to a bucket, they are not automatically available for consumption via an HTTP URL. To generate a new Download URL, you need to call the `getDownloadURL` method on a reference:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const url = firebase().storage().ref('images/profile-1.png').getDownloadURL();
 ```
@@ -202,7 +202,7 @@ const url = firebase().storage().ref('images/profile-1.png').getDownloadURL();
 To view a full list of the current files & directories within a particular bucket reference, call [list](#list) on a [reference](#reference-object) instance. The results are paginated, and if more results are available you can pass a page token into the request:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 function listFilesAndDirectories(reference, pageToken) {
 	return reference.list({ pageToken }).then((result) => {
@@ -237,7 +237,7 @@ To learn more, see [Get started with Firebase Security Rules](https://firebase.g
 A single Firebase project can have multiple storage buckets. The module will use the default bucket if no bucket argument is passed to the storage instance. To switch buckets, provide the module with the gs:// bucket URL found on the Firebase Console, under `Storage > Files`.
 
 ```ts
-import { firebase, FirebaseOptions } from '@nativescript/firebase-core';
+import { firebase, FirebaseOptions } from '@nativescript-asharghi/firebase-core';
 const defaultStorageBucket = firebase().storage();
 const config = new FirebaseOptions();
 config.storageBucket = 'gs://my-secondary-bucket.appspot.com';
@@ -250,7 +250,7 @@ const secondaryStorageBucket = firebase().storage(secondaryApp);
 ### Storage class
 #### android
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 storageAndroid: com.google.firebase.storage.FirebaseStorage = firebase().storage().android;
 ```
@@ -259,7 +259,7 @@ A `read-only` property that returns the underlying native Android object.
 ---
 #### ios
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 storageIOS: FIRStorage = firebase().storage().ios;
 ```
@@ -268,7 +268,7 @@ A `read-only` property that returns the underlying native iOS object.
 ---
 #### app
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 storageApp: FirebaseApp = firebase().storage().app;
 ```
@@ -277,7 +277,7 @@ A `read-only` property that returns the FirebaseApp instance to which this Stora
 ---
 #### maxDownloadRetryTime
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 maxDownloadRetryTime: number = firebase().storage().maxDownloadRetryTime;
 // or
@@ -288,7 +288,7 @@ Returns or sets the maximum time, in milliseconds, to retry downloads in the cas
 ---
 #### maxOperationRetryTime
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 maxOperationRetryTime: number = firebase().storage().maxOperationRetryTime;
 ```
@@ -297,7 +297,7 @@ Returns or sets the maximum time, in milliseconds, to retry operations other tha
 ---
 #### maxUploadRetryTime
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 maxUploadRetryTime: number = firebase().storage().maxUploadRetryTime;
 ```
@@ -306,7 +306,7 @@ Gets or sets the maximum time, in milliseconds, to retry uploads in the case of 
 ---
 #### constructor()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 new Storage(app);
 ```
@@ -318,7 +318,7 @@ new Storage(app);
 ---
 #### useEmulator()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().storage().useEmulator(host, port);
 ```
@@ -333,7 +333,7 @@ Attempts to connect to the Storage emulator running locally on the given host an
 ---
 #### ref()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 reference: Reference = firebase().storage().ref(path);
 ```
@@ -346,7 +346,7 @@ Creates a new storage [reference]() initialized at the root Firebase Storage loc
 ---
 #### refFromURL()
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 reference: Reference = firebase().storage().refFromURL(url);
 ```

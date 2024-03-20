@@ -1,4 +1,4 @@
-# @nativescript/firebase-firestore
+# @nativescript-asharghi/firebase-firestore
 
 * [Intro](#intro)
 * [Set up Firebase](#set-up-firebase)
@@ -74,7 +74,7 @@ This plugin allows you to add [Firebase Cloud Firestore](https://firebase.google
 
 ## Set up Firebase
 
-- To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+- To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript-asharghi/firebase-core](../firebase-core/) plugin.
 
 ## Create your Firestore database
 
@@ -82,31 +82,31 @@ To create your Firestore database, follow the instructions at [Create a Cloud Fi
 
 ## Add the Firestore SDK to your app
 
-To add the Cloud Firestore SDK to your app, install and import the `@nativescript/firebase-firestore` plugin.
+To add the Cloud Firestore SDK to your app, install and import the `@nativescript-asharghi/firebase-firestore` plugin.
 
 1. Install the plugin by running the following command in the root directory of your project.
 
 ```cli
-npm install @nativescript/firebase-firestore
+npm install @nativescript-asharghi/firebase-firestore
 ```
 
-2. To add the Firestore SDK, import the `@nativescript/firebase-firestore` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrapping file( `app.ts`, `main.ts`, etc).
+2. To add the Firestore SDK, import the `@nativescript-asharghi/firebase-firestore` plugin. You should import the plugin once in your app project and the ideal place to do that is the app bootstrapping file( `app.ts`, `main.ts`, etc).
 
 ## Initialize Cloud Firestore
 
-To initialize your Firestore database, create its instance by calling the `firestore` method on the `FirebaseApp` instance returned by the `firebase` method imported from the [@nativescript/firebase-core](../firebase-core) plugin.
+To initialize your Firestore database, create its instance by calling the `firestore` method on the `FirebaseApp` instance returned by the `firebase` method imported from the [@nativescript-asharghi/firebase-core](../firebase-core) plugin.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-firestore';
 const firestore = firebase().firestore();
 ```
 
 By default, this allows you to interact with Firestore using the default Firebase App used whilst installing Firebase on your platform. However, if you'd like to use Firestore with a secondary Firebase App, pass the secondary app instance when calling the `firestore` method:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-firestore';
 
 // create secondary app instance
 const config = new FirebaseOptions();
@@ -128,7 +128,7 @@ Before you write data to Firestore, see [Structure your data](https://firebase.g
 To add a new document to a collection, first, get the collection instance by calling the [collection](#collection) method on the Firestore instance with the collection's name.  Next, call the [add](#add) method on the [CollectionReference](#collectionreference-object) instance with the data for the document.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -145,7 +145,7 @@ firebase()
 The `add` method adds the new document to your collection with a random unique ID. If you'd like to specify an ID, call the [set](#set) method on a [DocumentReference](#documentreference-object) instead:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -166,7 +166,7 @@ The `set` method replaces any existing data on a given DocumentReference instanc
 To update a document's data, call the [update](#update) method on the document passing it the object of data to update.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -183,7 +183,7 @@ firebase()
 The method also provides support for updating deeply nested values via the dot notation. The following example updates the `zipcode` property of the `address` object which is a property of an `info` object.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -202,8 +202,8 @@ firebase()
 To update geolocation data, instantiate the [GeoPoint class](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L439-L449) with the latitude and longitude and use the instance as the value to update with.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { GeoPoint } from '@nativescript/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { GeoPoint } from '@nativescript-asharghi/firebase-firestore';
 
 firebase()
 	.firestore()
@@ -217,8 +217,8 @@ firebase()
 To store a Blob (Bytes) (for example of a Base64 image string), provide the string to the static `fromBase64String` method of the [Bytes class]():
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { Bytes } from '@nativescript/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { Bytes } from '@nativescript-asharghi/firebase-firestore';
 
 firebase()
 	.firestore()
@@ -232,8 +232,8 @@ firebase()
 To create a timestamp value, call the `serverTimestamp` static method on the [FieldValue class](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437) and pass the timestamp to the `update` method as shown below. When your code passes the timestamp to the database, the Firebase servers write a new timestamp based on their time, rather than that of the client. This helps resolve any data consistency issues with different client timezones.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { FieldValue } from '@nativescript/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { FieldValue } from '@nativescript-asharghi/firebase-firestore';
 
 firebase().firestore().doc('users/ABC').update({
 	createdAt: FieldValue.serverTimestamp(),
@@ -246,7 +246,7 @@ To help manage(adding or removing) the values with an array, the API exposes an 
 - The code below adds(if it does not exist) `'ABCDE123456'` to the `fcmTokens` array:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -259,8 +259,8 @@ firebase()
 - The code below removes(if it exists) `'ABCDE123456'` from the `fcmTokens` array:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { FieldValue } from '@nativescript/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { FieldValue } from '@nativescript-asharghi/firebase-firestore';
 
 firebase()
 	.firestore()
@@ -274,7 +274,7 @@ firebase()
 - To delete a document within Cloud Firestore, get the document and call the [delete](#delete) method on the document reference.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -289,8 +289,8 @@ firebase()
 - To remove a specific property from a document, rather than the document itself, call the `delete` method on the [FieldValue class](https://github.com/NativeScript/firebase/blob/main/packages/firebase-firestore/index.d.ts#L423-L437):
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { FieldValue } from '@nativescript/firebase-firestore';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { FieldValue } from '@nativescript-asharghi/firebase-firestore';
 
 firebase().firestore().collection('users').doc('ABC').update({
 	fcmTokens: FieldValue.delete(),
@@ -319,7 +319,7 @@ To update a document data with a transaction, follow these steps:
 
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 function onPostLike(postId) {
   // 1. Create a reference to the post
@@ -362,7 +362,7 @@ To execute a batched write, follow these steps:
 The example below shows how to delete all documents in a collection in a single operation:
 
 ```ts 
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 async function massDeleteUsers() {
   // 1. Documents references
@@ -393,7 +393,7 @@ Firestore provides out-of-the-box support for offline capabilities. When reading
 This functionality is enabled by default. However, you can disable it whenever you need to(e.g. on apps containing sensitive information) by setting the `settings` property of the Firestore instance to `false`. You should set the property before any Firestore interaction is performed. Otherwise, it will only take effect on the next app launch:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase().firestore().settings.persistence = false;
 
 ```
@@ -407,7 +407,7 @@ Cloud Firestore gives you the ability to read the value of a collection or a doc
 To read a collection or document once, call the Query.get or DocumentReference.get methods, for a collection or document respectively. 
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 const users = firebase().firestore().collection('users');
 
 users
@@ -428,7 +428,7 @@ users
 To react to any changes to a collection or a document, call the [onSnapshot](#onsnapshot) method on the collection or document with an event handler function. The example below watches for changes in the `users` collection.
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -446,7 +446,7 @@ firebase()
 The example below watches for changes in the `userId` document:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 const unsubscriber = firebase()
 	.firestore()
@@ -470,7 +470,7 @@ A QuerySnapshot returned by the `get` method of a collection query allows you to
 To access the documents within a QuerySnapshot object, call the `forEach` method:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 firebase()
 	.firestore()
 	.collection('users')
@@ -493,7 +493,7 @@ A DocumentSnapshot is returned from a query to a specific document, or as part o
 - To view a document's data, call the `data` method on the snapshot:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -512,7 +512,7 @@ firebase()
 - A snapshot also provides a helper function to easily access deeply nested data within a document. Call the `get` method with a dot-notated path:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase()
 	.firestore()
@@ -536,7 +536,7 @@ Cloud Firestore offers advanced capabilities for querying collections. Queries w
 To filter documents within a collection, call the `where` method on a collection reference. Filtering supports equality checks and "in" queries. For example, to filter users whose age is greater than 20 years, call where as follows:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().firestore()
   .collection('users')
@@ -549,7 +549,7 @@ firebase().firestore()
 Firestore also supports array queries. For example, to filter users who speak English (en) or Italian (it), use the `arrayContainsAny` filter:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().firestore()
   .collection('users')
@@ -565,7 +565,7 @@ To learn more about all of the querying capabilities Cloud Firestore has to offe
 To limit the number of documents returned from a query, use the `limit` method on a collection reference:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().firestore()
   .collection('users')
@@ -577,7 +577,7 @@ firebase().firestore()
 You can also limit to the last documents within the collection query by using the `limitToLast` method:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().firestore()
   .collection('users')
@@ -592,7 +592,7 @@ firebase().firestore()
 To order the documents by a specific value, use the `orderBy` method:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().firestore()
   .collection('users')
@@ -606,7 +606,7 @@ firebase().firestore()
 To start and/or end a query at a specific point within a collection, you can pass a value to the `startAt`, `endAt`, `startAfter` or `endBefore` methods. 
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().firestore()
   .collection('users')
@@ -621,7 +621,7 @@ firebase().firestore()
 You can also specify a DocumentSnapshot instead of a specific value, by passing it to the `startAfterDocument`, `startAtDocument`, `endAtDocument` or `endBeforeDocument` methods. For example:
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 
 firebase().firestore()
   .collection('users')

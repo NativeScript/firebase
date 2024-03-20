@@ -1,6 +1,6 @@
 import { runNativeScriptAngularApp, platformNativeScript } from '@nativescript/angular';
 import { AppModule } from './app.module';
-import { firebase } from '@nativescript/firebase-core';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 import { Application } from '@nativescript/core';
 
 Application.on('launch', (args) => {

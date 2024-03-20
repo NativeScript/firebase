@@ -1,4 +1,4 @@
-import { deserialize, firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript-asharghi/firebase-core';
 import { IDatabase, IReference, IDataSnapshot, EventType, IQuery, IOnDisconnect, TransactionResult, IThenableReference } from './common';
 import lazy from '@nativescript/core/utils/lazy';
 

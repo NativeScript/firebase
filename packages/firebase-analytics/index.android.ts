@@ -1,5 +1,5 @@
 import { Utils } from '@nativescript/core';
-import { firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp } from '@nativescript-asharghi/firebase-core';
 import { ConsentStatus, ConsentType, EventParameter, IAnalytics } from './common';
 
 export * from './common';

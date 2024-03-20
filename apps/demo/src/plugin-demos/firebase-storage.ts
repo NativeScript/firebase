@@ -1,8 +1,8 @@
 import { Observable, EventData, Page, File, knownFolders, path } from '@nativescript/core';
 import { DemoSharedFirebaseStorage } from '@demo/shared';
-import { Metadata, Storage, TaskEvent } from '@nativescript/firebase-storage';
-import { Auth } from '@nativescript/firebase-auth';
-import { firebase } from '@nativescript/firebase-core';
+import { Metadata, Storage, TaskEvent } from '@nativescript-asharghi/firebase-storage';
+import { Auth } from '@nativescript-asharghi/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
 	page.bindingContext = new DemoModel();
@@ -49,9 +49,7 @@ export class DemoModel extends DemoSharedFirebaseStorage {
 	}
 
 	uploadFile() {
-		const file = File.fromPath(
-			path.join(knownFolders.currentApp().path, 'images', 'deadpool.jpeg')
-		)
+		const file = File.fromPath(path.join(knownFolders.currentApp().path, 'images', 'deadpool.jpeg'));
 		const metadata = new Metadata();
 		metadata.contentType = 'image/jpg';
 		this.storage

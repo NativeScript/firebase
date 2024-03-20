@@ -1,4 +1,4 @@
-import { FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { ProviderBase } from './common';
 export interface IProvider {
 	getNative(ui: UI): any;
@@ -238,7 +238,7 @@ export class UI implements IUI {
 	signOut(): Promise<void>;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseUI {}
 }
 

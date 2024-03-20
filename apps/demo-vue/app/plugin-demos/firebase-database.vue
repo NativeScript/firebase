@@ -1,34 +1,33 @@
 <template>
-  <Page>
-    <ActionBar>
-      <Label text="firebase-database"/>
-    </ActionBar>
+	<Page>
+		<ActionBar>
+			<Label text="firebase-database" />
+		</ActionBar>
 
-    <GridLayout>
-      <Button class="info" :text="message"/>
-    </GridLayout>
-  </Page>
+		<GridLayout>
+			<Button class="info" :text="message" />
+		</GridLayout>
+	</Page>
 </template>
 
 <script lang="ts">
-  import Vue from "nativescript-vue";
-  import { DemoSharedFirebaseDatabase } from '@demo/shared';
-  import { } from '@nativescript/firebase-database';
+import Vue from 'nativescript-vue';
+import { DemoSharedFirebaseDatabase } from '@demo/shared';
+import {} from '@nativescript-asharghi/firebase-database';
 
-  export default Vue.extend({
-    computed: {
-      message() {
-        return "Test firebase-database";
-      }
-    }
-  });
+export default Vue.extend({
+	computed: {
+		message() {
+			return 'Test firebase-database';
+		},
+	},
+});
 </script>
 
 <style scoped lang="scss">
-
-  .info {
-    font-size: 20;
-    horizontal-align: center;
-    vertical-align: center;
-  }
+.info {
+	font-size: 20;
+	horizontal-align: center;
+	vertical-align: center;
+}
 </style>

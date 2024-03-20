@@ -1,7 +1,7 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseMessaging } from '@demo/shared';
-import { firebase } from '@nativescript/firebase-core';
-import { AuthorizationStatus } from '@nativescript/firebase-messaging';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { AuthorizationStatus } from '@nativescript-asharghi/firebase-messaging';
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
 	page.bindingContext = new DemoModel();
@@ -10,7 +10,6 @@ export function navigatingTo(args: EventData) {
 export class DemoModel extends DemoSharedFirebaseMessaging {
 	constructor() {
 		super();
-
 
 		// firebase().messaging().getToken().then(token =>{
 		// 	console.log('getToken', token);
@@ -41,6 +40,6 @@ export class DemoModel extends DemoSharedFirebaseMessaging {
 		var messaging = firebase().messaging();
 		const status = await messaging.requestPermission({ ios: { alert: true } });
 		console.log('status', status);
-		console.log('status', status === AuthorizationStatus.AUTHORIZED)
+		console.log('status', status === AuthorizationStatus.AUTHORIZED);
 	}
 }

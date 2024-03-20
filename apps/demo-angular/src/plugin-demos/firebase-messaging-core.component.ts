@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { DemoSharedFirebaseMessagingCore } from '@demo/shared';
-import {} from '@nativescript/firebase-messaging-core';
+import {} from '@nativescript-asharghi/firebase-messaging-core';
 
 @Component({
 	selector: 'demo-firebase-messaging-core',

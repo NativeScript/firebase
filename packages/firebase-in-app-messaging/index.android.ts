@@ -1,4 +1,4 @@
-import { firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp } from '@nativescript-asharghi/firebase-core';
 import { IInAppMessaging } from './common';
 
 let defaultInAppMessaging: InAppMessaging;

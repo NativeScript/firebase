@@ -1,9 +1,8 @@
 import { DemoSharedBase } from '../utils';
-import {  } from '@nativescript/firebase-performance';
+import {} from '@nativescript-asharghi/firebase-performance';
 
 export class DemoSharedFirebasePerformance extends DemoSharedBase {
-
-  testIt() {
-    console.log('test firebase-performance!');
-  }
+	testIt() {
+		console.log('test firebase-performance!');
+	}
 }

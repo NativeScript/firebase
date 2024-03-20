@@ -1,7 +1,7 @@
-# @nativescript/firebase-app-check
+# @nativescript-asharghi/firebase-app-check
 
 ```cli
-npm install @nativescript/firebase-app-check
+npm install @nativescript-asharghi/firebase-app-check
 ```
 
 
@@ -34,8 +34,8 @@ The [official Firebase App Check documentation](https://firebase.google.com/docs
 ### Activate
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { AppCheck } from '@nativescript/firebase-app-check';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { AppCheck } from '@nativescript-asharghi/firebase-app-check';
 
 AppCheck.setProviderFactory(); // call before the fb app is initialized 
 firebase.initializeApp()
@@ -55,8 +55,8 @@ You must call activate prior to calling any firebase back-end services for App C
 
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { AppCheck, AppCheckProviderFactory, AppCheckProvider } from '@nativescript/firebase-app-check';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { AppCheck, AppCheckProviderFactory, AppCheckProvider } from '@nativescript-asharghi/firebase-app-check';
 
 
 class AppCheckProviderFactoryImpl extends AppCheckProviderFactory {

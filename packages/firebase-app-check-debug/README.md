@@ -1,7 +1,7 @@
-# @nativescript/firebase-app-check-debug
+# @nativescript-asharghi/firebase-app-check-debug
 
 ```cli
-npm install @nativescript/firebase-app-check-debug
+npm install @nativescript-asharghi/firebase-app-check-debug
 ```
 
 > **Warning**: The debug provider allows access to your Firebase resources from unverified devices. Don't use the debug provider in production builds of your app, and don't share your debug builds with untrusted parties.
@@ -39,8 +39,8 @@ The [official Firebase App Check documentation](https://firebase.google.com/docs
 
 
 ```ts
-import { firebase } from '@nativescript/firebase-core';
-import { AppCheck } from '@nativescript/firebase-app-check-debug';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { AppCheck } from '@nativescript-asharghi/firebase-app-check-debug';
 
 AppCheck.setProviderFactory(); // call before the fb app is initialized 
 firebase.initializeApp()

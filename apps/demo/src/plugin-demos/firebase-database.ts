@@ -1,8 +1,8 @@
 import { Observable, EventData, Page } from '@nativescript/core';
 import { DemoSharedFirebaseDatabase } from '@demo/shared';
-import { firebase } from '@nativescript/firebase-core';
-import { Database } from '@nativescript/firebase-database';
-import { Auth } from '@nativescript/firebase-auth';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import { Database } from '@nativescript-asharghi/firebase-database';
+import { Auth } from '@nativescript-asharghi/firebase-auth';
 export function navigatingTo(args: EventData) {
 	const page = <Page>args.object;
 	page.bindingContext = new DemoModel();

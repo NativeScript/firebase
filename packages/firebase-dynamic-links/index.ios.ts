@@ -1,4 +1,4 @@
-import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
+import { deserialize, firebase, FirebaseApp, FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { IDynamicLink, IDynamicLinkAnalyticsParameters, IDynamicLinkAndroidParameters, IDynamicLinkIOSParameters, IDynamicLinkITunesParameters, IDynamicLinkNavigationParameters, IDynamicLinkParameters, IDynamicLinks, IDynamicLinkSocialParameters, OnLinkListener, ShortLinkType } from './common';
 
 let defaultDynamicLinks: DynamicLinks;

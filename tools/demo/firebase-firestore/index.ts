@@ -1,9 +1,8 @@
 import { DemoSharedBase } from '../utils';
-import {  } from '@nativescript/firebase-firestore';
+import {} from '@nativescript-asharghi/firebase-firestore';
 
 export class DemoSharedFirebaseFirestore extends DemoSharedBase {
-
-  testIt() {
-    console.log('test firebase-firestore!');
-  }
+	testIt() {
+		console.log('test firebase-firestore!');
+	}
 }

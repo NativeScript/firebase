@@ -1,5 +1,5 @@
 import { Application, Utils } from '@nativescript/core';
-import { FirebaseError } from '@nativescript/firebase-core';
+import { FirebaseError } from '@nativescript-asharghi/firebase-core';
 import { AdsConsentBase, AdsConsentDebugGeography, AdsConsentStatus } from './common';
 
 export { AdsConsentStatus, AdsConsentDebugGeography };

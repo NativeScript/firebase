@@ -12,15 +12,15 @@
 
 <script lang="ts">
 import Vue from 'nativescript-vue';
-import { firebase } from '@nativescript/firebase-core';
-import '@nativescript/firebase-messaging';
-import { Messaging } from '@nativescript/firebase-messaging';
+import { firebase } from '@nativescript-asharghi/firebase-core';
+import '@nativescript-asharghi/firebase-messaging';
+import { Messaging } from '@nativescript-asharghi/firebase-messaging';
 
 export default Vue.extend({
 	methods: {
 		requestPermission: function (args) {
 			const messaging = (firebase() as any).messaging() as Messaging;
-      console.log('requestPermission');
+			console.log('requestPermission');
 			messaging
 				.requestPermission()
 				.then(() => {

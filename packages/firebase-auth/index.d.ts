@@ -1,5 +1,5 @@
 import { ActionCodeInfoOperation } from './common';
-import { Firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { Firebase, FirebaseApp } from '@nativescript-asharghi/firebase-core';
 
 export { ActionCodeInfoOperation };
 
@@ -364,7 +364,7 @@ export declare class Auth implements IAuth {
 	verifyPasswordResetCode(code: string): Promise<string>;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseAuth {}
 }
 

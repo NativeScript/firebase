@@ -1,5 +1,5 @@
 import { IAnalytics, EventParameter, ConsentType, ConsentStatus } from './common';
-import { Firebase } from '@nativescript/firebase-core';
+import { Firebase } from '@nativescript-asharghi/firebase-core';
 
 export * from './common';
 
@@ -27,7 +27,7 @@ export declare class Analytics implements IAnalytics {
 	handleUserActivity(userActivity: any): void;
 }
 
-declare module '@nativescript/firebase-core' {
+declare module '@nativescript-asharghi/firebase-core' {
 	export interface Firebase extends FirebaseAnalytics {}
 }
 
