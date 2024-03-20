@@ -1,2 +1,2 @@
 platform :ios, '12.0'
-pod 'Firebase/Crashlytics', '~>10.20.0'
+pod 'Firebase/Crashlytics', '~>10.23.0'
