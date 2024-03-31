@@ -3,7 +3,7 @@
 #import <objc/runtime.h>
 
 @implementation NSObject (TNSUIAppDelegateExt)
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
+- (BOOL)application:(nullable UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
     LaunchCallback callback = [TNSFirebaseCore onAppFinishLaunchingCallback];
     if(callback != nil){
         callback();
