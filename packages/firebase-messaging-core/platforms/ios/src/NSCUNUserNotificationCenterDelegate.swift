@@ -76,7 +76,13 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
         
         if (NSCFirebaseMessagingCore.showNotificationsWhenInForeground || notification.request.content.userInfo["gcm.notification.showWhenInForeground"] as? String == "true" || notification.request.content.userInfo["showWhenInForeground"] as? Bool ?? false ||
             aps != nil && aps?["showWhenInForeground"] as? Bool ?? false) {
-            options = UNNotificationPresentationOptions(rawValue: UNNotificationPresentationOptions.alert.rawValue | UNNotificationPresentationOptions.sound.rawValue | UNNotificationPresentationOptions.badge.rawValue )
+            var alertOptions: UInt = 0
+            if #available(iOS 14.0, *) {
+                alertOptions = UNNotificationPresentationOptions.list.rawValue | UNNotificationPresentationOptions.banner.rawValue
+            } else {
+                alertOptions = UNNotificationPresentationOptions.alert.rawValue
+            }
+            options = UNNotificationPresentationOptions(rawValue: alertOptions |  UNNotificationPresentationOptions.sound.rawValue | UNNotificationPresentationOptions.badge.rawValue)
         }
         
         if (notification.request.content.userInfo["gcm.message_id"] != nil) {
