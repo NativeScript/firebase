@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^BoolCallback)(BOOL success, NSError* _Nullable error);
-typedef void(^DictionaryCallback)(NSDictionary* _Nullable value);
+typedef void(^CompletableDictionaryCallback)(NSDictionary* _Nullable value, void(^_Nonnull complete)(void));
 typedef void(^StringCallback)(NSString* _Nullable value);
 
 @interface NSCFirebaseMessagingCore: NSObject
@@ -11,9 +11,9 @@ typedef void(^StringCallback)(NSString* _Nullable value);
 
 @property (nonatomic, strong, class) BoolCallback _Nullable registerDeviceForRemoteMessagesCallback;
 
-@property (nonatomic, strong, class) DictionaryCallback _Nullable onNotificationTapCallback;
+@property (nonatomic, strong, class) CompletableDictionaryCallback _Nullable onNotificationTapCallback;
 
-@property (nonatomic, strong, class) DictionaryCallback _Nullable onMessageCallback;
+@property (nonatomic, strong, class) CompletableDictionaryCallback _Nullable onMessageCallback;
 
 @property (nonatomic, strong, class) StringCallback _Nullable onTokenCallback;
 

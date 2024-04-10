@@ -43,15 +43,14 @@ function deserialize(data: any): any {
 
 export class MessagingCore implements IMessagingCore {
 	_APNSToken;
-	_onMessage(message: any) {
+	_onMessage(message: any, completionHandler: () => void) {
 		console.log('_onMessage', message);
 		if (onMessageCallbacks.size > 0) {
 			const msg = deserialize(message);
-			onMessageCallbacks.forEach((cb) => {
-				cb(msg);
-			});
+			Promise.all(Array.from(onMessageCallbacks).map((cb) => cb(msg))).finally(() => completionHandler());
 		} else {
 			MessagingCore._messageQueues._onMessage.push(message);
+			completionHandler();
 		}
 	}
 	_onToken(token: string) {
@@ -65,15 +64,14 @@ export class MessagingCore implements IMessagingCore {
 			MessagingCore._messageQueues._onToken.push(token);
 		}
 	}
-	_onNotificationTap(message: any) {
+	_onNotificationTap(message: any, completionHandler: () => void) {
 		console.log('_onNotificationTap', message);
 		if (onNotificationTapCallbacks.size > 0) {
 			const msg = deserialize(message);
-			onNotificationTapCallbacks.forEach((cb) => {
-				cb(msg);
-			});
+			Promise.all(Array.from(onNotificationTapCallbacks).map((cb) => cb(msg))).finally(() => completionHandler());
 		} else {
 			MessagingCore._messageQueues._onNotificationTap.push(message);
+			completionHandler();
 		}
 	}
 
@@ -336,7 +334,7 @@ export class MessagingCore implements IMessagingCore {
 		if (queue.length > 0) {
 			MessagingCore._messageQueues[type] = [];
 			queue.forEach((message) => {
-				this[type](message);
+				this[type](message, () => {});
 			});
 		}
 	}

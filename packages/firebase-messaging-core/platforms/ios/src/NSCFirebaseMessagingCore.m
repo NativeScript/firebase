@@ -3,8 +3,8 @@
 
 BOOL ShowNotificationsWhenInForeground = NO;
 BoolCallback RegisterDeviceForRemoteMessagesCallback = nil;
-DictionaryCallback OnNotificationTapCallback = nil;
-DictionaryCallback OnMessageCallback = nil;
+CompletableDictionaryCallback OnNotificationTapCallback = nil;
+CompletableDictionaryCallback OnMessageCallback = nil;
 StringCallback OnTokenCallback = nil;
 
 + (void)setShowNotificationsWhenInForeground:(BOOL)showNotificationsWhenInForeground {
@@ -23,19 +23,19 @@ StringCallback OnTokenCallback = nil;
     RegisterDeviceForRemoteMessagesCallback = callback;
 }
 
-+ (DictionaryCallback)onNotificationTapCallback {
++ (CompletableDictionaryCallback)onNotificationTapCallback {
     return OnNotificationTapCallback;
 }
 
-+ (void)setOnNotificationTapCallback:(DictionaryCallback)callback {
++ (void)setOnNotificationTapCallback:(CompletableDictionaryCallback)callback {
     OnNotificationTapCallback = callback;
 }
 
-+ (DictionaryCallback)onMessageCallback {
++ (CompletableDictionaryCallback)onMessageCallback {
     return OnMessageCallback;
 }
 
-+ (void)setOnMessageCallback:(DictionaryCallback)callback {
++ (void)setOnMessageCallback:(CompletableDictionaryCallback)callback {
     OnMessageCallback = callback;
 }
 

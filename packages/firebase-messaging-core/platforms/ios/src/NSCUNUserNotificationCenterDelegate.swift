@@ -53,12 +53,16 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
         if (remoteNotification["gcm.message_id"] != nil) {
             var message = parseNotification(response.notification)
             message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
-            NSCFirebaseMessagingCore.onNotificationTapCallback?(message)
+            NSCFirebaseMessagingCore.onNotificationTapCallback?(message) {
+                completionHandler()
+            }
         }else {
             if((response.notification.request.trigger as? UNPushNotificationTrigger) != nil){
                 var message = remoteNotification
                 message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
-                NSCFirebaseMessagingCore.onNotificationTapCallback?(message)
+                NSCFirebaseMessagingCore.onNotificationTapCallback?(message) {
+                    completionHandler()
+                }
             }
         }
         
@@ -82,18 +86,22 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
         if (notification.request.content.userInfo["gcm.message_id"] != nil) {
             var message = parseNotification(notification)
             if (message["contentAvailable"] == nil) {
-                NSCFirebaseMessagingCore.onMessageCallback?(message)
+                NSCFirebaseMessagingCore.onMessageCallback?(message) {
+                    completionHandler(options)
+                }
                 message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
+            } else {
+                completionHandler(options)
             }
-            completionHandler(options)
             return
         }else {
             if((notification.request.trigger as? UNPushNotificationTrigger) != nil){
                 
                 var message = notification.request.content.userInfo
                 message["foreground"] = UIApplication.shared.applicationState == UIApplication.State.active
-                NSCFirebaseMessagingCore.onMessageCallback?(message)
-                completionHandler(options)
+                NSCFirebaseMessagingCore.onMessageCallback?(message) {
+                    completionHandler(options)
+                }
                 return
             }
         }
