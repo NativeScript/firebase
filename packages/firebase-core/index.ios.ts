@@ -381,7 +381,8 @@ export class Firebase {
 						app = FIRApp.appNamed(name);
 					} else {
 						if (defaultApp) {
-							return defaultApp;
+              resolve(defaultApp);
+              return;
 						}
 
 						if (nativeOptions) {
