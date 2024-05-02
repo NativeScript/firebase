@@ -1,3 +1,19 @@
+# [3.3.0](https://github.com/NativeScript/firebase/compare/3.2.4...3.3.0) (2024-05-02)
+
+
+### Bug Fixes
+
+* **core:** initializeApp default app not resolved ([#255](https://github.com/NativeScript/firebase/issues/255)) ([486294b](https://github.com/NativeScript/firebase/commit/486294bee34dbb7f4d1dabdf998a5bbff4b10572))
+* **ios:** cleaning firebase-messaging-core iOS build warnings ([#251](https://github.com/NativeScript/firebase/issues/251)) ([872c1c2](https://github.com/NativeScript/firebase/commit/872c1c22280a0e47861277236282f76751df507f))
+
+
+### Features
+
+* **analytics:** iOS SDK 10.24+ ([#257](https://github.com/NativeScript/firebase/issues/257)) ([d8ff8d6](https://github.com/NativeScript/firebase/commit/d8ff8d64746cc596d5ae7e2271e35f6952110a9c))
+* support async callbacks for messages and notification taps ([#252](https://github.com/NativeScript/firebase/issues/252)) ([86a2723](https://github.com/NativeScript/firebase/commit/86a27230749b8375409f89220efb170b3c94323a))
+
+
+
 # [3.2.0](https://github.com/NativeScript/firebase/compare/3.1.3...3.2.0) (2023-09-24)
 
 
