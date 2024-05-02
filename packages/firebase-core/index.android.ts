@@ -313,7 +313,8 @@ export class Firebase {
 					app = com.google.firebase.FirebaseApp.initializeApp(Utils.android.getApplicationContext(), nativeOptions.build(), name);
 				} else {
 					if (defaultApp) {
-						return defaultApp;
+						resolve(defaultApp);
+            return;
 					}
 					isDefault = true;
 					if (nativeOptions) {
