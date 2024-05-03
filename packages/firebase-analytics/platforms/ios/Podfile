@@ -10,3 +10,4 @@ platform :ios, '12.0'
     Pod::UI.puts "You may set variable `$NSFirebaseAnalyticsWithoutAdIdSupport=true` in Podfile to use analytics without ad ids."
     pod 'Firebase/Analytics', '~>10.24.0'
   end
+  
