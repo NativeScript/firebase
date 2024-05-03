@@ -1,3 +1,12 @@
+## [3.3.1](https://github.com/NativeScript/firebase/compare/3.3.0...3.3.1) (2024-05-03)
+
+
+### Features
+
+* iOS SDK 10.24+ ([bab1fb4](https://github.com/NativeScript/firebase/commit/bab1fb42a704644834b0d9efdf96b7f188d1b375))
+
+
+
 # [3.3.0](https://github.com/NativeScript/firebase/compare/3.2.4...3.3.0) (2024-05-02)
 
 
