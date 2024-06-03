@@ -56,7 +56,7 @@ Import the `firebase` function and call it to create a NativeScript Firebase ins
  
 ```ts
 import { firebase } from '@nativescript/firebase-core'
-const defaultApp = await firebase().initializeApp();
+const defaultApp = firebase().initializeApp();
 ```
 
 #### Initialize Secondary App
@@ -64,7 +64,7 @@ const defaultApp = await firebase().initializeApp();
 ```ts
 import { firebase, FirebaseOptions } from '@nativescript/firebase-core'
 const config = new FirebaseOptions()
-const secondaryApp = await firebase().initializeApp(config, 'SECONDARY_APP');
+const secondaryApp = firebase().initializeApp(config, 'SECONDARY_APP');
 ```
 
 
