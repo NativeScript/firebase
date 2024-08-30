@@ -1,3 +1,12 @@
+## [3.3.2](https://github.com/NativeScript/firebase/compare/3.3.1...3.3.2) (2024-08-30)
+
+
+### Bug Fixes
+
+* **messaging:** null reference when getting current token ([#266](https://github.com/NativeScript/firebase/issues/266)) ([ff516e0](https://github.com/NativeScript/firebase/commit/ff516e0decae4bf3e9dd123636ef2ed5f56ab9e4))
+
+
+
 ## [3.3.1](https://github.com/NativeScript/firebase/compare/3.3.0...3.3.1) (2024-05-03)
 
 

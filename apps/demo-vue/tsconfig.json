@@ -23,7 +23,8 @@
 			"@nativescript/firebase-dynamic-links": ["../../packages/firebase-dynamic-links/index.d.ts"],
 			"@nativescript/firebase-messaging": ["../../packages/firebase-messaging/index.d.ts"],
 			"@nativescript/firebase-functions": ["../../packages/firebase-functions/index.d.ts"],
-			"@nativescript/firebase-app-check-debug": ["../../packages/firebase-app-check-debug/index.d.ts"]
+			"@nativescript/firebase-app-check-debug": ["../../packages/firebase-app-check-debug/index.d.ts"],
+			"@nativescript/*": ["../../packages/*"]
 		}
 	}
 }

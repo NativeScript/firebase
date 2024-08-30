@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-messaging-core",
-	"version": "3.3.1",
+	"version": "3.3.2",
 	"description": "NativeScript Push Messaging Core",
 	"main": "index",
 	"typings": "index.d.ts",

@@ -41,7 +41,8 @@
 			"@nativescript/firebase-performance": ["packages/firebase-performance/index.d.ts"],
 			"@nativescript/firebase-remote-config": ["packages/firebase-remote-config/index.d.ts"],
 			"@nativescript/firebase-storage": ["packages/firebase-storage/index.d.ts"],
-			"@nativescript/firebase-ui": ["packages/firebase-ui/index.d.ts"]
+			"@nativescript/firebase-ui": ["packages/firebase-ui/index.d.ts"],
+			"@nativescript/*": ["packages/*"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]
