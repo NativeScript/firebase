@@ -486,7 +486,7 @@ export class Reference implements IReference {
 		let nsData;
 		switch (format) {
 			case StringFormat.BASE64:
-				nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
+				nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, NSDataBase64DecodingOptions.IgnoreUnknownCharacters);
 				break;
 			case StringFormat.BASE64URL:
 				{
@@ -495,7 +495,7 @@ export class Reference implements IReference {
 					while (base64Encoded.length % 4 != 0) {
 						base64Encoded = base64Encoded + '=';
 					}
-					nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, 0);
+					nsData = NSData.alloc().initWithBase64EncodedStringOptions(data, NSDataBase64DecodingOptions.IgnoreUnknownCharacters);
 				}
 				break;
 			case StringFormat.DATA_URL: {
@@ -506,13 +506,13 @@ export class Reference implements IReference {
 				if (!metadata.contentType) {
 					meta.contentType = mime;
 				}
-				return Task.fromNative(this.native.putDataMetadata(NSData.alloc().initWithBase64EncodedStringOptions(base64, 0), meta.native));
+				return Task.fromNative(this.native.putDataMetadata(NSData.alloc().initWithBase64EncodedStringOptions(base64, NSDataBase64DecodingOptions.IgnoreUnknownCharacters), meta.native));
 			}
 			default: {
 				const text = NSString.stringWithString(data);
 				const nativeData = text.dataUsingEncoding(NSUTF8StringEncoding);
-				const encodedString = nativeData.base64EncodedStringWithOptions(0);
-				nsData = NSData.alloc().initWithBase64EncodedStringOptions(encodedString, 0);
+				const encodedString = nativeData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength);
+				nsData = NSData.alloc().initWithBase64EncodedStringOptions(encodedString, NSDataBase64DecodingOptions.IgnoreUnknownCharacters);
 				break;
 			}
 		}

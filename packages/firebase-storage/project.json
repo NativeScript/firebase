@@ -5,7 +5,7 @@
 	"sourceRoot": "packages/firebase-storage",
 	"targets": {
 		"build": {
-			"executor": "@nrwl/js:tsc",
+			"executor": "@nx/js:tsc",
 			"options": {
 				"outputPath": "dist/packages/firebase-storage",
 				"tsConfig": "packages/firebase-storage/tsconfig.json",
@@ -26,7 +26,7 @@
 			"dependsOn": [
 				{
 					"target": "build.all",
-					"projects": "dependencies"
+					"dependencies": true
 				}
 			]
 		},
@@ -40,11 +40,10 @@
 			"dependsOn": [
 				{
 					"target": "build.all",
-					"projects": "dependencies"
+					"dependencies": true
 				},
 				{
-					"target": "build",
-					"projects": "self"
+					"target": "build"
 				}
 			]
 		},
@@ -56,10 +55,7 @@
 			}
 		},
 		"lint": {
-			"executor": "@nrwl/linter:eslint",
-			"options": {
-				"lintFilePatterns": ["packages/firebase-storage/**/*.ts"]
-			}
+			"executor": "@nx/eslint:lint"
 		}
 	}
 }

@@ -1304,7 +1304,7 @@ export class Bytes implements IBytes {
 				b64 = base64.split(',')[1];
 			}
 			const bytes = new Bytes();
-			bytes._native = NSData.alloc().initWithBase64EncodedStringOptions(b64, 0);
+			bytes._native = NSData.alloc().initWithBase64EncodedStringOptions(b64, NSDataBase64DecodingOptions.IgnoreUnknownCharacters);
 			return bytes;
 		}
 		return null;
@@ -1321,7 +1321,7 @@ export class Bytes implements IBytes {
 	}
 
 	toBase64(): string {
-		return this.native.base64EncodedStringWithOptions(0);
+		return this.native.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength);
 	}
 
 	toUint8Array(): Uint8Array {
