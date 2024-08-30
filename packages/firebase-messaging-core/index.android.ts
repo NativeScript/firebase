@@ -218,7 +218,7 @@ export class MessagingCore implements IMessagingCore {
 	getCurrentToken(): Promise<string> {
 		return new Promise((resolve, reject) => {
 			org.nativescript.firebase.messaging.FirebaseMessaging.getToken(
-				this._native,
+				this.native,
 				new org.nativescript.firebase.messaging.FirebaseMessaging.Callback<string>({
 					onSuccess(result) {
 						resolve(result);
