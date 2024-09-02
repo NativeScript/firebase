@@ -153,16 +153,20 @@ If you are listening to a node with many children, only listening to data you ca
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 
-const onChildAdd = firebase()
+const ref = firebase()
 	.database()
-	.ref('/users')
+	.ref('/users');
+
+const onChildAdd = ref
 	.on('child_added', (snapshot) => {
 		console.log('A new node has been added', snapshot.val());
 	});
 
 // Stop listening for updates when no longer required
-firebase().database().ref('/users').off('child_added', onChildAdd);
+ref.off('child_added', onChildAdd);
 ```
+
+
 ### Remove a reference event listener
 
  To unsubscribe from an event, call the `off` method on the reference passing it the event name and the function that the `on` method returned. This can be used within any useEffect hooks to automatically unsubscribe when the hook needs to unsubscribe itself.
@@ -170,16 +174,19 @@ firebase().database().ref('/users').off('child_added', onChildAdd);
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 
-const onValueChange = firebase()
+const ref = firebase()
 	.database()
-	.ref(`/users/${userId}`)
+	.ref(`/users/${userId}`);
+
+const onValueChange = ref
 	.on('value', (snapshot) => {
 		console.log('User data: ', snapshot.val());
 	});
 
 // Stop listening for updates when no longer required
-firebase().database().ref(`/users/${userId}`).off('value', onValueChange);
+ref.off('value', onValueChange);
 ```
+> **Note:** The `off` method requires the same `ref` as specified on the corresponding `on` method.  The event handler specified in the `on` method must be unique.  If a common event handler is used for multiple events, an anonymous function can be used to invoke the common handler.  
 
 ### Data querying
 
