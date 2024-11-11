@@ -5,6 +5,8 @@ declare class FUIPhoneAuth extends NSObject implements FUIAuthProvider {
 
 	static new(): FUIPhoneAuth; // inherited from NSObject
 
+	defaultCountryCode: string;
+
 	readonly accessToken: string; // inherited from FUIAuthProvider
 
 	buttonAlignment: FUIButtonAlignment; // inherited from FUIAuthProvider

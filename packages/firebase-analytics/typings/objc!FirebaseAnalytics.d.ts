@@ -11,6 +11,10 @@ declare class FIRAnalytics extends NSObject {
 
 	static initiateOnDeviceConversionMeasurementWithEmailAddress(emailAddress: string): void;
 
+	static initiateOnDeviceConversionMeasurementWithHashedEmailAddress(hashedEmailAddress: NSData): void;
+
+	static initiateOnDeviceConversionMeasurementWithHashedPhoneNumber(hashedPhoneNumber: NSData): void;
+
 	static initiateOnDeviceConversionMeasurementWithPhoneNumber(phoneNumber: string): void;
 
 	static logEventWithNameParameters(name: string, parameters: NSDictionary<string, any>): void;

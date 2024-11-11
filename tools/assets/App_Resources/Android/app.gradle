@@ -5,10 +5,10 @@ dependencies {
 }
 
 android {  
-  compileSdkVersion 33
+  compileSdkVersion 34
   defaultConfig {  
-    minSdkVersion 21
-    targetSdkVersion 33
+    minSdkVersion 23
+    targetSdkVersion 34
     generatedDensities = []
   }  
   aaptOptions {  

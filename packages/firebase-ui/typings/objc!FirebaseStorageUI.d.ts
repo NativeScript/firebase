@@ -19,6 +19,10 @@ declare class FUIStorageImageLoader extends NSObject implements SDImageLoader {
 
 	readonly; // inherited from NSObjectProtocol
 
+	/**
+	 * @since 8.0
+	 * @deprecated 100000
+	 */
 	canRequestImageForURL(url: NSURL): boolean;
 
 	canRequestImageForURLOptionsContext(url: NSURL, options: SDWebImageOptions, context: NSDictionary<string, any>): boolean;
@@ -47,6 +51,10 @@ declare class FUIStorageImageLoader extends NSObject implements SDImageLoader {
 
 	self(): this;
 
+	/**
+	 * @since 8.0
+	 * @deprecated 100000
+	 */
 	shouldBlockFailedURLWithURLError(url: NSURL, error: NSError): boolean;
 
 	shouldBlockFailedURLWithURLErrorOptionsContext(url: NSURL, error: NSError, options: SDWebImageOptions, context: NSDictionary<string, any>): boolean;

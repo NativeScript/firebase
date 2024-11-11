@@ -47,6 +47,9 @@ declare class FUIAuth extends NSObject implements NSSecureCoding {
 
 	emulatorEnabled: boolean;
 
+	/**
+	 * @since 13
+	 */
 	interactiveDismissEnabled: boolean;
 
 	privacyPolicyURL: NSURL;
@@ -145,9 +148,9 @@ interface FUIAuthDelegate extends NSObjectProtocol {
 
 	authUIDidFinishOperationError?(authUI: FUIAuth, operation: FUIAccountSettingsOperationType, error: NSError): void;
 
-	authUIDidSignInWithAuthDataResultError?(authUI: FUIAuth, authDataResult: FIRAuthDataResult, error: NSError): void;
+	authUIDidSignInWithError?(authUI: FUIAuth, authDataResult: FIRAuthDataResult, error: NSError): void;
 
-	authUIDidSignInWithAuthDataResultURLError?(authUI: FUIAuth, authDataResult: FIRAuthDataResult, url: NSURL, error: NSError): void;
+	authUIDidSignInWithURLError?(authUI: FUIAuth, authDataResult: FIRAuthDataResult, url: NSURL, error: NSError): void;
 
 	authUIDidSignInWithUserError?(authUI: FUIAuth, user: FIRUser, error: NSError): void;
 
@@ -237,14 +240,31 @@ declare class FUIAuthTableHeaderView extends UIView {
 
 	static appearance(): FUIAuthTableHeaderView; // inherited from UIAppearance
 
+	/**
+	 * @since 8.0
+	 */
 	static appearanceForTraitCollection(trait: UITraitCollection): FUIAuthTableHeaderView; // inherited from UIAppearance
 
+	/**
+	 * @since 8.0
+	 * @deprecated 9.0
+	 */
 	static appearanceForTraitCollectionWhenContainedIn(trait: UITraitCollection, ContainerClass: typeof NSObject): FUIAuthTableHeaderView; // inherited from UIAppearance
 
+	/**
+	 * @since 9.0
+	 */
 	static appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait: UITraitCollection, containerTypes: NSArray<typeof NSObject> | (typeof NSObject)[]): FUIAuthTableHeaderView; // inherited from UIAppearance
 
+	/**
+	 * @since 5.0
+	 * @deprecated 9.0
+	 */
 	static appearanceWhenContainedIn(ContainerClass: typeof NSObject): FUIAuthTableHeaderView; // inherited from UIAppearance
 
+	/**
+	 * @since 9.0
+	 */
 	static appearanceWhenContainedInInstancesOfClasses(containerTypes: NSArray<typeof NSObject> | (typeof NSObject)[]): FUIAuthTableHeaderView; // inherited from UIAppearance
 
 	static new(): FUIAuthTableHeaderView; // inherited from NSObject
@@ -259,14 +279,31 @@ declare class FUIAuthTableViewCell extends UITableViewCell {
 
 	static appearance(): FUIAuthTableViewCell; // inherited from UIAppearance
 
+	/**
+	 * @since 8.0
+	 */
 	static appearanceForTraitCollection(trait: UITraitCollection): FUIAuthTableViewCell; // inherited from UIAppearance
 
+	/**
+	 * @since 8.0
+	 * @deprecated 9.0
+	 */
 	static appearanceForTraitCollectionWhenContainedIn(trait: UITraitCollection, ContainerClass: typeof NSObject): FUIAuthTableViewCell; // inherited from UIAppearance
 
+	/**
+	 * @since 9.0
+	 */
 	static appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait: UITraitCollection, containerTypes: NSArray<typeof NSObject> | (typeof NSObject)[]): FUIAuthTableViewCell; // inherited from UIAppearance
 
+	/**
+	 * @since 5.0
+	 * @deprecated 9.0
+	 */
 	static appearanceWhenContainedIn(ContainerClass: typeof NSObject): FUIAuthTableViewCell; // inherited from UIAppearance
 
+	/**
+	 * @since 9.0
+	 */
 	static appearanceWhenContainedInInstancesOfClasses(containerTypes: NSArray<typeof NSObject> | (typeof NSObject)[]): FUIAuthTableViewCell; // inherited from UIAppearance
 
 	static new(): FUIAuthTableViewCell; // inherited from NSObject
@@ -318,18 +355,38 @@ declare class FUIPrivacyAndTermsOfServiceView extends UITextView {
 
 	static appearance(): FUIPrivacyAndTermsOfServiceView; // inherited from UIAppearance
 
+	/**
+	 * @since 8.0
+	 */
 	static appearanceForTraitCollection(trait: UITraitCollection): FUIPrivacyAndTermsOfServiceView; // inherited from UIAppearance
 
+	/**
+	 * @since 8.0
+	 * @deprecated 9.0
+	 */
 	static appearanceForTraitCollectionWhenContainedIn(trait: UITraitCollection, ContainerClass: typeof NSObject): FUIPrivacyAndTermsOfServiceView; // inherited from UIAppearance
 
+	/**
+	 * @since 9.0
+	 */
 	static appearanceForTraitCollectionWhenContainedInInstancesOfClasses(trait: UITraitCollection, containerTypes: NSArray<typeof NSObject> | (typeof NSObject)[]): FUIPrivacyAndTermsOfServiceView; // inherited from UIAppearance
 
+	/**
+	 * @since 5.0
+	 * @deprecated 9.0
+	 */
 	static appearanceWhenContainedIn(ContainerClass: typeof NSObject): FUIPrivacyAndTermsOfServiceView; // inherited from UIAppearance
 
+	/**
+	 * @since 9.0
+	 */
 	static appearanceWhenContainedInInstancesOfClasses(containerTypes: NSArray<typeof NSObject> | (typeof NSObject)[]): FUIPrivacyAndTermsOfServiceView; // inherited from UIAppearance
 
 	static new(): FUIPrivacyAndTermsOfServiceView; // inherited from NSObject
 
+	/**
+	 * @since 16.0
+	 */
 	static textViewUsingTextLayoutManager(usingTextLayoutManager: boolean): FUIPrivacyAndTermsOfServiceView; // inherited from UITextView
 
 	authUI: FUIAuth;

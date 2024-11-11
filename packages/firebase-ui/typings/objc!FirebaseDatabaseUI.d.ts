@@ -146,12 +146,21 @@ declare class FUICollectionViewDataSource extends NSObject implements UICollecti
 
 	class(): typeof NSObject;
 
+	/**
+	 * @since 9.0
+	 */
 	collectionViewCanMoveItemAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath): boolean;
 
 	collectionViewCellForItemAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath): UICollectionViewCell;
 
+	/**
+	 * @since 14.0
+	 */
 	collectionViewIndexPathForIndexTitleAtIndex(collectionView: UICollectionView, title: string, index: number): NSIndexPath;
 
+	/**
+	 * @since 9.0
+	 */
 	collectionViewMoveItemAtIndexPathToIndexPath(collectionView: UICollectionView, sourceIndexPath: NSIndexPath, destinationIndexPath: NSIndexPath): void;
 
 	collectionViewNumberOfItemsInSection(collectionView: UICollectionView, section: number): number;
@@ -160,6 +169,9 @@ declare class FUICollectionViewDataSource extends NSObject implements UICollecti
 
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
 
+	/**
+	 * @since 14.0
+	 */
 	indexTitlesForCollectionView(collectionView: UICollectionView): NSArray<string>;
 
 	initWithCollectionPopulateCell(collection: FUICollection, populateCell: (p1: UICollectionView, p2: NSIndexPath, p3: FIRDataSnapshot) => UICollectionViewCell): this;
@@ -278,12 +290,21 @@ declare class FUIIndexCollectionViewDataSource extends NSObject implements UICol
 
 	class(): typeof NSObject;
 
+	/**
+	 * @since 9.0
+	 */
 	collectionViewCanMoveItemAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath): boolean;
 
 	collectionViewCellForItemAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath): UICollectionViewCell;
 
+	/**
+	 * @since 14.0
+	 */
 	collectionViewIndexPathForIndexTitleAtIndex(collectionView: UICollectionView, title: string, index: number): NSIndexPath;
 
+	/**
+	 * @since 9.0
+	 */
 	collectionViewMoveItemAtIndexPathToIndexPath(collectionView: UICollectionView, sourceIndexPath: NSIndexPath, destinationIndexPath: NSIndexPath): void;
 
 	collectionViewNumberOfItemsInSection(collectionView: UICollectionView, section: number): number;
@@ -292,6 +313,9 @@ declare class FUIIndexCollectionViewDataSource extends NSObject implements UICol
 
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
 
+	/**
+	 * @since 14.0
+	 */
 	indexTitlesForCollectionView(collectionView: UICollectionView): NSArray<string>;
 
 	initWithIndexArrayDelegatePopulateCell(indexArray: FUIIndexArray, delegate: FUIIndexCollectionViewDataSourceDelegate, populateCell: (p1: UICollectionView, p2: NSIndexPath, p3: FIRDataSnapshot) => UICollectionViewCell): this;

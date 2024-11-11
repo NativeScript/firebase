@@ -3,30 +3,30 @@ declare class FUIArraySlice<ObjectType> extends NSObject {
 
 	static new<ObjectType>(): FUIArraySlice<ObjectType>; // inherited from NSObject
 
-	readonly backingArray: NSArray<ObjectType>;
+	readonly backingArray: NSArray<any>;
 
 	readonly count: number;
 
 	readonly endIndex: number;
 
 	readonly startIndex: number;
-	[index: number]: ObjectType;
+	[index: number]: any;
 
-	constructor(o: { array: NSArray<ObjectType> | ObjectType[] });
+	constructor(o: { array: NSArray<any> | any[] });
 
-	constructor(o: { array: NSArray<ObjectType> | ObjectType[]; startIndex: number; endIndex: number });
+	constructor(o: { array: NSArray<any> | any[]; startIndex: number; endIndex: number });
 
-	constructor(o: { array: NSArray<ObjectType> | ObjectType[]; startIndex: number; length: number });
+	constructor(o: { array: NSArray<any> | any[]; startIndex: number; length: number });
 
-	initWithArray(array: NSArray<ObjectType> | ObjectType[]): this;
+	initWithArray(array: NSArray<any> | any[]): this;
 
-	initWithArrayStartIndexEndIndex(array: NSArray<ObjectType> | ObjectType[], start: number, end: number): this;
+	initWithArrayStartIndexEndIndex(array: NSArray<any> | any[], start: number, end: number): this;
 
-	initWithArrayStartIndexLength(array: NSArray<ObjectType> | ObjectType[], start: number, length: number): this;
+	initWithArrayStartIndexLength(array: NSArray<any> | any[], start: number, length: number): this;
 
-	objectAtIndex(index: number): ObjectType;
+	objectAtIndex(index: number): any;
 
-	objectAtIndexedSubscript(index: number): ObjectType;
+	objectAtIndexedSubscript(index: number): any;
 
 	suffixFromIndex(index: number): FUIArraySlice<any>;
 }
@@ -104,12 +104,21 @@ declare class FUIFirestoreCollectionViewDataSource extends NSObject implements U
 
 	class(): typeof NSObject;
 
+	/**
+	 * @since 9.0
+	 */
 	collectionViewCanMoveItemAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath): boolean;
 
 	collectionViewCellForItemAtIndexPath(collectionView: UICollectionView, indexPath: NSIndexPath): UICollectionViewCell;
 
+	/**
+	 * @since 14.0
+	 */
 	collectionViewIndexPathForIndexTitleAtIndex(collectionView: UICollectionView, title: string, index: number): NSIndexPath;
 
+	/**
+	 * @since 9.0
+	 */
 	collectionViewMoveItemAtIndexPathToIndexPath(collectionView: UICollectionView, sourceIndexPath: NSIndexPath, destinationIndexPath: NSIndexPath): void;
 
 	collectionViewNumberOfItemsInSection(collectionView: UICollectionView, section: number): number;
@@ -118,6 +127,9 @@ declare class FUIFirestoreCollectionViewDataSource extends NSObject implements U
 
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
 
+	/**
+	 * @since 14.0
+	 */
 	indexTitlesForCollectionView(collectionView: UICollectionView): NSArray<string>;
 
 	initWithCollectionPopulateCell(collection: FUIBatchedArray, populateCell: (p1: UICollectionView, p2: NSIndexPath, p3: FIRDocumentSnapshot) => UICollectionViewCell): this;
@@ -240,7 +252,7 @@ declare class FUIFirestoreTableViewDataSource extends NSObject implements UITabl
 declare class FUILCS<ObjectType> extends NSObject {
 	static alloc<ObjectType>(): FUILCS<ObjectType>; // inherited from NSObject
 
-	static lcsWithInitialArrayResultArray<ObjectType>(initial: NSArray<ObjectType> | ObjectType[], result: NSArray<ObjectType> | ObjectType[]): NSArray<any>;
+	static lcsWithInitialArrayResultArray(initial: NSArray<any> | any[], result: NSArray<any> | any[]): NSArray<any>;
 
 	static new<ObjectType>(): FUILCS<ObjectType>; // inherited from NSObject
 }
@@ -252,31 +264,31 @@ declare class FUISnapshotArrayDiff<ObjectType> extends NSObject {
 
 	readonly changedIndexes: NSArray<number>;
 
-	readonly changedObjects: NSArray<ObjectType>;
+	readonly changedObjects: NSArray<any>;
 
 	readonly deletedIndexes: NSArray<number>;
 
-	readonly deletedObjects: NSArray<ObjectType>;
+	readonly deletedObjects: NSArray<any>;
 
-	readonly initial: NSArray<ObjectType>;
+	readonly initial: NSArray<any>;
 
 	readonly insertedIndexes: NSArray<number>;
 
-	readonly insertedObjects: NSArray<ObjectType>;
+	readonly insertedObjects: NSArray<any>;
 
 	readonly movedInitialIndexes: NSArray<number>;
 
-	readonly movedObjects: NSArray<ObjectType>;
+	readonly movedObjects: NSArray<any>;
 
 	readonly movedResultIndexes: NSArray<number>;
 
-	readonly result: NSArray<ObjectType>;
+	readonly result: NSArray<any>;
 
-	constructor(o: { initialArray: NSArray<ObjectType> | ObjectType[]; resultArray: NSArray<ObjectType> | ObjectType[] });
+	constructor(o: { initialArray: NSArray<any> | any[]; resultArray: NSArray<any> | any[] });
 
 	constructor(o: { initialArray: NSArray<FIRDocumentSnapshot> | FIRDocumentSnapshot[]; resultArray: NSArray<FIRDocumentSnapshot> | FIRDocumentSnapshot[]; documentChanges: NSArray<FIRDocumentChange> | FIRDocumentChange[] });
 
-	initWithInitialArrayResultArray(initialArray: NSArray<ObjectType> | ObjectType[], resultArray: NSArray<ObjectType> | ObjectType[]): this;
+	initWithInitialArrayResultArray(initialArray: NSArray<any> | any[], resultArray: NSArray<any> | any[]): this;
 
 	initWithInitialArrayResultArrayDocumentChanges(initial: NSArray<FIRDocumentSnapshot> | FIRDocumentSnapshot[], result: NSArray<FIRDocumentSnapshot> | FIRDocumentSnapshot[], documentChanges: NSArray<FIRDocumentChange> | FIRDocumentChange[]): this;
 }
@@ -286,9 +298,9 @@ declare class FUIUnorderedPair<ObjectType> extends NSObject implements NSCopying
 
 	static new<ObjectType>(): FUIUnorderedPair<ObjectType>; // inherited from NSObject
 
-	readonly left: ObjectType;
+	readonly left: any;
 
-	readonly right: ObjectType;
+	readonly right: any;
 
 	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
 }

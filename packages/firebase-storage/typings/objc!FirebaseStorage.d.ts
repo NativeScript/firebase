@@ -1,3 +1,6 @@
+/**
+ * @since 13
+ */
 declare class FIRStorage extends NSObject {
 	static alloc(): FIRStorage; // inherited from NSObject
 
@@ -13,6 +16,8 @@ declare class FIRStorage extends NSObject {
 
 	readonly app: FIRApp;
 
+	callbackQueue: NSObject & OS_dispatch_queue;
+
 	maxDownloadRetryTime: number;
 
 	maxOperationRetryTime: number;
@@ -21,8 +26,14 @@ declare class FIRStorage extends NSObject {
 
 	uploadChunkSizeBytes: number;
 
+	/**
+	 * @since 13
+	 */
 	reference(): FIRStorageReference;
 
+	/**
+	 * @since 13
+	 */
 	referenceForURL(url: string): FIRStorageReference;
 
 	referenceWithPath(path: string): FIRStorageReference;
@@ -30,6 +41,9 @@ declare class FIRStorage extends NSObject {
 	useEmulatorWithHostPort(host: string, port: number): void;
 }
 
+/**
+ * @since 13
+ */
 declare class FIRStorageDownloadTask extends FIRStorageObservableTask implements FIRStorageTaskManagement, SDWebImageOperation {
 	static alloc(): FIRStorageDownloadTask; // inherited from NSObject
 
@@ -104,8 +118,17 @@ declare const enum FIRStorageErrorCode {
 	Cancelled = -13040,
 
 	InvalidArgument = -13050,
+
+	BucketMismatch = -13051,
+
+	InternalError = -13052,
+
+	PathError = -13053,
 }
 
+/**
+ * @since 13
+ */
 declare class FIRStorageListResult extends NSObject {
 	static alloc(): FIRStorageListResult; // inherited from NSObject
 
@@ -118,6 +141,9 @@ declare class FIRStorageListResult extends NSObject {
 	readonly prefixes: NSArray<FIRStorageReference>;
 }
 
+/**
+ * @since 13
+ */
 declare class FIRStorageMetadata extends NSObject {
 	static alloc(): FIRStorageMetadata; // inherited from NSObject
 
@@ -166,6 +192,9 @@ declare class FIRStorageMetadata extends NSObject {
 	initWithDictionary(dictionary: NSDictionary<string, NSObject>): this;
 }
 
+/**
+ * @since 13
+ */
 declare class FIRStorageObservableTask extends FIRStorageTask {
 	static alloc(): FIRStorageObservableTask; // inherited from NSObject
 
@@ -180,6 +209,9 @@ declare class FIRStorageObservableTask extends FIRStorageTask {
 	removeObserverWithHandle(handle: string): void;
 }
 
+/**
+ * @since 13
+ */
 declare class FIRStorageReference extends NSObject {
 	static alloc(): FIRStorageReference; // inherited from NSObject
 
@@ -232,6 +264,9 @@ declare class FIRStorageReference extends NSObject {
 	writeToFileCompletion(fileURL: NSURL, completion: (p1: NSURL, p2: NSError) => void): FIRStorageDownloadTask;
 }
 
+/**
+ * @since 13
+ */
 declare class FIRStorageTask extends NSObject {
 	static alloc(): FIRStorageTask; // inherited from NSObject
 
@@ -253,6 +288,9 @@ declare var FIRStorageTaskManagement: {
 	prototype: FIRStorageTaskManagement;
 };
 
+/**
+ * @since 13
+ */
 declare class FIRStorageTaskSnapshot extends NSObject {
 	static alloc(): FIRStorageTaskSnapshot; // inherited from NSObject
 
@@ -285,6 +323,9 @@ declare const enum FIRStorageTaskStatus {
 	Failure = 5,
 }
 
+/**
+ * @since 13
+ */
 declare class FIRStorageUploadTask extends FIRStorageObservableTask implements FIRStorageTaskManagement {
 	static alloc(): FIRStorageUploadTask; // inherited from NSObject
 

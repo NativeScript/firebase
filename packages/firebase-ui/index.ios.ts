@@ -173,7 +173,7 @@ export class ActionCodeSettings implements IActionCodeSettings {
 
 	set iOSBundleId(id) {
 		if (this.native) {
-			this.native.setIOSBundleID(id);
+			this.native.iOSBundleID = id;
 		}
 	}
 }
@@ -386,7 +386,7 @@ export class IdpResponse {
 	}
 
 	get isNewUser(): boolean {
-		return this.native.additionalUserInfo?.newUser ?? false;
+		return this.native.additionalUserInfo?.newUser() ?? false;
 	}
 
 	get hasCredentialForLinking(): boolean {

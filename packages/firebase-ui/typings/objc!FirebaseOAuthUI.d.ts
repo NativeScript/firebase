@@ -1,12 +1,24 @@
 declare class FUIOAuth extends NSObject implements FUIAuthProvider {
 	static alloc(): FUIOAuth; // inherited from NSObject
 
+	/**
+	 * @since 13.0
+	 */
 	static appleAuthProvider(): FUIOAuth;
 
+	/**
+	 * @since 13.0
+	 */
 	static appleAuthProviderWithAuthUI(authUI: FUIAuth): FUIOAuth;
 
+	/**
+	 * @since 13.0
+	 */
 	static appleAuthProviderWithAuthUIUserInterfaceStyle(authUI: FUIAuth, userInterfaceStyle: UIUserInterfaceStyle): FUIOAuth;
 
+	/**
+	 * @since 13.0
+	 */
 	static appleAuthProviderWithUserInterfaceStyle(userInterfaceStyle: UIUserInterfaceStyle): FUIOAuth;
 
 	static githubAuthProvider(): FUIOAuth;

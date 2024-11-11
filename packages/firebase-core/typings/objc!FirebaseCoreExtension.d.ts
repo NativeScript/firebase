@@ -11,13 +11,11 @@ declare class FIRComponent extends NSObject {
 
 	static componentWithProtocolCreationBlock(protocol: any /* Protocol */, creationBlock: (p1: FIRComponentContainer, p2: interop.Pointer | interop.Reference<boolean>) => any): FIRComponent;
 
-	static componentWithProtocolInstantiationTimingDependenciesCreationBlock(protocol: any /* Protocol */, instantiationTiming: FIRInstantiationTiming, dependencies: NSArray<FIRDependency> | FIRDependency[], creationBlock: (p1: FIRComponentContainer, p2: interop.Pointer | interop.Reference<boolean>) => any): FIRComponent;
+	static componentWithProtocolInstantiationTimingCreationBlock(protocol: any /* Protocol */, instantiationTiming: FIRInstantiationTiming, creationBlock: (p1: FIRComponentContainer, p2: interop.Pointer | interop.Reference<boolean>) => any): FIRComponent;
 
 	static new(): FIRComponent; // inherited from NSObject
 
 	readonly creationBlock: (p1: FIRComponentContainer, p2: interop.Pointer | interop.Reference<boolean>) => any;
-
-	readonly dependencies: NSArray<FIRDependency>;
 
 	readonly instantiationTiming: FIRInstantiationTiming;
 
@@ -44,7 +42,7 @@ declare var FIRComponentLifecycleMaintainer: {
 declare class FIRComponentType<T> extends NSObject {
 	static alloc<T>(): FIRComponentType<T>; // inherited from NSObject
 
-	static instanceForProtocolInContainer(protocol: any /* Protocol */, container: FIRComponentContainer): T;
+	static instanceForProtocolInContainer(protocol: any /* Protocol */, container: FIRComponentContainer): any;
 
 	static new<T>(): FIRComponentType<T>; // inherited from NSObject
 }
@@ -59,20 +57,6 @@ declare const enum FIRDailyHeartbeatCode {
 	None = 0,
 
 	Some = 2,
-}
-
-declare class FIRDependency extends NSObject {
-	static alloc(): FIRDependency; // inherited from NSObject
-
-	static dependencyWithProtocol(protocol: any /* Protocol */): FIRDependency;
-
-	static dependencyWithProtocolIsRequired(protocol: any /* Protocol */, required: boolean): FIRDependency;
-
-	static new(): FIRDependency; // inherited from NSObject
-
-	readonly isRequired: boolean;
-
-	readonly protocol: any /* Protocol */;
 }
 
 declare function FIRGetLoggerLevel(): FIRLoggerLevel;
@@ -98,11 +82,23 @@ declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerP
 
 	constructor(o: { appID: string });
 
+	/**
+	 * @since 13.0
+	 */
+	asyncHeaderValueWithCompletionHandler(completionHandler: (p1: string) => void): void;
+
 	class(): typeof NSObject;
 
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
 
 	flushHeartbeatsIntoPayload(): FIRHeartbeatsPayload;
+
+	/**
+	 * @since 13.0
+	 */
+	flushHeartbeatsIntoPayloadWithCompletionHandler(completionHandler: (p1: FIRHeartbeatsPayload) => void): void;
+
+	headerValue(): string;
 
 	heartbeatCodeForToday(): FIRDailyHeartbeatCode;
 
@@ -130,7 +126,12 @@ declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerP
 }
 
 interface FIRHeartbeatLoggerProtocol extends NSObjectProtocol {
-	flushHeartbeatsIntoPayload(): FIRHeartbeatsPayload;
+	/**
+	 * @since 13.0
+	 */
+	asyncHeaderValueWithCompletionHandler(completionHandler: (p1: string) => void): void;
+
+	headerValue(): string;
 
 	heartbeatCodeForToday(): FIRDailyHeartbeatCode;
 
@@ -150,23 +151,25 @@ declare const enum FIRInstantiationTiming {
 
 declare function FIRIsLoggableLevel(loggerLevel: FIRLoggerLevel, analyticsComponent: boolean): boolean;
 
+declare function FIRIsLoggableLevelDebug(): boolean;
+
+declare function FIRIsLoggableLevelError(): boolean;
+
+declare function FIRIsLoggableLevelNotice(): boolean;
+
+declare function FIRIsLoggableLevelWarning(): boolean;
+
 interface FIRLibrary {}
 declare var FIRLibrary: {
 	prototype: FIRLibrary;
 
 	componentsToRegister(): NSArray<FIRComponent>;
-
-	configureWithApp?(app: FIRApp): void;
 };
-
-declare function FIRLogDebugSwift(service: string, messageCode: string, message: string): void;
-
-declare function FIRLogWarningSwift(service: string, messageCode: string, message: string): void;
 
 declare class FIRLoggerWrapper extends NSObject {
 	static alloc(): FIRLoggerWrapper; // inherited from NSObject
 
-	static logWithLevelServiceCodeMessage(level: FIRLoggerLevel, service: string, code: string, message: string): void;
+	static logWithLevelServiceCodeMessage(level: FIRLoggerLevel, category: string, code: string, message: string): void;
 
 	static new(): FIRLoggerWrapper; // inherited from NSObject
 }
@@ -174,6 +177,14 @@ declare class FIRLoggerWrapper extends NSObject {
 declare function FIRSetAnalyticsDebugMode(analyticsDebugMode: boolean): void;
 
 declare function FIRSetLoggerLevel(loggerLevel: FIRLoggerLevel): void;
+
+declare function FIRSetLoggerLevelDebug(): void;
+
+declare function FIRSetLoggerLevelError(): void;
+
+declare function FIRSetLoggerLevelNotice(): void;
+
+declare function FIRSetLoggerLevelWarning(): void;
 
 declare var FirebaseCoreExtensionVersionNumber: number;
 
@@ -226,8 +237,6 @@ declare var kFIRProjectID: string;
 declare var kFIRStorageBucket: string;
 
 declare var kFIRTrackingID: string;
-
-declare var kFirebaseCoreDefaultsSuiteName: string;
 
 declare var kFirebaseCoreErrorDomain: string;
 
