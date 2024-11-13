@@ -1,2 +1,2 @@
 platform :ios, '13.0'
-pod 'Firebase/Messaging', '~>11.4.0'
+pod 'Firebase/Messaging', '~>11.5.0'
