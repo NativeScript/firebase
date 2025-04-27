@@ -1,1 +1,2 @@
-pod 'FirebaseUI', '~> 13.0'
+platform :ios, '13.0'
+pod 'FirebaseUI', '~> 14.2.0'

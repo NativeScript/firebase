@@ -1,2 +1,2 @@
-platform :ios, '12.0'
-pod 'Firebase/Storage', '~>10.24.0'
+platform :ios, '13.0'
+pod 'Firebase/Storage', '~>11.5.0'

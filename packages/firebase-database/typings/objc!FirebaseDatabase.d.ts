@@ -38,6 +38,9 @@ declare class FIRDataSnapshot extends NSObject {
 	valueInExportFormat(): any;
 }
 
+/**
+ * @since 12.0
+ */
 declare class FIRDatabase extends NSObject {
 	static alloc(): FIRDatabase; // inherited from NSObject
 
@@ -56,6 +59,8 @@ declare class FIRDatabase extends NSObject {
 	static setLoggingEnabled(enabled: boolean): void;
 
 	readonly app: FIRApp;
+
+	callbackQueue: NSObject & OS_dispatch_queue;
 
 	persistenceCacheSizeBytes: number;
 

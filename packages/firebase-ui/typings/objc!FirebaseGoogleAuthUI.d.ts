@@ -67,8 +67,6 @@ declare class FUIGoogleAuth extends NSObject implements FUIAuthProvider {
 
 	performSelectorWithObjectWithObject(aSelector: string, object1: any, object2: any): any;
 
-	requestScopesWithPresentingViewControllerCompletion(presentingViewController: UIViewController, completion: (p1: FIRAuthCredential, p2: NSError, p3: (p1: FIRUser, p2: NSError) => void, p4: NSDictionary<string, any>) => void): void;
-
 	respondsToSelector(aSelector: string): boolean;
 
 	retainCount(): number;

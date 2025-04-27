@@ -1,3 +1,36 @@
+interface FIRCLSPersistenceLog {
+	debugLogWithMessage(message: string): void;
+
+	updateRolloutsStateToPersistenceWithRolloutsReportID(rollouts: NSData, reportID: string): void;
+}
+declare var FIRCLSPersistenceLog: {
+	prototype: FIRCLSPersistenceLog;
+};
+
+declare class FIRCLSRemoteConfigManager extends NSObject {
+	static alloc(): FIRCLSRemoteConfigManager; // inherited from NSObject
+
+	static new(): FIRCLSRemoteConfigManager; // inherited from NSObject
+
+	readonly rolloutAssignment: NSArray<FIRRolloutAssignment>;
+
+	constructor(o: { remoteConfig: FIRRemoteConfigInterop; persistenceDelegate: FIRCLSPersistenceLog });
+
+	getRolloutAssignmentsEncodedJsonString(): string;
+
+	initWithRemoteConfigPersistenceDelegate(remoteConfig: FIRRemoteConfigInterop, persistenceDelegate: FIRCLSPersistenceLog): this;
+
+	updateRolloutsStateWithRolloutsStateReportID(rolloutsState: FIRRolloutsState, reportID: string): void;
+}
+
+declare class FIRCLSwiftFileUtility extends NSObject {
+	static alloc(): FIRCLSwiftFileUtility; // inherited from NSObject
+
+	static new(): FIRCLSwiftFileUtility; // inherited from NSObject
+
+	static stringToHexConverterFor(string: string): string;
+}
+
 declare class FIRCrashlytics extends NSObject {
 	static alloc(): FIRCrashlytics; // inherited from NSObject
 

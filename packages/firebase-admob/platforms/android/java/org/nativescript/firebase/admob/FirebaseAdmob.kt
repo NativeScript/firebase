@@ -3,10 +3,7 @@ package org.nativescript.firebase.admob
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,7 +13,6 @@ import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.formats.AdManagerAdViewOptions
-import com.google.android.gms.ads.formats.ShouldDelayBannerRenderingListener
 import com.google.android.gms.ads.initialization.AdapterStatus
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.NativeAdOptions
@@ -446,14 +442,14 @@ class FirebaseAdmob {
               )
             }
 
-            if (it.has(AD_MANAGER_AD_VIEW_OPTIONS_SHOULD_DELAY_BANNER_RENDERING_KEY)) {
-              options.setShouldDelayBannerRenderingListener(object :
-                ShouldDelayBannerRenderingListener {
-                override fun shouldDelayBannerRendering(p0: Runnable): Boolean {
-                  return it.getBoolean(AD_MANAGER_AD_VIEW_OPTIONS_SHOULD_DELAY_BANNER_RENDERING_KEY)
-                }
-              })
-            }
+//            if (it.has(AD_MANAGER_AD_VIEW_OPTIONS_SHOULD_DELAY_BANNER_RENDERING_KEY)) {
+//              options.setShouldDelayBannerRenderingListener(object :
+//                ShouldDelayBannerRenderingListener {
+//                override fun shouldDelayBannerRendering(p0: Runnable): Boolean {
+//                  return it.getBoolean(AD_MANAGER_AD_VIEW_OPTIONS_SHOULD_DELAY_BANNER_RENDERING_KEY)
+//                }
+//              })
+//            }
             adLoader.withAdManagerAdViewOptions(options.build())
 
           }
@@ -825,10 +821,50 @@ class FirebaseAdmob {
       }
     }
 
+    private fun buildManagerRequest(adRequest: AdManagerAdRequest.Builder, request: String) {
+      try {
+        val json = JSONObject(request)
+        if (json.has(CONTENT_URL_KEY)) {
+          adRequest.setContentUrl(
+            json.getString(CONTENT_URL_KEY)
+          )
+        }
+
+        json.optJSONArray(KEYWORDS_KEY)?.let {
+          for (i in 0 until it.length()) {
+            adRequest.addKeyword(it.getString(i))
+          }
+        }
+
+        val extras = Bundle()
+
+
+        if (json.has(REQUEST_NON_PERSONALIZED_ADS_ONLY_KEY)) {
+          extras.putString("npa", "1")
+        }
+
+        json.optJSONObject(NETWORK_EXTRAS_KEY)?.let {
+          for (key in it.keys()) {
+            extras.putString(
+              key, it.getString(key)
+            )
+          }
+        }
+
+        adRequest.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
+
+        if (json.has(REQUEST_AGENT_KEY)) {
+          adRequest.setRequestAgent(json.getString(REQUEST_AGENT_KEY))
+        }
+
+      } catch (e: Exception) {
+      }
+    }
+
     private fun buildAdManagerRequest(request: String): AdManagerAdRequest {
       val adRequest = AdManagerAdRequest.Builder()
 
-      buildRequest(adRequest, request)
+      buildManagerRequest(adRequest, request)
       try {
         val json = JSONObject(request)
 

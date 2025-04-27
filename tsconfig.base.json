@@ -22,6 +22,7 @@
 		],
 		"paths": {
 			"@demo/shared": ["tools/demo/index.ts"],
+			"@nativescript/*": ["packages/*"],
 			"@nativescript/firebase-admob": ["packages/firebase-admob/index.d.ts"],
 			"@nativescript/firebase-admob/angular": ["packages/firebase-admob/angular/index.ts"],
 			"@nativescript/firebase-analytics": ["packages/firebase-analytics/index.d.ts"],
@@ -41,8 +42,7 @@
 			"@nativescript/firebase-performance": ["packages/firebase-performance/index.d.ts"],
 			"@nativescript/firebase-remote-config": ["packages/firebase-remote-config/index.d.ts"],
 			"@nativescript/firebase-storage": ["packages/firebase-storage/index.d.ts"],
-			"@nativescript/firebase-ui": ["packages/firebase-ui/index.d.ts"],
-			"@nativescript/*": ["packages/*"]
+			"@nativescript/firebase-ui": ["packages/firebase-ui/index.d.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

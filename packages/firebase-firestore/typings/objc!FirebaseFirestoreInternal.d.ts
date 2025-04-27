@@ -99,6 +99,8 @@ declare class FIRDocumentReference extends NSObject {
 
 	addSnapshotListenerWithIncludeMetadataChangesListener(includeMetadataChanges: boolean, listener: (p1: FIRDocumentSnapshot, p2: NSError) => void): FIRListenerRegistration;
 
+	addSnapshotListenerWithOptionsListener(options: FIRSnapshotListenOptions, listener: (p1: FIRDocumentSnapshot, p2: NSError) => void): FIRListenerRegistration;
+
 	collectionWithPath(collectionPath: string): FIRCollectionReference;
 
 	deleteDocument(): void;
@@ -180,6 +182,8 @@ declare class FIRFieldValue extends NSObject {
 	static fieldValueForServerTimestamp(): FIRFieldValue;
 
 	static new(): FIRFieldValue; // inherited from NSObject
+
+	static vectorWithArray(array: NSArray<number> | number[]): FIRVectorValue;
 }
 
 declare class FIRFilter extends NSObject {
@@ -341,6 +345,8 @@ declare class FIRFirestoreSettings extends NSObject implements NSCopying {
 
 	cacheSizeBytes: number;
 
+	dispatchQueue: NSObject & OS_dispatch_queue;
+
 	host: string;
 
 	persistenceEnabled: boolean;
@@ -372,6 +378,12 @@ declare class FIRGeoPoint extends NSObject implements NSCopying {
 	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
 
 	initWithLatitudeLongitude(latitude: number, longitude: number): this;
+}
+
+declare const enum FIRListenSource {
+	Default = 0,
+
+	Cache = 1,
 }
 
 interface FIRListenerRegistration extends NSObjectProtocol {
@@ -496,6 +508,8 @@ declare class FIRQuery extends NSObject {
 
 	addSnapshotListenerWithIncludeMetadataChangesListener(includeMetadataChanges: boolean, listener: (p1: FIRQuerySnapshot, p2: NSError) => void): FIRListenerRegistration;
 
+	addSnapshotListenerWithOptionsListener(options: FIRSnapshotListenOptions, listener: (p1: FIRQuerySnapshot, p2: NSError) => void): FIRListenerRegistration;
+
 	aggregate(aggregateFields: NSArray<FIRAggregateField> | FIRAggregateField[]): FIRAggregateQuery;
 
 	getDocumentsWithCompletion(completion: (p1: FIRQuerySnapshot, p2: NSError) => void): void;
@@ -609,6 +623,20 @@ declare const enum FIRServerTimestampBehavior {
 	Previous = 2,
 }
 
+declare class FIRSnapshotListenOptions extends NSObject {
+	static alloc(): FIRSnapshotListenOptions; // inherited from NSObject
+
+	static new(): FIRSnapshotListenOptions; // inherited from NSObject
+
+	readonly includeMetadataChanges: boolean;
+
+	readonly source: FIRListenSource;
+
+	optionsWithIncludeMetadataChanges(includeMetadataChanges: boolean): FIRSnapshotListenOptions;
+
+	optionsWithSource(source: FIRListenSource): FIRSnapshotListenOptions;
+}
+
 declare class FIRSnapshotMetadata extends NSObject {
 	static alloc(): FIRSnapshotMetadata; // inherited from NSObject
 
@@ -617,32 +645,6 @@ declare class FIRSnapshotMetadata extends NSObject {
 	readonly fromCache: boolean;
 
 	readonly pendingWrites: boolean;
-}
-
-declare class FIRTimestamp extends NSObject implements NSCopying {
-	static alloc(): FIRTimestamp; // inherited from NSObject
-
-	static new(): FIRTimestamp; // inherited from NSObject
-
-	static timestamp(): FIRTimestamp;
-
-	static timestampWithDate(date: Date): FIRTimestamp;
-
-	static timestampWithSecondsNanoseconds(seconds: number, nanoseconds: number): FIRTimestamp;
-
-	readonly nanoseconds: number;
-
-	readonly seconds: number;
-
-	constructor(o: { seconds: number; nanoseconds: number });
-
-	compare(other: FIRTimestamp): NSComparisonResult;
-
-	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
-
-	dateValue(): Date;
-
-	initWithSecondsNanoseconds(seconds: number, nanoseconds: number): this;
 }
 
 declare class FIRTransaction extends NSObject {
@@ -671,6 +673,18 @@ declare class FIRTransactionOptions extends NSObject implements NSCopying {
 	maxAttempts: number;
 
 	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
+}
+
+declare class FIRVectorValue extends NSObject {
+	static alloc(): FIRVectorValue; // inherited from NSObject
+
+	static new(): FIRVectorValue; // inherited from NSObject
+
+	readonly array: NSArray<number>;
+
+	constructor(o: { array: NSArray<number> | number[] });
+
+	initWithArray(array: NSArray<number> | number[]): this;
 }
 
 declare class FIRWriteBatch extends NSObject {

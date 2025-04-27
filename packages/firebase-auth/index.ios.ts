@@ -139,11 +139,11 @@ export class User implements IUser {
 	}
 
 	get anonymous() {
-		return this.native?.anonymous;
+		return this.native?.anonymous();
 	}
 
 	get emailVerified(): boolean {
-		return this.native?.emailVerified;
+		return this.native?.emailVerified();
 	}
 
 	get email(): string {
@@ -626,7 +626,7 @@ export class ActionCodeSettings implements IActionCodeSettings {
 
 	set iOSBundleId(id) {
 		if (this.native) {
-			this.native.setIOSBundleID(id);
+			this.native.iOSBundleID = id;
 		}
 	}
 }

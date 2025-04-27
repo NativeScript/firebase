@@ -566,12 +566,12 @@ export class Admob implements IAdmob {
 
 		if (typeof requestConfiguration?.tagForChildDirectedTreatment === 'boolean') {
 			this._requestConfiguration.tagForChildDirectedTreatment = requestConfiguration.tagForChildDirectedTreatment;
-			GADMobileAds.sharedInstance().requestConfiguration.tagForChildDirectedTreatment(requestConfiguration.tagForChildDirectedTreatment);
+			GADMobileAds.sharedInstance().requestConfiguration.tagForChildDirectedTreatment = Number(requestConfiguration.tagForChildDirectedTreatment);
 		}
 
 		if (typeof requestConfiguration?.tagForUnderAgeOfConsent === 'boolean') {
 			this._requestConfiguration.tagForUnderAgeOfConsent = requestConfiguration.tagForUnderAgeOfConsent;
-			GADMobileAds.sharedInstance().requestConfiguration.tagForUnderAgeOfConsent(requestConfiguration.tagForUnderAgeOfConsent);
+			GADMobileAds.sharedInstance().requestConfiguration.tagForUnderAgeOfConsent = Number(requestConfiguration.tagForUnderAgeOfConsent);
 		}
 
 		if (Array.isArray(requestConfiguration?.testDevices)) {

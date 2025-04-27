@@ -7,6 +7,8 @@ declare class FIRHeartbeatController extends NSObject {
 
 	flush(): FIRHeartbeatsPayload;
 
+	flushAsyncWithCompletionHandler(completionHandler: (p1: FIRHeartbeatsPayload) => void): void;
+
 	flushHeartbeatFromToday(): FIRHeartbeatsPayload;
 
 	initWithId(id: string): this;
