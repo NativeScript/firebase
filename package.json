@@ -17,37 +17,41 @@
 	},
 	"private": true,
 	"devDependencies": {
-		"@angular-devkit/build-angular": "^18.0.0",
-		"@angular/animations": "^18.0.0",
-		"@angular/common": "^18.0.0",
-		"@angular/compiler": "^18.0.0",
-		"@angular/compiler-cli": "^18.0.0",
-		"@angular/core": "^18.0.0",
-		"@angular/forms": "^18.0.0",
-		"@angular/platform-browser": "^18.0.0",
-		"@angular/platform-browser-dynamic": "^18.0.0",
-		"@angular/router": "^18.0.0",
-		"@nativescript/angular": "^18.0.0",
+		"@angular-devkit/build-angular": "^19.0.0",
+		"@angular/animations": "^19.0.0",
+		"@angular/common": "^19.0.0",
+		"@angular/compiler": "^19.0.0",
+		"@angular/compiler-cli": "^19.0.0",
+		"@angular/core": "^19.0.0",
+		"@angular/forms": "^19.0.0",
+		"@angular/platform-browser": "^19.0.0",
+		"@angular/platform-browser-dynamic": "^19.0.0",
+		"@angular/router": "^19.0.0",
+		"@nativescript/angular": "^19.0.0",
 		"@nativescript/core": "~8.8.0",
-		"@nativescript/plugin-tools": "5.4.1",
+		"@nativescript/plugin-tools": "5.5.1",
 		"@nativescript/types": "~8.8.0",
 		"@nativescript/webpack": "~5.0.5",
-		"@ngtools/webpack": "^18.0.0",
+		"@ngtools/webpack": "^19.0.0",
+		"@typescript-eslint/eslint-plugin": "^8.13.0",
+		"@typescript-eslint/parser": "^8.13.0",
+		"@typescript-eslint/utils": "^8.13.0",
 		"conventional-changelog-cli": "^2.2.2",
 		"husky": "~9.0.0",
 		"nativescript-vue": "~2.9.0",
 		"nativescript-vue-template-compiler": "~2.9.0",
-		"ng-packagr": "^18.0.0",
+		"ng-packagr": "^19.0.0",
 		"rxjs": "~7.8.0",
 		"stacktrace-js": "~2.0.2",
-		"typescript": "~5.5.0",
+		"typescript": "~5.6.0",
 		"vue": "~2.6.12",
-		"zone.js": "~0.14.0"
+		"zone.js": "~0.15.0"
 	},
 	"lint-staged": {
 		"**/*.{js,ts,scss,json,html}": [
 			"npx prettier --write"
 		]
 	},
-	"packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+	"packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+	"dependencies": {}
 }
