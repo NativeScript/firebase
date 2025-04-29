@@ -9,8 +9,6 @@
 			"@nativescript/firebase-database": ["packages/firebase-database/index.d.ts"],
 			"@nativescript/firebase-firestore": ["packages/firebase-firestore/index.d.ts"],
 			"@nativescript/firebase-analytics": ["packages/firebase-analytics/index.d.ts"],
-			"@nativescript/firebase-admob": ["packages/firebase-admob/index.d.ts"],
-			"@nativescript/firebase-admob/angular": ["packages/firebase-admob/angular/index.ts"],
 			"@nativescript/firebase-crashlytics": ["packages/firebase-crashlytics/index.d.ts"],
 			"@nativescript/firebase-app-check": ["packages/firebase-app-check/index.d.ts"],
 			"@nativescript/firebase-remote-config": ["packages/firebase-remote-config/index.d.ts"],

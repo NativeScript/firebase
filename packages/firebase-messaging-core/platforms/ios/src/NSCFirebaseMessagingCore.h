@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^BoolCallback)(BOOL success, NSError* _Nullable error);
-typedef void(^CompletableDictionaryCallback)(NSDictionary* _Nullable value, void(^_Nonnull complete)(void));
+typedef void(^CompletableDictionaryCallback)(NSDictionary* _Nullable, UNNotificationResponse* _Nullable response, value, void(^_Nonnull complete)(void));
 typedef void(^StringCallback)(NSString* _Nullable value);
 
 @interface NSCFirebaseMessagingCore: NSObject

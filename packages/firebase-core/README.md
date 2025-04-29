@@ -4,7 +4,6 @@ A plugin to initialize [FirebaseApp](https://firebase.google.com/docs/reference/
 
 Use this plugin with any of the following plugins:
 
-- [@nativescript/firebase-admob](https://docs.nativescript.org/plugins/firebase-admob)
 - [@nativescript/firebase-analytics](https://docs.nativescript.org/plugins/firebase-analytics)
 - [@nativescript/firebase-app-check](https://docs.nativescript.org/plugins/firebase-app-check)
 - [@nativescript/firebase-app-check-debug](https://docs.nativescript.org/plugins/firebase-app-check-debug)

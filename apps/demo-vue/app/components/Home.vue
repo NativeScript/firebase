@@ -18,7 +18,6 @@
 
 <script lang="ts">
 import Vue from 'nativescript-vue';
-import Admob from '../plugin-demos/firebase-admob.vue';
 import Analytics from '../plugin-demos/firebase-analytics.vue';
 import AppCheck from '../plugin-demos/firebase-app-check.vue';
 import AppCheckDebug from '../plugin-demos/firebase-app-check-debug.vue';
@@ -38,10 +37,6 @@ import RemoteConfig from '../plugin-demos/firebase-remote-config.vue';
 import Storage from '../plugin-demos/firebase-storage.vue';
 
 const routes = [
-	{
-		name: 'firebase-admob',
-		detail: Admob,
-	},
 	{
 		name: 'firebase-analytics',
 		detail: Analytics,
@@ -129,9 +124,6 @@ export default Vue.extend({
 		},
 		demos() {
 			return [
-				{
-					name: 'firebase-admob',
-				},
 				{
 					name: 'firebase-analytics',
 				},

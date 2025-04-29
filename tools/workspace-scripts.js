@@ -116,13 +116,6 @@ module.exports = {
 					description: '@nativescript/firebase-analytics: Build',
 				},
 			},
-			// @nativescript/firebase-admob
-			'firebase-admob': {
-				build: {
-					script: 'nx run firebase-admob:build.all',
-					description: '@nativescript/firebase-admob: Build',
-				},
-			},
 			// @nativescript/firebase-crashlytics
 			'firebase-crashlytics': {
 				build: {
@@ -243,10 +236,6 @@ module.exports = {
 			'firebase-analytics': {
 				script: 'nx run firebase-analytics:focus',
 				description: 'Focus on @nativescript/firebase-analytics',
-			},
-			'firebase-admob': {
-				script: 'nx run firebase-admob:focus',
-				description: 'Focus on @nativescript/firebase-admob',
 			},
 			'firebase-crashlytics': {
 				script: 'nx run firebase-crashlytics:focus',

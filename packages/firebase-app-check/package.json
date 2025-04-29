@@ -1,6 +1,6 @@
 {
 	"name": "@nativescript/firebase-app-check",
-	"version": "3.4.0-alpha.1",
+	"version": "4.0.0",
 	"description": "NativeScript Firebase - App Check",
 	"main": "index",
 	"typings": "index.d.ts",

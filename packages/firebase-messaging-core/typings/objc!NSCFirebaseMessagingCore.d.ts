@@ -5,9 +5,9 @@ declare class NSCFirebaseMessagingCore extends NSObject {
 
 	static new(): NSCFirebaseMessagingCore; // inherited from NSObject
 
-	static onMessageCallback: (p1: NSDictionary<any, any>) => void;
+	static onMessageCallback: (p1: NSDictionary<any, any>, p2?: UNNotificationResponse) => void;
 
-	static onNotificationTapCallback: (p1: NSDictionary<any, any>) => void;
+	static onNotificationTapCallback: (p1: NSDictionary<any, any>, p2?: UNNotificationResponse) => void;
 
 	static onTokenCallback: (p1: string) => void;
 
