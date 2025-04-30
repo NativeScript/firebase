@@ -49,7 +49,6 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
     }
     
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        if(NSCFirebaseMessagingCore.)
         let remoteNotification = response.notification.request.content.userInfo
         if (remoteNotification["gcm.message_id"] != nil) {
             var message = parseNotification(response.notification)

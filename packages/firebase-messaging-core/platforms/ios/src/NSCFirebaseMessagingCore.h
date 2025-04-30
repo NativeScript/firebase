@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <UserNotifications/UserNotifications.h>
 
 typedef void(^BoolCallback)(BOOL success, NSError* _Nullable error);
-typedef void(^CompletableDictionaryCallback)(NSDictionary* _Nullable, UNNotificationResponse* _Nullable response, value, void(^_Nonnull complete)(void));
+typedef void(^CompletableDictionaryCallback)(NSDictionary* _Nullable, UNNotificationResponse* _Nullable response, void(^_Nonnull complete)(void));
 typedef void(^StringCallback)(NSString* _Nullable value);
 
 @interface NSCFirebaseMessagingCore: NSObject
