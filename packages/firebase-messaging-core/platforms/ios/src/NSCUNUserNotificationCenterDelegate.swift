@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import NSCFirebaseMessagingCore
 
-struct OriginalDelegateRespondsTo {
+struct FirebaseOriginalDelegateRespondsTo {
     var willPresentNotification: Bool
     var didReceiveNotificationResponse:Bool
     var openSettingsForNotification: Bool
@@ -17,7 +17,7 @@ public class NSCUNUserNotificationCenterDelegate: NSObject, UNUserNotificationCe
     
     static var originalNotificationCenterDelegate: UNUserNotificationCenterDelegate? = nil
     
-    static var originalDelegateRespondsTo = OriginalDelegateRespondsTo(willPresentNotification: false, didReceiveNotificationResponse: false, openSettingsForNotification: false)
+    static var originalDelegateRespondsTo = FirebaseOriginalDelegateRespondsTo(willPresentNotification: false, didReceiveNotificationResponse: false, openSettingsForNotification: false)
     
     public static let sharedInstance = NSCUNUserNotificationCenterDelegate()
     

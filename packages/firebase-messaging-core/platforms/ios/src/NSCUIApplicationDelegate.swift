@@ -149,7 +149,7 @@ public class NSCUIApplicationDelegate: UIResponder , UIApplicationDelegate {
         message = parseRemoteMessage(userInfo)
         #endif
         message["foreground"] = application.applicationState == UIApplication.State.active
-        NSCFirebaseMessagingCore.onMessageCallback?(message) {
+        NSCFirebaseMessagingCore.onMessageCallback?(message, nil) {
             completionHandler(.newData)
         }
     }
