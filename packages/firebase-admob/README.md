@@ -7,7 +7,7 @@ A plugin that allows you to monetize your NativeScript app by integrating the [G
 The `@nativescript/firebase-admob` plugin currently supports loading and displaying the following ad types:
 
 - [Banner](#banner-ads)
-- [Interstitial (full-screen)](#interstitial-ad)
+- [Interstitial (full-screen)](#interstitial-ads)
 - [Native](#native-ads)
 - [Rewarded](#rewarded-ads)
 
@@ -103,14 +103,17 @@ Admob.init();
 
 The Mobile Ads SDK is now imported and you're ready to implement an ad. Click any of the links below to get detailed implementation steps for your desired ad format.
 
-- [Banner](#add-a-banner-ad)
-- [Interstitial (full-screen)](#interstitial-ad)
+- [Banner](#banner-ads)
+- [Interstitial (full-screen)](#interstitial-ads)
 - [Native](#native-ads)
 - [Rewarded](#rewarded-ads)
 
 ### Banner ads
 
 Banner ads are rectangular ads that appear at the top or bottom of the device screen. They stay on screen while users are interacting with the app, and can refresh automatically after a certain period. If you're new to mobile advertising, they're a great place to start.
+
+<!-- ![ScreenShot_20241112103956](https://github.com/user-attachments/assets/b96bf8f5-6e0f-4979-9ac2-f9c07db1ac01) -->
+<img src="https://github.com/user-attachments/assets/b96bf8f5-6e0f-4979-9ac2-f9c07db1ac01" height="410" alt="banner ads" />
 
 #### Testing Banner ads in development mode
 
@@ -283,9 +286,12 @@ To display a banner ad to the user, get the reference to the `BannerAd` view and
 bannerView.load();
 ```
 
-### Add an Interstitial ad
+### Interstitial ads
 
 Interstitial ads are full-screen ads that cover the interface of an app until closed by the user. They're best used at natural pauses in the flow of an app's execution, such as between levels of a game or just after a task is completed.
+
+<!-- ![ScreenShot_20241112104057](https://github.com/user-attachments/assets/f7417599-4e37-4fb5-883c-f266f8008dcb) -->
+<img src="https://github.com/user-attachments/assets/f7417599-4e37-4fb5-883c-f266f8008dcb" height="410" alt="interstitial ads" />
 
 #### Testing Interstitial ads in development
 
@@ -554,6 +560,9 @@ That's it! Your app is now ready to display native ads.
 ## Rewarded Ads
 
 Rewarded ads are ads that users have the option of interacting with [in exchange for in-app rewards](https://support.google.com/admob/answer/7313578).
+
+<!-- ![ScreenShot_20241112104231](https://github.com/user-attachments/assets/09ab1cf5-93ec-40d0-820d-6ae2ee881e1a) -->
+<img src="https://github.com/user-attachments/assets/09ab1cf5-93ec-40d0-820d-6ae2ee881e1a" height="410" alt="rewarded ads" />
 
 ### Testing Rewarded ads in development mode
 
