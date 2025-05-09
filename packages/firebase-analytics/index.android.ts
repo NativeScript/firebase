@@ -112,7 +112,7 @@ export class Analytics implements IAnalytics {
 	}
 
 	get appInstanceId(): string {
-		return this._native.getAppInstanceId();
+		return (<any>org).nativescript.firebase.analytics.FirebaseAnalytics.getAppInstanceIdSync(this._native);
 	}
 
 	setSessionTimeoutInterval(sessionTimeoutInterval: number): void {
