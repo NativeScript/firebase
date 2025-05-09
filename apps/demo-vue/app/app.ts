@@ -21,8 +21,6 @@ import '@nativescript/firebase-performance';
 import '@nativescript/firebase-remote-config';
 import '@nativescript/firebase-storage';
 
-import { Admob } from '@nativescript/firebase-admob';
-
 import { AppCheck } from '@nativescript/firebase-app-check-debug';
 import { Application } from '@nativescript/core';
 
@@ -34,8 +32,6 @@ firebase()
 		firebase().appCheck().activate(true);
 		firebase().crashlytics().setCrashlyticsCollectionEnabled(true);
 	});
-
-Admob.init();
 
 const dynamicLinks = firebase().dynamicLinks();
 

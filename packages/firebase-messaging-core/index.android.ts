@@ -45,7 +45,48 @@ function ensureCallback() {
 	Callback = CallbackImpl;
 }
 
-const onMessageCallbacks: Set<(message: any) => void> = new Set();
+let Callback2;
+function ensureCallback2() {
+	@NativeClass
+	@Interfaces([org.nativescript.firebase.messaging.FirebaseMessaging.Callback2])
+	class Callback2Impl extends java.lang.Object implements org.nativescript.firebase.messaging.FirebaseMessaging.Callback2<string, com.google.firebase.messaging.RemoteMessage> {
+		_owner: WeakRef<MessagingCore>;
+		_propName: string;
+		constructor() {
+			super();
+			return global.__native(this);
+		}
+
+		public onError(error: any): void {}
+
+		public onSuccess(message: string, remoteMessage: com.google.firebase.messaging.RemoteMessage): void {
+			const callback = this._owner?.get?.()?.[this._propName];
+			if (typeof callback === 'function') {
+				if (this._propName === '_onToken') {
+					callback(message);
+				} else if (this._propName === '_onNotificationTap' || this._propName === '_onMessage') {
+					try {
+						setTimeout(() => {
+							callback(JSON.parse(message), remoteMessage);
+						});
+					} catch (e) {
+						// ignore
+					}
+				} else {
+					try {
+						callback(JSON.parse(message), remoteMessage);
+					} catch (e) {
+						// ignore
+					}
+				}
+			}
+		}
+	}
+
+	Callback2 = Callback2Impl;
+}
+
+const onMessageCallbacks: Set<(message: any, nativeMessage: any) => void> = new Set();
 const onTokenCallbacks: Set<(token: any) => void> = new Set();
 const onNotificationTapCallbacks: Set<(message: any) => void> = new Set();
 
@@ -102,13 +143,14 @@ Application.android.on('activityDestroyed', (args) => {
 export class MessagingCore implements IMessagingCore {
 	_native: com.google.firebase.messaging.FirebaseMessaging;
 	_onMessageCallback?;
-	_onMessage(message: any) {
+	_onMessage(message: any, nativeMessage: com.google.firebase.messaging.RemoteMessage) {
 		if (onMessageCallbacks.size > 0) {
 			onMessageCallbacks.forEach((cb) => {
-				cb(message);
+				cb(message, nativeMessage);
 			});
 		} else {
 			MessagingCore._messageQueues._onMessage.push(message);
+			MessagingCore._messageQueues._onNativeMessage.push(nativeMessage);
 		}
 	}
 
@@ -139,6 +181,7 @@ export class MessagingCore implements IMessagingCore {
 	static _onResumeQueue = [];
 	static _messageQueues = {
 		_onMessage: [],
+		_onNativeMessage: [],
 		_onNotificationTap: [],
 		_onToken: [],
 	};
@@ -151,6 +194,7 @@ export class MessagingCore implements IMessagingCore {
 
 	static _inForeground = false;
 	static _appDidLaunch = false;
+	static onIntent?: (intent: android.content.Intent) => void;
 	static get inForeground() {
 		return MessagingCore._inForeground;
 	}
@@ -169,10 +213,11 @@ export class MessagingCore implements IMessagingCore {
 
 		org.nativescript.firebase.messaging.FirebaseMessaging.init(Utils.android.getApplicationContext());
 		ensureCallback();
+		ensureCallback2();
 
 		// Setup onmessage handling
 
-		this._onMessageCallback = new Callback();
+		this._onMessageCallback = new Callback2();
 		this._onMessageCallback._propName = '_onMessage';
 
 		this._onMessageCallback._owner = new WeakRef(this);
@@ -194,7 +239,7 @@ export class MessagingCore implements IMessagingCore {
 
 		org.nativescript.firebase.messaging.FirebaseMessaging.setOnTokenListener(this._onTokenCallback);
 
-		Application.android.on(AndroidApplication.activityNewIntentEvent, this._newIntentCallback.bind(this));
+		Application.android.on(Application.AndroidApplication.activityNewIntentEvent, this._newIntentCallback.bind(this));
 	}
 
 	static getInstance() {
@@ -351,10 +396,22 @@ export class MessagingCore implements IMessagingCore {
 
 	private _triggerPendingCallbacks(type: keyof typeof MessagingCore._messageQueues) {
 		const queue = MessagingCore._messageQueues[type];
+		const isOnMessage = type === '_onMessage';
+		const messageQueue: any[] = isOnMessage ? MessagingCore._messageQueues._onNativeMessage : undefined;
+
 		if (queue.length > 0) {
 			MessagingCore._messageQueues[type] = [];
-			queue.forEach((message) => {
-				this[type](message);
+
+			if (isOnMessage) {
+				MessagingCore._messageQueues._onNativeMessage = [];
+			}
+
+			queue.forEach((message, index) => {
+				if (isOnMessage) {
+					this[type](message, messageQueue[index]);
+				} else {
+					this[type](message);
+				}
 			});
 		}
 	}

@@ -47,9 +47,19 @@ declare module org {
 						public onError(param0: any): void;
 						public onSuccess(param0: T): void;
 					}
+					export class Callback2<U, T> extends java.lang.Object {
+						public static class: java.lang.Class<org.nativescript.firebase.messaging.FirebaseMessaging.Callback2<any, any>>;
+						/**
+						 * Constructs a new instance of the org.nativescript.firebase.messaging.FirebaseMessaging$Callback interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
+						 */
+						public constructor(implementation: { onSuccess(param0: U, param1: T): void; onError(param0: any): void });
+						public constructor();
+						public onError(param0: any): void;
+						public onSuccess(param0: U, param1: T): void;
+					}
 					export class Companion {
 						public static class: java.lang.Class<org.nativescript.firebase.messaging.FirebaseMessaging.Companion>;
-						public setOnMessageListener(param0: org.nativescript.firebase.messaging.FirebaseMessaging.Callback<string>): void;
+						public setOnMessageListener(param0: org.nativescript.firebase.messaging.FirebaseMessaging.Callback<string, com.google.firebase.messaging.RemoteMessage>): void;
 						public unsubscribeFromTopic(param0: string, param1: com.google.firebase.messaging.FirebaseMessaging, param2: org.nativescript.firebase.messaging.FirebaseMessaging.Callback<java.lang.Void>): void;
 						public setExecutorsCount(param0: number): void;
 						public setOnTokenListener(param0: org.nativescript.firebase.messaging.FirebaseMessaging.Callback<string>): void;

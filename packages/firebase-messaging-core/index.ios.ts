@@ -14,7 +14,7 @@ const REMOTE_NOTIFICATIONS_REGISTRATION_STATUS = 'org.nativescript.firebase.noti
 let defaultInstance: MessagingCore;
 const onMessageCallbacks: Set<(message: any) => void> = new Set();
 const onTokenCallbacks: Set<(token: any) => void> = new Set();
-const onNotificationTapCallbacks: Set<(message: any) => void> = new Set();
+const onNotificationTapCallbacks: Set<(message: any, remoteMessage?: any) => void> = new Set();
 
 function deserialize(data: any): any {
 	if (data instanceof NSNull) {
@@ -43,8 +43,7 @@ function deserialize(data: any): any {
 
 export class MessagingCore implements IMessagingCore {
 	_APNSToken;
-	_onMessage(message: any, completionHandler: () => void) {
-		console.log('_onMessage', message);
+	_onMessage(message: any, remoteMessage: UNNotificationResponse, completionHandler: () => void) {
 		if (onMessageCallbacks.size > 0) {
 			const msg = deserialize(message);
 			Promise.all(Array.from(onMessageCallbacks).map((cb) => cb(msg))).finally(() => completionHandler());
@@ -55,7 +54,12 @@ export class MessagingCore implements IMessagingCore {
 	}
 	_onToken(token: string) {
 		this._APNSToken = token;
-		console.log('_onToken', token);
+		if (this._getTokenQeueue.length > 0) {
+			this._getTokenQeueue.forEach((item) => {
+				item.resolve(token);
+			});
+			this._getTokenQeueue.splice(0);
+		}
 		if (onTokenCallbacks.size > 0) {
 			onTokenCallbacks.forEach((cb) => {
 				cb(token);
@@ -64,13 +68,13 @@ export class MessagingCore implements IMessagingCore {
 			MessagingCore._messageQueues._onToken.push(token);
 		}
 	}
-	_onNotificationTap(message: any, completionHandler: () => void) {
-		console.log('_onNotificationTap', message);
+	_onNotificationTap(message: any, remoteMessage: UNNotificationResponse, completionHandler: () => void) {
 		if (onNotificationTapCallbacks.size > 0) {
 			const msg = deserialize(message);
-			Promise.all(Array.from(onNotificationTapCallbacks).map((cb) => cb(msg))).finally(() => completionHandler());
+			Promise.all(Array.from(onNotificationTapCallbacks).map((cb) => cb(msg, remoteMessage))).finally(() => completionHandler());
 		} else {
 			MessagingCore._messageQueues._onNotificationTap.push(message);
+			MessagingCore._messageQueues._onNativeNotificationTap.push(remoteMessage);
 			completionHandler();
 		}
 	}
@@ -79,6 +83,7 @@ export class MessagingCore implements IMessagingCore {
 	static _messageQueues = {
 		_onMessage: [],
 		_onNotificationTap: [],
+		_onNativeNotificationTap: [],
 		_onToken: [],
 	};
 	static addToResumeQueue(callback: () => void) {
@@ -140,14 +145,19 @@ export class MessagingCore implements IMessagingCore {
 		NSCFirebaseMessagingCore.showNotificationsWhenInForeground = value;
 	}
 
+	private _getTokenQeueue: { resolve: (string) => void; reject: (any?) => void }[] = [];
 	getCurrentToken(): Promise<string> {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (!TNSFirebaseCore.isSimulator() && !UIApplication.sharedApplication.registeredForRemoteNotifications) {
 				reject(new Error('You must be registered for remote messages before calling getToken, see MessagingCore.getInstance().registerDeviceForRemoteMessages()'));
 				return;
 			}
 			if (!this._APNSToken) {
-				reject(new Error('No token found'));
+				if ((await this.hasPermission()) === AuthorizationStatus.DENIED) {
+					reject(new Error('Device is unauthorized to receive an APNSToken token.'));
+					return;
+				}
+				this._getTokenQeueue.push({ resolve, reject });
 				return;
 			}
 			resolve(this.getAPNSToken());
@@ -192,14 +202,14 @@ export class MessagingCore implements IMessagingCore {
 		});
 	}
 
-	addOnMessage(listener: (message: any) => any) {
+	addOnMessage(listener: (message: any, nativeMessage?: any) => any) {
 		if (typeof listener === 'function') {
 			onMessageCallbacks.add(listener);
 			this._triggerPendingCallbacks('_onMessage');
 		}
 	}
 
-	removeOnMessage(listener: (message: any) => any): boolean {
+	removeOnMessage(listener: (message: any, nativeMessage?: any) => any): boolean {
 		if (typeof listener === 'function') {
 			return onMessageCallbacks.delete(listener);
 		}
@@ -244,6 +254,12 @@ export class MessagingCore implements IMessagingCore {
 				if (error) {
 					const err: any = new Error(error?.localizedDescription);
 					err.native = error;
+					if (this._getTokenQeueue.length > 0) {
+						this._getTokenQeueue.forEach((item) => {
+							item.reject(err);
+						});
+						this._getTokenQeueue.splice(0);
+					}
 					reject(err);
 				} else {
 					resolve();
@@ -331,10 +347,24 @@ export class MessagingCore implements IMessagingCore {
 	}
 	private _triggerPendingCallbacks(type: keyof typeof MessagingCore._messageQueues) {
 		const queue = MessagingCore._messageQueues[type];
+		let remoteQueue: any[];
+		const isNotificationTap = type === '_onNotificationTap';
+		if (isNotificationTap) {
+			remoteQueue = MessagingCore._messageQueues._onNativeNotificationTap;
+		}
 		if (queue.length > 0) {
 			MessagingCore._messageQueues[type] = [];
-			queue.forEach((message) => {
-				this[type](message, () => {});
+
+			if (isNotificationTap) {
+				MessagingCore._messageQueues._onNativeNotificationTap = [];
+			}
+
+			queue.forEach((message, index) => {
+				if (isNotificationTap) {
+					this[type](message, remoteQueue[index], () => {});
+				} else {
+					this[type](message, () => {});
+				}
 			});
 		}
 	}

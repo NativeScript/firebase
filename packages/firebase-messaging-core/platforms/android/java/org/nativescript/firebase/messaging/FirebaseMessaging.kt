@@ -21,6 +21,12 @@ class FirebaseMessaging {
     fun onError(error: Any?)
   }
 
+  interface Callback2<U,T> {
+    fun onSuccess(result1: U?, result2: T?)
+    fun onError(error: Any?)
+  }
+
+
 
   open class Service : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -41,7 +47,7 @@ class FirebaseMessaging {
           }
         }
       }
-      onMessageListener?.onSuccess(message.toString())
+      onMessageListener?.onSuccess(message.toString(), remoteMessage)
 
     }
 
@@ -78,7 +84,7 @@ class FirebaseMessaging {
 
     private var onTokenListener: Callback<String>? = null
 
-    private var onMessageListener: Callback<String>? = null
+    private var onMessageListener: Callback2<String, RemoteMessage>? = null
 
     private var onMessageTapListener: Callback<String>? = null
 
@@ -253,7 +259,7 @@ class FirebaseMessaging {
     }
 
     @JvmStatic
-    fun setOnMessageListener(callback: Callback<String>?) {
+    fun setOnMessageListener(callback: Callback2<String, RemoteMessage>?) {
       onMessageListener = callback
     }
 

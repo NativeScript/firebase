@@ -27,9 +27,9 @@ export interface IMessagingCore {
 
 	hasPermission(): Promise<AuthorizationStatus>;
 
-	addOnMessage(listener: (message: any) => any);
+	addOnMessage(listener: (message: any, nativeMessage?: any) => any);
 
-	removeOnMessage(listener: (message: any) => any): boolean;
+	removeOnMessage(listener: (message: any, nativeMessage?: any) => any): boolean;
 
 	addOnToken(listener: (token: string) => any);
 

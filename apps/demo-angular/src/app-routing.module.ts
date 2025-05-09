@@ -7,7 +7,6 @@ import { HomeComponent } from './home.component';
 const routes: Routes = [
 	{ path: '', redirectTo: '/home', pathMatch: 'full' },
 	{ path: 'home', component: HomeComponent },
-	{ path: 'firebase-admob', loadChildren: () => import('./plugin-demos/firebase-admob.module').then((m) => m.FirebaseAdmobModule) },
 	{ path: 'firebase-analytics', loadChildren: () => import('./plugin-demos/firebase-analytics.module').then((m) => m.FirebaseAnalyticsModule) },
 	{ path: 'firebase-app-check', loadChildren: () => import('./plugin-demos/firebase-app-check.module').then((m) => m.FirebaseAppCheckModule) },
 	{ path: 'firebase-app-check-debug', loadChildren: () => import('./plugin-demos/firebase-app-check-debug.module').then((m) => m.FirebaseAppCheckDebugModule) },

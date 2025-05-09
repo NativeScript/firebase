@@ -1,4 +1,3 @@
-- [@nativescript/firebase-admob](packages/firebase-admob/README.md)
 - [@nativescript/firebase-analytics](packages/firebase-analytics/README.md)
 - [@nativescript/firebase-app-check](packages/firebase-app-check/README.md)
 - [@nativescript/firebase-app-check-debug](packages/firebase-app-check-debug/README.md)

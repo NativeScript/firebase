@@ -1,50 +1,50 @@
 #import "NSCFirebaseMessagingCore.h"
 @implementation NSCFirebaseMessagingCore
 
-BOOL ShowNotificationsWhenInForeground = NO;
-BoolCallback RegisterDeviceForRemoteMessagesCallback = nil;
-CompletableDictionaryCallback OnNotificationTapCallback = nil;
-CompletableDictionaryCallback OnMessageCallback = nil;
-StringCallback OnTokenCallback = nil;
+BOOL NSCFirebaseShowNotificationsWhenInForeground = NO;
+BoolCallback NSCFirebaseRegisterDeviceForRemoteMessagesCallback = nil;
+CompletableDictionaryCallback NSCFirebaseOnNotificationTapCallback = nil;
+CompletableDictionaryCallback NSCFirebaseOnMessageCallback = nil;
+StringCallback NSCFirebaseOnTokenCallback = nil;
 
 + (void)setShowNotificationsWhenInForeground:(BOOL)showNotificationsWhenInForeground {
-    ShowNotificationsWhenInForeground = showNotificationsWhenInForeground;
+  NSCFirebaseShowNotificationsWhenInForeground = showNotificationsWhenInForeground;
 }
 
 + (BOOL)showNotificationsWhenInForeground {
-    return ShowNotificationsWhenInForeground;
+    return NSCFirebaseShowNotificationsWhenInForeground;
 }
 
 + (BoolCallback)registerDeviceForRemoteMessagesCallback {
-    return RegisterDeviceForRemoteMessagesCallback;
+    return NSCFirebaseRegisterDeviceForRemoteMessagesCallback;
 }
 
 + (void)setRegisterDeviceForRemoteMessagesCallback:(BoolCallback)callback {
-    RegisterDeviceForRemoteMessagesCallback = callback;
+  NSCFirebaseRegisterDeviceForRemoteMessagesCallback = callback;
 }
 
 + (CompletableDictionaryCallback)onNotificationTapCallback {
-    return OnNotificationTapCallback;
+    return NSCFirebaseOnNotificationTapCallback;
 }
 
 + (void)setOnNotificationTapCallback:(CompletableDictionaryCallback)callback {
-    OnNotificationTapCallback = callback;
+  NSCFirebaseOnNotificationTapCallback = callback;
 }
 
 + (CompletableDictionaryCallback)onMessageCallback {
-    return OnMessageCallback;
+    return NSCFirebaseOnMessageCallback;
 }
 
 + (void)setOnMessageCallback:(CompletableDictionaryCallback)callback {
-    OnMessageCallback = callback;
+  NSCFirebaseOnMessageCallback = callback;
 }
 
 + (StringCallback)onTokenCallback {
-    return OnTokenCallback;
+    return NSCFirebaseOnTokenCallback;
 }
 
 + (void)setOnTokenCallback:(StringCallback)callback {
-    OnTokenCallback = callback;
+  NSCFirebaseOnTokenCallback = callback;
 }
 
 
