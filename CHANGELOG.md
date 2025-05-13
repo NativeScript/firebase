@@ -1,3 +1,16 @@
+# [5.0.0](https://github.com/NativeScript/firebase/compare/3.3.2...5.0.0) (2025-05-13)
+
+
+### Features
+
+* iOS SDK 11.5+, Android SDK 33.13+ ([#281](https://github.com/NativeScript/firebase/issues/281)) ([a0b6ef3](https://github.com/NativeScript/firebase/commit/a0b6ef37bfb3b72d9863aa6514a2e2a39b8b5b19))
+
+
+### BREAKING CHANGES
+
+* `@nativescript/firebase-admob` renamed to `@nativescript/google-mobile-ads` and source moved to https://github.com/NativeScript/plugins. 
+
+
 ## [3.3.2](https://github.com/NativeScript/firebase/compare/3.3.1...3.3.2) (2024-08-30)
 
 
