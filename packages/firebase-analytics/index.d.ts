@@ -4,7 +4,7 @@ import { Firebase } from '@nativescript/firebase-core';
 export * from './common';
 
 export declare class Analytics implements IAnalytics {
-	readonly appInstanceId: string;
+	readonly appInstanceId: Promise<string>;
 
 	logEvent(name: string, parameters: EventParameter): void;
 

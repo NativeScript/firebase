@@ -1,5 +1,5 @@
 export interface IAnalytics {
-	readonly appInstanceId: string;
+	readonly appInstanceId: Promise<string>;
 	logEvent(name: string, parameters: EventParameter): void;
 	setUserId(userId: string): void;
 	resetAnalyticsData(): void;

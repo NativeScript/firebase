@@ -3,9 +3,6 @@ import { Observable, Frame } from '@nativescript/core';
 export class MainViewModel extends Observable {
 	demos = [
 		{
-			name: 'firebase-admob',
-		},
-		{
 			name: 'firebase-analytics',
 		},
 		{

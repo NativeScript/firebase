@@ -5,9 +5,9 @@
 	"repository": "<fill-your-repository-here>",
 	"dependencies": {
 		"@nativescript/core": "file:../../node_modules/@nativescript/core",
-		"@nativescript/firebase-admob": "file:../../packages/firebase-admob",
 		"@nativescript/firebase-analytics": "file:../../dist/packages/firebase-analytics",
 		"@nativescript/firebase-app-check": "file:../../packages/firebase-app-check",
+		"@nativescript/firebase-app-check-debug": "file:../../packages/firebase-app-check-debug",
 		"@nativescript/firebase-auth": "file:../../packages/firebase-auth",
 		"@nativescript/firebase-core": "file:../../packages/firebase-core",
 		"@nativescript/firebase-crashlytics": "file:../../packages/firebase-crashlytics",
@@ -18,13 +18,12 @@
 		"@nativescript/firebase-in-app-messaging": "file:../../packages/firebase-in-app-messaging",
 		"@nativescript/firebase-installations": "file:../../packages/firebase-installations",
 		"@nativescript/firebase-messaging": "file:../../packages/firebase-messaging",
+		"@nativescript/firebase-messaging-core": "file:../../packages/firebase-messaging-core",
 		"@nativescript/firebase-performance": "file:../../packages/firebase-performance",
 		"@nativescript/firebase-remote-config": "file:../../packages/firebase-remote-config",
 		"@nativescript/firebase-storage": "file:../../packages/firebase-storage",
-		"@nativescript/google-signin": "~2.1.0",
-		"@nativescript/firebase-app-check-debug": "file:../../packages/firebase-app-check-debug",
-		"@nativescript/firebase-messaging-core": "file:../../packages/firebase-messaging-core",
-		"@nativescript/firebase-ui": "file:../../packages/firebase-ui"
+		"@nativescript/firebase-ui": "file:../../packages/firebase-ui",
+		"@nativescript/google-signin": "~2.1.0"
 	},
 	"devDependencies": {
 		"@nativescript/android": "~8.8.0",

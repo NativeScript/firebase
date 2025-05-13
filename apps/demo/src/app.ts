@@ -1,4 +1,5 @@
-import { Application, Utils } from '@nativescript/core';
+import { AndroidActivityNewIntentEventData, Application, Utils } from '@nativescript/core';
+
 import { firebase } from '@nativescript/firebase-core';
 import '@nativescript/firebase-analytics';
 import '@nativescript/firebase-auth';
@@ -15,8 +16,6 @@ import '@nativescript/firebase-remote-config';
 import '@nativescript/firebase-storage';
 import '@nativescript/firebase-ui';
 
-import { Admob } from '@nativescript/firebase-admob';
-
 import { AppCheck } from '@nativescript/firebase-app-check-debug';
 
 AppCheck.setProviderFactory();
@@ -27,8 +26,6 @@ firebase()
 		firebase().appCheck().activate(true);
 		firebase().crashlytics().setCrashlyticsCollectionEnabled(true);
 	});
-
-Admob.init();
 
 const dynamicLinks = firebase().dynamicLinks();
 

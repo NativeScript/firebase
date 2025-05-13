@@ -6,6 +6,7 @@ import android.os.Looper
 import org.json.JSONObject
 import java.util.concurrent.Executors
 import com.google.firebase.analytics.logEvent
+import java.util.concurrent.CountDownLatch
 
 class FirebaseAnalytics {
 
@@ -18,9 +19,21 @@ class FirebaseAnalytics {
 
 
   companion object {
+    @JvmStatic
+    fun getAppInstanceId(
+      analytics: com.google.firebase.analytics.FirebaseAnalytics,
+      callback: Callback<String>
+    ) {
+      analytics.appInstanceId.addOnCompleteListener(executors) {
+        if (it.isSuccessful) {
+          callback.onSuccess(it.result)
+        } else {
+          callback.onError(it.exception)
+        }
+      }
+    }
 
-
- @JvmStatic
+    @JvmStatic
     fun logEvent(
       analytics: com.google.firebase.analytics.FirebaseAnalytics,
       eventName: String,

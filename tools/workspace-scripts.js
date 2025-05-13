@@ -23,15 +23,15 @@ module.exports = {
 			},
 			demo: {
 				clean: {
-					script: 'nx run demo:clean',
+					script: 'nx clean demo',
 					description: '⚆  Clean  🧹',
 				},
 				ios: {
-					script: 'nx run demo:ios',
+					script: 'nx debug demo ios',
 					description: '⚆  Run iOS  ',
 				},
 				android: {
-					script: 'nx run demo:android',
+					script: 'nx debug demo android',
 					description: '⚆  Run Android  🤖',
 				},
 			},
@@ -41,15 +41,15 @@ module.exports = {
 			},
 			'demo-angular': {
 				clean: {
-					script: 'nx run demo-angular:clean',
+					script: 'nx clean demo-angular',
 					description: '⚆  Clean  🧹',
 				},
 				ios: {
-					script: 'nx run demo-angular:ios',
+					script: 'nx debug demo-angular ios',
 					description: '⚆  Run iOS  ',
 				},
 				android: {
-					script: 'nx run demo-angular:android',
+					script: 'nx debug demo-angular android',
 					description: '⚆  Run Android  🤖',
 				},
 			},
@@ -60,15 +60,15 @@ module.exports = {
 			},
 			'demo-vue': {
 				clean: {
-					script: 'nx run demo-vue:clean',
+					script: 'nx clean demo-vue',
 					description: '⚆  Clean  🧹',
 				},
 				ios: {
-					script: 'nx run demo-vue:ios',
+					script: 'nx debug demo-vue ios',
 					description: '⚆  Run iOS  ',
 				},
 				android: {
-					script: 'nx run demo-vue:android',
+					script: 'nx debug demo-vue android',
 					description: '⚆  Run Android  🤖',
 				},
 			},
@@ -114,13 +114,6 @@ module.exports = {
 				build: {
 					script: 'nx run firebase-analytics:build.all',
 					description: '@nativescript/firebase-analytics: Build',
-				},
-			},
-			// @nativescript/firebase-admob
-			'firebase-admob': {
-				build: {
-					script: 'nx run firebase-admob:build.all',
-					description: '@nativescript/firebase-admob: Build',
 				},
 			},
 			// @nativescript/firebase-crashlytics
@@ -243,10 +236,6 @@ module.exports = {
 			'firebase-analytics': {
 				script: 'nx run firebase-analytics:focus',
 				description: 'Focus on @nativescript/firebase-analytics',
-			},
-			'firebase-admob': {
-				script: 'nx run firebase-admob:focus',
-				description: 'Focus on @nativescript/firebase-admob',
 			},
 			'firebase-crashlytics': {
 				script: 'nx run firebase-crashlytics:focus',
