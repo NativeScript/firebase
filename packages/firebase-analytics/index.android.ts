@@ -1,5 +1,5 @@
 import { Utils } from '@nativescript/core';
-import { firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { ConsentStatus, ConsentType, EventParameter, IAnalytics } from './common';
 
 export * from './common';
@@ -111,8 +111,20 @@ export class Analytics implements IAnalytics {
 		return this._app;
 	}
 
-	get appInstanceId(): string {
-		return (<any>org).nativescript.firebase.analytics.FirebaseAnalytics.getAppInstanceIdSync(this._native);
+	get appInstanceId(): Promise<string> {
+		return new Promise((resolve, reject) => {
+			(<any>org).nativescript.firebase.analytics.FirebaseAnalytics.getAppInstanceId(
+				this._native,
+				new (<any>org).nativescript.firebase.analytics.FirebaseAnalytics.Callback({
+					onSuccess(success) {
+						resolve(success);
+					},
+					onError(error) {
+						reject(FirebaseError.fromNative(error));
+					},
+				})
+			);
+		});
 	}
 
 	setSessionTimeoutInterval(sessionTimeoutInterval: number): void {

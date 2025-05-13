@@ -1,5 +1,5 @@
 import { EventParameter, IAnalytics } from './common';
-import { firebase, FirebaseApp, serialize } from '@nativescript/firebase-core';
+import { firebase, FirebaseApp, FirebaseError, serialize } from '@nativescript/firebase-core';
 import { ConsentStatus, ConsentType } from '.';
 
 export * from './common';
@@ -47,8 +47,12 @@ export class Analytics implements IAnalytics {
 		return this._app;
 	}
 
-	get appInstanceId(): string {
-		return FIRAnalytics?.appInstanceID?.();
+	get appInstanceId(): Promise<string> {
+		try {
+			return Promise.resolve(FIRAnalytics.appInstanceID());
+		} catch (error) {
+			return Promise.reject(FirebaseError.fromNative(error));
+		}
 	}
 
 	setSessionTimeoutInterval(sessionTimeoutInterval: number): void {

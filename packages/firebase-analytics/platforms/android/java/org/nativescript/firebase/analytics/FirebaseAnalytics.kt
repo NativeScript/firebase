@@ -19,21 +19,6 @@ class FirebaseAnalytics {
 
 
   companion object {
-
-    @JvmStatic
-    fun getAppInstanceIdSync(analytics: com.google.firebase.analytics.FirebaseAnalytics): String? {
-      var ret: String? = null
-      val lock = CountDownLatch(1)
-      analytics.appInstanceId.addOnCompleteListener(executors) {
-        if (it.isSuccessful) {
-          ret = it.result
-        }
-        lock.countDown()
-      }
-      lock.await()
-      return ret
-    }
-
     @JvmStatic
     fun getAppInstanceId(
       analytics: com.google.firebase.analytics.FirebaseAnalytics,
