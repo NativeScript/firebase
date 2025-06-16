@@ -67,7 +67,7 @@ This plugin allows you to use the native Firebase SDKs for [Cloud Storage](https
 
 ## Set up and initialize Firebase for your app
 
-To use Firebase Cloud Storage, you initialize Firebase first. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
+To use Firebase Cloud Storage, you initialize Firebase first. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../plugins/firebase-core/) plugin.
 
 ## Create a default Cloud Storage bucket
 
