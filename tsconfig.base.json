@@ -40,7 +40,12 @@
 			"@nativescript/firebase-performance": ["packages/firebase-performance/index.d.ts"],
 			"@nativescript/firebase-remote-config": ["packages/firebase-remote-config/index.d.ts"],
 			"@nativescript/firebase-storage": ["packages/firebase-storage/index.d.ts"],
-			"@nativescript/firebase-ui": ["packages/firebase-ui/index.d.ts"]
+			"@nativescript/firebase-ui": ["packages/firebase-ui/index.d.ts"],
+			"@nativescript/firebase-auth/angular": ["packages/firebase-auth/angular/index.ts"],
+			"@nativescript/firebase-firestore/angular": ["packages/firebase-firestore/angular/index.ts"],
+			"@nativescript/firebase-ui/angular": ["packages/firebase-ui/angular/index.ts"],
+			"@nativescript/firebase-storage/angular": ["packages/firebase-storage/angular/index.ts"],
+			"@nativescript/firebase-database/angular": ["packages/firebase-database/angular/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

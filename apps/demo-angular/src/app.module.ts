@@ -1,5 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptModule } from '@nativescript/angular';
+import { provideFirebaseCoreInitializer } from '@nativescript/firebase-core/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -8,9 +9,9 @@ import { AppService } from './app.service';
 
 @NgModule({
 	schemas: [NO_ERRORS_SCHEMA],
-	declarations: [AppComponent, HomeComponent],
+	declarations: [AppComponent],
 	bootstrap: [AppComponent],
-	imports: [NativeScriptModule, AppRoutingModule],
-	providers: [AppService]
+	imports: [NativeScriptModule, AppRoutingModule, HomeComponent],
+	providers: [AppService, provideFirebaseCoreInitializer()],
 })
 export class AppModule {}

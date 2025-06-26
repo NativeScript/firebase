@@ -5,7 +5,8 @@ import { AppService } from './app.service';
 	template: `<GridLayout>
 		<page-router-outlet></page-router-outlet>
 	</GridLayout>`,
+	standalone: false,
 })
 export class AppComponent {
-	constructor(appService: AppService){}
+	constructor(appService: AppService) {}
 }

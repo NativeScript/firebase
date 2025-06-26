@@ -1,3 +1,26 @@
+## [5.0.3](https://github.com/Nativescript/firebase/compare/5.0.2...5.0.3) (2025-06-26)
+
+
+### Features
+
+* **apps/demo-angular:** add standalone components for Firebase Messaging, Performance, and Remote Config ([58e47d5](https://github.com/Nativescript/firebase/commit/58e47d5d844eb03567c1b89a1b9b25d5256c155d))
+
+* **firebase-auth:** create Angular provider for Firebase Auth service
+
+* **firebase-core:** create Angular provider for Firebase Core initialization
+
+* **firebase-database:** create Angular provider for Firebase Database service
+
+* **firebase-firestore:** create Angular provider for Firestore service
+
+* **firebase-storage:** create Angular provider for Firebase Storage service
+
+* **chore:** remove unused Firebase Analytics components and modules
+
+* **chore:** update TypeScript configuration for Angular compatibility
+
+
+
 # [5.0.0](https://github.com/NativeScript/firebase/compare/3.3.2...5.0.0) (2025-05-13)
 
 
@@ -455,6 +478,3 @@
 ### Features
 
 * nx migrate @nativescript/plugin-tools ([d081a2d](https://github.com/NativeScript/firebase/commit/d081a2dd1c645e696bf6ae8d8888319dc751e869))
-
-
-

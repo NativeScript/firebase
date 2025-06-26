@@ -1,19 +1,18 @@
 import { Component, NgZone } from '@angular/core';
 import { DemoSharedFirebaseInAppMessaging } from '@demo/shared';
-import { } from '@nativescript/firebase-in-app-messaging';
+import {} from '@nativescript/firebase-in-app-messaging';
 
 @Component({
 	selector: 'demo-firebase-in-app-messaging',
 	templateUrl: 'firebase-in-app-messaging.component.html',
+	standalone: false,
 })
 export class FirebaseInAppMessagingComponent {
-  
-  demoShared: DemoSharedFirebaseInAppMessaging;
-  
+	demoShared: DemoSharedFirebaseInAppMessaging;
+
 	constructor(private _ngZone: NgZone) {}
 
-  ngOnInit() {
-    this.demoShared = new DemoSharedFirebaseInAppMessaging();
-  }
-
+	ngOnInit() {
+		this.demoShared = new DemoSharedFirebaseInAppMessaging();
+	}
 }
