@@ -74,20 +74,58 @@ Common use cases for handling messages could be:
 
 You need to set up your app for Firebase before you can enable Firebase Messaging. To set up and initialize Firebase for your NativeScript app, follow the instructions on the documentation of the [@nativescript/firebase-core](../firebase-core/) plugin.
 
+### Other changes to your app
+
+[This issue](https://github.com/NativeScript/firebase/issues/221) and [Discord discussion](https://discord.com/channels/603595811204366337/1450349080751505519) were used for the basis of most of these steps.
+
+1. The `firebase().initializeApp().then()` (without using async/await) should be called only once per app as soon as possible in your app.ts or main.ts (from `package.json` -> "main" prop) to avoid errors like `TypeError: Cannot read properties of null (reading 'subscribeToTopicCompletion')`. Run command `pod repo update` for error `CocoaPods could not find compatible versions for pod "Firebase/Messaging"`.
+2. Your `nativescript.config.ts` -> app "id" prop needs to be correct. If you used the NS templates, it may start with "org.nativescript". You'll use this ID when registering your app with Firebase and Apple.
+3. From [Firebase](https://console.firebase.google.com/), create your project and register your app both for iOS and Android. From Project settings -> app settings -> SDK setup and configuration, download your respective configuration files to `App_Resources/iOS/GoogleService-Info.plist` and `App_Resources/Android/google-services.json`. Generate new keys for Apple Push Notifications (APNs) at the [ Apple Developer Portal](https://developer.apple.com/) -> Certificates, Identifiers & Profiles -> Keys . Download the *.p8 files from Apple then upload the *.p8 files to Firebase -> Project -> Cloud Messaging tab using the Key ID (10 length string) and Team ID (8 length string). Android does not require *.p8 files.
+4. Create `App_Resources/iOS/app.entitlements` (it must be named that) with the following to avoid error `No APNS token specified before fetching FCM Token`.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>aps-environment</key>
+    <string>production</string>
+</dict>
+</plist>
+```
+
+5. According to the [Apple Docs](https://developer.apple.com/documentation/bundleresources/information-property-list/uibackgroundmodes), `UIBackgroundModes` goes in `App_Resources/iOS/Info.plist` although this [SO question offers disagreement](https://stackoverflow.com/questions/78759594/how-to-include-the-uibackgroundmodes-entitlement-into-provisioning-profile) as to where it goes.
+
+```xml
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>remote-notification</string>
+    </array>
+```
+
+6. Running `ns clean` and `ns install` may help with issues.
+
 ## Add the Firebase Cloud Messaging SDK to your app
 
 To add the Firebase Cloud Messaging SDK to your app follow these steps:
 
-1. Install the `@nativescript/firebase-messaging` plugin by running the following command in the root directory of your project.
+1. Install the two other `firebase` plugins by running the following commands in the root directory of your project. The npm package `@nativescript/firebase-core` is already installed from the previous section.
 
 ```cli
-npm install @nativescript/firebase-messaging
+npm i @nativescript/firebase-messaging --save
+npm i @nativescript/firebase-messaging-core --save
 ```
 
-2. Add the SDK by importing the `@nativescript/firebase-messaging` module. You should import this module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`).
+2. Add the SDK by importing the `@nativescript/firebase-messaging` module. You should import this module once in your app, ideally in the main file (e.g. `app.ts` or `main.ts`). You also need to `initializeApp()`.
 
 ```ts
 import '@nativescript/firebase-messaging';
+import { firebase } from '@nativescript/firebase-core';
+
+firebase().initializeApp()
+  .then(app => {
+    console.info('firebase().initializeApp() returned', app);
+  });
 ```
 
 ## iOS: Requesting permissions
@@ -98,7 +136,7 @@ To request permission, call the [requestPermission](#requestpermission) method o
 
 ```ts
 import { firebase } from '@nativescript/firebase-core';
-import { AuthorizationStatus } from '@nativescript/firebase-messaging-core';
+import { AuthorizationStatus } from '@nativescript/firebase-messaging';
 
 async function requestUserPermission() {
 	const authStatus = await firebase()
@@ -377,46 +415,6 @@ Topics allow you to simplify FCM server integration as you do not need to keep a
 
 To learn more about how to send messages to devices subscribed to topics, see [Topic messaging on Android](https://firebase.google.com/docs/cloud-messaging/android/topic-messaging) or [Send messages to topics on Apple platforms](https://firebase.google.com/docs/cloud-messaging/ios/topic-messaging).
 
-### Subscribing to topics
-
-To subscribe a device to a topic, call the [subscribeToTopic](#subscribetotopic) method on the [Messsaging](#messaging-class) instance with the topic name (must not include ´/´):
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.messaging()
-	.subscribeToTopic('weather')
-	.then(() => console.log('Subscribed to topic!'));
-```
-
-### Unsubscribing to topics
-
-To unsubscribe from a topic, call the [unsubscribeFromTopic](#unsubscribefromtopic) method with the topic name:
-
-```ts
-import { firebase } from '@nativescript/firebase-core';
-
-firebase()
-	.messaging()
-	.unsubscribeFromTopic('weather')
-	.then(() => console.log('Unsubscribed fom the topic!'));
-```
-
-### Send messages to a user device via topics
-
-Topics are mechanisms that allow a device to subscribe and unsubscribe from named [PubSub channels](https://redis.io/commands/pubsub-channels/), all managed via FCM. Rather than sending a message to a specific device by FCM token, you can instead send a message to a topic and any devices subscribed to that topic will receive the message.
-
-Topics allow you to simplify FCM server integration as you do not need to keep a store of device tokens. There are, however, some things to keep in mind about topics:
-
-- Messages sent to topics should not contain sensitive or private information. 
-- Do not create a topic for a specific user to subscribe to.
-- Topic messaging supports unlimited subscriptions for each topic.
-- One app instance can be subscribed to no more than 2000 topics.
-- The frequency of new subscriptions is rate-limited per project. If you send too many subscription requests in a short period, FCM servers will respond with a `429 RESOURCE_EXHAUSTED` ("quota exceeded") response. 
-- A server integration can send a single message to multiple topics at once. However, this is limited to `5` topics.
-
-To learn more about how to send messages to devices subscribed to topics, see [Topic messaging on Android](https://firebase.google.com/docs/cloud-messaging/android/topic-messaging) or [Send messages to topics on Apple platforms](https://firebase.google.com/docs/cloud-messaging/ios/topic-messaging).
 
 ### Subscribing to topics
 
@@ -425,6 +423,7 @@ To subscribe a device to a topic, call the [subscribeToTopic](#subscribetotopic)
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 
+// requires firebase().initializeApp() in app.ts or main.ts
 firebase()
 	.messaging()
 	.subscribeToTopic('weather')
@@ -438,6 +437,7 @@ To unsubscribe from a topic, call the [unsubscribeFromTopic](#unsubscribefromtop
 ```ts
 import { firebase } from '@nativescript/firebase-core';
 
+// requires firebase().initializeApp() in app.ts or main.ts
 firebase()
 	.messaging()
 	.unsubscribeFromTopic('weather')
