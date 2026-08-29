@@ -151,6 +151,32 @@ export class AppCheck implements IAppCheck {
 			);
 		});
 	}
+	getLimitedUseToken(): Promise<AppCheckToken> {
+		return new Promise((resolve, reject) => {
+			// Uses the Task API directly rather than the org.nativescript helper: the
+			// helper only bridges getAppCheckToken, and extending it would mean
+			// rebuilding the prebuilt firebase_app_check.aar. Listeners registered
+			// without an executor are dispatched on the main thread, which is where
+			// the helper's Callback lands too.
+			const task = this.native.getLimitedUseAppCheckToken() as any;
+			task.addOnSuccessListener(
+				new (<any>com).google.android.gms.tasks.OnSuccessListener({
+					onSuccess(param0) {
+						resolve(AppCheckToken.fromNative(param0));
+					},
+				})
+			);
+			task.addOnFailureListener(
+				new (<any>com).google.android.gms.tasks.OnFailureListener({
+					onFailure(param0) {
+						const err = FirebaseError.fromNative(param0);
+						reject(err);
+					},
+				})
+			);
+		});
+	}
+
 	setTokenAutoRefreshEnabled(enabled: boolean) {
 		this.native.setTokenAutoRefreshEnabled(enabled);
 	}
