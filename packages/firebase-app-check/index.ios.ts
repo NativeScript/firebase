@@ -181,6 +181,19 @@ export class AppCheck implements IAppCheck {
 		});
 	}
 
+	getLimitedUseToken(): Promise<AppCheckToken> {
+		return new Promise((resolve, reject) => {
+			this.native.limitedUseTokenWithCompletion((token, error) => {
+				if (error) {
+					const err = FirebaseError.fromNative(error);
+					reject(err);
+				} else {
+					resolve(AppCheckToken.fromNative(token));
+				}
+			});
+		});
+	}
+
 	setTokenAutoRefreshEnabled(enabled: boolean) {
 		this.native.isTokenAutoRefreshEnabled = enabled;
 	}

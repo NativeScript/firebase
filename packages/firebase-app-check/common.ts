@@ -5,6 +5,7 @@ export interface IAppCheck {
 	activate(isTokenAutoRefreshEnabled: boolean);
 	setTokenAutoRefreshEnabled(enabled: boolean);
 	getToken(forceRefresh: boolean): Promise<IAppCheckToken>;
+	getLimitedUseToken(): Promise<IAppCheckToken>;
 }
 
 export interface IAppCheckToken {

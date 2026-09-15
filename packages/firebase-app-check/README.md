@@ -103,6 +103,23 @@ If unset, the "tokenAutoRefreshEnabled" setting will defer to the app's "automat
 
 The [official documentation](https://firebase.google.com/docs/app-check/web/custom-resource) shows how to use getToken to access the current App Check token and then verify it in external services.
 
+```ts
+const { token } = await firebase().appCheck().getToken(false);
+// send `token` to your backend, e.g. as the X-Firebase-AppCheck header
+```
+
+`getToken` returns a cached token that App Check refreshes in the background, so the same token is reused until it nears expiry. That is what you want for most requests.
+
+### Replay protection (limited-use tokens)
+
+If your backend enables [replay protection](https://firebase.google.com/docs/app-check/custom-resource-backend#replay-protection), it consumes each token once and rejects any token it has already seen. A cached token from `getToken` would fail on its second use, so those endpoints need a fresh, single-use token instead:
+
+```ts
+const { token } = await firebase().appCheck().getLimitedUseToken();
+```
+
+Call it per request — the token is deliberately not cached — and verify it on your backend with `verifyToken(token, { consume: true })`.
+
 ## License
 
 Apache License Version 2.0

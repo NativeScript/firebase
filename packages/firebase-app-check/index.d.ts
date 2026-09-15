@@ -15,6 +15,8 @@ declare class AppCheck {
 	setTokenAutoRefreshEnabled(enabled: boolean);
 
 	getToken(forceRefresh: boolean): Promise<AppCheckToken>;
+
+	getLimitedUseToken(): Promise<AppCheckToken>;
 }
 
 declare abstract class AppCheckProviderFactory {
@@ -34,7 +36,6 @@ declare abstract class AppCheckProvider {
 	);
 	readonly native;
 }
-
 
 declare class AppCheckToken {
 	readonly ios: any;
