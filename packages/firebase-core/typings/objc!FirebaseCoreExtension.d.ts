@@ -82,9 +82,6 @@ declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerP
 
 	constructor(o: { appID: string });
 
-	/**
-	 * @since 13.0
-	 */
 	asyncHeaderValueWithCompletionHandler(completionHandler: (p1: string) => void): void;
 
 	class(): typeof NSObject;
@@ -93,9 +90,6 @@ declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerP
 
 	flushHeartbeatsIntoPayload(): FIRHeartbeatsPayload;
 
-	/**
-	 * @since 13.0
-	 */
 	flushHeartbeatsIntoPayloadWithCompletionHandler(completionHandler: (p1: FIRHeartbeatsPayload) => void): void;
 
 	headerValue(): string;
@@ -126,9 +120,6 @@ declare class FIRHeartbeatLogger extends NSObject implements FIRHeartbeatLoggerP
 }
 
 interface FIRHeartbeatLoggerProtocol extends NSObjectProtocol {
-	/**
-	 * @since 13.0
-	 */
 	asyncHeaderValueWithCompletionHandler(completionHandler: (p1: string) => void): void;
 
 	headerValue(): string;

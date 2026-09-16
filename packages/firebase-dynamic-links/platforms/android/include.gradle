@@ -1,6 +1,0 @@
-dependencies {
-    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "33.13.0" }
-    implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
-    implementation 'com.google.firebase:firebase-dynamic-links'
-    implementation 'com.google.firebase:firebase-analytics'
-}

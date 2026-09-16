@@ -64,6 +64,9 @@ export class FirebaseOptions implements IFirebaseOptions {
 	}
 
 	_databaseURL: string;
+	set databaseURL(value) {
+		this._databaseURL = value;
+	}
 	get databaseURL(): string {
 		if (this._databaseURL) {
 			return this._databaseURL;
@@ -108,7 +111,7 @@ export class FirebaseOptions implements IFirebaseOptions {
 	_trackingId: string;
 
 	set trackingId(value) {
-		this.trackingId = value;
+		this._trackingId = value;
 	}
 	get trackingId(): string {
 		if (this._trackingId) {
@@ -147,8 +150,9 @@ export class FirebaseApp {
 
 	get options() {
 		if (!this._options) {
-			return FirebaseOptions.fromNative(this._native);
+			this._options = FirebaseOptions.fromNative(this._native);
 		}
+		return this._options;
 	}
 
 	delete() {
@@ -213,6 +217,7 @@ export class Firebase {
 			Firebase._onResumeQueue.forEach((callback) => {
 				callback();
 			});
+			Firebase._onResumeQueue.splice(0);
 		});
 
 		Application.android.on('activityPaused', (args) => {
@@ -314,7 +319,7 @@ export class Firebase {
 				} else {
 					if (defaultApp) {
 						resolve(defaultApp);
-            return;
+						return;
 					}
 					isDefault = true;
 					if (nativeOptions) {
@@ -324,10 +329,13 @@ export class Firebase {
 					}
 				}
 
-				console.log(app);
-
-				if (app && typeof configOrName === 'object' && typeof configOrName.automaticResourceManagement === 'boolean') {
-					app.setAutomaticResourceManagementEnabled(configOrName.automaticDataCollectionEnabled);
+				if (app && typeof configOrName === 'object') {
+					if (typeof configOrName.automaticResourceManagement === 'boolean') {
+						app.setAutomaticResourceManagementEnabled(configOrName.automaticResourceManagement);
+					}
+					if (typeof configOrName.automaticDataCollectionEnabled === 'boolean') {
+						app.setDataCollectionDefaultEnabled(configOrName.automaticDataCollectionEnabled);
+					}
 				}
 				const fbApp = FirebaseApp.fromNative(app);
 
@@ -438,8 +446,13 @@ export class Firebase {
 
 				const app = com.google.firebase.FirebaseApp.initializeApp(ctx, nativeOptions.build());
 
-				if (app && typeof config === 'object' && typeof config.automaticResourceManagement === 'boolean') {
-					app.setAutomaticResourceManagementEnabled(config.automaticDataCollectionEnabled);
+				if (app && typeof config === 'object') {
+					if (typeof config.automaticResourceManagement === 'boolean') {
+						app.setAutomaticResourceManagementEnabled(config.automaticResourceManagement);
+					}
+					if (typeof config.automaticDataCollectionEnabled === 'boolean') {
+						app.setDataCollectionDefaultEnabled(config.automaticDataCollectionEnabled);
+					}
 				}
 
 				const fbApp = FirebaseApp.fromNative(app);

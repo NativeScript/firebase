@@ -1,4 +1,4 @@
-import { GetOptions, WhereFilterOp, DocumentFieldType, DocumentChangeType } from './common';
+import { GetOptions, DocumentChangeType } from './common';
 
 export type WhereFilterOp = '<' | '<=' | '==' | '>' | '>=' | '!=' | 'array-contains' | 'array-contains-any' | 'in' | 'not-in';
 
@@ -316,7 +316,7 @@ export declare class Query<T extends DocumentData = DocumentData> implements IQu
 	onSnapshot(onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 	onSnapshot(options: SnapshotListenOptions, onNext: (snapshot: QuerySnapshot) => void, onError?: (error: Error) => void, onCompletion?: () => void): () => void;
 
-	orderBy(fieldPath: keyof DocumentData | FieldPath, directionStr: 'asc' | 'desc' = 'asc'): Query;
+	orderBy(fieldPath: keyof DocumentData | FieldPath, directionStr?: 'asc' | 'desc'): Query;
 
 	startAfter(snapshot: DocumentSnapshot<T>): Query;
 	startAfter(fieldValues: FieldValue[]): Query;
@@ -544,5 +544,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseFirestore {
-	static firestore(app?: FirebaseApp): Firestore;
+	firestore(app?: FirebaseApp): Firestore;
 }

@@ -35,5 +35,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseCrashlytics {
-	static crashlytics(app?: FirebaseApp): Crashlytics;
+	crashlytics(app?: FirebaseApp): Crashlytics;
 }

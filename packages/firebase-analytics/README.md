@@ -116,13 +116,30 @@ Apple strictly bans an app from being in the Kids category if the app accesses I
 
 Additionally, if an app accesses IDFA iOS symbols, it must implement Apple's [App Tracking Transparency](https://developer.apple.com/documentation/apptrackingtransparency)(or `ATT`). However, if an app does not use IDFA and otherwise handles data in an ATT-compatible way, it eliminates this ATT requirement.
 
-If you need to avoid IDFA usage while still using analytics, define the following variable in your Podfile:
+If you need to avoid IDFA usage while still using analytics, override this plugin's Swift package
+in your app's `nativescript.config.ts`, keeping the same `name` so yours takes precedence:
 
-```ruby
-$NSFirebaseAnalyticsWithoutAdIdSupport = true
+```ts
+export default {
+	ios: {
+		SPMPackages: [
+			{
+				name: 'FirebaseAnalytics',
+				libs: ['FirebaseAnalyticsCore'],
+				repositoryURL: 'https://github.com/firebase/firebase-ios-sdk',
+				version: '>=12.19.0 <13.0.0',
+			},
+		],
+	},
+} as NativeScriptConfig;
 ```
 
-During pod install, using that variable installs a new `Analytics With No Ad Ids` pod that the firebase-ios-sdk team created, and allows both the use of Firebase Analytics in Kids Category apps and Firebase Analytics without needing the App Tracking Transparency handling (assuming no other parts of your app handles data in a way that requires ATT)
+`FirebaseAnalyticsCore` is the Analytics build without ad-identifier support. It allows both the use
+of Firebase Analytics in Kids Category apps and Firebase Analytics without needing App Tracking
+Transparency handling (assuming no other part of your app handles data in a way that requires ATT).
+
+>**Note** The `$NSFirebaseAnalyticsWithoutAdIdSupport` Podfile variable used by 5.x is gone — the
+suite no longer uses CocoaPods on iOS, so there is no Podfile to set it in.
 
 >**Note** that configuring Firebase Analytics for use without IDFA is incompatible with AdMob.
 

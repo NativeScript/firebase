@@ -1,7 +1,14 @@
 if (!project.hasProperty("tempBuild")) {
 	apply plugin: 'com.google.gms.google-services'
 }
+
+android {
+	defaultConfig {
+		minSdkVersion 23
+	}
+}
+
 dependencies {
-    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "33.5.1" }
+    def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "34.19.0" }
     implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
 }

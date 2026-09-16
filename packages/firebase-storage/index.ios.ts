@@ -542,8 +542,7 @@ export class Reference implements IReference {
 			this.native.updateMetadataCompletion(metadata.native, (metadata, error) => {
 				if (error) {
 					reject(FirebaseError.fromNative(error));
-				}
-				{
+				} else {
 					resolve(Metadata.fromNative(metadata));
 				}
 			});

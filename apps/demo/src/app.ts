@@ -5,7 +5,6 @@ import '@nativescript/firebase-analytics';
 import '@nativescript/firebase-auth';
 import '@nativescript/firebase-crashlytics';
 import '@nativescript/firebase-database';
-import '@nativescript/firebase-dynamic-links';
 import '@nativescript/firebase-firestore';
 import '@nativescript/firebase-functions';
 import '@nativescript/firebase-in-app-messaging';
@@ -26,12 +25,6 @@ firebase()
 		firebase().appCheck().activate(true);
 		firebase().crashlytics().setCrashlyticsCollectionEnabled(true);
 	});
-
-const dynamicLinks = firebase().dynamicLinks();
-
-dynamicLinks.onLink((link) => {
-	console.log('onLink', link);
-});
 
 const messaging = firebase().messaging();
 

@@ -317,7 +317,6 @@ export class MessagingCore implements IMessagingCore {
 						const err: any = new Error(error?.localizedDescription);
 						err.native = error;
 						reject(err);
-						reject(err);
 					} else {
 						this._hasPermission(resolve, reject);
 					}

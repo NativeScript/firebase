@@ -183,7 +183,7 @@ export class RemoteConfig implements IRemoteConfig {
 					}
 				});
 			} else {
-				this.native.fetchWithCompletionHandler((error) => {
+				this.native.fetchWithCompletionHandler((status, error) => {
 					if (error) {
 						const err = FirebaseError.fromNative(error);
 						reject(err);

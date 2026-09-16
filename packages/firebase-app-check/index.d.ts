@@ -50,5 +50,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseAppCheck {
-	static appCheck(app?: FirebaseApp): AppCheck;
+	appCheck(app?: FirebaseApp): AppCheck;
 }

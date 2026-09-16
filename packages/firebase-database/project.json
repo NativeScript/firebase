@@ -14,6 +14,7 @@
 				"assets": [
 					"packages/firebase-database/*.md",
 					"packages/firebase-database/index.d.ts",
+					"packages/firebase-database/nativescript.config.ts",
 					"packages/firebase-database/typings/*.d.ts",
 					"LICENSE",
 					{

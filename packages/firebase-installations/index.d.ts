@@ -21,5 +21,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseInstallations {
-	static installations(): Installations;
+	installations(): Installations;
 }
