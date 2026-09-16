@@ -71,12 +71,31 @@ Note: *good to always clean the demo you plan to run after focusing. (You can cl
 
 ## How to publish packages?
 
-```
-npm run publish-packages
-```
+Releases run through the [Release Workflow](.github/workflows/secure_nx_release.yml) GitHub Action. It versions with `nx release`, publishes to npm through OIDC trusted publishing (provenance attached, no npm token in the repo), and creates one GitHub release per package tag.
 
-- You will be prompted for the package names to publish. Leaving blank and hitting enter will publish them all.
-- You will then be prompted for the version to use. Leaving blank will auto bump the patch version (it also handles prerelease types like alpha, beta, rc, etc. - It even auto tags the corresponding prelease type on npm).
-- You will then be given a brief sanity check 🧠😊
+### Manual release (Actions → Release Workflow → Run workflow)
+
+- `version`: exact version such as `6.1.0` or `6.1.0-rc.0`. The npm dist-tag is derived from it (`6.1.0` → `latest`, `6.1.0-rc.0` → `rc`).
+- `release-type` + `preid`: used when `version` is empty. `patch` / `minor` / `major` publish to `latest`; `prerelease` bumps e.g. `6.0.0` → `6.0.1-next.0` and publishes to the `preid` dist-tag.
+- `release-group`: Nx project pattern to scope the release, e.g. `firebase-core` or `firebase-messaging*,firebase-core`. Empty releases every package under `packages/`.
+- `dry-run`: prints every change and publishes nothing.
+
+Each run commits the bumped `package.json` and per-package `CHANGELOG.md`, tags `{version}-{projectName}` (e.g. `6.1.0-firebase-core`), builds with `build.all`, and publishes from `dist/packages/*`.
+
+### Tag release
+
+Pushing a tag shaped `{version}-{projectName}` publishes that single package at the version already in its `package.json`. A prerelease version goes to the `next` dist-tag, anything else to `latest`.
+
+### Automatic `next` prereleases
+
+A push to `main` publishes a `next` prerelease of the affected packages named in the repository variable `NEXT_PRERELEASE_PROJECT_ALLOWLIST` (comma-separated Nx project names, e.g. `firebase-core,firebase-auth`). Leave the variable unset and pushes to `main` publish nothing.
+
+### One-time repository setup
+
+- npm: on each `@nativescript/firebase-*` package, add a trusted publisher for GitHub Actions with organization `NativeScript`, repository `firebase`, workflow `secure_nx_release.yml` and environment `npm-publish`. npm only offers trusted publishing on packages that already exist, so a brand-new package must be published once with a token first.
+- GitHub: environments `npm-publish` and `npm-publish-dry-run`. Required reviewers on `npm-publish` gate every real publish.
+- Optional token fallback: set the repository variable `USE_NPM_TOKEN` to `true` and the secret `NPM_PUBLISH_TOKEN` to publish with a granular npm token instead of OIDC.
+
+The interactive `npm run publish-packages` generator still works for local, token-based publishing, but it produces no provenance, changelogs, tags or GitHub releases.
 
 <h3 align="center">Made with ❤️</h3>
