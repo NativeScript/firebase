@@ -126,7 +126,7 @@ export class OnDisconnect implements IOnDisconnect {
 			NSOnDisconnect().update(
 				this.native,
 				// should auto marshall ?
-				values as any,
+				serializeItems(values, true),
 				new org.nativescript.firebase.database.FirebaseDatabase.Callback<java.lang.Void>({
 					onError(error) {
 						const err = FirebaseError.fromNative(error);
