@@ -5,7 +5,7 @@ npm install @nativescript/firebase-app-check
 ```
 
 
-> **Note**: (iOS) App Check requires you set the minimum iOS Deployment version in ios/Podfile to 11.0 or greater.
+> **Note**: (iOS) App Check requires an iOS deployment target of 15.0 or greater, set via `IPHONEOS_DEPLOYMENT_TARGET` in `App_Resources/iOS/build.xcconfig`.
 
 
 ### What does it do

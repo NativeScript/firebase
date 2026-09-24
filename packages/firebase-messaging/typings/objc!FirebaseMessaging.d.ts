@@ -15,6 +15,8 @@ declare class FIRMessaging extends NSObject {
 
 	delegate: FIRMessagingDelegate;
 
+	readonly installationIdEnabled: boolean;
+
 	appDidReceiveMessage(message: NSDictionary<any, any>): FIRMessagingMessageInfo;
 
 	deleteDataWithCompletion(completion: (p1: NSError) => void): void;
@@ -22,6 +24,8 @@ declare class FIRMessaging extends NSObject {
 	deleteFCMTokenForSenderIDCompletion(senderID: string, completion: (p1: NSError) => void): void;
 
 	deleteTokenWithCompletion(completion: (p1: NSError) => void): void;
+
+	registerWithCompletion(completion: (p1: NSError) => void): void;
 
 	retrieveFCMTokenForSenderIDCompletion(senderID: string, completion: (p1: string, p2: NSError) => void): void;
 
@@ -32,6 +36,8 @@ declare class FIRMessaging extends NSObject {
 	subscribeToTopicCompletion(topic: string, completion: (p1: NSError) => void): void;
 
 	tokenWithCompletion(completion: (p1: string, p2: NSError) => void): void;
+
+	unregisterWithCompletion(completion: (p1: NSError) => void): void;
 
 	unsubscribeFromTopic(topic: string): void;
 
@@ -47,7 +53,11 @@ declare const enum FIRMessagingAPNSTokenType {
 }
 
 interface FIRMessagingDelegate extends NSObjectProtocol {
+	messagingDidReceiveRegistration?(messaging: FIRMessaging, installationId: string): void;
+
 	messagingDidReceiveRegistrationToken?(messaging: FIRMessaging, fcmToken: string): void;
+
+	messagingDidUnregister?(messaging: FIRMessaging, installationId: string): void;
 }
 declare var FIRMessagingDelegate: {
 	prototype: FIRMessagingDelegate;
@@ -82,6 +92,8 @@ declare class FIRMessagingExtensionHelper extends NSObject {
 
 	populateNotificationContentWithContentHandler(content: UNMutableNotificationContent, contentHandler: (p1: UNNotificationContent) => void): void;
 }
+
+declare var FIRMessagingInstallationIdUnregisteredNotification: string;
 
 declare class FIRMessagingMessageInfo extends NSObject {
 	static alloc(): FIRMessagingMessageInfo; // inherited from NSObject

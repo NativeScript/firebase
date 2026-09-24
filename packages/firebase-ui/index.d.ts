@@ -38,6 +38,11 @@ export declare class ActionCodeSettings implements IActionCodeSettings {
 	androidInstallIfNotAvailable: boolean;
 	androidMinimumVersion: string;
 	androidPackageName: string;
+	linkDomain: string;
+
+	/**
+	 * @deprecated Dynamic Links shut down on 2025-08-25. Use linkDomain.
+	 */
 	dynamicLinkDomain: string;
 	handleCodeInApp: boolean;
 	iOSBundleId: string;
@@ -66,8 +71,18 @@ export class PhoneProvider extends ProviderBase {
 
 	defaultCountryIso: string;
 
+	blockedCountries: string[];
+
+	/**
+	 * @deprecated Renamed to blockedCountries in firebase-ui-auth 9.
+	 */
 	blacklistedCountries: string[];
 
+	allowedCountries: string[];
+
+	/**
+	 * @deprecated Renamed to allowedCountries in firebase-ui-auth 9.
+	 */
 	whitelistedCountries: string[];
 
 	readonly native;
@@ -128,6 +143,11 @@ export interface IActionCodeSettings {
 	readonly androidInstallIfNotAvailable: boolean;
 	readonly androidMinimumVersion: string;
 	readonly androidPackageName: string;
+	readonly linkDomain: string;
+
+	/**
+	 * @deprecated Dynamic Links shut down on 2025-08-25. Use linkDomain.
+	 */
 	readonly dynamicLinkDomain: string;
 	readonly handleCodeInApp: boolean;
 	readonly iOSBundleId: string;
@@ -243,5 +263,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseUI {
-	static ui(app?: FirebaseApp): UI;
+	ui(app?: FirebaseApp): UI;
 }

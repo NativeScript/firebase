@@ -39,11 +39,11 @@ declare class FIRActionCodeSettings extends NSObject {
 
 	androidPackageName: string;
 
-	dynamicLinkDomain: string;
-
 	handleCodeInApp: boolean;
 
 	iOSBundleID: string;
+
+	linkDomain: string;
 
 	setAndroidPackageNameInstallIfNotAvailableMinimumVersion(androidPackageName: string, installIfNotAvailable: boolean, minimumVersion: string): void;
 }
@@ -94,9 +94,6 @@ declare class FIRAdditionalUserInfo extends NSObject implements NSSecureCoding {
 	newUser(): boolean;
 }
 
-/**
- * @since 13
- */
 declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationDelegate, UISceneDelegate {
 	static alloc(): FIRAuth; // inherited from NSObject
 
@@ -152,9 +149,14 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	/**
 	 * @since 8.0
+	 * @deprecated 26.0
 	 */
 	applicationContinueUserActivityRestorationHandler(application: UIApplication, userActivity: NSUserActivity, restorationHandler: (p1: NSArray<UIUserActivityRestoring>) => void): boolean;
 
+	/**
+	 * @since 2.0
+	 * @deprecated 26.0
+	 */
 	applicationDidBecomeActive(application: UIApplication): void;
 
 	/**
@@ -186,6 +188,7 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	/**
 	 * @since 8.0
+	 * @deprecated 26.0
 	 */
 	applicationDidFailToContinueUserActivityWithTypeError(application: UIApplication, userActivityType: string, error: NSError): void;
 
@@ -233,6 +236,7 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	/**
 	 * @since 8.0
+	 * @deprecated 26.0
 	 */
 	applicationDidUpdateUserActivity(application: UIApplication, userActivity: NSUserActivity): void;
 
@@ -289,6 +293,7 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	/**
 	 * @since 9.0
+	 * @deprecated 26.0
 	 */
 	applicationOpenURLOptions(app: UIApplication, url: NSURL, options: NSDictionary<string, any>): boolean;
 
@@ -300,6 +305,7 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	/**
 	 * @since 9.0
+	 * @deprecated 26.0
 	 */
 	applicationPerformActionForShortcutItemCompletionHandler(application: UIApplication, shortcutItem: UIApplicationShortcutItem, completionHandler: (p1: boolean) => void): void;
 
@@ -365,6 +371,7 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	/**
 	 * @since 10.0
+	 * @deprecated 26.0
 	 */
 	applicationUserDidAcceptCloudKitShareWithMetadata(application: UIApplication, cloudKitShareMetadata: CKShareMetadata): void;
 
@@ -387,6 +394,7 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	/**
 	 * @since 8.0
+	 * @deprecated 26.0
 	 */
 	applicationWillContinueUserActivityWithType(application: UIApplication, userActivityType: string): boolean;
 
@@ -397,6 +405,7 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	/**
 	 * @since 4.0
+	 * @deprecated 26.0
 	 */
 	applicationWillEnterForeground(application: UIApplication): void;
 
@@ -405,6 +414,10 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 	 */
 	applicationWillFinishLaunchingWithOptions(application: UIApplication, launchOptions: NSDictionary<string, any>): boolean;
 
+	/**
+	 * @since 2.0
+	 * @deprecated 26.0
+	 */
 	applicationWillResignActive(application: UIApplication): void;
 
 	applicationWillTerminate(application: UIApplication): void;
@@ -495,9 +508,6 @@ declare class FIRAuth extends NSObject implements FIRAuthInterop, UIApplicationD
 
 	signInAnonymouslyWithCompletion(completion: (p1: FIRAuthDataResult, p2: NSError) => void): void;
 
-	/**
-	 * @since 13
-	 */
 	signInAnonymouslyWithCompletionHandler(completionHandler: (p1: FIRAuthDataResult, p2: NSError) => void): void;
 
 	signInWithCredentialCompletion(credential: FIRAuthCredential, completion: (p1: FIRAuthDataResult, p2: NSError) => void): void;
@@ -533,9 +543,6 @@ declare const enum FIRAuthAPNSTokenType {
 	Prod = 2,
 }
 
-/**
- * @since 13
- */
 declare class FIRAuthCredential extends NSObject {
 	static alloc(): FIRAuthCredential; // inherited from NSObject
 
@@ -544,23 +551,18 @@ declare class FIRAuthCredential extends NSObject {
 	readonly provider: string;
 }
 
-/**
- * @since 13
- */
 declare class FIRAuthDataResult extends NSObject implements NSSecureCoding {
 	static alloc(): FIRAuthDataResult; // inherited from NSObject
 
 	static new(): FIRAuthDataResult; // inherited from NSObject
 
-	static setSupportsSecureCoding(value: boolean): void;
+	static supportsSecureCoding(): boolean;
 
 	readonly additionalUserInfo: FIRAdditionalUserInfo;
 
 	readonly credential: FIROAuthCredential;
 
 	readonly user: FIRUser;
-
-	static supportsSecureCoding: boolean;
 
 	static readonly supportsSecureCoding: boolean; // inherited from NSSecureCoding
 
@@ -684,15 +686,13 @@ declare const enum FIRAuthErrorCode {
 
 	NullUser = 17067,
 
-	DynamicLinkNotActivated = 17068,
-
 	InvalidProviderID = 17071,
 
 	TenantIDMismatch = 17072,
 
 	UnsupportedTenantOperation = 17073,
 
-	InvalidDynamicLinkDomain = 17074,
+	InvalidHostingLinkDomain = 17214,
 
 	RejectedCredential = 17075,
 
@@ -748,6 +748,8 @@ declare const enum FIRAuthErrorCode {
 
 	RecaptchaActionCreationFailed = 17210,
 
+	PasswordDoesNotMeetRequirements = 17211,
+
 	KeychainError = 17995,
 
 	InternalError = 17999,
@@ -795,9 +797,6 @@ declare class FIRAuthSettings extends NSObject implements NSCopying {
 
 declare var FIRAuthStateDidChangeNotification: string;
 
-/**
- * @since 13
- */
 declare class FIRAuthTokenResult extends NSObject implements NSSecureCoding {
 	static alloc(): FIRAuthTokenResult; // inherited from NSObject
 
@@ -837,9 +836,6 @@ declare var FIRAuthUIDelegate: {
 	prototype: FIRAuthUIDelegate;
 };
 
-/**
- * @since 13
- */
 declare class FIREmailAuthProvider extends NSObject {
 	static alloc(): FIREmailAuthProvider; // inherited from NSObject
 
@@ -858,9 +854,6 @@ declare var FIREmailLinkAuthSignInMethod: string;
 
 declare var FIREmailPasswordAuthSignInMethod: string;
 
-/**
- * @since 13
- */
 declare class FIRFacebookAuthProvider extends NSObject {
 	static alloc(): FIRFacebookAuthProvider; // inherited from NSObject
 
@@ -875,22 +868,13 @@ declare var FIRFacebookAuthProviderID: string;
 
 declare var FIRFacebookAuthSignInMethod: string;
 
-/**
- * @since 13
- */
 interface FIRFederatedAuthProvider extends NSObjectProtocol {
-	/**
-	 * @since 13
-	 */
 	getCredentialWithUIDelegateCompletion(uiDelegate: FIRAuthUIDelegate, completionHandler: (p1: FIRAuthCredential, p2: NSError) => void): void;
 }
 declare var FIRFederatedAuthProvider: {
 	prototype: FIRFederatedAuthProvider;
 };
 
-/**
- * @since 13
- */
 declare class FIRGameCenterAuthProvider extends NSObject {
 	static alloc(): FIRGameCenterAuthProvider; // inherited from NSObject
 
@@ -905,9 +889,6 @@ declare var FIRGameCenterAuthProviderID: string;
 
 declare var FIRGameCenterAuthSignInMethod: string;
 
-/**
- * @since 13
- */
 declare class FIRGitHubAuthProvider extends NSObject {
 	static alloc(): FIRGitHubAuthProvider; // inherited from NSObject
 
@@ -922,9 +903,6 @@ declare var FIRGitHubAuthProviderID: string;
 
 declare var FIRGitHubAuthSignInMethod: string;
 
-/**
- * @since 13
- */
 declare class FIRGoogleAuthProvider extends NSObject {
 	static alloc(): FIRGoogleAuthProvider; // inherited from NSObject
 
@@ -939,9 +917,6 @@ declare var FIRGoogleAuthProviderID: string;
 
 declare var FIRGoogleAuthSignInMethod: string;
 
-/**
- * @since 13
- */
 declare class FIRMultiFactor extends NSObject implements NSSecureCoding {
 	static alloc(): FIRMultiFactor; // inherited from NSObject
 
@@ -1000,9 +975,6 @@ declare class FIRMultiFactorInfo extends NSObject implements NSSecureCoding {
 	initWithCoder(coder: NSCoder): this;
 }
 
-/**
- * @since 13
- */
 declare class FIRMultiFactorResolver extends NSObject {
 	static alloc(): FIRMultiFactorResolver; // inherited from NSObject
 
@@ -1017,32 +989,24 @@ declare class FIRMultiFactorResolver extends NSObject {
 	resolveSignInWithAssertionCompletion(assertion: FIRMultiFactorAssertion, completion: (p1: FIRAuthDataResult, p2: NSError) => void): void;
 }
 
-/**
- * @since 13
- */
 declare class FIRMultiFactorSession extends NSObject {
 	static alloc(): FIRMultiFactorSession; // inherited from NSObject
 
 	static new(): FIRMultiFactorSession; // inherited from NSObject
 }
 
-/**
- * @since 13
- */
 declare class FIROAuthCredential extends FIRAuthCredential implements NSSecureCoding {
 	static alloc(): FIROAuthCredential; // inherited from NSObject
 
 	static new(): FIROAuthCredential; // inherited from NSObject
 
-	static setSupportsSecureCoding(value: boolean): void;
+	static supportsSecureCoding(): boolean;
 
 	readonly IDToken: string;
 
 	readonly accessToken: string;
 
 	readonly secret: string;
-
-	static supportsSecureCoding: boolean;
 
 	static readonly supportsSecureCoding: boolean; // inherited from NSSecureCoding
 
@@ -1053,9 +1017,6 @@ declare class FIROAuthCredential extends FIRAuthCredential implements NSSecureCo
 	initWithCoder(coder: NSCoder): this;
 }
 
-/**
- * @since 13
- */
 declare class FIROAuthProvider extends NSObject implements FIRFederatedAuthProvider {
 	static alloc(): FIROAuthProvider; // inherited from NSObject
 
@@ -1099,9 +1060,6 @@ declare class FIROAuthProvider extends NSObject implements FIRFederatedAuthProvi
 
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
 
-	/**
-	 * @since 13
-	 */
 	getCredentialWithUIDelegateCompletion(uiDelegate: FIRAuthUIDelegate, completionHandler: (p1: FIRAuthCredential, p2: NSError) => void): void;
 
 	isEqual(object: any): boolean;
@@ -1123,17 +1081,12 @@ declare class FIROAuthProvider extends NSObject implements FIRFederatedAuthProvi
 	self(): this;
 }
 
-/**
- * @since 13
- */
 declare class FIRPhoneAuthCredential extends FIRAuthCredential implements NSSecureCoding {
 	static alloc(): FIRPhoneAuthCredential; // inherited from NSObject
 
 	static new(): FIRPhoneAuthCredential; // inherited from NSObject
 
-	static setSupportsSecureCoding(value: boolean): void;
-
-	static supportsSecureCoding: boolean;
+	static supportsSecureCoding(): boolean;
 
 	static readonly supportsSecureCoding: boolean; // inherited from NSSecureCoding
 
@@ -1144,9 +1097,6 @@ declare class FIRPhoneAuthCredential extends FIRAuthCredential implements NSSecu
 	initWithCoder(coder: NSCoder): this;
 }
 
-/**
- * @since 13
- */
 declare class FIRPhoneAuthProvider extends NSObject {
 	static alloc(): FIRPhoneAuthProvider; // inherited from NSObject
 
@@ -1171,18 +1121,12 @@ declare var FIRPhoneAuthProviderID: string;
 
 declare var FIRPhoneAuthSignInMethod: string;
 
-/**
- * @since 13
- */
 declare class FIRPhoneMultiFactorAssertion extends FIRMultiFactorAssertion {
 	static alloc(): FIRPhoneMultiFactorAssertion; // inherited from NSObject
 
 	static new(): FIRPhoneMultiFactorAssertion; // inherited from NSObject
 }
 
-/**
- * @since 13
- */
 declare class FIRPhoneMultiFactorGenerator extends NSObject {
 	static alloc(): FIRPhoneMultiFactorGenerator; // inherited from NSObject
 
@@ -1205,17 +1149,12 @@ declare class FIRPhoneMultiFactorInfo extends FIRMultiFactorInfo {
 	static readonly FIRTOTPMultiFactorID: string;
 }
 
-declare function FIRRecaptchaGetToken(siteKey: string, actionString: string, fakeToken: string, callback: (p1: string, p2: NSError, p3: boolean, p4: boolean) => void): void;
-
 declare class FIRTOTPMultiFactorAssertion extends FIRMultiFactorAssertion {
 	static alloc(): FIRTOTPMultiFactorAssertion; // inherited from NSObject
 
 	static new(): FIRTOTPMultiFactorAssertion; // inherited from NSObject
 }
 
-/**
- * @since 13
- */
 declare class FIRTOTPMultiFactorGenerator extends NSObject {
 	static alloc(): FIRTOTPMultiFactorGenerator; // inherited from NSObject
 
@@ -1242,9 +1181,6 @@ declare class FIRTOTPSecret extends NSObject {
 	sharedSecretKey(): string;
 }
 
-/**
- * @since 13
- */
 declare class FIRTwitterAuthProvider extends NSObject {
 	static alloc(): FIRTwitterAuthProvider; // inherited from NSObject
 
@@ -1259,9 +1195,6 @@ declare var FIRTwitterAuthProviderID: string;
 
 declare var FIRTwitterAuthSignInMethod: string;
 
-/**
- * @since 13
- */
 declare class FIRUser extends NSObject implements FIRUserInfo, NSSecureCoding {
 	static alloc(): FIRUser; // inherited from NSObject
 
@@ -1271,8 +1204,6 @@ declare class FIRUser extends NSObject implements FIRUserInfo, NSSecureCoding {
 
 	displayName: string;
 
-	email: string;
-
 	readonly isAnonymous: boolean;
 
 	readonly isEmailVerified: boolean;
@@ -1280,8 +1211,6 @@ declare class FIRUser extends NSObject implements FIRUserInfo, NSSecureCoding {
 	readonly metadata: FIRUserMetadata;
 
 	readonly multiFactor: FIRMultiFactor;
-
-	phoneNumber: string;
 
 	photoURL: NSURL;
 
@@ -1291,19 +1220,23 @@ declare class FIRUser extends NSObject implements FIRUserInfo, NSSecureCoding {
 
 	readonly tenantID: string;
 
-	uid: string;
-
 	readonly debugDescription: string; // inherited from NSObjectProtocol
 
 	readonly description: string; // inherited from NSObjectProtocol
+
+	readonly email: string; // inherited from FIRUserInfo
 
 	readonly hash: number; // inherited from NSObjectProtocol
 
 	readonly isProxy: boolean; // inherited from NSObjectProtocol
 
+	readonly phoneNumber: string; // inherited from FIRUserInfo
+
 	readonly providerID: string; // inherited from FIRUserInfo
 
 	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
+
+	readonly uid: string; // inherited from FIRUserInfo
 
 	readonly; // inherited from NSObjectProtocol
 
@@ -1397,9 +1330,6 @@ declare var FIRUserInfo: {
 	prototype: FIRUserInfo;
 };
 
-/**
- * @since 13
- */
 declare class FIRUserMetadata extends NSObject implements NSSecureCoding {
 	static alloc(): FIRUserMetadata; // inherited from NSObject
 
@@ -1420,9 +1350,6 @@ declare class FIRUserMetadata extends NSObject implements NSSecureCoding {
 	initWithCoder(coder: NSCoder): this;
 }
 
-/**
- * @since 13
- */
 declare class FIRUserProfileChangeRequest extends NSObject {
 	static alloc(): FIRUserProfileChangeRequest; // inherited from NSObject
 

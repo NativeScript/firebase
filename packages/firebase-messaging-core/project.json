@@ -15,6 +15,7 @@
 				"assets": [
 					"packages/firebase-messaging-core/*.md",
 					"packages/firebase-messaging-core/index.d.ts",
+					"packages/firebase-messaging-core/nativescript.config.ts",
 					"LICENSE",
 					{
 						"glob": "**/*",

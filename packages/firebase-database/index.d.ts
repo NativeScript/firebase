@@ -1,4 +1,4 @@
-import { Firebase, FirebaseApp } from '@nativescript/firebase-core';
+import { Firebase, FirebaseApp, FirebaseError } from '@nativescript/firebase-core';
 import { IDataSnapshot, IDatabase, IOnDisconnect, EventType, IQuery, IReference, IThenableReference, TransactionResult } from './common';
 
 export { EventType };
@@ -69,7 +69,7 @@ export declare class Reference extends Query implements IReference {
 
 	readonly key: string;
 	readonly parent: Reference;
-	readonly ref: Reference;
+	get ref(): Reference;
 	readonly root: Reference;
 
 	child(path: string): Reference;
@@ -86,7 +86,7 @@ export declare class Reference extends Query implements IReference {
 
 	setWithPriority(newVal: any, newPriority: string | number, onComplete?: (error: FirebaseError) => void): Promise<void>;
 
-	transaction(transactionUpdate: (currentData: object) => object, onComplete?: (error: FirebaseError, committed: boolean, finalResult: any) => void, applyLocally: boolean = true): Promise<TransactionResult>;
+	transaction(transactionUpdate: (currentData: object) => object, onComplete?: (error: FirebaseError, committed: boolean, finalResult: any) => void, applyLocally?: boolean): Promise<TransactionResult>;
 
 	update(values: { [key: string]: any }, onComplete?: (error: FirebaseError) => void): Promise<void>;
 }
@@ -148,5 +148,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseDatabase {
-	static database(app?: FirebaseApp): Database;
+	database(app?: FirebaseApp): Database;
 }

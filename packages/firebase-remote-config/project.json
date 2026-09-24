@@ -14,6 +14,7 @@
 				"assets": [
 					"packages/firebase-remote-config/*.md",
 					"packages/firebase-remote-config/index.d.ts",
+					"packages/firebase-remote-config/nativescript.config.ts",
 					"packages/firebase-remote-config/typings/*.d.ts",
 					"LICENSE",
 					{

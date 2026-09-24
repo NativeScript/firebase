@@ -69,5 +69,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseRemoteConfig {
-	static remoteConfig(): RemoteConfig;
+	remoteConfig(): RemoteConfig;
 }

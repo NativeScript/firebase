@@ -18,6 +18,7 @@
 
 <script lang="ts">
 import Vue from 'nativescript-vue';
+import Ai from '../plugin-demos/firebase-ai.vue';
 import Analytics from '../plugin-demos/firebase-analytics.vue';
 import AppCheck from '../plugin-demos/firebase-app-check.vue';
 import AppCheckDebug from '../plugin-demos/firebase-app-check-debug.vue';
@@ -25,7 +26,6 @@ import Auth from '../plugin-demos/firebase-auth.vue';
 import Core from '../plugin-demos/firebase-core.vue';
 import Crashlytics from '../plugin-demos/firebase-crashlytics.vue';
 import Database from '../plugin-demos/firebase-database.vue';
-import DynamicLinks from '../plugin-demos/firebase-dynamic-links.vue';
 import FireStore from '../plugin-demos/firebase-firestore.vue';
 import Functions from '../plugin-demos/firebase-functions.vue';
 import InAppMessaging from '../plugin-demos/firebase-in-app-messaging.vue';
@@ -37,6 +37,10 @@ import RemoteConfig from '../plugin-demos/firebase-remote-config.vue';
 import Storage from '../plugin-demos/firebase-storage.vue';
 
 const routes = [
+	{
+		name: 'firebase-ai',
+		detail: Ai,
+	},
 	{
 		name: 'firebase-analytics',
 		detail: Analytics,
@@ -64,10 +68,6 @@ const routes = [
 	{
 		name: 'firebase-database',
 		detail: Database,
-	},
-	{
-		name: 'firebase-dynamic-links',
-		detail: DynamicLinks,
 	},
 	{
 		name: 'firebase-firestore',
@@ -125,6 +125,9 @@ export default Vue.extend({
 		demos() {
 			return [
 				{
+					name: 'firebase-ai',
+				},
+				{
 					name: 'firebase-analytics',
 				},
 				{
@@ -144,9 +147,6 @@ export default Vue.extend({
 				},
 				{
 					name: 'firebase-database',
-				},
-				{
-					name: 'firebase-dynamic-links',
 				},
 				{
 					name: 'firebase-firestore',

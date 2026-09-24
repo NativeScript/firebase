@@ -1,0 +1,592 @@
+name: Release Workflow
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      # Matches the Nx releaseTagPattern in nx.json: "{version}-{projectName}"
+      - '*-*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Exact version to release (e.g. 6.1.0-rc.0). Overrides release-type/preid; npm dist-tag is derived from it (6.1.0-rc.0 -> rc, 6.1.0 -> latest)"
+        required: false
+        type: string
+        default: ""
+      release-type:
+        description: "Version bump when 'version' is empty (patch/minor/major publish to npm 'latest'; prerelease uses 'preid')"
+        required: false
+        type: choice
+        options:
+          - prerelease
+          - patch
+          - minor
+          - major
+        default: prerelease
+      preid:
+        description: "Prerelease identifier (used only when release-type=prerelease and 'version' is empty; also becomes the npm dist-tag, e.g. next | alpha | beta | rc)"
+        required: false
+        type: string
+        default: next
+      dry-run:
+        description: "Run release steps without making changes (no git push, no publish)"
+        required: false
+        type: boolean
+        default: false
+      release-group:
+        description: "Optional Nx project pattern to scope the release, e.g. firebase-core or firebase-messaging*,firebase-core (empty = all packages)"
+        required: false
+        type: string
+        default: ""
+
+concurrency:
+  # Avoid overlapping publishes on the same ref/branch
+  group: nx-release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write        # needed to push version commits and tags
+  id-token: write        # required for npm provenance / trusted publishing (OIDC)
+
+jobs:
+  release:
+    name: Version and Publish (gated by environment)
+    # Branch pushes only do work when the repo variable NEXT_PRERELEASE_PROJECT_ALLOWLIST names
+    # the projects that may auto-publish a `next` prerelease; with it unset, only tags and
+    # manual dispatches release anything.
+    if: ${{ github.actor != 'github-actions[bot]' && (github.event_name != 'push' || startsWith(github.ref, 'refs/tags/') || vars.NEXT_PRERELEASE_PROJECT_ALLOWLIST != '') }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry-run) && 'npm-publish-dry-run' || 'npm-publish' }}
+
+    env:
+      # Comma-separated Nx project names allowed to auto-publish `next` prereleases on pushes to main.
+      NEXT_PRERELEASE_PROJECT_ALLOWLIST: ${{ vars.NEXT_PRERELEASE_PROJECT_ALLOWLIST }}
+
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout repository (full history for tagging)
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Update npm (required for OIDC trusted publishing)
+        run: |
+          npm install -g npm@^11.5.1
+          npm --version
+
+      # No lockfile is committed (yarn.lock is gitignored), so a frozen install is not possible.
+      # --ignore-engines mirrors the repo's own `setup` script; Angular's engine range lags Node 24.
+      - name: Install dependencies
+        run: yarn install --ignore-engines --non-interactive
+
+      - name: Resolve release context
+        id: ctx
+        shell: bash
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_RELEASE_TYPE: ${{ inputs['release-type'] }}
+          INPUT_PREID: ${{ inputs.preid }}
+          INPUT_SCOPE: ${{ inputs['release-group'] }}
+          INPUT_DRY_RUN: ${{ inputs['dry-run'] }}
+        run: |
+          set -euo pipefail
+
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            version="${INPUT_VERSION}"
+            release_type="${INPUT_RELEASE_TYPE}"
+            preid="${INPUT_PREID}"
+            scope="${INPUT_SCOPE}"
+            dry_run="${INPUT_DRY_RUN}"
+            mode="dispatch"
+
+            if [[ -n "$version" ]]; then
+              specifier="$version"
+              release_type=""
+              preid=""
+              if [[ "$version" == *-* ]]; then
+                # npm dist-tag is the alphabetic prerelease label (6.1.0-rc.0 -> rc); purely numeric labels fall back to next.
+                prerelease="${version#*-}"
+                dist_tag="${prerelease%%.*}"
+                if [[ "$dist_tag" =~ ^[0-9]+$ ]]; then
+                  dist_tag="next"
+                fi
+              else
+                dist_tag="latest"
+              fi
+            else
+              specifier="$release_type"
+              # npm dist-tag follows release type: prerelease -> preid, stable -> latest
+              if [[ "$release_type" == "prerelease" ]]; then
+                dist_tag="$preid"
+              else
+                preid=""
+                dist_tag="latest"
+              fi
+            fi
+          elif [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            specifier=""
+            release_type=""
+            preid=""
+            dist_tag=""
+            scope=""
+            dry_run="false"
+            mode="tag"
+          else
+            specifier="prerelease"
+            release_type="prerelease"
+            preid="next"
+            dist_tag="next"
+            scope=""
+            dry_run="false"
+            mode="main"
+          fi
+
+          echo "mode=${mode}" >> "$GITHUB_OUTPUT"
+          echo "specifier=${specifier}" >> "$GITHUB_OUTPUT"
+          echo "release_type=${release_type}" >> "$GITHUB_OUTPUT"
+          echo "preid=${preid}" >> "$GITHUB_OUTPUT"
+          echo "dist_tag=${dist_tag}" >> "$GITHUB_OUTPUT"
+          echo "scope=${scope}" >> "$GITHUB_OUTPUT"
+          echo "dry_run=${dry_run}" >> "$GITHUB_OUTPUT"
+
+      - name: Determine affected release projects (main)
+        id: affected
+        if: ${{ steps.ctx.outputs.mode == 'main' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${NEXT_PRERELEASE_PROJECT_ALLOWLIST}" ]]; then
+            echo "NEXT_PRERELEASE_PROJECT_ALLOWLIST is empty; nothing auto-publishes on main."
+            echo "projects=" >> "$GITHUB_OUTPUT"
+            echo "count=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          base='${{ github.event.before }}'
+          head='${{ github.sha }}'
+
+          # Handle edge cases where base commit doesn't exist (first push, force-push, etc.)
+          # Use HEAD~1 as fallback, or just compare against HEAD if no parent exists
+          if [[ "$base" == "0000000000000000000000000000000000000000" ]] || ! git cat-file -e "$base" 2>/dev/null; then
+            echo "Base commit not available, falling back to HEAD~1"
+            base="HEAD~1"
+            # If HEAD~1 doesn't exist (first commit), use empty tree
+            if ! git cat-file -e "$base" 2>/dev/null; then
+              base="$(git hash-object -t tree /dev/null)"
+            fi
+          fi
+
+          # Only consider main-branch prerelease libraries allowed for automatic next publishes.
+          affected_json=$(npx nx show projects --affected --base "$base" --head "$head" --type lib --projects "$NEXT_PRERELEASE_PROJECT_ALLOWLIST" --json)
+          affected_list=$(printf '%s' "$affected_json" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const a=JSON.parse(s||"[]");process.stdout.write(a.join(","));});')
+          affected_count=$(printf '%s' "$affected_json" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const a=JSON.parse(s||"[]");process.stdout.write(String(a.length));});')
+
+          echo "projects=${affected_list}" >> "$GITHUB_OUTPUT"
+          echo "count=${affected_count}" >> "$GITHUB_OUTPUT"
+
+      - name: Determine tag release project and dist-tag (tags)
+        id: taginfo
+        if: ${{ steps.ctx.outputs.mode == 'tag' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          tag_name="${GITHUB_REF_NAME}"
+
+          # Find the project by matching the tag suffix against known releaseable packages.
+          projects=$(npx nx show projects --projects "packages/*" --type lib --sep ' ')
+
+          # Longest suffix wins so firebase-app-check-debug is not mistaken for firebase-app-check
+          # (and firebase-messaging-core for firebase-messaging).
+          best_match=""
+          best_len=0
+          for p in $projects; do
+            suffix="-${p}"
+            if [[ "$tag_name" == *"$suffix" ]]; then
+              if (( ${#p} > best_len )); then
+                best_match="$p"
+                best_len=${#p}
+              fi
+            fi
+          done
+
+          if [[ -z "$best_match" ]]; then
+            echo "Could not determine project from tag '$tag_name'. Expected '{version}-{projectName}'." >&2
+            exit 1
+          fi
+
+          version_part="${tag_name%-$best_match}"
+          if [[ "$version_part" == *-* ]]; then
+            dist_tag="next"
+          else
+            dist_tag="latest"
+          fi
+
+          echo "project=${best_match}" >> "$GITHUB_OUTPUT"
+          echo "version=${version_part}" >> "$GITHUB_OUTPUT"
+          echo "dist_tag=${dist_tag}" >> "$GITHUB_OUTPUT"
+
+      - name: Configure git user for automated commits
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # VERSION: updates versions and creates git tags following nx.json releaseTagPattern.
+      - name: nx release version (main)
+        if: ${{ steps.ctx.outputs.mode == 'main' && steps.affected.outputs.count != '0' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx nx release version prerelease \
+            --preid next \
+            --projects "${{ steps.affected.outputs.projects }}" \
+            --git-commit \
+            --git-push \
+            --verbose
+
+      - name: nx release version (main, no-op)
+        if: ${{ steps.ctx.outputs.mode == 'main' && steps.affected.outputs.count == '0' }}
+        run: echo "No affected release projects on main; skipping version + publish."
+
+      # The checkout above is pinned to the SHA resolved at dispatch time; by now (install)
+      # the branch may have moved (e.g. a push-triggered next release), which makes the later
+      # release-commit push non-fast-forward. Re-sync to the branch tip before versioning.
+      - name: Sync to latest branch tip (dispatch)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && !inputs.dry-run }}
+        run: |
+          git fetch origin "$GITHUB_REF_NAME"
+          git reset --hard "origin/$GITHUB_REF_NAME"
+
+      # Orchestrated release: bumps versions, generates changelogs, commits + tags in one shot.
+      # The orchestrator does not accept --git-* flags (config-driven only); push is handled in the next step.
+      # --skip-publish keeps publishing as a separate step below so the OIDC token-clearing logic still runs.
+      # A project with no prior release tag gets its changelog from its first commit (release.changelog.automaticFromRef in nx.json).
+      - name: nx release version + changelog (dispatch)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && !inputs.dry-run }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          scope="${{ steps.ctx.outputs.scope }}"
+          projects_arg=()
+          if [[ -n "$scope" ]]; then
+            projects_arg=(--projects "$scope")
+          fi
+
+          preid="${{ steps.ctx.outputs.preid }}"
+          preid_arg=()
+          if [[ -n "$preid" ]]; then
+            preid_arg=(--preid "$preid")
+          fi
+
+          npx nx release "${{ steps.ctx.outputs.specifier }}" \
+            "${preid_arg[@]}" \
+            "${projects_arg[@]}" \
+            --skip-publish \
+            --verbose
+
+      # --atomic: if the branch push is rejected, the release tags are rejected with it,
+      # so a failed run leaves no orphaned tag behind and a plain re-dispatch is enough to retry.
+      - name: Push release commit and tags (dispatch)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && !inputs.dry-run }}
+        run: git push --atomic --follow-tags origin HEAD
+
+      - name: nx release version + changelog (dispatch, dry-run)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && inputs.dry-run }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          scope="${{ steps.ctx.outputs.scope }}"
+          projects_arg=()
+          if [[ -n "$scope" ]]; then
+            projects_arg=(--projects "$scope")
+          fi
+
+          preid="${{ steps.ctx.outputs.preid }}"
+          preid_arg=()
+          if [[ -n "$preid" ]]; then
+            preid_arg=(--preid "$preid")
+          fi
+
+          npx nx release "${{ steps.ctx.outputs.specifier }}" \
+            "${preid_arg[@]}" \
+            "${projects_arg[@]}" \
+            --skip-publish \
+            --verbose \
+            --dry-run
+
+      # BUILD: build.all (not build) is the publishable artifact — it runs tools/scripts/build-finish.ts,
+      # which copies the publishing .npmignore into dist and strips fields npm must not see.
+      - name: Build affected projects (main)
+        if: ${{ steps.ctx.outputs.mode == 'main' && steps.affected.outputs.count != '0' }}
+        run: npx nx run-many -t build.all --projects "${{ steps.affected.outputs.projects }}" --verbose
+
+      - name: Build projects (dispatch)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          scope="${{ steps.ctx.outputs.scope }}"
+          if [[ -n "$scope" ]]; then
+            npx nx run-many -t build.all --projects "$scope" --verbose
+          else
+            npx nx run-many -t build.all --all --verbose
+          fi
+
+      # PUBLISH: OIDC trusted publishing (default). Avoid any lingering token auth.
+      - name: nx release publish (OIDC, main)
+        if: ${{ steps.ctx.outputs.mode == 'main' && steps.affected.outputs.count != '0' && vars.USE_NPM_TOKEN != 'true' }}
+        shell: bash
+        env:
+          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ""
+        run: |
+          set -euo pipefail
+          unset NODE_AUTH_TOKEN
+          rm -f ~/.npmrc || true
+          if [[ -n "${NPM_CONFIG_USERCONFIG:-}" ]]; then
+            rm -f "$NPM_CONFIG_USERCONFIG" || true
+          fi
+
+          npx nx release publish \
+            --projects "${{ steps.affected.outputs.projects }}" \
+            --tag "${{ steps.ctx.outputs.dist_tag }}" \
+            --access public \
+            --verbose
+
+      - name: nx release publish (OIDC, dispatch)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && steps.ctx.outputs.dry_run != 'true' && vars.USE_NPM_TOKEN != 'true' }}
+        shell: bash
+        env:
+          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ""
+        run: |
+          set -euo pipefail
+          unset NODE_AUTH_TOKEN
+          rm -f ~/.npmrc || true
+          if [[ -n "${NPM_CONFIG_USERCONFIG:-}" ]]; then
+            rm -f "$NPM_CONFIG_USERCONFIG" || true
+          fi
+
+          scope="${{ steps.ctx.outputs.scope }}"
+          if [[ -n "$scope" ]]; then
+            projects_arg="--projects $scope"
+          else
+            projects_arg=""
+          fi
+
+          npx nx release publish \
+            $projects_arg \
+            --tag "${{ steps.ctx.outputs.dist_tag }}" \
+            --access public \
+            --verbose
+
+      - name: nx release publish (OIDC, dispatch dry-run)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && inputs.dry-run && vars.USE_NPM_TOKEN != 'true' }}
+        shell: bash
+        env:
+          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ""
+        run: |
+          set -euo pipefail
+          unset NODE_AUTH_TOKEN
+          rm -f ~/.npmrc || true
+          if [[ -n "${NPM_CONFIG_USERCONFIG:-}" ]]; then
+            rm -f "$NPM_CONFIG_USERCONFIG" || true
+          fi
+
+          scope="${{ steps.ctx.outputs.scope }}"
+          if [[ -n "$scope" ]]; then
+            projects_arg="--projects $scope"
+          else
+            projects_arg=""
+          fi
+
+          npx nx release publish \
+            $projects_arg \
+            --tag "${{ steps.ctx.outputs.dist_tag }}" \
+            --access public \
+            --verbose \
+            --dry-run
+
+      # PUBLISH: token fallback (only when explicitly enabled via repo/environment variable USE_NPM_TOKEN=true).
+      - name: nx release publish (token, main)
+        if: ${{ steps.ctx.outputs.mode == 'main' && steps.affected.outputs.count != '0' && vars.USE_NPM_TOKEN == 'true' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+        run: |
+          npx nx release publish --projects "${{ steps.affected.outputs.projects }}" --tag "${{ steps.ctx.outputs.dist_tag }}" --access public --verbose
+
+      - name: nx release publish (token, dispatch)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && steps.ctx.outputs.dry_run != 'true' && vars.USE_NPM_TOKEN == 'true' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+        run: |
+          set -euo pipefail
+          scope="${{ steps.ctx.outputs.scope }}"
+          if [[ -n "$scope" ]]; then
+            projects_arg="--projects $scope"
+          else
+            projects_arg=""
+          fi
+          npx nx release publish $projects_arg --tag "${{ steps.ctx.outputs.dist_tag }}" --access public --verbose
+
+      - name: nx release publish (token, dispatch dry-run)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && inputs.dry-run && vars.USE_NPM_TOKEN == 'true' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+        run: |
+          set -euo pipefail
+          scope="${{ steps.ctx.outputs.scope }}"
+          if [[ -n "$scope" ]]; then
+            projects_arg="--projects $scope"
+          else
+            projects_arg=""
+          fi
+          npx nx release publish $projects_arg --tag "${{ steps.ctx.outputs.dist_tag }}" --access public --verbose --dry-run
+
+      # Tag-triggered publishing: publish the single package referenced by the tag.
+      - name: Build project before publish (tag)
+        if: ${{ steps.ctx.outputs.mode == 'tag' }}
+        run: npx nx run "${{ steps.taginfo.outputs.project }}:build.all" --verbose
+
+      - name: nx release publish (tag)
+        if: ${{ steps.ctx.outputs.mode == 'tag' && vars.USE_NPM_TOKEN != 'true' }}
+        shell: bash
+        env:
+          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ""
+        run: |
+          set -euo pipefail
+          unset NODE_AUTH_TOKEN
+          rm -f ~/.npmrc || true
+          if [[ -n "${NPM_CONFIG_USERCONFIG:-}" ]]; then
+            rm -f "$NPM_CONFIG_USERCONFIG" || true
+          fi
+
+          npx nx release publish \
+            --projects "${{ steps.taginfo.outputs.project }}" \
+            --tag "${{ steps.taginfo.outputs.dist_tag }}" \
+            --access public \
+            --verbose
+
+      - name: nx release publish (tag, token)
+        if: ${{ steps.ctx.outputs.mode == 'tag' && vars.USE_NPM_TOKEN == 'true' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+        run: |
+          npx nx release publish --projects "${{ steps.taginfo.outputs.project }}" --tag "${{ steps.taginfo.outputs.dist_tag }}" --access public --verbose
+
+      # Nx only writes CHANGELOG.md files (nx.json release.changelog has no createRelease),
+      # so GitHub releases are posted here. This must run after the tag push (creating a
+      # release for a tag GitHub doesn't have yet would auto-create it from the wrong
+      # commit) and after npm publish (so a GitHub API failure cannot block publishing —
+      # a red run here means only the release step needs manual recovery).
+      - name: Create GitHub releases (dispatch)
+        if: ${{ steps.ctx.outputs.mode == 'dispatch' && !inputs.dry-run }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          tags=$(git tag --points-at HEAD)
+          if [[ -z "$tags" ]]; then
+            echo "No release tags on HEAD; skipping GitHub release creation."
+            exit 0
+          fi
+
+          projects=$(npx nx show projects --projects "packages/*" --type lib --sep ' ')
+
+          for tag in $tags; do
+            # Tag format is {version}-{projectName} (nx.json releaseTagPattern); take the
+            # longest project suffix so project names containing '-' resolve correctly.
+            best_match=""
+            best_len=0
+            for p in $projects; do
+              suffix="-${p}"
+              if [[ "$tag" == *"$suffix" ]] && (( ${#p} > best_len )); then
+                best_match="$p"
+                best_len=${#p}
+              fi
+            done
+            if [[ -z "$best_match" ]]; then
+              echo "Skipping tag '$tag' (no matching release project)."
+              continue
+            fi
+
+            version="${tag%-$best_match}"
+            root=$(npx nx show project "$best_match" --json | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).root))')
+            pkg=$(node -e "console.log(require('./${root}/package.json').name)")
+
+            if gh release view "$tag" --json id --jq .id >/dev/null 2>&1; then
+              echo "Release for '$tag' already exists; skipping."
+              continue
+            fi
+
+            notes_file="$(mktemp)"
+            awk -v h="## ${version} (" 'index($0, h) == 1 {found=1; next} /^## / {if (found) exit} found' "${root}/CHANGELOG.md" > "$notes_file"
+
+            flags=(--verify-tag --title "${pkg}@${version}")
+            if [[ "$version" == *-* ]]; then
+              flags+=(--prerelease)
+            elif [[ "$best_match" == "firebase-core" ]]; then
+              # The repo's Latest badge stays on stable firebase-core releases; other packages
+              # must not claim it just by being published later.
+              flags+=(--latest)
+            else
+              flags+=(--latest=false)
+            fi
+            if [[ -s "$notes_file" ]]; then
+              flags+=(--notes-file "$notes_file")
+            else
+              flags+=(--generate-notes)
+            fi
+
+            gh release create "$tag" "${flags[@]}"
+          done
+
+      - name: Summary
+        if: always()
+        run: |
+          mode="${{ steps.ctx.outputs.mode }}"
+
+          echo "Nx Release completed."
+          echo "- mode: ${mode}"
+          echo "- specifier: '${{ steps.ctx.outputs.specifier }}'"
+          echo "- release-type: '${{ steps.ctx.outputs.release_type }}'"
+          echo "- preid: '${{ steps.ctx.outputs.preid }}'"
+          echo "- dist-tag: ${{ steps.ctx.outputs.mode == 'tag' && steps.taginfo.outputs.dist_tag || steps.ctx.outputs.dist_tag }}"
+          echo "- scope: '${{ steps.ctx.outputs.scope }}'"
+          echo "- next-prerelease-allowlist: '${NEXT_PRERELEASE_PROJECT_ALLOWLIST}'"
+          if [[ "$mode" == "main" ]]; then
+            echo "- projects: ${{ steps.affected.outputs.projects }}"
+          elif [[ "$mode" == "dispatch" ]]; then
+            if [[ -n "${{ steps.ctx.outputs.scope }}" ]]; then
+              echo "- projects: ${{ steps.ctx.outputs.scope }}"
+            else
+              echo "- projects: all configured release projects"
+            fi
+          else
+            echo "- project: ${{ steps.taginfo.outputs.project }}"
+          fi
+          echo "- dry-run: ${{ steps.ctx.outputs.dry_run }}"
+          echo "- use-token: ${{ vars.USE_NPM_TOKEN == 'true' }}"

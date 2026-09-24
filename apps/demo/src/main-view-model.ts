@@ -3,6 +3,9 @@ import { Observable, Frame } from '@nativescript/core';
 export class MainViewModel extends Observable {
 	demos = [
 		{
+			name: 'firebase-ai',
+		},
+		{
 			name: 'firebase-analytics',
 		},
 		{
@@ -13,9 +16,6 @@ export class MainViewModel extends Observable {
 		},
 		{
 			name: 'firebase-database',
-		},
-		{
-			name: 'firebase-dynamic-links',
 		},
 		{
 			name: 'firebase-firestore',

@@ -477,7 +477,7 @@ export class Reference extends Query implements IReference {
 		});
 	}
 
-	transaction(transactionUpdate: (currentData: object) => object, onComplete?: (error: FirebaseError, committed: boolean, finalResult: any) => void, applyLocally?: boolean): Promise<any> {
+	transaction(transactionUpdate: (currentData: object) => object, onComplete?: (error: FirebaseError, committed: boolean, finalResult: any) => void, applyLocally = true): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.native.runTransactionBlockAndCompletionBlockWithLocalEvents(
 				(data) => {
@@ -499,7 +499,7 @@ export class Reference extends Query implements IReference {
 						});
 					}
 				},
-				applyLocally || true
+				applyLocally
 			);
 		});
 	}

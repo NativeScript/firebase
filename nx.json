@@ -27,6 +27,12 @@
 		"@nx/eslint:lint": {
 			"inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
 			"cache": true
+		},
+		"nx-release-publish": {
+			"dependsOn": ["build.all"],
+			"options": {
+				"packageRoot": "{workspaceRoot}/dist/packages/{projectName}"
+			}
 		}
 	},
 	"useDaemonProcess": false,
@@ -39,12 +45,18 @@
 		"projectsRelationship": "independent",
 		"changelog": {
 			"workspaceChangelog": false,
+			"automaticFromRef": true,
 			"projectChangelogs": {
 				"renderOptions": {
 					"authors": true,
 					"commitReferences": true,
 					"versionTitleDate": true
 				}
+			}
+		},
+		"version": {
+			"generatorOptions": {
+				"updateDependents": "never"
 			}
 		}
 	},

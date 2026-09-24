@@ -14,6 +14,7 @@
 				"assets": [
 					"packages/firebase-messaging/*.md",
 					"packages/firebase-messaging/index.d.ts",
+					"packages/firebase-messaging/nativescript.config.ts",
 					"packages/firebase-messaging/typings/*.d.ts",
 					"LICENSE",
 					{
