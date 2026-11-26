@@ -14,5 +14,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseInAppMessaging {
-	static inAppMessaging(): InAppMessaging;
+	inAppMessaging(): InAppMessaging;
 }

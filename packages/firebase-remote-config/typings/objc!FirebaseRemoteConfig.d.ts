@@ -48,10 +48,22 @@ declare class FIRRemoteConfig extends NSObject implements NSFastEnumeration {
 
 	objectForKeyedSubscript(key: string): FIRRemoteConfigValue;
 
+	setCustomSignalsWithCompletion(customSignals: NSDictionary<string, NSObject>, completionHandler: (p1: NSError) => void): void;
+
 	setDefaults(defaults: NSDictionary<string, NSObject>): void;
 
 	setDefaultsFromPlistFileName(fileName: string): void;
 }
+
+declare const enum FIRRemoteConfigCustomSignalsError {
+	Unknown = 8101,
+
+	InvalidValueType = 8102,
+
+	LimitExceeded = 8103,
+}
+
+declare var FIRRemoteConfigCustomSignalsErrorDomain: string;
 
 declare const enum FIRRemoteConfigError {
 	Unknown = 8001,

@@ -164,13 +164,17 @@ export class ActionCodeSettings implements IActionCodeSettings {
 	}
 
 	get native() {
-		return this._native
+		const builder = this._native
 			.setUrl(this.url || '')
 			.setIOSBundleId(this.iOSBundleId || '')
 			.setHandleCodeInApp(this.handleCodeInApp || false)
-			.setDynamicLinkDomain(this.dynamicLinkDomain || '')
-			.setAndroidPackageName(this.androidPackageName || '', this.androidInstallIfNotAvailable || false, this.androidMinimumVersion || '')
-			.build();
+			.setAndroidPackageName(this.androidPackageName || '', this.androidInstallIfNotAvailable || false, this.androidMinimumVersion || '');
+
+		if (this.linkDomain) {
+			builder.setLinkDomain(this.linkDomain);
+		}
+
+		return builder.build();
 	}
 
 	get android() {
@@ -181,9 +185,20 @@ export class ActionCodeSettings implements IActionCodeSettings {
 	androidInstallIfNotAvailable: boolean;
 	androidMinimumVersion: string;
 	androidPackageName: string;
-	dynamicLinkDomain: string;
+	linkDomain: string;
 	handleCodeInApp: boolean;
 	iOSBundleId: string;
+
+	/**
+	 * @deprecated Dynamic Links shut down on 2025-08-25. Use linkDomain, which this forwards to.
+	 */
+	get dynamicLinkDomain() {
+		return this.linkDomain;
+	}
+
+	set dynamicLinkDomain(value) {
+		this.linkDomain = value;
+	}
 }
 
 export class EmailProvider extends ProviderBase {
@@ -280,36 +295,58 @@ export class PhoneProvider extends ProviderBase {
 		this._builder.setDefaultCountryIso(value);
 	}
 
-	_blacklistedCountries: string[] = [];
+	_blockedCountries: string[] = [];
+	get blockedCountries() {
+		return this._blockedCountries;
+	}
+
+	set blockedCountries(values: string[]) {
+		if (Array.isArray(values)) {
+			this._blockedCountries = values;
+			const countries = new java.util.ArrayList<string>();
+			this._blockedCountries.forEach((country) => {
+				countries.add(country);
+			});
+			this._builder.setBlockedCountries(countries);
+		}
+	}
+
+	/**
+	 * @deprecated Renamed to blockedCountries in firebase-ui-auth 9.
+	 */
 	get blacklistedCountries() {
-		return this._blacklistedCountries;
+		return this.blockedCountries;
 	}
 
 	set blacklistedCountries(values: string[]) {
+		this.blockedCountries = values;
+	}
+
+	_allowedCountries: string[] = [];
+	get allowedCountries() {
+		return this._allowedCountries;
+	}
+
+	set allowedCountries(values: string[]) {
 		if (Array.isArray(values)) {
-			this._blacklistedCountries = values;
+			this._allowedCountries = values;
 			const countries = new java.util.ArrayList<string>();
-			this._blacklistedCountries.forEach((country) => {
+			this._allowedCountries.forEach((country) => {
 				countries.add(country);
 			});
-			this._builder.setBlacklistedCountries(countries);
+			this._builder.setAllowedCountries(countries);
 		}
 	}
 
-	_whitelistedCountries: string[] = [];
+	/**
+	 * @deprecated Renamed to allowedCountries in firebase-ui-auth 9.
+	 */
 	get whitelistedCountries() {
-		return this._whitelistedCountries;
+		return this.allowedCountries;
 	}
 
 	set whitelistedCountries(values: string[]) {
-		if (Array.isArray(values)) {
-			this._whitelistedCountries = values;
-			const countries = new java.util.ArrayList<string>();
-			this._whitelistedCountries.forEach((country) => {
-				countries.add(country);
-			});
-			this._builder.setWhitelistedCountries(countries);
-		}
+		this.allowedCountries = values;
 	}
 
 	getNative(ui: IUI) {

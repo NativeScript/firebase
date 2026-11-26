@@ -32,5 +32,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseAnalytics {
-	static analytics(): Analytics;
+	analytics(): Analytics;
 }

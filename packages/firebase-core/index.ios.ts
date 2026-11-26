@@ -75,17 +75,6 @@ export class FirebaseOptions implements IFirebaseOptions {
 		return this.native?.GCMSenderID;
 	}
 
-	_androidClientId: string;
-	set androidClientId(value) {
-		this._androidClientId = value;
-	}
-	get androidClientId(): string {
-		if (this._androidClientId) {
-			return this._androidClientId;
-		}
-		return this.native?.androidClientID;
-	}
-
 	_appGroupId: string;
 	set appGroupId(value) {
 		this._appGroupId = value;
@@ -131,17 +120,6 @@ export class FirebaseOptions implements IFirebaseOptions {
 		return this.native?.databaseURL;
 	}
 
-	_deepLinkURLScheme: string;
-	set deepLinkURLScheme(value) {
-		this._deepLinkURLScheme = value;
-	}
-	get deepLinkURLScheme(): string {
-		if (this._deepLinkURLScheme) {
-			return this._deepLinkURLScheme;
-		}
-		return this.native?.deepLinkURLScheme;
-	}
-
 	_googleAppId: string;
 	set googleAppId(value) {
 		this._googleAppId = value;
@@ -173,17 +151,6 @@ export class FirebaseOptions implements IFirebaseOptions {
 			return this._storageBucket;
 		}
 		return this.native?.storageBucket;
-	}
-
-	_trackingId: string;
-	set trackingId(value) {
-		this._trackingId = value;
-	}
-	get trackingId(): string {
-		if (this._trackingId) {
-			return this._trackingId;
-		}
-		return this.native?.trackingID;
 	}
 }
 
@@ -319,6 +286,10 @@ export class Firebase {
 					const name = typeof configOrName === 'string' ? configOrName : configOrName?.name;
 					let nativeOptions: FIROptions;
 					if (name) {
+						if (!options?.googleAppId || !options?.gcmSenderId) {
+							reject(new FirebaseError('A named app requires options with googleAppId and gcmSenderId.'));
+							return;
+						}
 						nativeOptions = FIROptions.alloc().initWithGoogleAppIDGCMSenderID(options.googleAppId, options.gcmSenderId);
 					}
 
@@ -332,10 +303,6 @@ export class Firebase {
 
 					if (options?.gcmSenderId) {
 						nativeOptions.GCMSenderID = options.gcmSenderId;
-					}
-
-					if (options?.androidClientId) {
-						nativeOptions.androidClientID = options.androidClientId;
 					}
 
 					if (options?.appGroupId) {
@@ -354,10 +321,6 @@ export class Firebase {
 						nativeOptions.databaseURL = options.databaseURL;
 					}
 
-					if (options?.deepLinkURLScheme) {
-						nativeOptions.deepLinkURLScheme = options.deepLinkURLScheme;
-					}
-
 					if (options?.googleAppId) {
 						nativeOptions.googleAppID = options.googleAppId;
 					}
@@ -370,10 +333,6 @@ export class Firebase {
 						nativeOptions.storageBucket = options.storageBucket;
 					}
 
-					if (options?.trackingId) {
-						nativeOptions.trackingID = options.trackingId;
-					}
-
 					let app: FIRApp;
 					let isDefault = false;
 					if (name) {
@@ -381,8 +340,8 @@ export class Firebase {
 						app = FIRApp.appNamed(name);
 					} else {
 						if (defaultApp) {
-              resolve(defaultApp);
-              return;
+							resolve(defaultApp);
+							return;
 						}
 
 						if (nativeOptions) {
@@ -446,10 +405,6 @@ export class Firebase {
 						nativeOptions.GCMSenderID = options.gcmSenderId;
 					}
 
-					if (options?.androidClientId) {
-						nativeOptions.androidClientID = options.androidClientId;
-					}
-
 					if (options?.appGroupId) {
 						nativeOptions.appGroupID = options.appGroupId;
 					}
@@ -466,10 +421,6 @@ export class Firebase {
 						nativeOptions.databaseURL = options.databaseURL;
 					}
 
-					if (options?.deepLinkURLScheme) {
-						nativeOptions.deepLinkURLScheme = options.deepLinkURLScheme;
-					}
-
 					if (options?.googleAppId) {
 						nativeOptions.googleAppID = options.googleAppId;
 					}
@@ -480,10 +431,6 @@ export class Firebase {
 
 					if (options?.storageBucket) {
 						nativeOptions.storageBucket = options.storageBucket;
-					}
-
-					if (options?.trackingId) {
-						nativeOptions.trackingID = options.trackingId;
 					}
 
 					FIRApp.configureWithOptions(nativeOptions);

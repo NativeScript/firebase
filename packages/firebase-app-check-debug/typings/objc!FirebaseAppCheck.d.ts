@@ -1,6 +1,3 @@
-/**
- * @since 14.0
- */
 declare class FIRAppAttestProvider extends NSObject implements FIRAppCheckProvider {
 	static alloc(): FIRAppAttestProvider; // inherited from NSObject
 
@@ -29,6 +26,48 @@ declare class FIRAppAttestProvider extends NSObject implements FIRAppCheckProvid
 	getTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
 
 	initWithApp(app: FIRApp): this;
+
+	isEqual(object: any): boolean;
+
+	isKindOfClass(aClass: typeof NSObject): boolean;
+
+	isMemberOfClass(aClass: typeof NSObject): boolean;
+
+	performSelector(aSelector: string): any;
+
+	performSelectorWithObject(aSelector: string, object: any): any;
+
+	performSelectorWithObjectWithObject(aSelector: string, object1: any, object2: any): any;
+
+	respondsToSelector(aSelector: string): boolean;
+
+	retainCount(): number;
+
+	self(): this;
+}
+
+declare class FIRAppAttestProviderFactory extends NSObject implements FIRAppCheckProviderFactory {
+	static alloc(): FIRAppAttestProviderFactory; // inherited from NSObject
+
+	static new(): FIRAppAttestProviderFactory; // inherited from NSObject
+
+	readonly debugDescription: string; // inherited from NSObjectProtocol
+
+	readonly description: string; // inherited from NSObjectProtocol
+
+	readonly hash: number; // inherited from NSObjectProtocol
+
+	readonly isProxy: boolean; // inherited from NSObjectProtocol
+
+	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
+
+	readonly; // inherited from NSObjectProtocol
+
+	class(): typeof NSObject;
+
+	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
+
+	createProviderWithApp(app: FIRApp): FIRAppCheckProvider;
 
 	isEqual(object: any): boolean;
 
@@ -207,9 +246,6 @@ declare class FIRAppCheckToken extends NSObject {
 	initWithTokenExpirationDate(token: string, expirationDate: Date): this;
 }
 
-/**
- * @since 11.0
- */
 declare class FIRDeviceCheckProvider extends NSObject implements FIRAppCheckProvider {
 	static alloc(): FIRDeviceCheckProvider; // inherited from NSObject
 
@@ -258,9 +294,6 @@ declare class FIRDeviceCheckProvider extends NSObject implements FIRAppCheckProv
 	self(): this;
 }
 
-/**
- * @since 11.0
- */
 declare class FIRDeviceCheckProviderFactory extends NSObject implements FIRAppCheckProviderFactory {
 	static alloc(): FIRDeviceCheckProviderFactory; // inherited from NSObject
 
@@ -283,6 +316,106 @@ declare class FIRDeviceCheckProviderFactory extends NSObject implements FIRAppCh
 	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
 
 	createProviderWithApp(app: FIRApp): FIRAppCheckProvider;
+
+	isEqual(object: any): boolean;
+
+	isKindOfClass(aClass: typeof NSObject): boolean;
+
+	isMemberOfClass(aClass: typeof NSObject): boolean;
+
+	performSelector(aSelector: string): any;
+
+	performSelectorWithObject(aSelector: string, object: any): any;
+
+	performSelectorWithObjectWithObject(aSelector: string, object1: any, object2: any): any;
+
+	respondsToSelector(aSelector: string): boolean;
+
+	retainCount(): number;
+
+	self(): this;
+}
+
+/**
+ * @since 15.0
+ */
+declare class FIRRecaptchaProvider extends NSObject implements FIRAppCheckProvider {
+	static alloc(): FIRRecaptchaProvider; // inherited from NSObject
+
+	static new(): FIRRecaptchaProvider; // inherited from NSObject
+
+	readonly debugDescription: string; // inherited from NSObjectProtocol
+
+	readonly description: string; // inherited from NSObjectProtocol
+
+	readonly hash: number; // inherited from NSObjectProtocol
+
+	readonly isProxy: boolean; // inherited from NSObjectProtocol
+
+	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
+
+	readonly; // inherited from NSObjectProtocol
+
+	constructor(o: { app: FIRApp; siteKey: string });
+
+	class(): typeof NSObject;
+
+	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
+
+	getLimitedUseTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
+
+	getTokenWithCompletion(handler: (p1: FIRAppCheckToken, p2: NSError) => void): void;
+
+	initWithAppSiteKey(app: FIRApp, siteKey: string): this;
+
+	isEqual(object: any): boolean;
+
+	isKindOfClass(aClass: typeof NSObject): boolean;
+
+	isMemberOfClass(aClass: typeof NSObject): boolean;
+
+	performSelector(aSelector: string): any;
+
+	performSelectorWithObject(aSelector: string, object: any): any;
+
+	performSelectorWithObjectWithObject(aSelector: string, object1: any, object2: any): any;
+
+	respondsToSelector(aSelector: string): boolean;
+
+	retainCount(): number;
+
+	self(): this;
+}
+
+/**
+ * @since 15.0
+ */
+declare class FIRRecaptchaProviderFactory extends NSObject implements FIRAppCheckProviderFactory {
+	static alloc(): FIRRecaptchaProviderFactory; // inherited from NSObject
+
+	static new(): FIRRecaptchaProviderFactory; // inherited from NSObject
+
+	readonly debugDescription: string; // inherited from NSObjectProtocol
+
+	readonly description: string; // inherited from NSObjectProtocol
+
+	readonly hash: number; // inherited from NSObjectProtocol
+
+	readonly isProxy: boolean; // inherited from NSObjectProtocol
+
+	readonly superclass: typeof NSObject; // inherited from NSObjectProtocol
+
+	readonly; // inherited from NSObjectProtocol
+
+	constructor(o: { siteKey: string });
+
+	class(): typeof NSObject;
+
+	conformsToProtocol(aProtocol: any /* Protocol */): boolean;
+
+	createProviderWithApp(app: FIRApp): FIRAppCheckProvider;
+
+	initWithSiteKey(siteKey: string): this;
 
 	isEqual(object: any): boolean;
 

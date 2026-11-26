@@ -1,5 +1,0 @@
- module TNSFirebaseDynamicLinksLoader {
-  umbrella header "TNSFirebaseDynamicLinksLoader.h"
-  export *
-  module * { export * }
-}

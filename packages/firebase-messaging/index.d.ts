@@ -125,5 +125,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseMessaging {
-	static messaging(): Messaging;
+	messaging(): Messaging;
 }

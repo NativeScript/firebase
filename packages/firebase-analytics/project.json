@@ -14,6 +14,7 @@
 				"assets": [
 					"packages/firebase-analytics/*.md",
 					"packages/firebase-analytics/index.d.ts",
+					"packages/firebase-analytics/nativescript.config.ts",
 					"packages/firebase-analytics/typings/*.d.ts",
 					"LICENSE",
 					{
@@ -33,7 +34,7 @@
 		"build.all": {
 			"executor": "nx:run-commands",
 			"options": {
-				"commands": ["./node_modules/.bin/tsc -p packages/firebase-analytics/hooks/tsconfig.json", "node tools/scripts/build-finish.ts firebase-analytics"],
+				"commands": ["node tools/scripts/build-finish.ts firebase-analytics"],
 				"parallel": false
 			},
 			"outputs": ["{workspaceRoot}/dist/packages/firebase-analytics"],

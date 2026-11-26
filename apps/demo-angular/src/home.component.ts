@@ -7,6 +7,9 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 	demos = [
 		{
+			name: 'firebase-ai',
+		},
+		{
 			name: 'firebase-analytics',
 		},
 		{
@@ -26,9 +29,6 @@ export class HomeComponent {
 		},
 		{
 			name: 'firebase-database',
-		},
-		{
-			name: 'firebase-dynamic-links',
 		},
 		{
 			name: 'firebase-firestore',

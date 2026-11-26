@@ -1,6 +1,11 @@
 import Foundation
 import UIKit
+#if canImport(GoogleUtilities_AppDelegateSwizzler)
+// Swift Package Manager exposes the subspec as its own module.
+import GoogleUtilities_AppDelegateSwizzler
+#elseif canImport(GoogleUtilities)
 import GoogleUtilities
+#endif
 #if canImport(FirebaseMessaging)
 import FirebaseMessaging
 #endif

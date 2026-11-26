@@ -3,8 +3,6 @@ export interface IFirebaseOptions {
 
 	gcmSenderId?: string;
 
-	androidClientId?: string;
-
 	appGroupId?: string;
 
 	bundleId?: string;
@@ -13,14 +11,15 @@ export interface IFirebaseOptions {
 
 	databaseURL?: string;
 
-	deepLinkURLScheme?: string;
-
 	googleAppId?: string;
 
 	projectId?: string;
 
 	storageBucket?: string;
 
+	/**
+	 * Android only. Removed from FIROptions in the Firebase iOS SDK 12.
+	 */
 	trackingId?: string;
 }
 
@@ -43,8 +42,6 @@ declare class FirebaseOptions implements IFirebaseOptions {
 
 	gcmSenderId?: string;
 
-	androidClientId?: string;
-
 	appGroupId?: string;
 
 	bundleId?: string;
@@ -53,26 +50,27 @@ declare class FirebaseOptions implements IFirebaseOptions {
 
 	databaseURL?: string;
 
-	deepLinkURLScheme?: string;
-
 	googleAppId?: string;
 
 	projectId?: string;
 
 	storageBucket?: string;
 
+	/**
+	 * Android only. Removed from FIROptions in the Firebase iOS SDK 12.
+	 */
 	trackingId?: string;
 }
 
 declare class FirebaseApp {
 	readonly native;
 	readonly ios;
+	readonly android;
 	readonly name;
 	readonly options: Readonly<FirebaseOptions>;
+	readonly apps: FirebaseApp[];
 
 	delete(): Promise<void>;
-
-	apps(): FirebaseApp[];
 }
 
 export interface Firebase {

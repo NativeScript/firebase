@@ -1,3 +1,13 @@
+declare class FIRAddFieldsStageBridge extends FIRStageBridge {
+	static alloc(): FIRAddFieldsStageBridge; // inherited from NSObject
+
+	static new(): FIRAddFieldsStageBridge; // inherited from NSObject
+
+	constructor(o: { fields: NSDictionary<string, FIRExprBridge> });
+
+	initWithFields(fields: NSDictionary<string, FIRExprBridge>): this;
+}
+
 declare class FIRAggregateField extends NSObject {
 	static aggregateFieldForAverageOfField(field: string): FIRAggregateField;
 
@@ -12,6 +22,16 @@ declare class FIRAggregateField extends NSObject {
 	static alloc(): FIRAggregateField; // inherited from NSObject
 
 	static new(): FIRAggregateField; // inherited from NSObject
+}
+
+declare class FIRAggregateFunctionBridge extends NSObject {
+	static alloc(): FIRAggregateFunctionBridge; // inherited from NSObject
+
+	static new(): FIRAggregateFunctionBridge; // inherited from NSObject
+
+	constructor(o: { name: string; args: NSArray<FIRExprBridge> | FIRExprBridge[] });
+
+	initWithNameArgs(name: string, args: NSArray<FIRExprBridge> | FIRExprBridge[]): this;
 }
 
 declare class FIRAggregateQuery extends NSObject {
@@ -40,6 +60,26 @@ declare const enum FIRAggregateSource {
 	Server = 0,
 }
 
+declare class FIRAggregateStageBridge extends FIRStageBridge {
+	static alloc(): FIRAggregateStageBridge; // inherited from NSObject
+
+	static new(): FIRAggregateStageBridge; // inherited from NSObject
+
+	constructor(o: { accumulators: NSDictionary<string, FIRAggregateFunctionBridge>; groups: NSDictionary<string, FIRExprBridge> });
+
+	initWithAccumulatorsGroups(accumulators: NSDictionary<string, FIRAggregateFunctionBridge>, groups: NSDictionary<string, FIRExprBridge>): this;
+}
+
+declare class FIRCollectionGroupSourceStageBridge extends FIRStageBridge {
+	static alloc(): FIRCollectionGroupSourceStageBridge; // inherited from NSObject
+
+	static new(): FIRCollectionGroupSourceStageBridge; // inherited from NSObject
+
+	constructor(o: { collectionId: string; forceIndex: string });
+
+	initWithCollectionIdForceIndex(id: string, force_index: string): this;
+}
+
 declare class FIRCollectionReference extends FIRQuery {
 	static alloc(): FIRCollectionReference; // inherited from NSObject
 
@@ -58,6 +98,52 @@ declare class FIRCollectionReference extends FIRQuery {
 	documentWithAutoID(): FIRDocumentReference;
 
 	documentWithPath(documentPath: string): FIRDocumentReference;
+}
+
+declare class FIRCollectionSourceStageBridge extends FIRStageBridge {
+	static alloc(): FIRCollectionSourceStageBridge; // inherited from NSObject
+
+	static new(): FIRCollectionSourceStageBridge; // inherited from NSObject
+
+	constructor(o: { ref: FIRCollectionReference; firestore: FIRFirestore; forceIndex: string });
+
+	initWithRefFirestoreForceIndex(ref: FIRCollectionReference, db: FIRFirestore, force_index: string): this;
+}
+
+declare class FIRConstantBridge extends FIRExprBridge {
+	static alloc(): FIRConstantBridge; // inherited from NSObject
+
+	static new(): FIRConstantBridge; // inherited from NSObject
+
+	constructor();
+
+	init(input: any): this;
+}
+
+declare class FIRDatabaseSourceStageBridge extends FIRStageBridge {
+	static alloc(): FIRDatabaseSourceStageBridge; // inherited from NSObject
+
+	static new(): FIRDatabaseSourceStageBridge; // inherited from NSObject
+}
+
+declare class FIRDefineStageBridge extends FIRStageBridge {
+	static alloc(): FIRDefineStageBridge; // inherited from NSObject
+
+	static new(): FIRDefineStageBridge; // inherited from NSObject
+
+	constructor(o: { variables: NSDictionary<string, FIRExprBridge> });
+
+	initWithVariables(variables: NSDictionary<string, FIRExprBridge>): this;
+}
+
+declare class FIRDistinctStageBridge extends FIRStageBridge {
+	static alloc(): FIRDistinctStageBridge; // inherited from NSObject
+
+	static new(): FIRDistinctStageBridge; // inherited from NSObject
+
+	constructor(o: { groups: NSDictionary<string, FIRExprBridge> });
+
+	initWithGroups(groups: NSDictionary<string, FIRExprBridge>): this;
 }
 
 declare class FIRDocumentChange extends NSObject {
@@ -152,6 +238,38 @@ declare class FIRDocumentSnapshot extends NSObject {
 	valueForFieldServerTimestampBehavior(field: any, serverTimestampBehavior: FIRServerTimestampBehavior): any;
 }
 
+declare class FIRDocumentsSourceStageBridge extends FIRStageBridge {
+	static alloc(): FIRDocumentsSourceStageBridge; // inherited from NSObject
+
+	static new(): FIRDocumentsSourceStageBridge; // inherited from NSObject
+
+	constructor(o: { documents: NSArray<FIRDocumentReference> | FIRDocumentReference[]; firestore: FIRFirestore });
+
+	initWithDocumentsFirestore(documents: NSArray<FIRDocumentReference> | FIRDocumentReference[], db: FIRFirestore): this;
+}
+
+declare class FIRExprBridge extends NSObject {
+	static alloc(): FIRExprBridge; // inherited from NSObject
+
+	static new(): FIRExprBridge; // inherited from NSObject
+}
+
+declare class FIRFieldBridge extends FIRExprBridge {
+	static alloc(): FIRFieldBridge; // inherited from NSObject
+
+	static new(): FIRFieldBridge; // inherited from NSObject
+
+	constructor(o: { name: string });
+
+	constructor(o: { path: FIRFieldPath });
+
+	field_name(): string;
+
+	initWithName(name: string): this;
+
+	initWithPath(path: FIRFieldPath): this;
+}
+
 declare class FIRFieldPath extends NSObject implements NSCopying {
 	static alloc(): FIRFieldPath; // inherited from NSObject
 
@@ -177,7 +295,15 @@ declare class FIRFieldValue extends NSObject {
 
 	static fieldValueForDoubleIncrement(d: number): FIRFieldValue;
 
+	static fieldValueForDoubleMaximum(d: number): FIRFieldValue;
+
+	static fieldValueForDoubleMinimum(d: number): FIRFieldValue;
+
 	static fieldValueForIntegerIncrement(l: number): FIRFieldValue;
+
+	static fieldValueForIntegerMaximum(l: number): FIRFieldValue;
+
+	static fieldValueForIntegerMinimum(l: number): FIRFieldValue;
 
 	static fieldValueForServerTimestamp(): FIRFieldValue;
 
@@ -234,6 +360,16 @@ declare class FIRFilter extends NSObject {
 	static new(): FIRFilter; // inherited from NSObject
 
 	static orFilterWithFilters(filters: NSArray<FIRFilter> | FIRFilter[]): FIRFilter;
+}
+
+declare class FIRFindNearestStageBridge extends FIRStageBridge {
+	static alloc(): FIRFindNearestStageBridge; // inherited from NSObject
+
+	static new(): FIRFindNearestStageBridge; // inherited from NSObject
+
+	constructor(o: { field: FIRFieldBridge; vectorValue: FIRVectorValue; distanceMeasure: string; limit: number; distanceField: FIRExprBridge });
+
+	initWithFieldVectorValueDistanceMeasureLimitDistanceField(field: FIRFieldBridge, vectorValue: FIRVectorValue, distanceMeasure: string, limit: number, distanceField: FIRExprBridge): this;
 }
 
 declare class FIRFirestore extends NSObject {
@@ -364,6 +500,16 @@ declare const enum FIRFirestoreSource {
 	Cache = 2,
 }
 
+declare class FIRFunctionExprBridge extends FIRExprBridge {
+	static alloc(): FIRFunctionExprBridge; // inherited from NSObject
+
+	static new(): FIRFunctionExprBridge; // inherited from NSObject
+
+	constructor(o: { name: string; args: NSArray<FIRExprBridge> | FIRExprBridge[]; options: NSDictionary<string, FIRExprBridge> });
+
+	initWithNameArgsOptions(name: string, args: NSArray<FIRExprBridge> | FIRExprBridge[], options: NSDictionary<string, FIRExprBridge>): this;
+}
+
 declare class FIRGeoPoint extends NSObject implements NSCopying {
 	static alloc(): FIRGeoPoint; // inherited from NSObject
 
@@ -378,6 +524,16 @@ declare class FIRGeoPoint extends NSObject implements NSCopying {
 	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
 
 	initWithLatitudeLongitude(latitude: number, longitude: number): this;
+}
+
+declare class FIRLimitStageBridge extends FIRStageBridge {
+	static alloc(): FIRLimitStageBridge; // inherited from NSObject
+
+	static new(): FIRLimitStageBridge; // inherited from NSObject
+
+	constructor(o: { limit: number });
+
+	initWithLimit(value: number): this;
 }
 
 declare const enum FIRListenSource {
@@ -471,6 +627,26 @@ declare class FIRMemoryLRUGCSettings extends NSObject implements FIRMemoryGarbag
 	initWithSizeBytes(size: number): this;
 }
 
+declare class FIROffsetStageBridge extends FIRStageBridge {
+	static alloc(): FIROffsetStageBridge; // inherited from NSObject
+
+	static new(): FIROffsetStageBridge; // inherited from NSObject
+
+	constructor(o: { offset: number });
+
+	initWithOffset(value: number): this;
+}
+
+declare class FIROrderingBridge extends NSObject {
+	static alloc(): FIROrderingBridge; // inherited from NSObject
+
+	static new(): FIROrderingBridge; // inherited from NSObject
+
+	constructor(o: { expr: FIRExprBridge; direction: string });
+
+	initWithExprDirection(expr: FIRExprBridge, direction: string): this;
+}
+
 declare class FIRPersistentCacheIndexManager extends NSObject {
 	static alloc(): FIRPersistentCacheIndexManager; // inherited from NSObject
 
@@ -493,6 +669,30 @@ declare class FIRPersistentCacheSettings extends NSObject implements FIRLocalCac
 	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
 
 	initWithSizeBytes(size: number): this;
+}
+
+declare class FIRPipelineBridge extends NSObject {
+	static alloc(): FIRPipelineBridge; // inherited from NSObject
+
+	static createStageBridgesFromQuery(query: FIRQuery): NSArray<FIRStageBridge>;
+
+	static new(): FIRPipelineBridge; // inherited from NSObject
+
+	constructor(o: { stages: NSArray<FIRStageBridge> | FIRStageBridge[]; db: FIRFirestore });
+
+	executeWithCompletion(completion: (p1: __FIRPipelineSnapshotBridge, p2: NSError) => void): void;
+
+	initWithStagesDb(stages: NSArray<FIRStageBridge> | FIRStageBridge[], db: FIRFirestore): this;
+}
+
+declare class FIRPipelineExprBridge extends FIRExprBridge {
+	static alloc(): FIRPipelineExprBridge; // inherited from NSObject
+
+	static new(): FIRPipelineExprBridge; // inherited from NSObject
+
+	constructor(o: { stages: NSArray<FIRStageBridge> | FIRStageBridge[] });
+
+	initWithStages(stages: NSArray<FIRStageBridge> | FIRStageBridge[]): this;
 }
 
 declare class FIRQuery extends NSObject {
@@ -615,6 +815,82 @@ declare class FIRQuerySnapshot extends NSObject {
 	documentChangesWithIncludeMetadataChanges(includeMetadataChanges: boolean): NSArray<FIRDocumentChange>;
 }
 
+declare class FIRRawStageBridge extends FIRStageBridge {
+	static alloc(): FIRRawStageBridge; // inherited from NSObject
+
+	static new(): FIRRawStageBridge; // inherited from NSObject
+
+	constructor(o: { name: string; params: NSArray<any> | any[]; options: NSDictionary<string, FIRExprBridge> });
+
+	initWithNameParamsOptions(name: string, params: NSArray<any> | any[], options: NSDictionary<string, FIRExprBridge>): this;
+}
+
+declare class FIRRealtimePipelineBridge extends NSObject {
+	static alloc(): FIRRealtimePipelineBridge; // inherited from NSObject
+
+	static new(): FIRRealtimePipelineBridge; // inherited from NSObject
+
+	constructor(o: { stages: NSArray<FIRStageBridge> | FIRStageBridge[]; db: FIRFirestore });
+
+	addSnapshotListenerWithOptionsListener(options: __FIRPipelineListenOptionsBridge, listener: (p1: __FIRRealtimePipelineSnapshotBridge, p2: NSError) => void): FIRListenerRegistration;
+
+	initWithStagesDb(stages: NSArray<FIRStageBridge> | FIRStageBridge[], db: FIRFirestore): this;
+}
+
+declare class FIRRemoveFieldsStageBridge extends FIRStageBridge {
+	static alloc(): FIRRemoveFieldsStageBridge; // inherited from NSObject
+
+	static new(): FIRRemoveFieldsStageBridge; // inherited from NSObject
+
+	constructor(o: { fields: NSArray<string> | string[] });
+
+	initWithFields(fields: NSArray<string> | string[]): this;
+}
+
+declare class FIRReplaceWithStageBridge extends FIRStageBridge {
+	static alloc(): FIRReplaceWithStageBridge; // inherited from NSObject
+
+	static new(): FIRReplaceWithStageBridge; // inherited from NSObject
+
+	constructor(o: { expr: FIRExprBridge });
+
+	initWithExpr(expr: FIRExprBridge): this;
+}
+
+declare class FIRSampleStageBridge extends FIRStageBridge {
+	static alloc(): FIRSampleStageBridge; // inherited from NSObject
+
+	static new(): FIRSampleStageBridge; // inherited from NSObject
+
+	constructor(o: { count: number });
+
+	constructor(o: { percentage: number });
+
+	initWithCount(count: number): this;
+
+	initWithPercentage(percentage: number): this;
+}
+
+declare class FIRSearchStageBridge extends FIRStageBridge {
+	static alloc(): FIRSearchStageBridge; // inherited from NSObject
+
+	static new(): FIRSearchStageBridge; // inherited from NSObject
+
+	constructor(o: { options: NSDictionary<string, FIRExprBridge>; addFields: NSDictionary<string, FIRExprBridge>; select: NSDictionary<string, FIRExprBridge>; sort: NSArray<FIROrderingBridge> | FIROrderingBridge[] });
+
+	initWithOptionsAddFieldsSelectSort(options: NSDictionary<string, FIRExprBridge>, add_fields: NSDictionary<string, FIRExprBridge>, select: NSDictionary<string, FIRExprBridge>, sort: NSArray<FIROrderingBridge> | FIROrderingBridge[]): this;
+}
+
+declare class FIRSelectStageBridge extends FIRStageBridge {
+	static alloc(): FIRSelectStageBridge; // inherited from NSObject
+
+	static new(): FIRSelectStageBridge; // inherited from NSObject
+
+	constructor(o: { selections: NSDictionary<string, FIRExprBridge> });
+
+	initWithSelections(selections: NSDictionary<string, FIRExprBridge>): this;
+}
+
 declare const enum FIRServerTimestampBehavior {
 	None = 0,
 
@@ -647,6 +923,34 @@ declare class FIRSnapshotMetadata extends NSObject {
 	readonly pendingWrites: boolean;
 }
 
+declare class FIRSorStageBridge extends FIRStageBridge {
+	static alloc(): FIRSorStageBridge; // inherited from NSObject
+
+	static new(): FIRSorStageBridge; // inherited from NSObject
+
+	constructor(o: { orderings: NSArray<any> | any[] });
+
+	initWithOrderings(orderings: NSArray<any> | any[]): this;
+}
+
+declare class FIRStageBridge extends NSObject {
+	static alloc(): FIRStageBridge; // inherited from NSObject
+
+	static new(): FIRStageBridge; // inherited from NSObject
+
+	readonly name: string;
+}
+
+declare class FIRSubcollectionSourceStageBridge extends FIRStageBridge {
+	static alloc(): FIRSubcollectionSourceStageBridge; // inherited from NSObject
+
+	static new(): FIRSubcollectionSourceStageBridge; // inherited from NSObject
+
+	constructor(o: { path: string });
+
+	initWithPath(path: string): this;
+}
+
 declare class FIRTransaction extends NSObject {
 	static alloc(): FIRTransaction; // inherited from NSObject
 
@@ -675,6 +979,36 @@ declare class FIRTransactionOptions extends NSObject implements NSCopying {
 	copyWithZone(zone: interop.Pointer | interop.Reference<any>): any;
 }
 
+declare class FIRUnionStageBridge extends FIRStageBridge {
+	static alloc(): FIRUnionStageBridge; // inherited from NSObject
+
+	static new(): FIRUnionStageBridge; // inherited from NSObject
+
+	constructor(o: { other: FIRPipelineBridge });
+
+	initWithOther(other: FIRPipelineBridge): this;
+}
+
+declare class FIRUnnestStageBridge extends FIRStageBridge {
+	static alloc(): FIRUnnestStageBridge; // inherited from NSObject
+
+	static new(): FIRUnnestStageBridge; // inherited from NSObject
+
+	constructor(o: { field: FIRExprBridge; alias: FIRExprBridge; indexField: FIRExprBridge });
+
+	initWithFieldAliasIndexField(field: FIRExprBridge, alias: FIRExprBridge, index_field: FIRExprBridge): this;
+}
+
+declare class FIRVariableBridge extends FIRExprBridge {
+	static alloc(): FIRVariableBridge; // inherited from NSObject
+
+	static new(): FIRVariableBridge; // inherited from NSObject
+
+	constructor(o: { name: string });
+
+	initWithName(name: string): this;
+}
+
 declare class FIRVectorValue extends NSObject {
 	static alloc(): FIRVectorValue; // inherited from NSObject
 
@@ -685,6 +1019,16 @@ declare class FIRVectorValue extends NSObject {
 	constructor(o: { array: NSArray<number> | number[] });
 
 	initWithArray(array: NSArray<number> | number[]): this;
+}
+
+declare class FIRWhereStageBridge extends FIRStageBridge {
+	static alloc(): FIRWhereStageBridge; // inherited from NSObject
+
+	static new(): FIRWhereStageBridge; // inherited from NSObject
+
+	constructor(o: { expr: FIRExprBridge });
+
+	initWithExpr(expr: FIRExprBridge): this;
 }
 
 declare class FIRWriteBatch extends NSObject {
@@ -710,5 +1054,79 @@ declare class FIRWriteBatch extends NSObject {
 declare var FirebaseFirestoreInternalVersionNumber: number;
 
 declare var FirebaseFirestoreInternalVersionString: interop.Reference<number>;
+
+declare class __FIRPipelineListenOptionsBridge extends NSObject {
+	static alloc(): __FIRPipelineListenOptionsBridge; // inherited from NSObject
+
+	static new(): __FIRPipelineListenOptionsBridge; // inherited from NSObject
+
+	readonly includeMetadata: boolean;
+
+	readonly serverTimestampBehavior: string;
+
+	readonly source: FIRListenSource;
+
+	constructor(o: { serverTimestampBehavior: string; includeMetadata: boolean; source: FIRListenSource });
+
+	initWithServerTimestampBehaviorIncludeMetadataSource(serverTimestampBehavior: string, includeMetadata: boolean, source: FIRListenSource): this;
+}
+
+declare class __FIRPipelineResultBridge extends NSObject {
+	static alloc(): __FIRPipelineResultBridge; // inherited from NSObject
+
+	static new(): __FIRPipelineResultBridge; // inherited from NSObject
+
+	readonly create_time: FIRTimestamp;
+
+	readonly documentID: string;
+
+	readonly reference: FIRDocumentReference;
+
+	readonly update_time: FIRTimestamp;
+
+	data(): NSDictionary<string, any>;
+
+	dataWithServerTimestampBehavior(serverTimestampBehavior: FIRServerTimestampBehavior): NSDictionary<string, any>;
+
+	get(field: any): any;
+
+	getServerTimestampBehavior(field: any, serverTimestampBehavior: FIRServerTimestampBehavior): any;
+}
+
+declare class __FIRPipelineResultChangeBridge extends NSObject {
+	static alloc(): __FIRPipelineResultChangeBridge; // inherited from NSObject
+
+	static new(): __FIRPipelineResultChangeBridge; // inherited from NSObject
+
+	readonly newIndex: number;
+
+	readonly oldIndex: number;
+
+	readonly result: __FIRPipelineResultBridge;
+
+	readonly type: FIRDocumentChangeType;
+}
+
+declare class __FIRPipelineSnapshotBridge extends NSObject {
+	static alloc(): __FIRPipelineSnapshotBridge; // inherited from NSObject
+
+	static new(): __FIRPipelineSnapshotBridge; // inherited from NSObject
+
+	readonly execution_time: FIRTimestamp;
+
+	readonly results: NSArray<__FIRPipelineResultBridge>;
+}
+
+declare class __FIRRealtimePipelineSnapshotBridge extends NSObject {
+	static alloc(): __FIRRealtimePipelineSnapshotBridge; // inherited from NSObject
+
+	static new(): __FIRRealtimePipelineSnapshotBridge; // inherited from NSObject
+
+	readonly changes: NSArray<__FIRPipelineResultChangeBridge>;
+
+	readonly metadata: FIRSnapshotMetadata;
+
+	readonly results: NSArray<__FIRPipelineResultBridge>;
+}
 
 declare var kFIRFirestoreCacheSizeUnlimited: number;

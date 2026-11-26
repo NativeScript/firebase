@@ -90,6 +90,11 @@ export interface IActionCodeSettings {
 	readonly androidInstallIfNotAvailable: boolean;
 	readonly androidMinimumVersion: string;
 	readonly androidPackageName: string;
+	readonly linkDomain: string;
+
+	/**
+	 * @deprecated Dynamic Links shut down on 2025-08-25. Use linkDomain.
+	 */
 	readonly dynamicLinkDomain: string;
 	readonly handleCodeInApp: boolean;
 	readonly iOSBundleId: string;
@@ -137,6 +142,10 @@ export interface IAuth {
 	addAuthStateChangeListener(listener: (user: IUser) => void);
 	removeAuthStateChangeListener(listener: (user: IUser) => void);
 	addIdTokenChangeListener(listener: (user: IUser) => void);
+	removeIdTokenChangeListener(listener: (user: IUser) => void);
+	/**
+	 * @deprecated Use removeIdTokenChangeListener() instead.
+	 */
 	removeIdTokenChangListener(listener: (user: IUser) => void);
 	sendPasswordResetEmail(email: string, actionCodeSettings?: IActionCodeSettings): Promise<void>;
 	sendSignInLinkToEmail(email: string, actionCodeSettings?: IActionCodeSettings): Promise<void>;
@@ -224,6 +233,11 @@ export declare class ActionCodeSettings implements IActionCodeSettings {
 	androidInstallIfNotAvailable: boolean;
 	androidMinimumVersion: string;
 	androidPackageName: string;
+	linkDomain: string;
+
+	/**
+	 * @deprecated Dynamic Links shut down on 2025-08-25. Use linkDomain.
+	 */
 	dynamicLinkDomain: string;
 	handleCodeInApp: boolean;
 	iOSBundleId: string;
@@ -337,6 +351,11 @@ export declare class Auth implements IAuth {
 
 	addIdTokenChangeListener(listener: (user: User) => void);
 
+	removeIdTokenChangeListener(listener: (user: User) => void);
+
+	/**
+	 * @deprecated Use removeIdTokenChangeListener() instead.
+	 */
 	removeIdTokenChangListener(listener: (user: User) => void);
 
 	sendPasswordResetEmail(email: string, actionCodeSettings?: ActionCodeSettings): Promise<void>;
@@ -369,5 +388,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseAuth {
-	static auth(app?: FirebaseApp): Auth;
+	auth(app?: FirebaseApp): Auth;
 }

@@ -14,6 +14,7 @@
 				"assets": [
 					"packages/firebase-performance/*.md",
 					"packages/firebase-performance/index.d.ts",
+					"packages/firebase-performance/nativescript.config.ts",
 					"packages/firebase-performance/typings/*.d.ts",
 					"LICENSE",
 					{

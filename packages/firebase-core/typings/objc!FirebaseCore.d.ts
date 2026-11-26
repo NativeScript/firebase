@@ -87,8 +87,6 @@ declare class FIROptions extends NSObject implements NSCopying {
 
 	GCMSenderID: string;
 
-	androidClientID: string;
-
 	appGroupID: string;
 
 	bundleID: string;
@@ -97,15 +95,11 @@ declare class FIROptions extends NSObject implements NSCopying {
 
 	databaseURL: string;
 
-	deepLinkURLScheme: string;
-
 	googleAppID: string;
 
 	projectID: string;
 
 	storageBucket: string;
-
-	trackingID: string;
 
 	constructor(o: { contentsOfFile: string });
 

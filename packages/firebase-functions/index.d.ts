@@ -26,14 +26,13 @@ export declare class Functions implements IFunctions {
 }
 
 declare module '@nativescript/firebase-core' {
-
 	export interface Firebase extends FirebaseFunctions {}
 	// Add 'functions' method to FirebaseApp
 	export interface FirebaseApp extends FirebaseFunctionsApp {}
 }
 
 export interface FirebaseFunctions {
-	static functions(app?: FirebaseApp): Functions;
+	functions(app?: FirebaseApp): Functions;
 }
 /**
 	Add Region (Android & iOS) or Custom Domain (iOS only) to Firebase Functions HTTPS call
@@ -43,5 +42,5 @@ export interface FirebaseFunctions {
 	@example firebase().app().functions("us-central1")
 	*/
 export interface FirebaseFunctionsApp {
-	static functions(regionOrCustomDomain?: string): Functions;
+	functions(regionOrCustomDomain?: string): Functions;
 }

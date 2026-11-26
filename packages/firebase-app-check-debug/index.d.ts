@@ -8,7 +8,7 @@ declare class AppCheck {
 
 	constructor(app?: FirebaseApp);
 
-    static setProviderFactory();
+	static setProviderFactory();
 
 	activate(isTokenAutoRefreshEnabled: boolean);
 
@@ -30,5 +30,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseAppCheck {
-	static appCheck(app?: FirebaseApp): AppCheck;
+	appCheck(app?: FirebaseApp): AppCheck;
 }

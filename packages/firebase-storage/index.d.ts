@@ -214,5 +214,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebaseStorage {
-	static storage(): Storage;
+	storage(): Storage;
 }

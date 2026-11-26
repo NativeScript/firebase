@@ -211,7 +211,8 @@ export class User implements IUser {
 	delete(): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.delete(
 					this.native,
@@ -231,7 +232,8 @@ export class User implements IUser {
 	getIdToken(forceRefresh: boolean = false): Promise<string> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.getIdToken(
 					this.native,
@@ -252,7 +254,8 @@ export class User implements IUser {
 	getIdTokenResult(forceRefresh: boolean = false): Promise<AuthTokenResult> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.getIdTokenResult(
 					this.native,
@@ -273,7 +276,8 @@ export class User implements IUser {
 	linkWithCredential(credential: AuthCredential): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.linkWithCredential(
 					this.native,
@@ -319,7 +323,8 @@ export class User implements IUser {
 	reauthenticateWithCredential(credential: AuthCredential): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.reauthenticateWithCredential(
 					this.native,
@@ -340,7 +345,8 @@ export class User implements IUser {
 	reload(): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.reload(
 					this.native,
@@ -360,7 +366,8 @@ export class User implements IUser {
 	sendEmailVerification(actionCodeSettings?: ActionCodeSettings): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.sendEmailVerification(
 					this.native,
@@ -381,7 +388,8 @@ export class User implements IUser {
 	unlink(providerId: string): Promise<User> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.unlink(
 					this.native,
@@ -402,7 +410,8 @@ export class User implements IUser {
 	updateEmail(email: string): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.updateEmail(
 					this.native,
@@ -423,7 +432,8 @@ export class User implements IUser {
 	updatePassword(password: string): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.updatePassword(
 					this.native,
@@ -444,7 +454,8 @@ export class User implements IUser {
 	updatePhoneNumber(credential: PhoneAuthCredential): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.updatePhoneNumber(
 					this.native,
@@ -465,7 +476,8 @@ export class User implements IUser {
 	updateProfile(profile: UserProfileChangeRequest): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				const builder = new com.google.firebase.auth.UserProfileChangeRequest.Builder();
 				if (profile.displayName) {
@@ -495,7 +507,8 @@ export class User implements IUser {
 	verifyBeforeUpdateEmail(email: string, actionCodeSettings?: ActionCodeSettings): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().User.verifyBeforeUpdateEmail(
 					this.native,
@@ -618,13 +631,17 @@ export class ActionCodeSettings implements IActionCodeSettings {
 	}
 
 	get native() {
-		return this._native
+		const builder = this._native
 			.setUrl(this.url || '')
 			.setIOSBundleId(this.iOSBundleId || '')
 			.setHandleCodeInApp(this.handleCodeInApp || false)
-			.setDynamicLinkDomain(this.dynamicLinkDomain || '')
-			.setAndroidPackageName(this.androidPackageName || '', this.androidInstallIfNotAvailable || false, this.androidMinimumVersion || '')
-			.build();
+			.setAndroidPackageName(this.androidPackageName || '', this.androidInstallIfNotAvailable || false, this.androidMinimumVersion || '');
+
+		if (this.linkDomain) {
+			builder.setLinkDomain(this.linkDomain);
+		}
+
+		return builder.build();
 	}
 
 	get android() {
@@ -635,9 +652,20 @@ export class ActionCodeSettings implements IActionCodeSettings {
 	androidInstallIfNotAvailable: boolean;
 	androidMinimumVersion: string;
 	androidPackageName: string;
-	dynamicLinkDomain: string;
+	linkDomain: string;
 	handleCodeInApp: boolean;
 	iOSBundleId: string;
+
+	/**
+	 * @deprecated Dynamic Links shut down on 2025-08-25. Use linkDomain, which this forwards to.
+	 */
+	get dynamicLinkDomain() {
+		return this.linkDomain;
+	}
+
+	set dynamicLinkDomain(value) {
+		this.linkDomain = value;
+	}
 }
 
 export class AuthCredential implements IAuthCredential {
@@ -978,7 +1006,8 @@ export class Auth implements IAuth {
 	fetchSignInMethodsForEmail(email: string): Promise<string[]> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			}
 			NSFirebaseAuth().fetchSignInMethodsForEmail(
 				this.native,
@@ -1026,7 +1055,7 @@ export class Auth implements IAuth {
 			const nativeListener = this._authStateChangeListeners.get(listener);
 			if (nativeListener) {
 				this.native.removeAuthStateListener(nativeListener);
-				this._authStateChangeListeners.delete(nativeListener);
+				this._authStateChangeListeners.delete(listener);
 			}
 		}
 	}
@@ -1046,20 +1075,28 @@ export class Auth implements IAuth {
 		}
 	}
 
-	removeIdTokenChangListener(listener: (user: User) => void) {
+	removeIdTokenChangeListener(listener: (user: User) => void) {
 		if (this.native && typeof listener === 'function') {
-			const nativeListener = this._authStateChangeListeners.get(listener);
+			const nativeListener = this._idTokenChangeListeners.get(listener);
 			if (nativeListener) {
 				this.native.removeIdTokenListener(nativeListener);
-				this._authStateChangeListeners.delete(nativeListener);
+				this._idTokenChangeListeners.delete(listener);
 			}
 		}
+	}
+
+	/**
+	 * @deprecated Use removeIdTokenChangeListener() instead.
+	 */
+	removeIdTokenChangListener(listener: (user: User) => void) {
+		this.removeIdTokenChangeListener(listener);
 	}
 
 	sendPasswordResetEmail(email: string, actionCodeSettings?: ActionCodeSettings): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().sendPasswordResetEmail(
 					this.native,
@@ -1081,7 +1118,8 @@ export class Auth implements IAuth {
 	sendSignInLinkToEmail(email: string, actionCodeSettings?: ActionCodeSettings): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().sendSignInLinkToEmail(
 					this.native,
@@ -1103,7 +1141,8 @@ export class Auth implements IAuth {
 	signInAnonymously(): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().signInAnonymously(
 					this.native,
@@ -1173,7 +1212,8 @@ export class Auth implements IAuth {
 	signInWithCredential(credential: AuthCredential): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().signInWithCredential(
 					this.native,
@@ -1194,7 +1234,8 @@ export class Auth implements IAuth {
 	signInWithCustomToken(customToken: string): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().signInWithCustomToken(
 					this.native,
@@ -1215,7 +1256,8 @@ export class Auth implements IAuth {
 	signInWithEmailLink(email: string, emailLink: string): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().signInWithEmailLink(
 					this.native,
@@ -1241,7 +1283,8 @@ export class Auth implements IAuth {
 	verifyPasswordResetCode(code: string): Promise<string> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().verifyPasswordResetCode(
 					this.native,
@@ -1262,7 +1305,8 @@ export class Auth implements IAuth {
 	createUserWithEmailAndPassword(email: string, password: string): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().createUserWithEmailAndPassword(
 					this.native,
@@ -1284,7 +1328,8 @@ export class Auth implements IAuth {
 	confirmPasswordReset(code: string, newPassword: string): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			}
 
 			NSFirebaseAuth().confirmPasswordReset(
@@ -1309,7 +1354,8 @@ export class Auth implements IAuth {
 	checkActionCode(code: string): Promise<ActionCodeInfo> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			}
 
 			NSFirebaseAuth().checkActionCode(
@@ -1353,7 +1399,8 @@ export class Auth implements IAuth {
 	applyActionCode(code: string): Promise<void> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().applyActionCode(
 					this.native,
@@ -1374,7 +1421,8 @@ export class Auth implements IAuth {
 	signInWithEmailAndPassword(email: string, password: string): Promise<IUserCredential> {
 		return new Promise((resolve, reject) => {
 			if (!this.native) {
-				reject();
+				reject(new FirebaseError('Auth is not initialized.'));
+				return;
 			} else {
 				NSFirebaseAuth().signInWithEmailAndPassword(
 					this.native,
@@ -1403,6 +1451,7 @@ export class Auth implements IAuth {
 				clearTimeout(timeout);
 				if (user) {
 					reject(false);
+					return;
 				}
 				resolve(true);
 			};

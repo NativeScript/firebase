@@ -70,5 +70,5 @@ declare module '@nativescript/firebase-core' {
 }
 
 export interface FirebasePerformance {
-	static performance(): Performance;
+	performance(): Performance;
 }

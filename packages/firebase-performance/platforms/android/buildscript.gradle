@@ -1,9 +1,8 @@
 repositories {
   google()
   mavenCentral()
-  jcenter()
 }
 
 dependencies {
-  classpath 'com.google.firebase:perf-plugin:1.4.2'
+  classpath 'com.google.firebase:perf-plugin:2.0.2'
 }

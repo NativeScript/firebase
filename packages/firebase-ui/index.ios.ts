@@ -29,6 +29,9 @@ export class GoogleProvider extends ProviderBase {
 	scopes: string[] = [];
 
 	getNative(ui: UI) {
+		if (typeof FUIGoogleAuth === 'undefined') {
+			throw new Error('FirebaseGoogleAuthUI is not installed. Remove $NSFirebaseUIWithoutGoogleProvider from your Podfile to use GoogleProvider.');
+		}
 		if (this.scopes.length > 0) {
 			return FUIGoogleAuth.alloc().initWithAuthUIScopes(ui.native, this.scopes);
 		} else {
@@ -45,6 +48,9 @@ export class FacebookProvider extends ProviderBase {
 	permissions: string[] = [];
 
 	getNative(ui: UI) {
+		if (typeof FUIFacebookAuth === 'undefined') {
+			throw new Error('FirebaseFacebookAuthUI is not installed. Remove $NSFirebaseUIWithoutFacebookProvider from your Podfile to use FacebookProvider.');
+		}
 		if (this.permissions.length > 0) {
 			return FUIFacebookAuth.alloc().initWithAuthUIPermissions(ui.native, this.permissions);
 		} else {
@@ -135,14 +141,26 @@ export class ActionCodeSettings implements IActionCodeSettings {
 		}
 	}
 
+	get linkDomain() {
+		return this.native?.linkDomain;
+	}
+
+	set linkDomain(value) {
+		if (this.native) {
+			this.native.linkDomain = value;
+		}
+	}
+
+	/**
+	 * @deprecated Dynamic Links shut down on 2025-08-25 and Firebase 12 removed this property.
+	 * Use linkDomain, which this now forwards to.
+	 */
 	get dynamicLinkDomain() {
-		return this.native.dynamicLinkDomain;
+		return this.linkDomain;
 	}
 
 	set dynamicLinkDomain(value) {
-		if (this.native) {
-			this.native.dynamicLinkDomain = value;
-		}
+		this.linkDomain = value;
 	}
 
 	get handleCodeInApp(): boolean {
@@ -221,20 +239,42 @@ export class PhoneProvider extends ProviderBase {
 
 	defaultCountryIso = '';
 
-	blacklistedCountries: string[] = [];
+	blockedCountries: string[] = [];
 
-	whitelistedCountries: string[] = [];
+	allowedCountries: string[] = [];
+
+	/**
+	 * @deprecated Renamed to blockedCountries in firebase-ui-auth 9.
+	 */
+	get blacklistedCountries() {
+		return this.blockedCountries;
+	}
+
+	set blacklistedCountries(values: string[]) {
+		this.blockedCountries = values;
+	}
+
+	/**
+	 * @deprecated Renamed to allowedCountries in firebase-ui-auth 9.
+	 */
+	get whitelistedCountries() {
+		return this.allowedCountries;
+	}
+
+	set whitelistedCountries(values: string[]) {
+		this.allowedCountries = values;
+	}
 
 	getNative(ui: UI) {
-		if (this.blacklistedCountries.length > 0) {
+		if (this.blockedCountries.length > 0) {
 			const countries = NSMutableSet.new<string>();
-			this.blacklistedCountries.forEach((country) => {
+			this.blockedCountries.forEach((country) => {
 				countries.addObject(country);
 			});
 			return FUIPhoneAuth.alloc().initWithAuthUIBlacklistedCountries(ui.native, countries);
-		} else if (this.whitelistedCountries.length > 0) {
+		} else if (this.allowedCountries.length > 0) {
 			const countries = NSMutableSet.new<string>();
-			this.whitelistedCountries.forEach((country) => {
+			this.allowedCountries.forEach((country) => {
 				countries.addObject(country);
 			});
 			return FUIPhoneAuth.alloc().initWithAuthUIWhitelistedCountries(ui.native, countries);

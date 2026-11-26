@@ -15,6 +15,7 @@
 				"assets": [
 					"packages/firebase-ui/*.md",
 					"packages/firebase-ui/index.d.ts",
+					"packages/firebase-ui/nativescript.config.ts",
 					"packages/firebase-ui/typings/*.d.ts",
 					"LICENSE",
 					{

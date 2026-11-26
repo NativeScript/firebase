@@ -1,11 +1,10 @@
 repositories {
   google()
   mavenCentral()
-  jcenter()
 }
 
 dependencies {
-  def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "33.13.0" }
+  def computeFirebaseBomVersion = { -> project.hasProperty("firebaseBomVersion") ? firebaseBomVersion : "34.19.0" }
   implementation platform("com.google.firebase:firebase-bom:${computeFirebaseBomVersion}")
   implementation 'com.google.firebase:firebase-perf'
 }

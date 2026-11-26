@@ -61,9 +61,11 @@ export class Messaging implements IMessaging {
 	}
 
 	onMessage(listener: (message: RemoteMessage) => any) {
-		if (!listener && this._onMessage) {
+		if (this._onMessage) {
 			this._instance.removeOnMessage(this._onMessage);
-		} else {
+		}
+
+		if (listener) {
 			this._instance.addOnMessage(listener);
 		}
 
@@ -71,9 +73,11 @@ export class Messaging implements IMessaging {
 	}
 
 	onNotificationTap(listener: (message: RemoteMessage) => any) {
-		if (!listener && this._onNotificationTap) {
+		if (this._onNotificationTap) {
 			this._instance.removeOnNotificationTap(this._onNotificationTap);
-		} else {
+		}
+
+		if (listener) {
 			this._instance.addOnNotificationTap(listener);
 		}
 
@@ -81,9 +85,11 @@ export class Messaging implements IMessaging {
 	}
 
 	onToken(listener: (token: string) => any) {
-		if (!listener && this._onToken) {
+		if (this._onToken) {
 			this._instance.removeOnToken(this._onToken);
-		} else {
+		}
+
+		if (listener) {
 			this._instance.addOnToken(listener);
 		}
 

@@ -3,6 +3,7 @@
 ## Contents
 * [Intro](#intro)
 * [Set up your app for Firebase](#set-up-your-app-for-firebase)
+* [iOS auth providers](#ios-auth-providers)
 * [Add the FirebaseUI for Auth SDK to your app](#add-the-firebaseui-for-auth-sdk-to-your-app)
 * [Enable sign-in methods in the Firebase console](#enable-sign-in-methods-in-the-firebase-console)
 * [Invoke the FirebaseUI auth flow](#invoke-the-firebaseui-auth-flow)
@@ -40,6 +41,49 @@
 ## Intro
 
 With this plugin, you can use the [FirebaseUI for Auth](https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#firebaseui-for-auth) library in your NativeScript app. FirebaseUI for Auth is a library that provides a drop-in auth solution that handles the UI flows for signing up and signing in users with email and password, phone number, Google, Facebook, Twitter, and more.
+
+## iOS auth providers
+
+On iOS the providers come from the [FirebaseUI-iOS](https://github.com/firebase/FirebaseUI-iOS)
+Swift package, pinned to `15.x`. That range is deliberate: FirebaseUI **16.0.0 dropped the classic
+UIKit auth products** (`FirebaseAuthUI` and friends) in favour of a SwiftUI rewrite, and this plugin
+wraps the UIKit ones.
+
+All seven providers are linked by default:
+
+```
+FirebaseAuthUI  FirebaseAnonymousAuthUI  FirebaseEmailAuthUI  FirebaseOAuthUI
+FirebasePhoneAuthUI  FirebaseGoogleAuthUI  FirebaseFacebookAuthUI
+```
+
+`FirebaseGoogleAuthUI` pulls in GoogleSignIn and `FirebaseFacebookAuthUI` pulls in the Facebook SDK.
+To leave either out, override the package in your app's `nativescript.config.ts` with the same
+`name` and a trimmed `libs` list:
+
+```ts
+export default {
+	ios: {
+		SPMPackages: [
+			{
+				name: 'FirebaseUI',
+				libs: ['FirebaseAuthUI', 'FirebaseEmailAuthUI', 'FirebasePhoneAuthUI'],
+				repositoryURL: 'https://github.com/firebase/FirebaseUI-iOS',
+				version: '>=15.1.0 <16.0.0',
+			},
+		],
+	},
+} as NativeScriptConfig;
+```
+
+Using `GoogleProvider` or `FacebookProvider` after dropping its library throws with a message saying
+so. Android is unaffected — `firebase-ui-auth` ships every provider in one artifact.
+
+### Using this alongside @nativescript/google-signin
+
+They coexist with no configuration. FirebaseUI 15.x holds GoogleSignIn at `7.x`, and
+`@nativescript/google-signin` 3.x accepts `7.1` through `10`, so Swift Package Manager settles both
+on one shared copy. The `$NSFirebaseUIWithoutGoogleProvider` Podfile variable that 5.x needed is
+gone along with CocoaPods.
 
 ## Set up your app for Firebase
 

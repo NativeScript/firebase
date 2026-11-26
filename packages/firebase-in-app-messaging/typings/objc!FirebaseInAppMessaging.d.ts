@@ -4,9 +4,6 @@ declare const enum FIAMDisplayRenderErrorType {
 	UnspecifiedError = 1,
 }
 
-/**
- * @since 13.0
- */
 declare class FIRInAppMessaging extends NSObject {
 	static alloc(): FIRInAppMessaging; // inherited from NSObject
 
