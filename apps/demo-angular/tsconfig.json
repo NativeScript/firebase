@@ -20,6 +20,7 @@
 			"@nativescript/firebase-messaging": ["packages/firebase-messaging/index.d.ts"],
 			"@nativescript/firebase-functions": ["packages/firebase-functions/index.d.ts"],
 			"@nativescript/firebase-app-check-debug": ["packages/firebase-app-check-debug/index.d.ts"],
+			"@nativescript/firebase-ui": ["packages/firebase-ui/index.d.ts"],
 			"@nativescript/*": ["../../dist/packages/*"]
 		}
 	},

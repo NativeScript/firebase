@@ -2,6 +2,10 @@
 <StackLayout class="p-20">
 	<ScrollView class="h-full">
 		<StackLayout>
+			<TextField [text]="textToUpload" hint="Enter Text to upload" />
+			<TextField [text]="textToUploadFileName" hint="Enter Text to upload file name" />
+			<Button text="Upload text" (tap)="uploadText()" class="btn btn-primary"></Button>
+			<Button text="Upload file" (tap)="uploadFile()" class="btn btn-primary"></Button>
 			<Button text="Test firebase-storage" (tap)="demoShared.testIt()" class="btn btn-primary"></Button>
 		</StackLayout>
 	</ScrollView>
